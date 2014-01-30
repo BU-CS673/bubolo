@@ -50,23 +50,22 @@ public class App extends JPanel
 	
 	public void start() throws UnknownHostException, IOException
 	{
-		Socket socket = new Socket("whois.internic.net", 43);
-		
-		InputStream in = socket.getInputStream();
-		OutputStream out = socket.getOutputStream();
-		
-		String requestText = "christopherdcanfield.com\n";
-		byte buffer[] = requestText.getBytes();
-		
-		out.write(buffer);
-		
-		int c = 0;
-		while ((c = in.read()) != -1)
+		try (Socket socket = new Socket("whois.internic.net", 43))
 		{
-			System.out.print((char)c);
+			InputStream in = socket.getInputStream();
+			OutputStream out = socket.getOutputStream();
+			
+			String requestText = "christopherdcanfield.com\n";
+			byte buffer[] = requestText.getBytes();
+			
+			out.write(buffer);
+			
+			int c = 0;
+			while ((c = in.read()) != -1)
+			{
+				System.out.print((char)c);
+			}
 		}
-		
-		socket.close();
 	}
 	
 	@Override
