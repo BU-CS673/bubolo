@@ -55,7 +55,7 @@ public class App extends JPanel
 		InputStream in = socket.getInputStream();
 		OutputStream out = socket.getOutputStream();
 		
-		String requestText = "christopherdcanfield.com";
+		String requestText = "christopherdcanfield.com\n";
 		byte buffer[] = requestText.getBytes();
 		
 		out.write(buffer);
@@ -63,7 +63,7 @@ public class App extends JPanel
 		int c = 0;
 		while ((c = in.read()) != -1)
 		{
-			System.out.println((char)c);
+			System.out.print((char)c);
 		}
 		
 		socket.close();
