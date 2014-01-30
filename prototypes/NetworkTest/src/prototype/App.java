@@ -1,6 +1,11 @@
 package prototype;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +21,20 @@ public class App extends JPanel
 	public static void main(String[] args)
 	{
 		App app = new App();
-		app.start();
+		try
+		{
+			app.start();
+		}
+		catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public App()
@@ -30,10 +48,25 @@ public class App extends JPanel
 		frame.setVisible(true);
 	}
 	
-	public void start()
+	public void start() throws UnknownHostException, IOException
 	{
-		//frame.addKeyListener(controller);
+		Socket socket = new Socket("whois.internic.net", 43);
 		
+		InputStream in = socket.getInputStream();
+		OutputStream out = socket.getOutputStream();
+		
+		String requestText = "christopherdcanfield.com";
+		byte buffer[] = requestText.getBytes();
+		
+		out.write(buffer);
+		
+		int c = 0;
+		while ((c = in.read()) != -1)
+		{
+			System.out.println((char)c);
+		}
+		
+		socket.close();
 	}
 	
 	@Override
