@@ -1,0 +1,3 @@
+This folder contains templates for the code conventions. For information about compiler warnings and the FindBugs static code analysis tool, please see the wiki and the Software Quality Assurance Plan.
+
+To import these templates into Eclipse, go to Window >> Preferences >> Java >> Code Style, and then import the relevant file into Clean Up (bubolo_cleanup.xml), Code Templates (bubolo_codetemplates.xml) and Formatter (bubolo_formatter.xml).
