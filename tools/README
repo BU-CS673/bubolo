@@ -1,0 +1,5 @@
+This folder contains settings for the code conventions, compiler warnings and FindBugs, as well as templates for just the code conventions. Please see the Software Quality Assurance Plan for information about these standards.
+
+The simplest way to import these settings is to import the bubolo.preferences.epf file. This is done by selecting File >> Import >> General >> Preferences, and then selecting the file.
+
+Alternatively, you can import the code convention templates into Eclipse, by going to Window >> Preferences >> Java >> Code Style, and then import the relevant file into Clean Up (bubolo_cleanup.xml), Code Templates (bubolo_codetemplates.xml) and Formatter (bubolo_formatter.xml). You will then need to set the warnings and FindBugs settings manually.
