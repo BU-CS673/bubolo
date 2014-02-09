@@ -3,6 +3,7 @@ package bubolo.graphics;
 import java.util.UUID;
 
 import bubolo.world.Entity;
+import bubolo.world.Tank;
 
 /**
  * Interface for sprites, which draw textures to a quad at a specific
@@ -19,10 +20,9 @@ public abstract class Sprite<T extends Entity>
 	 * Constructor for the base Sprite class.
 	 * @param spriteId An id that identifies the sprite's type.
 	 */
-	public Sprite(UUID spriteId)
+	Sprite(UUID spriteId)
 	{
 		this.id = spriteId;
-		
 	}
 	
 	/**
@@ -49,9 +49,18 @@ public abstract class Sprite<T extends Entity>
 	 * the world system does not need to know about any of the concrete sprites.
 	 * @param entity Reference to the entity that is creating the sprite.
 	 * @return A new concrete Sprite of type T.
+	 * @throws IllegalArgumentException if the entity is of a type that
+	 * is unknown to this method. This signifies a programming error.
 	 */
-	public static <T extends Entity> T create(T entity)
+	public static <T extends Entity> Sprite<?> create(T entity)
 	{
-		return null;
+		if (entity.getClass() == Tank.class)
+		{
+			return new TankSprite();
+		}
+		
+		// Programming error if this line is reached.
+		throw new IllegalArgumentException(
+				"Unknown entity type passed to Sprite.create(): " + entity.getClass().toString());
 	}
 }
