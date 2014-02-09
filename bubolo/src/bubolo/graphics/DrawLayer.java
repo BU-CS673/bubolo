@@ -7,5 +7,5 @@ package bubolo.graphics;
  */
 public enum DrawLayer
 {
-	test;
+	TERRAIN, TERRAIN_MODIFIERS, OBJECTS, TANKS;
 }
