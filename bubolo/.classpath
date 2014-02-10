@@ -14,5 +14,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-openal.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://libgdx.badlogicgames.com/nightlies/docs/api/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
