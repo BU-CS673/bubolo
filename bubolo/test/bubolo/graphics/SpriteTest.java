@@ -1,5 +1,7 @@
 package bubolo.graphics;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,11 +12,12 @@ import com.badlogic.gdx.Gdx;
 
 import bubolo.world.Tank;
 
-public class TankSpriteTest
+public class SpriteTest
 {
 	private SpriteBatch batch;
 	private Camera camera;
 	private static boolean isComplete;
+	private static boolean hadException;
 	
 	@Before
 	public void setUp()
@@ -26,7 +29,7 @@ public class TankSpriteTest
 	}
 	
 	@Test
-	public void constructTankSprite() throws InterruptedException
+	public void testValid() throws InterruptedException
 	{
 		isComplete = false;
 		
@@ -34,8 +37,15 @@ public class TankSpriteTest
 			@Override
 			public void run()
 			{
-				// Fails if the constructor throws an exception.
-				Sprite<Tank> sprite = new TankSprite(new Tank());
+				try
+				{
+					Sprite<Tank> sprite = Sprite.create(new Tank());
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
 				isComplete = true;
 			}
 		});
@@ -45,28 +55,28 @@ public class TankSpriteTest
 			Thread.yield();
 		}
 	}
-
+	
 	@Test
-	public void drawTankSprite()
+	public void createInvalidArgument() throws InterruptedException
 	{
 		isComplete = false;
+		hadException = false;
 		
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run()
 			{
-				if (batch == null)
+				// Fails if the constructor throws an exception.
+				try
 				{
-					batch = new SpriteBatch();
+					Sprite<?> sprite = Sprite.create(null);
+					hadException = false;
 				}
-				if (camera == null)
+				catch (Exception e)
 				{
-					camera = new OrthographicCamera();
+					hadException = true;
+					isComplete = true;
 				}
-				Sprite<Tank> sprite = new TankSprite(new Tank());
-				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TANKS);
-				isComplete = true;
 			}
 		});
 
@@ -74,5 +84,6 @@ public class TankSpriteTest
 		{
 			Thread.yield();
 		}
+		assertTrue("Expected an exception, but none encountered", hadException);
 	}
 }

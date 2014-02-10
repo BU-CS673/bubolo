@@ -107,11 +107,13 @@ public abstract class Sprite<T extends Entity>
 	 * @throws IllegalArgumentException if the entity is of a type that
 	 * is unknown to this method. This signifies a programming error.
 	 */
-	public static <T extends Entity> Sprite<?> create(T entity)
+	public static <T extends Entity> Sprite<T> create(T entity)
 	{
 		if (entity.getClass() == Tank.class)
 		{
-			return new TankSprite((Tank)entity);
+			Sprite<Tank> tank = new TankSprite((Tank)entity);
+			return Sprite<Tank>.class.cast(tank);
+			return (Sprite<T>) new TankSprite((Tank)entity);
 		}
 		
 		// Programming error if this line is reached.

@@ -23,7 +23,7 @@ public class TankTest
 	{
 		// TODO: Fix this test once Entity.getX() is properly implemented.
 		Entity tank = new Tank();
-		assertTrue(0.f == tank.getX());
+		assertEquals(0, (int)tank.getX());
 	}
 	
 	@Test
@@ -31,6 +31,6 @@ public class TankTest
 	{
 		// TODO: Fix this test once Entity.getY() is properly implemented.
 		Entity tank = new Tank();
-		assertTrue(0.f == tank.getY());	
+		assertEquals(0, (int)tank.getY());	
 	}
 }
