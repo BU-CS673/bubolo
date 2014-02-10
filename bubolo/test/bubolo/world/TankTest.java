@@ -18,4 +18,19 @@ public class TankTest
 		Entity tank = new Tank();
 	}
 
+	@Test
+	public void getX()
+	{
+		// TODO: Fix this test once Entity.getX() is properly implemented.
+		Entity tank = new Tank();
+		assertEquals(0, (int)tank.getX());
+	}
+	
+	@Test
+	public void getY()
+	{
+		// TODO: Fix this test once Entity.getY() is properly implemented.
+		Entity tank = new Tank();
+		assertEquals(0, (int)tank.getY());	
+	}
 }
