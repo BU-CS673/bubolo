@@ -2,6 +2,11 @@ package bubolo.graphics;
 
 import java.util.UUID;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
 import bubolo.world.Entity;
 import bubolo.world.Tank;
 
@@ -16,13 +21,24 @@ public abstract class Sprite<T extends Entity>
 	// each instance of the concrete sprite.
 	private UUID id;
 	
+	// The layer that this sprite is drawn to.
+	private DrawLayer drawLayer;
+	
+	// Reference to the entity that this sprite represents.
+	private T entity;
+	
+	
 	/**
 	 * Constructor for the base Sprite class.
-	 * @param spriteId An id that identifies the sprite's type.
+	 * @param spriteId an id that identifies the sprite's type.
+	 * @param layer the layer that the sprite is drawn to.
+	 * @param entity reference to the Entity that this sprite represents.
 	 */
-	Sprite(UUID spriteId)
+	Sprite(UUID spriteId, DrawLayer layer, T entity)
 	{
 		this.id = spriteId;
+		this.drawLayer = layer;
+		this.entity = entity;
 	}
 	
 	/**
@@ -37,12 +53,51 @@ public abstract class Sprite<T extends Entity>
 	}
 	
 	/**
-	 * Draws the sprite to the screen.
-	 * @param layer Specifies the draw order.
-	 * @param entity The entity that this sprite represents. At a minimum,
-	 * this is used to get location information.
+	 * Returns the sprite's draw layer.
+	 * @return the sprite's draw layer.
 	 */
-	public abstract void draw(DrawLayer layer, T entity);
+	protected DrawLayer getDrawLayer()
+	{
+		return drawLayer;
+	}
+	
+	/**
+	 * Returns the entity that this sprite represents.
+	 * @return the entity that this sprite represents.
+	 */
+	protected T getEntity()
+	{
+		return entity;
+	}
+	
+	/**
+	 * Draws the sprite to the screen.
+	 * @param batch The game's SpriteBatch object. batch.begin() must have
+	 * been called before the SpriteBatch is passed to this Sprite.
+	 * @param camera The game's libgdx camera.
+	 * @param layer The layer that is currently being drawn. Note that this is
+	 * not necessarily the DrawLayer that this entity belongs to.
+	 */
+	public abstract void draw(SpriteBatch batch, Camera camera, DrawLayer layer);
+	
+	/**
+	 * Draws the texture to the screen.
+	 * @param batch The game's SpriteBatch object. batch.begin() must have
+	 * been called before the SpriteBatch is passed to this Sprite.
+	 * @param camera The game's libgdx camera.
+	 * @param layer The layer that is currently being drawn. Note that this is
+	 * not necessarily the DrawLayer that this entity belongs to.
+	 * @param texture The texture to draw.
+	 */
+	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
+	{
+		if (layer == drawLayer)
+		{
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, 
+					new Vector2(getEntity().getX(), getEntity().getY()));
+			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y);
+		}
+	}
 	
 	/**
 	 * Static factory method for creating concrete sprites. This ensures that
@@ -56,7 +111,7 @@ public abstract class Sprite<T extends Entity>
 	{
 		if (entity.getClass() == Tank.class)
 		{
-			return new TankSprite();
+			return new TankSprite((Tank)entity);
 		}
 		
 		// Programming error if this line is reached.
