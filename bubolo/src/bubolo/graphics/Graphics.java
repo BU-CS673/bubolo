@@ -41,6 +41,9 @@ public class Graphics
 		return texture;
 	}
 	
+	/**
+	 * Destroys all textures.
+	 */
 	public static void dispose()
 	{
 		for (Texture texture : textures.values())
