@@ -35,8 +35,17 @@ public class Graphics
 		if (texture == null)
 		{
 			texture = new Texture(new FileHandle(new File(path)));
+			textures.put(path, texture);
 		}
 		
 		return texture;
+	}
+	
+	public static void dispose()
+	{
+		for (Texture texture : textures.values())
+		{
+			texture.dispose();
+		}
 	}
 }

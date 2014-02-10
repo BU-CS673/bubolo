@@ -2,8 +2,6 @@ package bubolo.world;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 /**
  * Base class for game objects. Anything that is part of the game logic should
  * inherit from this class.
@@ -20,7 +18,10 @@ public abstract class Entity implements Serializable
 	 */
 	public float getX()
 	{
-		throw new NotImplementedException("Entity.getX() is not yet implemented.");
+		// TODO (cdc - 2/9/2014): properly implement this. Initially, I threw a 
+		// NotImplementedException when this was called. However, that made writing
+		// passable tests for the graphics code impossible.
+		return 0.f;
 	}
 	
 	/**
@@ -29,6 +30,9 @@ public abstract class Entity implements Serializable
 	 */
 	public float getY()
 	{
-		throw new NotImplementedException("Entity.getY() is not yet implemented.");
+		// TODO (cdc - 2/9/2014): properly implement this. Initially, I threw a 
+		// NotImplementedException when this was called. However, that made writing
+		// passable tests for the graphics code impossible.
+		return 0.f;
 	}
 }

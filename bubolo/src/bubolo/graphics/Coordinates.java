@@ -17,8 +17,8 @@ class Coordinates
 	 */
 	static Vector2 worldToCamera(Camera camera, Vector2 worldCoordinates)
 	{
-		return new Vector2(worldCoordinates.x + camera.position.x,
-				worldCoordinates.y + camera.position.y);
+		return new Vector2(worldCoordinates.x - camera.position.x,
+				worldCoordinates.y - camera.position.y);
 	}
 	
 	/**
@@ -29,7 +29,7 @@ class Coordinates
 	 */
 	static Vector2 cameraToWorld(Camera camera, Vector2 cameraCoordinates)
 	{
-		return new Vector2(cameraCoordinates.x - camera.position.x,
-				cameraCoordinates.y - camera.position.y);
+		return new Vector2(cameraCoordinates.x + camera.position.x,
+				cameraCoordinates.y + camera.position.y);
 	}
 }
