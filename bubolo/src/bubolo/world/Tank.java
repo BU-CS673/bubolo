@@ -5,7 +5,7 @@ package bubolo.world;
  * or an AI bot.
  * @author BU673 - Clone Industries
  */
-public class Tank extends Entity
+public class Tank extends Actor
 {
 	private static final long serialVersionUID = 457933513574468829L;
 	
