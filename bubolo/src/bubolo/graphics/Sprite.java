@@ -99,25 +99,19 @@ public abstract class Sprite<T extends Entity>
 		}
 	}
 	
+	// Note (cdc - 2/10/2014): I initially tried to create a generic form of this
+	// static method. However, I wasn't able to create a version that would compile
+	// without warnings (unchecked class cast warning, despite performing a check).
+	// Instead, this method will be overloaded.
+	
 	/**
 	 * Static factory method for creating concrete sprites. This ensures that
 	 * the world system does not need to know about any of the concrete sprites.
 	 * @param entity Reference to the entity that is creating the sprite.
-	 * @return A new concrete Sprite of type T.
-	 * @throws IllegalArgumentException if the entity is of a type that
-	 * is unknown to this method. This signifies a programming error.
+	 * @return A new concrete Sprite.
 	 */
-	public static <T extends Entity> Sprite<T> create(T entity)
+	public static Sprite<Tank> create(Tank entity)
 	{
-		if (entity.getClass() == Tank.class)
-		{
-			Sprite<Tank> tank = new TankSprite((Tank)entity);
-			return Sprite<Tank>.class.cast(tank);
-			return (Sprite<T>) new TankSprite((Tank)entity);
-		}
-		
-		// Programming error if this line is reached.
-		throw new IllegalArgumentException(
-				"Unknown entity type passed to Sprite.create(): " + entity.getClass().toString());
+		return new TankSprite(entity);
 	}
 }
