@@ -22,6 +22,8 @@ public class TankSprite extends Sprite<Tank>
 	TankSprite()
 	{
 		super(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"));
+		
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
 	}
 
 	@Override
