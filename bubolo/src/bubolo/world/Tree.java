@@ -89,22 +89,15 @@ public class Tree extends StationaryElement
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (sprite != null){
 			//TODO: Create TreeSprite class!
 			//sprite.draw(batch, camera, layer);
-		}
 	}
 
 	@Override
 	public UUID getSpriteId()
 	{
 		//TODO: Create TreeSprite class!
-		/*
-		if (sprite != null){
-			return sprite.getId();
-		}
-		else return null;
-		*/
+		//	return sprite.getId();
 		return null;
 	}
 

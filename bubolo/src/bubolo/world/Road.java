@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * Roads are Modifiers for Terrain that allow Tanks to drive more quickly.
- * They can be created and destroyed by Tanks.
+ * Roads are Modifiers for Terrain that allow Tanks to drive more quickly. They can be
+ * created and destroyed by Tanks.
+ * 
  * @author BU CS673 - Clone Productions
  */
-public class Road extends Modifier 
+public class Road extends Modifier
 {
 	Sprite<Road> sprite;
 
@@ -81,41 +82,36 @@ public class Road extends Modifier
 	{
 		super(x, y, w, h, rot, id);
 	}
+
 	@Override
 	public void update()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void destroy()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (sprite != null)
-		{
-			// TODO: Create RoadSprite class!
-			// sprite.draw(batch, camera, layer);
-		}
+		// TODO: Create RoadSprite class!
+		// sprite.draw(batch, camera, layer);
 	}
 
 	@Override
 	public UUID getSpriteId()
 	{
 		// TODO: Create RoadSprite class!
-
-		/*
-		 * if (sprite != null){ return sprite.getId(); } else return null;
-		 */
+		// return sprite.getId();
 
 		return null;
 	}
 
-	//TODO: Add Road functionality!
+	// TODO: Add Road functionality!
 }

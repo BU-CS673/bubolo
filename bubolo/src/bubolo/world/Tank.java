@@ -94,22 +94,13 @@ public class Tank extends Actor
 	@Override
 	public UUID getSpriteId()
 	{
-		if (sprite != null)
-		{
 			return sprite.getId();
-		}
-
-		else
-			return null;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (sprite != null)
-		{
-			sprite.draw(batch, camera, layer);
-		}
+		sprite.draw(batch, camera, layer);
 
 	}
 

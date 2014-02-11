@@ -83,23 +83,16 @@ public class Grass extends Terrain
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (sprite != null)
-		{
 			// TODO: Create GrassSprite class!
 			// sprite.draw(batch, camera, layer);
-		}
 	}
 
 	@Override
 	public UUID getSpriteId()
 	{
-		// TODO: Create GrassSprite class!
-
-		/*
-		 * if (sprite != null){ return sprite.getId(); } else return null;
-		 */
-
-		return null;
+		//TODO: Create GrassSprite class!
+			//return sprite.getId(); 
+			return null; 
 	}
 
 	@Override

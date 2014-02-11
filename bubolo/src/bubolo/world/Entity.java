@@ -16,11 +16,11 @@ public abstract class Entity implements Serializable, Drawable
 	// Used when serializing and deserializing.
 	private static final long serialVersionUID = -7558368147503376322L;
 	private UUID myID;
-	private int height; // height of this entity in pixels
-	private int width; // width of this entity in pixels
+	private int height; // height of this Entity in pixels
+	private int width; // width of this Entity in pixels
 	private float xPos;
 	private float yPos;
-	private float rotation; // rotation of this entity in radians
+	private float rotation; // rotation of this Entity in radians
 
 	/**
 	 * Construct a new Entity with a random UUID.
@@ -42,7 +42,8 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Construct a new DummyEntity with the given initial parameters and the specified UUID.
+	 * Construct a new DummyEntity with the given initial parameters and the specified
+	 * UUID.
 	 * 
 	 * @param id
 	 *            is the existing UUID to be applied to the new Entity.
@@ -66,7 +67,7 @@ public abstract class Entity implements Serializable, Drawable
 		height = h;
 		rotation = rot;
 	}
-	
+
 	/**
 	 * Construct a new Entity with the given initial parameters and a random UUID.
 	 * 
@@ -89,19 +90,6 @@ public abstract class Entity implements Serializable, Drawable
 		width = w;
 		height = h;
 		rotation = rot;
-	}
-	
-	/**
-	 * Tests to see if the initial parameters of this Entity are equivalent to those of another Entity.
-	 * @param e is the Entity that this one should be compared against.
-	 * @return true if the Entities match each other and false if they do not.
-	 */
-	public boolean matches(Entity e){
-		if (!e.getId().equals(myID) || e.getX() != xPos || e.getY() != yPos || e.getWidth() != width || e.getHeight() != height || e.getRotation() != rotation)
-		{
-			return false;
-		}
-		else return true;
 	}
 
 	@Override
@@ -135,19 +123,6 @@ public abstract class Entity implements Serializable, Drawable
 		return rotation;
 	}
 
-	/**
-	 * Set the rotation of this Entity.
-	 * 
-	 * @param newRotation
-	 *            is the desired rotation state of this Entity in radians.
-	 * @return this Entity, after the rotation action has been completed.
-	 */
-	public Entity setRotation(float newRotation)
-	{
-		rotation = newRotation;
-		return this;
-	}
-
 	@Override
 	public float getX()
 	{
@@ -161,48 +136,70 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Sets this entity's x position.
+	 * Set the rotation of this Entity.
+	 * 
+	 * @param newRotation
+	 *            is the desired rotation state of this Entity in radians.
+	 * @return this Entity, after the rotation action has been completed.
+	 */
+	public Entity setRotation(float newRotation)
+	{
+		rotation = newRotation;
+		return this;
+	}
+
+	/**
+	 * Sets this Entity's x position.
 	 * 
 	 * @param x
 	 *            is the desired x position in world coordinates.
+	 * @return this Entity.
 	 */
-	public void setX(float x)
+
+	public Entity setX(float x)
 	{
 		xPos = x;
+		return this;
 	}
 
 	/**
-	 * Set this entity's y position.
+	 * Set this Entity's y position.
 	 * 
 	 * @param y
 	 *            is the desired y position in world coordinates.
+	 * @return this Entity.
 	 */
-	public void setY(float y)
+	public Entity setY(float y)
 	{
 		yPos = y;
+		return this;
 
 	}
 
 	/**
-	 * Set this entity's width.
+	 * Set this Entity's width.
 	 * 
 	 * @param size
 	 *            is the desired Entity width in world coordinates.
+	 * @return this Entity.
 	 */
-	public void setWidth(int size)
+	public Entity setWidth(int size)
 	{
 		width = size;
+		return this;
 
 	}
 
 	/**
-	 * Set this entity's height.
+	 * Set this Entity's height.
 	 * 
 	 * @param size
 	 *            is the desired Entity height in world coordinates.
+	 * @return this Entity.
 	 */
-	public void setHeight(int size)
+	public Entity setHeight(int size)
 	{
 		height = size;
+		return this;
 	}
 }

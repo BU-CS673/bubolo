@@ -24,13 +24,33 @@ public class EntityTest
 	@Before
 	public void setUpApp()
 	{
-		ent = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT,
-				TARGET_ROT, TARGET_UUID);
+		ent = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT,
+				TARGET_UUID);
 	}
 
 	/**
-	 * Intended to ensure that Entities constructed or set with the same values are equivalent.
-	 * Also tests inheritance of constructed values from subclasses of Entity.
+	 * Tests to see if the initial parameters of this Entity are equivalent to those of
+	 * another Entity.
+	 * 
+	 * @param e
+	 *            is the Entity that this one should be compared against.
+	 * @return true if the Entities match each other and false if they do not.
+	 */
+	public boolean matches(Entity e)
+	{
+		if (!e.getId().equals(ent.getId()) || e.getX() != ent.getX() || e.getY() != ent.getY()
+				|| e.getWidth() != ent.getWidth() || e.getHeight() != ent.getHeight()
+				|| e.getRotation() != ent.getRotation())
+		{
+			return false;
+		}
+		else
+			return true;
+	}
+
+	/**
+	 * Intended to ensure that Entities constructed or set with the same values are
+	 * equivalent. Also tests inheritance of constructed values from subclasses of Entity.
 	 */
 	@Test
 	public void constructorMatch()
@@ -41,8 +61,8 @@ public class EntityTest
 		ent2.setWidth(TARGET_WIDTH);
 		ent2.setHeight(TARGET_HEIGHT);
 		ent2.setRotation(TARGET_ROT);
-		
-		assertEquals("Entities constructed in different ways match.", true, ent.matches(ent2));
+
+		assertEquals("Entities constructed in different ways match.", true, matches(ent2));
 	}
 
 	@Test
