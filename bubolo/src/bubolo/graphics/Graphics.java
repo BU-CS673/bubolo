@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Graphics
 {
+	/**
+	 * File path where textures are stored.
+	 */
 	public static final String TEXTURE_PATH = "res/textures/";
 	
 	// Stores the textures, ensuring that only one is needed for all instances
@@ -31,6 +34,7 @@ public class Graphics
 	 */
 	public static Texture getTexture(String path)
 	{
+		//TODO: Throw FileNotFoundException for this method or remove the @throws from the javadoc.
 		Texture texture = textures.get(path);
 		if (texture == null)
 		{
