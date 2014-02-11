@@ -41,6 +41,7 @@ public class Tank extends Actor
 	public Tank()
 	{
 		super();
+		sprite = Sprite.create(this);
 	}
 
 	/**
