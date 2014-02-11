@@ -9,7 +9,6 @@ import java.util.UUID;
  */
 public abstract class MobileEntity extends Entity
 {
-
 	/**
 	 * Used when serializing and de-serializing.
 	 */
@@ -74,4 +73,6 @@ public abstract class MobileEntity extends Entity
 	{
 		super(x, y, w, h, rot, id);
 	}
+	
+	//TODO: Add MobileEntity functionality!
 }

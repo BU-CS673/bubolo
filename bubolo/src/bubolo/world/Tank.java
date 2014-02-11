@@ -21,7 +21,7 @@ public class Tank extends Actor
 	 * Used when serializing and de-serializing.
 	 */
 	private static final long serialVersionUID = 457933513574468829L;
-	
+
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
@@ -119,4 +119,6 @@ public class Tank extends Actor
 		// TODO Auto-generated method stub
 
 	}
+
+	// TODO: Add Tank functionality!
 }

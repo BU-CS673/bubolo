@@ -103,5 +103,7 @@ public abstract class Actor extends MobileEntity implements Damageable
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	//TODO: Add Actor functionality!
 
 }

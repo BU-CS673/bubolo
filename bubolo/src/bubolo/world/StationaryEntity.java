@@ -75,4 +75,6 @@ public abstract class StationaryEntity extends Entity
 	{
 		super(x, y, w, h, rot, id);
 	}
+	
+	//TODO: Add StationaryEntity functionality!
 }

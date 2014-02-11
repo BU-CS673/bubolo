@@ -44,5 +44,4 @@ public interface Damageable
 	 * Destroy this Damageable and clean up any remaining assets.
 	 */
 	public void destroy();
-
 }

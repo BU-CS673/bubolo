@@ -102,4 +102,6 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	//TODO: Add Modifier functionality!
 }

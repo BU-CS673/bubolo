@@ -76,4 +76,5 @@ public abstract class Terrain extends StationaryEntity
 	}
 	
 
+	//TODO: Add Terrain functionality!
 }
