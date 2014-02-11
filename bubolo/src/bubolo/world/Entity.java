@@ -41,6 +41,34 @@ public abstract class Entity implements Serializable, Drawable
 		myID = newID;
 	}
 
+	public Entity(UUID id, float x, float y, int w, int h, float rot)
+	{
+		myID = id;
+		xPos = x;
+		yPos = y;
+		width = w;
+		height = h;
+		rotation = rot;
+	}
+	
+	public Entity(float x, float y, int w, int h, float rot)
+	{
+		myID = UUID.randomUUID();
+		xPos = x;
+		yPos = y;
+		width = w;
+		height = h;
+		rotation = rot;
+	}
+	
+	public boolean matches(Entity e){
+		if (!e.getId().equals(myID) || e.getX() != xPos || e.getY() != yPos || e.getWidth() != width || e.getHeight() != height || e.getRotation() != rotation)
+		{
+			return false;
+		}
+		else return true;
+	}
+
 	@Override
 	public UUID getId()
 	{

@@ -17,6 +17,16 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 		super();
 	}
 	
+	public StationaryElement(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public StationaryElement(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
+
 	@Override
 	public int getHP()
 	{

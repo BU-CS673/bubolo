@@ -22,6 +22,16 @@ public class Road extends Modifier
 		//TODO: Create RoadSprite class!
 		//sprite = Sprite.create(this);
 	}
+	
+	public Road(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Road(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
 
 	/**
 	 * Used when serializing and de-serializing.

@@ -19,6 +19,15 @@ public abstract class Terrain extends StationaryEntity
 		super();
 	}
 
+	public Terrain(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Terrain(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
 	
 
 }

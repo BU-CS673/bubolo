@@ -4,58 +4,80 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
-
 import bubolo.world.Entity;
 
 public class EntityTest
 {
-	static final UUID TARGET_UUID = UUID.fromString("5231b533-ba17-4787-98a3-f2df37de2aD7"); // random UUID string
+	static final UUID TARGET_UUID = UUID.fromString("5231b533-ba17-4787-98a3-f2df37de2aD7"); // random
+																								// UUID
+																								// string
 	static final float TARGET_X = 26.7f;
 	static final float TARGET_Y = 72.5f;
-	static final float TARGET_ROT = (float)Math.PI/2;
+	static final float TARGET_ROT = (float) Math.PI / 2;
 	static final int TARGET_WIDTH = 50;
 	static final int TARGET_HEIGHT = 100;
+	boolean LOAD_TEXTURES = false;
 	static Entity ent;
-	
-	@BeforeClass
-	public static void setup(){
-		ent = new Tank(TARGET_UUID);
-		ent.setX(TARGET_X);
-		ent.setY(TARGET_Y);
-		ent.setRotation(TARGET_ROT);
-		ent.setWidth(TARGET_WIDTH);
-		ent.setHeight(TARGET_HEIGHT);
+
+	@Before
+	public void setUpApp()
+	{
+		ent = new DummyEntity(TARGET_UUID, TARGET_X, TARGET_Y, TARGET_WIDTH,
+				TARGET_HEIGHT, TARGET_ROT);
 	}
-	
+
+	/**
+	 * Intended to ensure that Entities constructed or set with the same values are equivalent.
+	 * Also tests inheritance of constructed values from subclasses of Entity.
+	 */
 	@Test
-	public void constructEntityUUID(){
+	public void constructorMatch()
+	{
+		Entity ent2 = new DummyEntity(TARGET_UUID);
+		ent2.setX(TARGET_X);
+		ent2.setY(TARGET_Y);
+		ent2.setWidth(TARGET_WIDTH);
+		ent2.setHeight(TARGET_HEIGHT);
+		ent2.setRotation(TARGET_ROT);
+		
+		assertEquals("Entities constructed in different ways match.", true, ent.matches(ent2));
+	}
+
+	@Test
+	public void constructEntityUUID()
+	{
 		assertEquals("UUID of new Entity consistent with input UUID.", TARGET_UUID, ent.getId());
 	}
-	
-	@Test 
-	public void getX(){
+
+	@Test
+	public void getX()
+	{
 		assertEquals("Entity x position matches target.", TARGET_X, ent.getX(), .0001);
 	}
-	
-	@Test 
-	public void getY(){
+
+	@Test
+	public void getY()
+	{
 		assertEquals("Entity y position matches target.", TARGET_Y, ent.getY(), .0001);
 	}
-	
+
 	@Test
-	public void getRotation(){
+	public void getRotation()
+	{
 		assertEquals("Entity rotation matches target.", TARGET_Y, ent.getY(), .0001);
 	}
-	
+
 	@Test
-	public void getWidth(){
+	public void getWidth()
+	{
 		assertEquals("Entity xSize matches target.", TARGET_WIDTH, ent.getWidth());
 	}
-	
+
 	@Test
-	public void getHeight(){
+	public void getHeight()
+	{
 		assertEquals("Entity xSize matches target.", TARGET_HEIGHT, ent.getHeight());
 	}
 

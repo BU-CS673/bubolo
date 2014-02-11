@@ -24,6 +24,16 @@ public abstract class Actor extends MobileEntity implements Damageable
 		super();
 	}
 	
+	public Actor(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Actor(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
+
 	@Override
 	public int getHP()
 	{

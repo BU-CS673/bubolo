@@ -16,6 +16,21 @@ import bubolo.graphics.Sprite;
 public class Tank extends Actor
 {
 	Sprite<Tank> sprite;
+
+	public Tank(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id, x, y, w, h, rot);
+		sprite = Sprite.create(this);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Tank(float x, float y, int w, int h, float rot)
+	{
+		super(x, y, w, h, rot);
+		sprite = Sprite.create(this);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Tank(UUID id)
 	{
 		super(id);
@@ -39,16 +54,9 @@ public class Tank extends Actor
 		// TODO Determine update behavior for Tanks.
 
 	}
-	
+
 	/* Drawable Methods */
 
-	@Override
-	public UUID getId()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	@Override
 	public UUID getSpriteId()
 	{
@@ -56,7 +64,7 @@ public class Tank extends Actor
 		{
 			return sprite.getId();
 		}
-	
+
 		else
 			return null;
 	}
@@ -64,16 +72,17 @@ public class Tank extends Actor
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (sprite != null){
+		if (sprite != null)
+		{
 			sprite.draw(batch, camera, layer);
 		}
-		
+
 	}
 
 	@Override
 	public void destroy()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

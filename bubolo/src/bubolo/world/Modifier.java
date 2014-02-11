@@ -19,6 +19,16 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 		super();
 	}
 
+	public Modifier(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Modifier(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
+
 	@Override
 	public int getHP()
 	{

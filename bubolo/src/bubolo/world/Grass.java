@@ -29,6 +29,16 @@ public class Grass extends Terrain
 		// TODO: Create GrassSprite class!
 		//sprite = Sprite.create(this);
 	}
+	
+	public Grass(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Grass(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)

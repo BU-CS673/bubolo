@@ -30,6 +30,16 @@ public class Tree extends StationaryElement
 		//TODO: Create TreeSprite class!
 		//sprite = Sprite.create(this);
 	}
+	
+	public Tree(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public Tree(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
 
 	@Override
 	public void destroy()

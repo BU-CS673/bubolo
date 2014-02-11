@@ -27,4 +27,14 @@ public abstract class MobileEntity extends Entity
 		// TODO Auto-generated constructor stub
 	}
 
+	public MobileEntity(UUID id, float x, float y, int w, int h, float rot)
+	{
+		super(id,x,y,w,h,rot);
+	}
+	
+	public MobileEntity(float x, float y, int w, int h, float rot)
+	{
+		super(x,y,w,h,rot);
+	}
+
 }
