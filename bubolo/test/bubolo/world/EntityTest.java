@@ -24,8 +24,8 @@ public class EntityTest
 	@Before
 	public void setUpApp()
 	{
-		ent = new DummyEntity(TARGET_UUID, TARGET_X, TARGET_Y, TARGET_WIDTH,
-				TARGET_HEIGHT, TARGET_ROT);
+		ent = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT,
+				TARGET_ROT, TARGET_UUID);
 	}
 
 	/**

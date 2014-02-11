@@ -5,6 +5,10 @@ import java.util.UUID;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Drawable objects contain the information necessary to allow them to be drawn by the Graphics system.
+ * @author BU CS673 - Clone Productions
+ */
 public interface Drawable
 {
 	

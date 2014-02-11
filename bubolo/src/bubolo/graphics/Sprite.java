@@ -12,8 +12,9 @@ import bubolo.world.Tank;
 
 /**
  * Interface for sprites, which draw textures to a quad at a specific
- * x,y location.
+ * x,y location. 
  * @author BU673 - Clone Industries
+ * @param <T> is any object that extends the Entity class.
  */
 public abstract class Sprite<T extends Entity>
 {

@@ -2,6 +2,11 @@ package bubolo.world;
 
 import java.util.UUID;
 
+/**
+ * Basic class for StationaryEntities that sit on top of Terrain tiles and interact with
+ * Modifiers in some way.
+ * @author BU CS673 - Clone Productions
+ */
 public abstract class Modifier extends StationaryEntity implements Damageable
 {
 
@@ -10,23 +15,64 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 	 */
 	private static final long serialVersionUID = -3848663925702678195L;
 	
-	public Modifier(UUID id)
+	/**
+	 * Construct a new Modifier with a random UUID.
+	 */
+	public Modifier()
 	{
-		super(id);
-	}
-	
-	public Modifier(){
 		super();
 	}
 
-	public Modifier(UUID id, float x, float y, int w, int h, float rot)
+	/**
+	 * Construct a new Modifier with the specified UUID.
+	 * 
+	 * @param id
+	 *            is the existing UUID to be applied to the new Modifier.
+	 */
+	public Modifier(UUID id)
 	{
-		super(id,x,y,w,h,rot);
+		super(id);
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	/**
+	 * Construct a new Modifier with the given initial parameters and a random UUID.
+	 * 
+	 * @param x
+	 *            is the initial x position in world coordinates.
+	 * @param y
+	 *            is the initial y position in world coordinates.
+	 * @param w
+	 *            is the initial width in world coordinates.
+	 * @param h
+	 *            is the initial height in world coordinates.
+	 * @param rot
+	 *            is the initial rotation in radians.
+	 */
 	public Modifier(float x, float y, int w, int h, float rot)
 	{
-		super(x,y,w,h,rot);
+		super(x, y, w, h, rot);
+	}
+
+	/**
+	 * Construct a new Modifier with the given initial parameters and the specified UUID.
+	 * 
+	 * @param id
+	 *            is the existing UUID to be applied to the new Modifier.
+	 * @param x
+	 *            is the initial x position in world coordinates.
+	 * @param y
+	 *            is the initial y position in world coordinates.
+	 * @param w
+	 *            is the initial width in world coordinates.
+	 * @param h
+	 *            is the initial height in world coordinates.
+	 * @param rot
+	 *            is the initial rotation in radians.
+	 */
+	public Modifier(float x, float y, int w, int h, float rot, UUID id)
+	{
+		super(x, y, w, h, rot, id);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public abstract class Entity implements Serializable, Drawable
 	private float rotation; // rotation of this entity in radians
 
 	/**
-	 * Creates a new Entity with a randomly generated UUID.
+	 * Construct a new Entity with a random UUID.
 	 */
 	public Entity()
 	{
@@ -31,17 +31,33 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Creates an Entity with the specified UUID.
+	 * Construct a new Entity with the specified UUID.
 	 * 
 	 * @param newID
-	 *            is a pre-generated UUID.
+	 *            is the existing UUID to be assigned to the new Entity.
 	 */
 	public Entity(UUID newID)
 	{
 		myID = newID;
 	}
 
-	public Entity(UUID id, float x, float y, int w, int h, float rot)
+	/**
+	 * Construct a new DummyEntity with the given initial parameters and the specified UUID.
+	 * 
+	 * @param id
+	 *            is the existing UUID to be applied to the new Entity.
+	 * @param x
+	 *            is the initial x position in world coordinates.
+	 * @param y
+	 *            is the initial y position in world coordinates.
+	 * @param w
+	 *            is the initial width in world coordinates.
+	 * @param h
+	 *            is the initial height in world coordinates.
+	 * @param rot
+	 *            is the initial rotation in radians.
+	 */
+	public Entity(float x, float y, int w, int h, float rot, UUID id)
 	{
 		myID = id;
 		xPos = x;
@@ -51,6 +67,20 @@ public abstract class Entity implements Serializable, Drawable
 		rotation = rot;
 	}
 	
+	/**
+	 * Construct a new Entity with the given initial parameters and a random UUID.
+	 * 
+	 * @param x
+	 *            is the initial x position in world coordinates.
+	 * @param y
+	 *            is the initial y position in world coordinates.
+	 * @param w
+	 *            is the initial width in world coordinates.
+	 * @param h
+	 *            is the initial height in world coordinates.
+	 * @param rot
+	 *            is the initial rotation in radians.
+	 */
 	public Entity(float x, float y, int w, int h, float rot)
 	{
 		myID = UUID.randomUUID();
@@ -61,6 +91,11 @@ public abstract class Entity implements Serializable, Drawable
 		rotation = rot;
 	}
 	
+	/**
+	 * Tests to see if the initial parameters of this Entity are equivalent to those of another Entity.
+	 * @param e is the Entity that this one should be compared against.
+	 * @return true if the Entities match each other and false if they do not.
+	 */
 	public boolean matches(Entity e){
 		if (!e.getId().equals(myID) || e.getX() != xPos || e.getY() != yPos || e.getWidth() != width || e.getHeight() != height || e.getRotation() != rotation)
 		{
