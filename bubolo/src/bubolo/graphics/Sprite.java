@@ -1,5 +1,5 @@
 package bubolo.graphics;
-import bubolo.world.DrawableEntity;
+import bubolo.world.Entity;
 
 import java.util.UUID;
 
@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-import bubolo.world.Entity;
 import bubolo.world.Tank;
 
 /**
@@ -16,7 +15,7 @@ import bubolo.world.Tank;
  * x,y location.
  * @author BU673 - Clone Industries
  */
-public abstract class Sprite<T extends DrawableEntity>
+public abstract class Sprite<T extends Entity>
 {
 	// Each concrete sprite class has a unique ID. These IDs are shared across
 	// each instance of the concrete sprite.

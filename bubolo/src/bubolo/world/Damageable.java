@@ -38,5 +38,11 @@ public interface Damageable
 	 * @return true if the Damageable should be considered 'alive'.
 	 */
 	public boolean isAlive();
+	
+	
+	/** 
+	 * Destroy this Damageable and clean up any remaining assets.
+	 */
+	public void destroy();
 
 }
