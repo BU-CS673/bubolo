@@ -52,7 +52,6 @@ public class GraphicsTest extends ApplicationAdapter
 			{
 				Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
 				Graphics.dispose();
-				
 				isComplete = true;
 			}
 		});
