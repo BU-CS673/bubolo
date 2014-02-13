@@ -93,7 +93,7 @@ public class TankSpriteTest
 			public void run()
 			{
 				Sprite<Tank> sprite = Sprite.create(new Tank());
-				passed = sprite.getId().equals(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f")); 
+				assertEquals(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"), sprite.getId()); 
 				isComplete = true;
 			}
 		});
@@ -102,7 +102,5 @@ public class TankSpriteTest
 		{
 			Thread.yield();
 		}
-		
-		assertTrue(passed);
 	}
 }

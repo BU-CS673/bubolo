@@ -2,6 +2,8 @@ package bubolo.graphics;
 
 import java.util.UUID;
 
+import bubolo.graphics.DrawLayer;
+import bubolo.graphics.Sprite;
 import bubolo.world.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
