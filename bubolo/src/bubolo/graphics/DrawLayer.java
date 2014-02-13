@@ -7,5 +7,23 @@ package bubolo.graphics;
  */
 public enum DrawLayer
 {
-	TERRAIN, TERRAIN_MODIFIERS, OBJECTS, TANKS;
+	/**
+	 * The terrain layer. This is the first layer drawn.
+	 */
+	TERRAIN, 
+	
+	/**
+	 * The terrain modifier layer. This is the second layer drawn.
+	 */
+	TERRAIN_MODIFIERS, 
+	
+	/**
+	 * The game objects layer. This is the third layer drawn.
+	 */
+	OBJECTS, 
+	
+	/**
+	 * The tanks layer. This is the last layer drawn.
+	 */
+	TANKS;
 }
