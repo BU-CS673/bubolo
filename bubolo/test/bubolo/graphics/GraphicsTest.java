@@ -11,7 +11,8 @@ import com.badlogic.gdx.Gdx;
 
 public class GraphicsTest extends ApplicationAdapter
 {
-	private static boolean isComplete;
+	private boolean isComplete;
+	private boolean passed;
 	
 	@Before
 	public void setUp()
@@ -52,6 +53,7 @@ public class GraphicsTest extends ApplicationAdapter
 			{
 				Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
 				Graphics.dispose();
+				passed = true;
 				isComplete = true;
 			}
 		});
@@ -60,7 +62,20 @@ public class GraphicsTest extends ApplicationAdapter
 		{
 			Thread.yield();
 		}
+		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void constructGraphics()
+	{
+		Graphics g = new Graphics(50, 500);
 	}
 
-	
+	@Test
+	public void draw()
+	{
+		Graphics g = new Graphics(50, 500);
+		g.draw(new MockWorld());
+	}
 }
