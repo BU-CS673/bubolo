@@ -19,8 +19,8 @@ public class TankSpriteTest
 	private SpriteBatch batch;
 	private Camera camera;
 	
-	private static boolean isComplete;
-	private static boolean passed;
+	private boolean isComplete;
+	private boolean passed;
 	
 	@Before
 	public void setUp()
