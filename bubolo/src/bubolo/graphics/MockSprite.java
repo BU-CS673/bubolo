@@ -17,7 +17,7 @@ public class MockSprite<T extends Entity> extends Sprite<T>
 	/**
 	 * Constructs a MockSprite, 
 	 */
-	MockSprite()
+	public MockSprite()
 	{
 		super(UUID.fromString("b6615e40-7390-4a38-a331-f3015925b68f"), DrawLayer.OBJECTS, null);
 	}
