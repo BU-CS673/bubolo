@@ -2,6 +2,8 @@ package bubolo.world;
 
 import static org.junit.Assert.*;
 
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,11 +16,11 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.Entity;
 import bubolo.world.Tank;
 
-public class TankTest
+public class TreeTest
 {
 
 	static boolean isComplete = false;
-	static Tank tank;
+	static Tree tree;
 
 	/**
 	 * An OpenGL context must be created so that the textures for the Tank object can load properly.
@@ -34,7 +36,7 @@ public class TankTest
 			@Override
 			public void run()
 			{
-				tank = new Tank();
+				tree = new Tree();
 
 				isComplete = true;
 			}
@@ -45,5 +47,6 @@ public class TankTest
 			Thread.yield();
 		}
 
-	}
+	}	
+	
 }

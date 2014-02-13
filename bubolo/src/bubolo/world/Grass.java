@@ -2,12 +2,6 @@ package bubolo.world;
 
 import java.util.UUID;
 
-import bubolo.graphics.DrawLayer;
-import bubolo.graphics.Sprite;
-
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 /**
  * Grass is the standard Terrain of B.U.B.O.L.O., and offers no special movement effects.
  * @author BU CS673 - Clone Productions
@@ -18,7 +12,6 @@ public class Grass extends Terrain
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = 5319713357245800006L;
-	Sprite<Grass> sprite;
 
 	/**
 	 * Construct a new Grass with a random UUID.
@@ -26,6 +19,8 @@ public class Grass extends Terrain
 	public Grass()
 	{
 		super();
+		//sprite = Sprite.create(this);
+		// TODO: Create GrassSprite class!
 	}
 
 	/**
@@ -37,7 +32,8 @@ public class Grass extends Terrain
 	public Grass(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		//sprite = Sprite.create(this);
+		// TODO: Create GrassSprite class!
 	}
 
 	/**
@@ -57,6 +53,8 @@ public class Grass extends Terrain
 	public Grass(float x, float y, int w, int h, float rot)
 	{
 		super(x, y, w, h, rot);
+		//sprite = Sprite.create(this);
+		// TODO: Create GrassSprite class!
 	}
 
 	/**
@@ -78,21 +76,7 @@ public class Grass extends Terrain
 	public Grass(float x, float y, int w, int h, float rot, UUID id)
 	{
 		super(x, y, w, h, rot, id);
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
-			// TODO: Create GrassSprite class!
-			// sprite.draw(batch, camera, layer);
-	}
-
-	@Override
-	public UUID getSpriteId()
-	{
-		//TODO: Create GrassSprite class!
-			//return sprite.getId(); 
-			return null; 
+		//sprite = Sprite.create(this);
 	}
 
 	@Override

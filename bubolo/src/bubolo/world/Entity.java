@@ -3,7 +3,12 @@ package bubolo.world;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import bubolo.graphics.DrawLayer;
 import bubolo.graphics.Drawable;
+import bubolo.graphics.Sprite;
 
 /**
  * Base class for game objects. Anything that is part of the game logic should inherit
@@ -21,6 +26,7 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
+	protected transient Sprite<?> sprite;
 
 	/**
 	 * Construct a new Entity with a random UUID.
@@ -28,6 +34,16 @@ public abstract class Entity implements Serializable, Drawable
 	public Entity()
 	{
 		myID = UUID.randomUUID();
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer){
+		sprite.draw(batch, camera, layer);
+	}
+	
+	@Override
+	public UUID getSpriteId(){
+		return sprite.getId();
 	}
 
 	/**
@@ -67,7 +83,7 @@ public abstract class Entity implements Serializable, Drawable
 		height = h;
 		rotation = rot;
 	}
-
+	
 	/**
 	 * Construct a new Entity with the given initial parameters and a random UUID.
 	 * 

@@ -1,11 +1,6 @@
 package bubolo.world;
 
 import java.util.UUID;
-
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import bubolo.graphics.DrawLayer;
 import bubolo.graphics.Sprite;
 
 /**
@@ -15,8 +10,6 @@ import bubolo.graphics.Sprite;
  */
 public class Tank extends Actor
 {
-	Sprite<Tank> sprite;
-
 	/**
 	 * Used when serializing and de-serializing.
 	 */
@@ -28,6 +21,7 @@ public class Tank extends Actor
 	public Tank()
 	{
 		super();
+		sprite = Sprite.create(this);
 	}
 
 	/**
@@ -39,6 +33,7 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
+		sprite = Sprite.create(this);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -59,6 +54,7 @@ public class Tank extends Actor
 	public Tank(float x, float y, int w, int h, float rot)
 	{
 		super(x, y, w, h, rot);
+		sprite = Sprite.create(this);
 	}
 
 	/**
@@ -80,27 +76,13 @@ public class Tank extends Actor
 	public Tank(float x, float y, int w, int h, float rot, UUID id)
 	{
 		super(x, y, w, h, rot, id);
+		sprite = Sprite.create(this);
 	}
 
 	@Override
 	public void update()
 	{
 		// TODO Determine update behavior for Tanks.
-
-	}
-
-	/* Drawable Methods */
-
-	@Override
-	public UUID getSpriteId()
-	{
-			return sprite.getId();
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
-		sprite.draw(batch, camera, layer);
 
 	}
 

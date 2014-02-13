@@ -2,11 +2,8 @@ package bubolo.world;
 
 import java.util.UUID;
 
-import bubolo.graphics.DrawLayer;
-import bubolo.graphics.Sprite;
+//import bubolo.graphics.Sprite;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Roads are Modifiers for Terrain that allow Tanks to drive more quickly. They can be
@@ -16,8 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Road extends Modifier
 {
-	Sprite<Road> sprite;
-
 	/**
 	 * Used when serializing and de-serializing.
 	 */
@@ -29,6 +24,7 @@ public class Road extends Modifier
 	public Road()
 	{
 		super();
+		//sprite = Sprite.create(this);
 	}
 
 	/**
@@ -40,7 +36,7 @@ public class Road extends Modifier
 	public Road(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		//sprite = Sprite.create(this);
 	}
 
 	/**
@@ -60,6 +56,7 @@ public class Road extends Modifier
 	public Road(float x, float y, int w, int h, float rot)
 	{
 		super(x, y, w, h, rot);
+		//sprite = Sprite.create(this);
 	}
 
 	/**
@@ -81,36 +78,19 @@ public class Road extends Modifier
 	public Road(float x, float y, int w, int h, float rot, UUID id)
 	{
 		super(x, y, w, h, rot, id);
+		//sprite = Sprite.create(this);
 	}
 
 	@Override
 	public void update()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void destroy()
 	{
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
-		// TODO: Create RoadSprite class!
-		// sprite.draw(batch, camera, layer);
-	}
-
-	@Override
-	public UUID getSpriteId()
-	{
-		// TODO: Create RoadSprite class!
-		// return sprite.getId();
-
-		return null;
 	}
 
 	// TODO: Add Road functionality!
