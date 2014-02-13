@@ -81,17 +81,5 @@ public class Road extends Modifier
 		//sprite = Sprite.create(this);
 	}
 
-	@Override
-	public void update()
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
 	// TODO: Add Road functionality!
 }

@@ -77,13 +77,7 @@ public class Grass extends Terrain
 	{
 		super(x, y, w, h, rot, id);
 		//sprite = Sprite.create(this);
-	}
-
-	@Override
-	public void update()
-	{
-		// TODO Auto-generated method stub
-
+		// TODO: Create GrassSprite class!
 	}
 
 	//TODO: Add Grass functionality!

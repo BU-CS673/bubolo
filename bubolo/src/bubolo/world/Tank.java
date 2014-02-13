@@ -79,19 +79,5 @@ public class Tank extends Actor
 		sprite = Sprite.create(this);
 	}
 
-	@Override
-	public void update()
-	{
-		// TODO Determine update behavior for Tanks.
-
-	}
-
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	// TODO: Add Tank functionality!
 }

@@ -26,6 +26,14 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
+	/**
+	 * Each Entity's sprite must be created using Sprite.create(this) to ensure that the
+	 * correct kind of Sprite is generated. This is transient to prevent sprite objects
+	 * from being transferred during serialization. If the sprite is not initialized
+	 * during the constructor of a subclass of Entity, a DefaultSprite is created so as to
+	 * ensure that methods that interact with an Entity's sprite will not return null.
+	 * 
+	 */
 	protected transient Sprite<?> sprite;
 
 	/**
@@ -34,15 +42,21 @@ public abstract class Entity implements Serializable, Drawable
 	public Entity()
 	{
 		myID = UUID.randomUUID();
+		if (sprite == null)
+		{
+			sprite = Sprite.create(this);
+		}
 	}
-	
+
 	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer){
+	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
+	{
 		sprite.draw(batch, camera, layer);
 	}
-	
+
 	@Override
-	public UUID getSpriteId(){
+	public UUID getSpriteId()
+	{
 		return sprite.getId();
 	}
 
@@ -55,6 +69,10 @@ public abstract class Entity implements Serializable, Drawable
 	public Entity(UUID newID)
 	{
 		myID = newID;
+		if (sprite == null)
+		{
+			sprite = Sprite.create(this);
+		}
 	}
 
 	/**
@@ -82,8 +100,12 @@ public abstract class Entity implements Serializable, Drawable
 		width = w;
 		height = h;
 		rotation = rot;
+		if (sprite == null)
+		{
+			sprite = Sprite.create(this);
+		}
 	}
-	
+
 	/**
 	 * Construct a new Entity with the given initial parameters and a random UUID.
 	 * 
@@ -106,6 +128,10 @@ public abstract class Entity implements Serializable, Drawable
 		width = w;
 		height = h;
 		rotation = rot;
+		if (sprite == null)
+		{
+			sprite = Sprite.create(this);
+		}
 	}
 
 	@Override
@@ -131,7 +157,10 @@ public abstract class Entity implements Serializable, Drawable
 	 * current Entity state.
 	 * 
 	 */
-	public abstract void update();
+	public void update()
+	{
+		// TODO: Implement update functionality for entities and subclasses!
+	}
 
 	@Override
 	public float getRotation()

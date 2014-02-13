@@ -74,7 +74,12 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 	{
 		super(x, y, w, h, rot, id);
 	}
-
+	
+	@Override
+	public Modifier setHP(int i){
+		return this;
+	}
+	
 	@Override
 	public int getHP()
 	{
@@ -90,10 +95,10 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 	}
 
 	@Override
-	public int modifyHP()
+	public Modifier modifyHP(int i)
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return this;
 	}
 
 	@Override
@@ -101,6 +106,11 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 	{
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override 
+	public void destroy(){
+		// TODO Auto-generated method stub
 	}
 	
 	//TODO: Add Modifier functionality!

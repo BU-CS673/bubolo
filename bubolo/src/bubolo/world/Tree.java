@@ -77,18 +77,5 @@ public class Tree extends StationaryElement
 		//sprite = Sprite.create(this);
 	}
 
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void update()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	// TODO: Add Tree functionality!
 }
