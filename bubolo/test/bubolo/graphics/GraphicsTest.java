@@ -73,6 +73,22 @@ public class GraphicsTest extends ApplicationAdapter
 	{
 		Graphics g = new Graphics(50, 500);
 	}
+	
+	@Test
+	public void getGraphicsInstance()
+	{
+		Graphics g = new Graphics(50, 500);
+		assertNotNull(Graphics.getInstance());
+	}
+	
+	@Test
+	public void getGraphicsInstanceBad()
+	{
+		try {
+			assertNotNull(Graphics.getInstance());
+			fail("Graphics.getInstance() should throw an exception when it has not been explicitly instantiated, but it has not.");
+		} catch (Exception e) {}	
+	}
 
 	@Test
 	public void draw()

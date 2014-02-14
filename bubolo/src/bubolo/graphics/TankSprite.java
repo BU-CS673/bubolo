@@ -15,6 +15,9 @@ class TankSprite extends Sprite<Tank>
 {
 	private Texture image;
 	
+	// true if the camera controller has been added.
+	private boolean addedCameraController;
+	
 	/**
 	 * Constructor for the TankSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system
@@ -33,5 +36,14 @@ class TankSprite extends Sprite<Tank>
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		drawTexture(batch, camera, layer, image);
+		
+		if (!addedCameraController)
+		{
+			// TODO: the sprite needs to ask the Tank if it is the local player.
+			//	Something like tank.isLocalPlayer() would work.
+			CameraController controller = new TankCameraController(getEntity());
+			Graphics.getInstance().addCameraController(controller);
+			addedCameraController = true;
+		}
 	}
 }

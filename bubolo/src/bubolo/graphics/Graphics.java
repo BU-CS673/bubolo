@@ -36,6 +36,28 @@ public class Graphics
 	
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
 	
+	private static Graphics instance = null; 
+	
+	/**
+	 * Gets a reference to the Graphics system. The Graphics system must be 
+	 * explicitly constructed using the <code>Graphics(width, height)</code> constructor
+	 * before this is called, or an <code>IllegalStateException</code> will
+	 * be thrown. This method is package-private, because only objects within
+	 * the Graphics system should have access to it.
+	 * @return a reference to the Graphics system.
+	 * @throws IllegalStateException when the Graphics system has not been 
+	 * explicitly constructed using the <code>Graphics(width, height)</code> constructor.
+	 */
+	static Graphics getInstance()
+	{
+		if (instance == null)
+		{
+			throw new IllegalStateException(
+					"Graphics.getInstance cannot be called until the Graphics system has been explicitly constructed.");
+		}
+		return instance;
+	}
+	
 	/**
 	 * Returns a texture from a path. Ensures that the same texture isn't
 	 * store multiple times. Will load the file if it has not yet been loaded.
@@ -77,6 +99,7 @@ public class Graphics
 	{
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
+		instance = this;
 	}
 	
 	/**
