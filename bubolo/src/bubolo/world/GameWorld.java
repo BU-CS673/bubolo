@@ -19,6 +19,20 @@ public class GameWorld implements World
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new WeakHashMap<UUID, Entity>();
 
+	private int worldMapWidth;
+	private int worldMapHeight;
+	
+	/**
+	 * Constructs the GameWorld object.
+	 * @param worldMapWidth the width of the game world map.
+	 * @param worldMapHeight the height of the game world map.
+	 */
+	public GameWorld(int worldMapWidth, int worldMapHeight)
+	{
+		this.worldMapWidth = worldMapWidth;
+		this.worldMapHeight = worldMapHeight;
+	}
+	
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
@@ -61,4 +75,15 @@ public class GameWorld implements World
 		entities.remove(entityMap.get(id));
 	}
 
+	@Override
+	public int getMapWidth()
+	{
+		return worldMapWidth;
+	}
+
+	@Override
+	public int getMapHeight()
+	{
+		return worldMapHeight;
+	}
 }

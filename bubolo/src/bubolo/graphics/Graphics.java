@@ -2,6 +2,7 @@ package bubolo.graphics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class Graphics
 	
 	private SpriteBatch batch;
 	private Camera camera;
+	
+	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
 	
 	/**
 	 * Returns a texture from a path. Ensures that the same texture isn't
@@ -96,6 +99,22 @@ public class Graphics
 		drawEntities(entities, DrawLayer.TERRAIN_MODIFIERS);
 		drawEntities(entities, DrawLayer.OBJECTS);
 		drawEntities(entities, DrawLayer.TANKS);
+		
+		// Update the camera controller(s).
+		for (CameraController c : cameraControllers)
+		{
+			c.update(world);
+		}
+	}
+	
+	/**
+	 * Adds the specified camera controller.
+	 * @param controller a camera controller. The update method will be called
+	 * once per draw call.
+	 */
+	public void addCameraController(CameraController controller)
+	{
+		cameraControllers.add(controller);
 	}
 	
 	/**

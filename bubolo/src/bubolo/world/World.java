@@ -50,4 +50,16 @@ public interface World
 	 * @throws GameLogicException if the entity is not found.
 	 */
 	public void removeEntity(UUID id) throws GameLogicException;
+	
+	/**
+	 * Returns the width of the game map.
+	 * @return the width of the game map.
+	 */
+	public int getMapWidth();
+	
+	/**
+	 * Returns the height of the game map.
+	 * @return the width of the game map.
+	 */
+	public int getMapHeight();
 }
