@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -76,6 +78,26 @@ public class GraphicsTest extends ApplicationAdapter
 	public void draw()
 	{
 		Graphics g = new Graphics(50, 500);
+		g.draw(new MockWorld());
+	}
+	
+	@Test
+	public void addCameraController()
+	{
+		Camera camera = new OrthographicCamera();
+		CameraController controller = new TankCameraController(new MockTank());
+		Graphics g = new Graphics(50, 500);
+		g.addCameraController(controller);
+	}
+	
+	@Test
+	public void addCameraControllerAndUpdate()
+	{
+		Camera camera = new OrthographicCamera();
+		CameraController controller = new TankCameraController(new MockTank());
+		controller.setCamera(camera);
+		Graphics g = new Graphics(50, 500);
+		g.addCameraController(controller);
 		g.draw(new MockWorld());
 	}
 }

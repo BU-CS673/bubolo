@@ -9,6 +9,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 class Coordinates
 {
+	private Coordinates()
+	{
+	}
+	
 	/**
 	 * Converts world coordinates to camera coordinates.
 	 * @param camera the game's camera.

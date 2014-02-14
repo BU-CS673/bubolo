@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
+import com.google.common.base.Preconditions;
+
 import bubolo.util.GameLogicException;
 
 /**
@@ -29,6 +31,9 @@ public class GameWorld implements World
 	 */
 	public GameWorld(int worldMapWidth, int worldMapHeight)
 	{
+		Preconditions.checkArgument(worldMapWidth > 0, "worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
+		Preconditions.checkArgument(worldMapHeight > 0, "worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
+		
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 	}

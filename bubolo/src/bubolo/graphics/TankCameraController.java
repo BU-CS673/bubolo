@@ -22,7 +22,7 @@ class TankCameraController implements CameraController
 	 */
 	TankCameraController(Tank tank)
 	{
-		this.tank = tank;
+		this.tank = checkNotNull(tank);
 	}
 
 	@Override
