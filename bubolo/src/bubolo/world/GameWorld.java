@@ -92,4 +92,14 @@ public class GameWorld implements World
 	{
 		return worldMapHeight;
 	}
+	
+	@Override
+	public void update()
+	{
+		for (Entity e : entities)
+		{
+			// TODO: reference to World (this) must be passed to entities.
+			e.update();
+		}
+	}
 }

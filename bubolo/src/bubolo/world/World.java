@@ -62,4 +62,9 @@ public interface World
 	 * @return the width of the game map.
 	 */
 	public int getMapHeight();
+	
+	/**
+	 * Updates the game world. Must be called once per game tick.
+	 */
+	public void update();
 }
