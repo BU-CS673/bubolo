@@ -7,7 +7,10 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.world.Grass;
+import bubolo.world.Road;
 import bubolo.world.Tank;
+import bubolo.world.Tree;
 
 public class SpriteTest
 {
@@ -21,7 +24,7 @@ public class SpriteTest
 	}
 	
 	@Test
-	public void testValid() throws InterruptedException
+	public void spriteCreateTank() throws InterruptedException
 	{
 		isComplete = false;
 		
@@ -31,7 +34,8 @@ public class SpriteTest
 			{
 				try
 				{
-					Sprite<Tank> sprite = Sprite.create(new Tank());
+					Sprite<?> sprite = Sprite.create(new Tank());
+					assertNotNull(sprite);
 					hadException = false;
 				}
 				catch (Exception e)
@@ -46,6 +50,96 @@ public class SpriteTest
 		{
 			Thread.yield();
 		}
-		assertTrue("Exception thrown when creating sprite.", !hadException);
+		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void spriteCreateTree() throws InterruptedException
+	{
+		isComplete = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					Sprite<?> sprite = Sprite.create(new Tree());
+					assertNotNull(sprite);
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void spriteCreateGrass() throws InterruptedException
+	{
+		isComplete = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					Sprite<?> sprite = Sprite.create(new Grass());
+					assertNotNull(sprite);
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void spriteCreateRoad() throws InterruptedException
+	{
+		isComplete = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					Sprite<?> sprite = Sprite.create(new Road());
+					assertNotNull(sprite);
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		assertFalse("Exception thrown when creating sprite.", hadException);
 	}
 }

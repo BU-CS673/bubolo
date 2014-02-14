@@ -31,8 +31,9 @@ public interface World
 	/**
 	 * Adds an entity to the world.
 	 * @param e the entity to add.
+	 * @throws GameLogicException if the entity already exists in the game world.
 	 */
-	public void addEntity(Entity e);
+	public void addEntity(Entity e) throws GameLogicException;
 	
 	/**
 	 * Removes an entity from the world. After this method is called, the 
@@ -49,4 +50,21 @@ public interface World
 	 * @throws GameLogicException if the entity is not found.
 	 */
 	public void removeEntity(UUID id) throws GameLogicException;
+	
+	/**
+	 * Returns the width of the game map.
+	 * @return the width of the game map.
+	 */
+	public int getMapWidth();
+	
+	/**
+	 * Returns the height of the game map.
+	 * @return the width of the game map.
+	 */
+	public int getMapHeight();
+	
+	/**
+	 * Updates the game world. Must be called once per game tick.
+	 */
+	public void update();
 }

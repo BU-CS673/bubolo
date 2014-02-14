@@ -17,19 +17,22 @@ public class LibGdxAppTester extends ApplicationAdapter
 	
 	public static void createApp()
 	{
-		if (app == null)
+		synchronized(LibGdxAppTester.class)
 		{
-			ready = false;
-			LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-			cfg.title = "test";
-			cfg.width = 400;
-			cfg.height = 400;
-			app = new LwjglApplication(new LibGdxAppTester(), cfg);
-		}
-		
-		while (!ready)
-		{
-			Thread.yield();
+			if (app == null)
+			{
+				ready = false;
+				LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+				cfg.title = "test";
+				cfg.width = 400;
+				cfg.height = 400;
+				app = new LwjglApplication(new LibGdxAppTester(), cfg);
+			}
+			
+			while (!ready)
+			{
+				Thread.yield();
+			}
 		}
 	}
 	
