@@ -31,8 +31,9 @@ public interface World
 	/**
 	 * Adds an entity to the world.
 	 * @param e the entity to add.
+	 * @throws GameLogicException if the entity already exists in the game world.
 	 */
-	public void addEntity(Entity e);
+	public void addEntity(Entity e) throws GameLogicException;
 	
 	/**
 	 * Removes an entity from the world. After this method is called, the 
