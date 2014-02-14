@@ -75,6 +75,12 @@ public abstract class Actor extends MobileEntity implements Damageable
 	{
 		super(x, y, w, h, rot, id);
 	}
+	
+	@Override
+	public Actor setHP(int i){
+		return this;
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public int getHP()
@@ -91,10 +97,10 @@ public abstract class Actor extends MobileEntity implements Damageable
 	}
 
 	@Override
-	public int modifyHP()
+	public Actor modifyHP(int i)
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return this;
 	}
 
 	@Override
@@ -103,6 +109,12 @@ public abstract class Actor extends MobileEntity implements Damageable
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override 
+	public void destroy(){
+		// TODO Auto-generated method stub
+	}
+	
 	
 	//TODO: Add Actor functionality!
 

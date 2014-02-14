@@ -3,6 +3,7 @@ package bubolo.world;
 import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
+import bubolo.graphics.MockSprite;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class DummyEntity extends Entity
 {
-
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -28,6 +28,7 @@ public class DummyEntity extends Entity
 	public DummyEntity()
 	{
 		super();
+		
 	}
 
 	/**
@@ -80,26 +81,6 @@ public class DummyEntity extends Entity
 	public DummyEntity(float x, float y, int w, int h, float rot, UUID id)
 	{
 		super(x, y, w, h, rot, id);
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
-		// do nothing
-	}
-
-	@Override
-	public UUID getSpriteId()
-	{
-		// do nothing
-		return null;
-	}
-
-	@Override
-	public void update()
-	{
-		// do nothing
-
 	}
 
 }

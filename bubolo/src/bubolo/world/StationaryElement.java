@@ -89,10 +89,16 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	}
 
 	@Override
-	public int modifyHP()
+	public StationaryElement modifyHP(int i)
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return this;
+	}
+	
+	@Override 
+	public StationaryElement setHP(int i){
+		// TODO Auto-generated method stub
+		return this;
 	}
 
 	@Override
@@ -100,6 +106,11 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	{
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override 
+	public void destroy(){
+		// TODO Auto-generated method stub
 	}
 	
 	//TODO: Add StationaryElement functionality!

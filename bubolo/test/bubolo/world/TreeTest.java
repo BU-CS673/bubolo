@@ -13,14 +13,13 @@ import com.badlogic.gdx.graphics.Texture;
 
 import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
+import bubolo.graphics.MockSprite;
 import bubolo.world.Entity;
 import bubolo.world.Tank;
 
-public class TankTest
+public class TreeTest
 {
 
-	static boolean isComplete = false;
-	static Tank tank;
 	static final UUID TARGET_UUID = UUID.fromString("5231b533-ba17-4787-98a3-f2df37de2aD7"); // random
 	// UUID
 	// string
@@ -30,9 +29,12 @@ public class TankTest
 	static final int TARGET_WIDTH = 50;
 	static final int TARGET_HEIGHT = 100;
 
+	static boolean isComplete = false;
+	static Tree tree;
+
 	/**
-	 * An OpenGL context must be created so that the textures for the Tank object can load properly.
-	 * Without this, all tests will crash on Tank construction.
+	 * An OpenGL context must be created so that the textures for the Tree object can load
+	 * properly. Without this, all tests will crash on Tree construction.
 	 */
 	@BeforeClass
 	public static void setUpApp()
@@ -44,7 +46,8 @@ public class TankTest
 			@Override
 			public void run()
 			{
-				tank = new Tank(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT, TARGET_UUID);
+				tree = new Tree(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT,
+						TARGET_UUID);
 
 				isComplete = true;
 			}
@@ -56,29 +59,31 @@ public class TankTest
 		}
 
 	}
-	
+
 	@Test
-	public void constructTank_NO_UUID()
+	public void constructTree_NO_UUID()
 	{
-		Tank tank2 = new Tank();
+		Tree tree2 = new Tree();
 	}
 
 	@Test
-	public void constructTank_UUID_ONLY()
+	public void constructTree_UUID_ONLY()
 	{
-		Tank tank2 = new Tank(TARGET_UUID);
-		assertEquals("Grass param constructor without UUID sets fields correctly,", tank.getId(), tank2.getId());
+		Tree tree2 = new Tree(TARGET_UUID);
+		assertEquals("Tree constructor with UUID sets the field correctly,", tree.getId(), tree2.getId());
 	}
 
 	@Test
-	public void constructTank_PARAM_NO_UUID()
+	public void constructGrass_PARAM_NO_UUID()
 	{
-		Tank tank2 = new Tank(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT);
-		assertEquals("Tank param constructor without UUID sets fields correctly,", true, EntityTestCase.matches_NO_UUID(tank, tank2));
+		Tree tree2 = new Tree(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT);
+		assertEquals("Tree param constructor without UUID sets fields correctly,", true, EntityTestCase.matches_NO_UUID(tree, tree2));
 	}
 	
 	@Test
 	public void checkSprite(){
-		assertNotEquals("Tank is not using the default entity sprite.", tank.getSpriteId(), new DummyEntity().getSpriteId());
+		assertNotEquals("Tree is not using the default entity sprite.", tree.getSpriteId(), new DummyEntity().getSpriteId());
 	}
+	
+
 }

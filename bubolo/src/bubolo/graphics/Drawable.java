@@ -68,8 +68,7 @@ public interface Drawable
 	/**
 	 * Get the UUID of this Entity's Sprite object, if it exists.
 	 * 
-	 * @return the UUID of this Entity's Sprite object, or null if this Entity does not
-	 *         have an associated Sprite.
+	 * @return the UUID of this Entity's Sprite object.
 	 */
 	public UUID getSpriteId();
 	

@@ -5,7 +5,12 @@ import static org.junit.Assert.*;
 import java.util.UUID;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.badlogic.gdx.Gdx;
+
+import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.Entity;
 
 public class EntityTest
@@ -20,32 +25,34 @@ public class EntityTest
 	static final int TARGET_HEIGHT = 100;
 	boolean LOAD_TEXTURES = false;
 	static Entity ent;
-
-	@Before
-	public void setUpApp()
-	{
-		ent = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT,
-				TARGET_UUID);
-	}
+	static boolean isComplete = false;
 
 	/**
-	 * Tests to see if the initial parameters of this Entity are equivalent to those of
-	 * another Entity.
-	 * 
-	 * @param e
-	 *            is the Entity that this one should be compared against.
-	 * @return true if the Entities match each other and false if they do not.
+	 * An OpenGL context must be created so that the textures for the Tree object can load
+	 * properly. Without this, all tests will crash on Tank construction.
 	 */
-	public boolean matches(Entity e)
+	@BeforeClass
+	public static void setUpApp()
 	{
-		if (!e.getId().equals(ent.getId()) || e.getX() != ent.getX() || e.getY() != ent.getY()
-				|| e.getWidth() != ent.getWidth() || e.getHeight() != ent.getHeight()
-				|| e.getRotation() != ent.getRotation())
+		LibGdxAppTester.createApp();
+		isComplete = false;
+
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				ent = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT,
+						TARGET_UUID);
+
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
 		{
-			return false;
+			Thread.yield();
 		}
-		else
-			return true;
+
 	}
 
 	/**
@@ -62,7 +69,41 @@ public class EntityTest
 		ent2.setHeight(TARGET_HEIGHT);
 		ent2.setRotation(TARGET_ROT);
 
-		assertEquals("Entities constructed in different ways match.", true, matches(ent2));
+		assertEquals("Entities constructed in different ways match.", true, EntityTestCase.matches(ent, ent2));
+	}
+
+	@Test
+	public void getSpriteId()
+	{
+		assertEquals("Entity has default sprite ID", ent.getSpriteId(),
+				(new DummyEntity().getSpriteId()));
+	}
+
+	@Test
+	public void update()
+	{
+		ent.update();
+	}
+
+	@Test
+	public void constructEntity_NO_UUID()
+	{
+		Entity ent2 = new DummyEntity();
+		assert(true);
+	}
+
+	@Test
+	public void constructEntity_UUID_ONLY()
+	{
+		Entity ent2 = new DummyEntity(TARGET_UUID);
+		assertEquals("Entity constructor with UUID sets the field correctly,", ent2.getId(), ent.getId());
+	}
+
+	@Test
+	public void constructEntity_PARAM_NO_UUID()
+	{
+		Entity ent2 = new DummyEntity(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT);
+		assertEquals("Entity param constructor without UUID sets fields correctly,", true, EntityTestCase.matches_NO_UUID(ent, ent2));
 	}
 
 	@Test

@@ -2,12 +2,6 @@ package bubolo.world;
 
 import java.util.UUID;
 
-import bubolo.graphics.DrawLayer;
-import bubolo.graphics.Sprite;
-
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 /**
  * Trees are StationaryElements that can spread over time, and hide Tanks that drive over them.
  * @author BU CS673 - Clone Productions
@@ -18,7 +12,6 @@ public class Tree extends StationaryElement
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = 4072369464678115753L;
-	Sprite<Tree> sprite;
 
 	/**
 	 * Construct a new Tree with a random UUID.
@@ -26,6 +19,7 @@ public class Tree extends StationaryElement
 	public Tree()
 	{
 		super();
+		//sprite = Sprite.create(this);
 	}
 
 	/**
@@ -37,6 +31,7 @@ public class Tree extends StationaryElement
 	public Tree(UUID id)
 	{
 		super(id);
+		//sprite = Sprite.create(this);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -57,6 +52,7 @@ public class Tree extends StationaryElement
 	public Tree(float x, float y, int w, int h, float rot)
 	{
 		super(x, y, w, h, rot);
+		//sprite = Sprite.create(this);
 	}
 
 	/**
@@ -78,34 +74,7 @@ public class Tree extends StationaryElement
 	public Tree(float x, float y, int w, int h, float rot, UUID id)
 	{
 		super(x, y, w, h, rot, id);
-	}
-
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
-			//TODO: Create TreeSprite class!
-			//sprite.draw(batch, camera, layer);
-	}
-
-	@Override
-	public UUID getSpriteId()
-	{
-		//TODO: Create TreeSprite class!
-		//	return sprite.getId();
-		return null;
-	}
-
-	@Override
-	public void update()
-	{
-		// TODO Auto-generated method stub
-
+		//sprite = Sprite.create(this);
 	}
 
 	// TODO: Add Tree functionality!
