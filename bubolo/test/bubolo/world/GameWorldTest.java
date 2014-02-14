@@ -46,6 +46,18 @@ public class GameWorldTest
 	}
 	
 	@Test
+	public void testAddEntityTwice()
+	{
+		World w = new GameWorld(1, 1);
+		Entity t = new MockTank();
+		w.addEntity(t);
+		try {
+			w.addEntity(t);
+			fail("Entity was added twice, but this is not allowed.");
+		} catch (Exception e) {}
+	}
+	
+	@Test
 	public void testGetEntity()
 	{
 		World w = new GameWorld(1, 1);

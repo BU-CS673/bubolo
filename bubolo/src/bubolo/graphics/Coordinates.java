@@ -7,8 +7,11 @@ import com.badlogic.gdx.math.Vector2;
  * Utility methods for working with coordinates.
  * @author BU673 - Clone Industries
  */
-class Coordinates
+final class Coordinates
 {
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private Coordinates()
 	{
 	}
