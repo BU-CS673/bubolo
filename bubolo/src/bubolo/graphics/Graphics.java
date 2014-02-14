@@ -34,8 +34,10 @@ public class Graphics
 	private SpriteBatch batch;
 	private Camera camera;
 	
+	// The list of camera controllers.
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
 	
+	// Static reference to this object for the getInstance() method.
 	private static Graphics instance = null; 
 	
 	/**
@@ -99,7 +101,11 @@ public class Graphics
 	{
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
-		instance = this;
+		
+		synchronized(Graphics.class)
+		{
+			Graphics.instance = this;
+		}
 	}
 	
 	/**
