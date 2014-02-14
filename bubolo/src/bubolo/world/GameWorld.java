@@ -2,10 +2,10 @@ package bubolo.world;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
 import com.google.common.base.Preconditions;
 
@@ -19,7 +19,7 @@ import bubolo.util.GameLogicException;
 public class GameWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
-	private Map<UUID, Entity> entityMap = new WeakHashMap<UUID, Entity>();
+	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
 
 	private int worldMapWidth;
 	private int worldMapHeight;
@@ -72,12 +72,13 @@ public class GameWorld implements World
 	public void removeEntity(Entity e)
 	{
 		entities.remove(e);
+		entityMap.remove(e.getId());
 	}
 
 	@Override
 	public void removeEntity(UUID id) throws GameLogicException
 	{
-		entities.remove(entityMap.get(id));
+		removeEntity(entityMap.get(id));
 	}
 
 	@Override
