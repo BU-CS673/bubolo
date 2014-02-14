@@ -56,4 +56,10 @@ class MockWorld implements World
 		return 0;
 	}
 
+	@Override
+	public void update()
+	{
+		// do nothing...
+	}
+
 }
