@@ -26,8 +26,7 @@ class RoadSprite extends Sprite<Road>
 	 */
 	RoadSprite(Road road)
 	{
-		// EMS WHAT IS THIS BELOW?
-		super(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"),
+		super(UUID.fromString("a297c142-716a-431f-8ea2-742a105fbbef"),
 				DrawLayer.TERRAIN_MODIFIERS, road);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png");
