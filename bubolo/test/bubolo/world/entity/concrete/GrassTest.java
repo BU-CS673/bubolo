@@ -15,8 +15,8 @@ import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.graphics.MockSprite;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.base.EntityTestCase;
-import bubolo.world.entity.base.MockEntity;
+import bubolo.world.entity.EntityTestCase;
+import bubolo.world.entity.MockEntity;
 
 public class GrassTest
 {

@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import bubolo.graphics.MockSprite;
-import bubolo.world.entity.base.EntityTestCase;
+import bubolo.world.entity.EntityTestCase;
 
 public class RoadTest
 {

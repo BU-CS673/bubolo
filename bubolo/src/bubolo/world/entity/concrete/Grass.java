@@ -3,15 +3,16 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
+import bubolo.graphics.Sprite;
 import bubolo.world.entity.Terrain;
 
 /**
- * Grass is the standard Terrain of B.U.B.O.L.O., and offers no special movement
- * effects.
+ * Grass is the standard Terrain of B.U.B.O.L.O., and offers no special movement effects.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Grass extends Terrain {
+public class Grass extends Terrain
+{
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -20,10 +21,10 @@ public class Grass extends Terrain {
 	/**
 	 * Construct a new Grass with a random UUID.
 	 */
-	public Grass() {
+	public Grass()
+	{
 		super();
-		// sprite = Sprite.create(this);
-		// TODO: Create GrassSprite class!
+		sprite = Sprite.create(this);
 	}
 
 	/**
@@ -32,20 +33,21 @@ public class Grass extends Terrain {
 	 * @param id
 	 *            is the existing UUID to be applied to the new Grass.
 	 */
-	public Grass(UUID id) {
+	public Grass(UUID id)
+	{
 		super(id);
-		// sprite = Sprite.create(this);
-		// TODO: Create GrassSprite class!
+		sprite = Sprite.create(this);
 	}
 
 	/**
-	 * Construct a new Grass with a MockSprite. Used for unit testing with
-	 * separation from the Graphics system.
+	 * Construct a new Grass with a MockSprite. Used for unit testing with separation from
+	 * the Graphics system.
 	 * 
 	 * @param m
 	 *            is the MockSprite that should be used to represent this Grass.
 	 */
-	public Grass(MockSprite<Grass> m) {
+	public Grass(MockSprite<Grass> m)
+	{
 		super();
 		sprite = m;
 	}

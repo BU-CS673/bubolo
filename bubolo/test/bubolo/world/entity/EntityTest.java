@@ -1,4 +1,4 @@
-package bubolo.world.entity.base;
+package bubolo.world.entity;
 
 import static org.junit.Assert.*;
 
@@ -65,7 +65,7 @@ public class EntityTest {
 
 	@Test
 	public void getRotation() {
-		assertEquals("Entity rotation matches target.", EntityTestCase.TARGET_ROT, ent.getY(),
+		assertEquals("Entity rotation matches target.", EntityTestCase.TARGET_ROT, ent.getRotation(),
 				.0001);
 	}
 

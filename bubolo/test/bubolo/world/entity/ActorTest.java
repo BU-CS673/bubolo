@@ -1,4 +1,4 @@
-package bubolo.world.entity.base;
+package bubolo.world.entity;
 
 import static org.junit.Assert.*;
 
@@ -27,6 +27,11 @@ public class ActorTest
 	{
 		act = new Tank(new MockSprite<Tank>());
 		EntityTestCase.setTestParams(act);
+	}
+	
+	@Test
+	public void constructId(){
+		Actor act2 = new Tank(new MockSprite<Tank>());
 	}
 
 	@Test

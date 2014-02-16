@@ -3,6 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
+import bubolo.graphics.Sprite;
 import bubolo.world.entity.Modifier;
 
 //import bubolo.graphics.Sprite;
@@ -24,7 +25,7 @@ public class Road extends Modifier {
 	 */
 	public Road() {
 		super();
-		// sprite = Sprite.create(this);
+		sprite = Sprite.create(this);
 	}
 
 	/**
@@ -35,7 +36,7 @@ public class Road extends Modifier {
 	 */
 	public Road(UUID id) {
 		super(id);
-		// sprite = Sprite.create(this);
+		sprite = Sprite.create(this);
 	}
 
 	/**

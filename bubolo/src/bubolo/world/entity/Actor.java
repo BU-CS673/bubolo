@@ -36,17 +36,6 @@ public abstract class Actor extends Entity implements Damageable {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Construct a new Actor with a MockSprite. Used for unit testing with
-	 * separation from the Graphics system.
-	 * 
-	 * @param m
-	 *            is the MockSprite that should be used to represent this Actor.
-	 */
-	public Actor(MockSprite<?> m) {
-		sprite = m;
-	}
-
 	@Override
 	public Actor setHP(int i) {
 		return this;

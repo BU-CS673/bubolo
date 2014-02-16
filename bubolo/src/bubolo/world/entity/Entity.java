@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import bubolo.graphics.DrawLayer;
 import bubolo.graphics.Drawable;
-import bubolo.graphics.MockSprite;
 import bubolo.graphics.Sprite;
 
 /**
@@ -81,11 +80,11 @@ public abstract class Entity implements Serializable, Drawable {
 	 * @return a reference to this Entity.
 	 */
 	public Entity setParams(float x, float y, int w, int h, float rot) {
-		xPos = x;
-		yPos = y;
-		width = w;
-		height = h;
-		rotation = rot;
+		setX(x);
+		setY(y);
+		setWidth(w);
+		setHeight(h);
+		setRotation(rot);
 		return this;
 	}
 

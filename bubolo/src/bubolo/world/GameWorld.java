@@ -13,12 +13,13 @@ import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
 
 /**
- * The concrete implementation of the World interface. GameWorld is the sole
- * owner of Entity objects.
+ * The concrete implementation of the World interface. GameWorld is the sole owner of
+ * Entity objects.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class GameWorld implements World {
+public class GameWorld implements World
+{
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
 
@@ -33,41 +34,43 @@ public class GameWorld implements World {
 	 * @param worldMapHeight
 	 *            the height of the game world map.
 	 */
-	public GameWorld(int worldMapWidth, int worldMapHeight) {
+	public GameWorld(int worldMapWidth, int worldMapHeight)
+	{
 		Preconditions.checkArgument(worldMapWidth > 0,
-				"worldMapWidth must be greater than 0. worldMapWidth: %s",
-				worldMapWidth);
+				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
 		Preconditions.checkArgument(worldMapHeight > 0,
-				"worldMapHeight must be greater than 0. worldMapHeight: %s",
-				worldMapHeight);
+				"worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
 
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 	}
 
 	@Override
-	public Entity getEntity(UUID id) throws GameLogicException {
+	public Entity getEntity(UUID id) throws GameLogicException
+	{
 		Entity entity = entityMap.get(id);
-		if (entity == null) {
+		if (entity == null)
+		{
 			throw new GameLogicException(
-					"The specified entity does not exist in the game world. Entity id: "
-							+ id);
+					"The specified entity does not exist in the game world. Entity id: " + id);
 		}
 		return entity;
 	}
 
 	@Override
-	public List<Entity> getEntities() {
+	public List<Entity> getEntities()
+	{
 		List<Entity> copyOfEntities = Collections.unmodifiableList(entities);
 		return copyOfEntities;
 	}
 
 	@Override
-	public void addEntity(Entity e) throws GameLogicException {
-		if (entityMap.containsKey(e.getId())) {
-			throw new GameLogicException(
-					"The specified entity already exists. Entity id: "
-							+ e.getId());
+	public void addEntity(Entity e) throws GameLogicException
+	{
+		if (entityMap.containsKey(e.getId()))
+		{
+			throw new GameLogicException("The specified entity already exists. Entity id: "
+					+ e.getId());
 		}
 
 		entities.add(e);
@@ -75,29 +78,35 @@ public class GameWorld implements World {
 	}
 
 	@Override
-	public void removeEntity(Entity e) {
+	public void removeEntity(Entity e)
+	{
 		entities.remove(e);
 		entityMap.remove(e.getId());
 	}
 
 	@Override
-	public void removeEntity(UUID id) throws GameLogicException {
+	public void removeEntity(UUID id) throws GameLogicException
+	{
 		removeEntity(entityMap.get(id));
 	}
 
 	@Override
-	public int getMapWidth() {
+	public int getMapWidth()
+	{
 		return worldMapWidth;
 	}
 
 	@Override
-	public int getMapHeight() {
+	public int getMapHeight()
+	{
 		return worldMapHeight;
 	}
 
 	@Override
-	public void update() {
-		for (Entity e : entities) {
+	public void update()
+	{
+		for (Entity e : entities)
+		{
 			// TODO: reference to World (this) must be passed to entities.
 			e.update();
 		}
