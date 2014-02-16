@@ -5,7 +5,7 @@ package bubolo.world;
  * damage. Outlines methods relating to getting, checking, and modifying the HP of
  * Entities.
  * 
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 public interface Damageable
 {

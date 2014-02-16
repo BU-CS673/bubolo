@@ -6,28 +6,29 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
 
 /**
  * The graphical representation of a Tank.
  * @author BU673 - Clone Industries
  */
-class DefaultSprite extends Sprite<Entity>
+class GrassSprite extends Sprite<Grass>
 {
 	private Texture image;
 	
 	/**
-	 * Constructor for the TankSprite. This is Package-private because sprites
+	 * Constructor for the GrassSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system
 	 * (instead, call the Sprite.create(entity) static method).
-	 * @param tank Reference to the tank that this TankSprite represents.
+	 * @param grass Reference to the Grass that this GrassSprite represents.
 	 */
-	DefaultSprite(Entity e)
+	GrassSprite(Grass grass)
 	{
-		super(UUID.fromString("5dbd05cb-9ae7-44e0-a84b-def4a8791641"),
-				DrawLayer.OBJECTS, e);
+		super(UUID.fromString("ff36aca0-96bf-11e3-a5e2-0800200c9a66"),
+				DrawLayer.OBJECTS, grass);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
+		//TODO: Create a Tree texture!
 	}
 
 	@Override
