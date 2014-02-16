@@ -44,4 +44,22 @@ class MockWorld implements World
 		removeEntity(getEntity(id));
 	}
 
+	@Override
+	public int getMapWidth()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getMapHeight()
+	{
+		return 0;
+	}
+
+	@Override
+	public void update()
+	{
+		// do nothing...
+	}
+
 }
