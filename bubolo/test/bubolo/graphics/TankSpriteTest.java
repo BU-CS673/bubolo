@@ -56,6 +56,7 @@ public class TankSpriteTest
 		assertTrue(passed);
 	}
 
+	
 	@Test
 	public void drawTankSprite()
 	{
@@ -81,6 +82,7 @@ public class TankSpriteTest
 		
 		assertTrue(passed);
 	}
+	
 	
 	@Test
 	public void getId()

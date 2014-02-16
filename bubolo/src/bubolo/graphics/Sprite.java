@@ -1,6 +1,9 @@
 package bubolo.graphics;
 
 import bubolo.world.Entity;
+import bubolo.world.Grass;
+import bubolo.world.Road;
+import bubolo.world.Tree;
 
 import java.util.UUID;
 
@@ -8,6 +11,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.google.common.base.Preconditions;
 
 import bubolo.world.Tank;
 
@@ -133,7 +137,7 @@ public abstract class Sprite<T extends Entity>
 	{
 		return new TankSprite(entity);
 	}
-
+	
 	/**
 	 * Creates a DefaultSprite object for instances where subclasses of Entity are
 	 * constructed without specifying their own specific sprite type.
@@ -144,5 +148,35 @@ public abstract class Sprite<T extends Entity>
 	public static Sprite<Entity> create(Entity entity)
 	{
 		return new DefaultSprite(entity);
+	}
+	
+	/**
+	 * @see Sprite#create(Tank)
+	 */
+	public static Sprite<Tree> create(Tree entity)
+	{
+		// TODO: replace this when Sprite<Tree> is implemented, and remove the unnecessary precondition.
+		Preconditions.checkNotNull(entity);
+		return new MockSprite<Tree>();
+	}
+	
+	/**
+	 * @see Sprite#create(Tank)
+	 */
+	public static Sprite<Road> create(Road entity)
+	{
+		// TODO: replace this when Sprite<Road> is implemented, and remove the unnecessary precondition.
+		Preconditions.checkNotNull(entity);
+		return new MockSprite<Road>();
+	}
+	
+	/**
+	 * @see Sprite#create(Tank)
+	 */
+	public static Sprite<Grass> create(Grass entity)
+	{
+		// TODO: replace this when Sprite<Tree> is implemented, and remove the unnecessary precondition.
+		Preconditions.checkNotNull(entity);
+		return new MockSprite<Grass>();
 	}
 }
