@@ -29,6 +29,7 @@ public class TankSpriteTest
 		
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(100, 100);
+		Graphics g = new Graphics(50, 500);
 	}
 	
 	@Test
