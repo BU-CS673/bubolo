@@ -3,7 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
-import bubolo.world.entity.base.StationaryElement;
+import bubolo.world.entity.StationaryElement;
 
 /**
  * Trees are StationaryElements that can spread over time, and hide Tanks that

@@ -10,7 +10,7 @@ import java.util.UUID;
 import com.google.common.base.Preconditions;
 
 import bubolo.util.GameLogicException;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 /**
  * The concrete implementation of the World interface. GameWorld is the sole

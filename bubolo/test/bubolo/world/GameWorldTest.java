@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import bubolo.graphics.MockTank;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 public class GameWorldTest
 {

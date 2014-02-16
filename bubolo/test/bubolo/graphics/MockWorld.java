@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import bubolo.util.GameLogicException;
 import bubolo.world.World;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 /**
  * Mock class used for testing components that need a world implementation

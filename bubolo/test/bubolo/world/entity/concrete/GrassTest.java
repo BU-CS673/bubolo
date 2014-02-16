@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.graphics.MockSprite;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.base.EntityTestCase;
 import bubolo.world.entity.base.MockEntity;
 

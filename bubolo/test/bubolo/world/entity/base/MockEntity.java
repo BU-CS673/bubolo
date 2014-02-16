@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
 import bubolo.graphics.MockSprite;
+import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
 import bubolo.graphics.Sprite;
-import bubolo.world.entity.base.Actor;
+import bubolo.world.entity.Actor;
 
 /**
  * The tank, which may be controlled by a local player, a networked player, or

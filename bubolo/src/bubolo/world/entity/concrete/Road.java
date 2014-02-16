@@ -3,7 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
-import bubolo.world.entity.base.Modifier;
+import bubolo.world.entity.Modifier;
 
 //import bubolo.graphics.Sprite;
 

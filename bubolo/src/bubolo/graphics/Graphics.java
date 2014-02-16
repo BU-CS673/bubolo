@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import bubolo.world.World;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;

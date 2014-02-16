@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
 import bubolo.graphics.Sprite;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

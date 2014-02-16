@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import bubolo.util.GameLogicException;
-import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.Entity;
 
 /**
  * Provides access to game entities. This is the primary interface between 

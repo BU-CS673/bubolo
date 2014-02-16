@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.graphics.MockSprite;
+import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 

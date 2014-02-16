@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import bubolo.world.entity.Entity;
+
 public class EntityTestCase
 {
 

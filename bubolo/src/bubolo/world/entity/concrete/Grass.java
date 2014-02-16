@@ -3,7 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.graphics.MockSprite;
-import bubolo.world.entity.base.Terrain;
+import bubolo.world.entity.Terrain;
 
 /**
  * Grass is the standard Terrain of B.U.B.O.L.O., and offers no special movement

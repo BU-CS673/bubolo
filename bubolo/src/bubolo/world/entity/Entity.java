@@ -1,4 +1,4 @@
-package bubolo.world.entity.base;
+package bubolo.world.entity;
 
 import java.io.Serializable;
 import java.util.UUID;

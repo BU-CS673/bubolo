@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.graphics.MockSprite;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
 
 public class EntityTest {
