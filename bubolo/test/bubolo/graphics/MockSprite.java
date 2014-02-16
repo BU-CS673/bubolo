@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
 import bubolo.graphics.Sprite;
-import bubolo.world.Entity;
+import bubolo.world.entity.base.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,4 +29,6 @@ public class MockSprite<T extends Entity> extends Sprite<T>
 	{
 		// Do nothing, since this is a mock object.
 	}
+	
+	
 }

@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 public class TankSpriteTest
 {

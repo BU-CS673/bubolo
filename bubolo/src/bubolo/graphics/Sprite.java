@@ -1,10 +1,5 @@
 package bubolo.graphics;
 
-import bubolo.world.Entity;
-import bubolo.world.Grass;
-import bubolo.world.Road;
-import bubolo.world.Tree;
-
 import java.util.UUID;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -13,7 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.google.common.base.Preconditions;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.base.Entity;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
 
 /**
  * Interface for sprites, which draw textures to a quad at a specific x,y location.

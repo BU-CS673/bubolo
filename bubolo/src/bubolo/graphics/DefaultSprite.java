@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.Entity;
+import bubolo.world.entity.base.Entity;
 
 /**
  * The graphical representation of a Tank.
