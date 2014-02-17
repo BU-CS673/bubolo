@@ -154,11 +154,27 @@ public class Graphics
 	 * @param entities the list of entities.
 	 * @param currentLayer the current layer to draw.
 	 */
-	private void drawEntities(List<Sprite<? extends Entity>> entities, DrawLayer currentLayer)
+	private void drawEntities(List<Sprite<? extends Entity>> sprites, DrawLayer currentLayer)
 	{
-		for (Sprite<? extends Entity> sprite : entities)
+		if (sprites.size() == 0)
 		{
-			sprite.draw(batch, camera, currentLayer);
+			return;
 		}
+		
+		Class<?> lastTexture = null;
+		for (Sprite<? extends Entity> sprite : sprites)
+		{
+			if (sprite.getClass() != lastTexture)
+			{
+				if (lastTexture != null)
+				{
+					batch.end();
+				}
+				batch.begin();
+			}
+			sprite.draw(batch, camera, currentLayer);
+			lastTexture = sprite.getClass();
+		}
+		batch.end();
 	}
 }

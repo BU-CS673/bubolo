@@ -5,7 +5,10 @@ import java.util.List;
 
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
 
 /**
  * Contains static methods for adding new sprites.
@@ -73,32 +76,32 @@ public class Sprites
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param grass reference to a grass entity.
 	 */
-//	public Sprite<? extends Entity> create(Grass grass)
-//	{
-//		GrassSprite sprite = new GrassSprite(grass);
-//		sprites.add(sprite);
-//		return sprite;
-//	}
-//	
-//	/**
-//	 * Creates a new sprite, and adds it to the list of drawables.
-//	 * @param road reference to a road entity.
-//	 */
-//	public Sprite<? extends Entity> create(Road road)
-//	{
-//		RoadSprite sprite = new RoadSprite(road);
-//		sprites.add(sprite);
-//		return sprite;
-//	}
-//	
-//	/**
-//	 * Creates a new sprite, and adds it to the list of drawables.
-//	 * @param tree reference to a tree entity.
-//	 */
-//	public Sprite<? extends Entity> create(Tree tree)
-//	{
-//		TreeSprite sprite = new TreeSprite(tree);
-//		sprites.add(sprite);
-//		return sprite;
-//	}
+	public Sprite<? extends Entity> create(Grass grass)
+	{
+		GrassSprite sprite = new GrassSprite(grass);
+		sprites.add(sprite);
+		return sprite;
+	}
+	
+	/**
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param road reference to a road entity.
+	 */
+	public Sprite<? extends Entity> create(Road road)
+	{
+		RoadSprite sprite = new RoadSprite(road);
+		sprites.add(sprite);
+		return sprite;
+	}
+	
+	/**
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param tree reference to a tree entity.
+	 */
+	public Sprite<? extends Entity> create(Tree tree)
+	{
+		TreeSprite sprite = new TreeSprite(tree);
+		sprites.add(sprite);
+		return sprite;
+	}
 }

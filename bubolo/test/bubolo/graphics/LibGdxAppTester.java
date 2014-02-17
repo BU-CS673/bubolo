@@ -1,5 +1,7 @@
 package bubolo.graphics;
 
+import bubolo.GameApplication;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -15,7 +17,9 @@ public class LibGdxAppTester extends ApplicationAdapter
 	private static LwjglApplication app;
 	private static boolean ready;
 	
-	public static void createApp()
+	private static Object lock = new Object();
+	
+	synchronized public static void createApp()
 	{
 		if (app == null)
 		{
@@ -31,6 +35,29 @@ public class LibGdxAppTester extends ApplicationAdapter
 		{
 			Thread.yield();
 		}
+	}
+	
+	synchronized public static void createApp(GameApplication ga)
+	{
+		if (app == null)
+		{
+			ready = false;
+			LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+			cfg.title = "test";
+			cfg.width = 400;
+			cfg.height = 400;
+			app = new LwjglApplication(ga, cfg);
+		}
+		
+		while (!ga.isReady())
+		{
+			Thread.yield();
+		}
+	}
+	
+	public static Object getLock()
+	{
+		return lock;
 	}
 	
 	@Override
