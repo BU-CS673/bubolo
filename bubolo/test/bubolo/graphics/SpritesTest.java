@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
-public class SpriteTest
+public class SpritesTest
 {
 	private static boolean isComplete;
 	private static boolean hadException;

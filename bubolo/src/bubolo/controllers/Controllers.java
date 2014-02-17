@@ -15,7 +15,6 @@ import bubolo.world.entity.concrete.Tree;
 public class Controllers
 {
 	private List<Controller> controllers = new ArrayList<Controller>();
-	private World world;
 	
 	private static Controllers instance;
 	
@@ -49,15 +48,6 @@ public class Controllers
 	}
 	
 	/**
-	 * Initializes the Controllers System.
-	 * @param world reference to the world object.
-	 */
-	public void initialize(World w)
-	{
-		this.world = w;
-	}
-	
-	/**
 	 * Calls the <code>update</code> method on all controllers.
 	 * @param world 
 	 */
@@ -80,15 +70,9 @@ public class Controllers
 	 */
 	public void create(Entity entity, ControllerFactory factory)
 	{
-		if (world == null)
-		{
-			throw new IllegalStateException(
-					"initialize must be called before calling create(Entity, ControllerFactory");
-		}
-
 		if (factory != null)
 		{
-			factory.create(entity, world);
+			factory.create(entity, this);
 		}
 	}
 	
@@ -100,8 +84,15 @@ public class Controllers
 	 */
 	public void create(Tank tank, ControllerFactory factory)
 	{
-		// WARNING NOTE: The warnings will be eliminated once this method has been implemented.
-		throw new UnsupportedOperationException("Not yet implemented");
+		if (factory != null)
+		{
+			factory.create(tank, this);
+		}
+		else
+		{
+			// TODO: implement this once at least one tank controller has been implemented.
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
 	}
 	
 	/**
@@ -112,7 +103,23 @@ public class Controllers
 	 */
 	public void create(Tree tree, ControllerFactory factory)
 	{
-		// WARNING NOTE: The warnings will be eliminated once this method has been implemented.
-		throw new UnsupportedOperationException("Not yet implemented");
+		if (factory != null)
+		{
+			factory.create(tree, this);
+		}
+		else
+		{
+			// WARNING NOTE: The warnings will be eliminated once this method has been implemented.
+			throw new UnsupportedOperationException("Not yet implemented");
+		}
+	}
+	
+	/**
+	 * Adds a controller to the list.
+	 * @param controller the controller to add.
+	 */
+	void addController(Controller controller)
+	{
+		controllers.add(controller);
 	}
 }

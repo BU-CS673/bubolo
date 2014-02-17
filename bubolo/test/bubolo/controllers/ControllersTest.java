@@ -30,17 +30,18 @@ public class ControllersTest
 		Controllers controllerSystem = Controllers.getInstance();
 		// Pass Grass entity, since it does not have any controllers normally.
 		controllerSystem.create(new Grass(), null);
-		assertEquals(1, controllerSystem.getCount());
+		assertEquals(0, controllerSystem.getCount());
 	}
 
 	@Test
 	public void testCreateTankControllerFactory()
 	{
 		Controllers controllerSystem = Controllers.getInstance();
-		controllerSystem.create(new Tank(), null);
+		controllerSystem.create(new Tank(), new MockTankControllerFactory());
 		assertEquals(1, controllerSystem.getCount());
 	}
 
+	// TODO: this will not pass until at least one tree controller has been implemented.
 	@Test
 	public void testCreateTreeControllerFactory()
 	{

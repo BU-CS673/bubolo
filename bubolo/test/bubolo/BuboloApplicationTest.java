@@ -2,6 +2,7 @@ package bubolo;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.graphics.LibGdxAppTester;
@@ -10,18 +11,20 @@ import com.badlogic.gdx.Gdx;
 
 public class BuboloApplicationTest
 {
-	@Test
-	public void testGameApplication()
+	private GameApplication ga;
+	
+	@Before
+	public void setup()
 	{
-		GameApplication ga = new BuboloApplication(500, 400);
+		ga = new BuboloApplication(500, 400);
 	}
+
 
 	@Test
 	public void testCreate()
 	{
 		synchronized(LibGdxAppTester.getLock())
 		{
-			GameApplication ga = new BuboloApplication(500, 400);
 			ga.create();
 		}
 	}
@@ -62,7 +65,24 @@ public class BuboloApplicationTest
 	@Test
 	public void testDispose()
 	{
-		GameApplication ga = new BuboloApplication(500, 400);
 		ga.dispose();
+	}
+
+	@Test
+	public void pause()
+	{
+		ga.pause();
+	}
+
+	@Test
+	public void resize()
+	{
+		ga.resize(600, 700);
+	}
+
+	@Test
+	public void resume()
+	{
+		ga.resume();
 	}
 }
