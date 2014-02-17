@@ -5,10 +5,18 @@ package bubolo.world;
  * damage. Outlines methods relating to getting, checking, and modifying the HP of
  * Entities.
  * 
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 public interface Damageable
 {
+	/**
+	 * Set the HP value f or this Damageable to the specified value.
+	 * @param i is the value to set this Damageable's HP to.
+	 * @return a reference to this Damageable.
+	 * 
+	 * */
+	public Damageable setHP(int i);
+
 	/**
 	 * Get the current HP value for this Damageable.
 	 * 
@@ -26,10 +34,10 @@ public interface Damageable
 	/**
 	 * Modify this Damageable's HP by the specified amount. Positive values should
 	 * increase the current HP, negative values should decrease it.
-	 * 
-	 * @return this Damageable's current HP, after the change.
+	 * @param i is the amount to modify this Damageable's health by. Positive values increase HP, negative values decrease.
+	 * @return a reference to this Damageable.
 	 */
-	public int modifyHP();
+	public Damageable modifyHP(int i);
 
 	/**
 	 * Test to see whether this Damageable should be considered 'alive' for the purposes
@@ -38,9 +46,8 @@ public interface Damageable
 	 * @return true if the Damageable should be considered 'alive'.
 	 */
 	public boolean isAlive();
-	
-	
-	/** 
+
+	/**
 	 * Destroy this Damageable and clean up any remaining assets.
 	 */
 	public void destroy();

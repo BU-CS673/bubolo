@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import bubolo.graphics.MockTank;
+import bubolo.world.entity.Entity;
 
 public class GameWorldTest
 {
@@ -18,23 +19,31 @@ public class GameWorldTest
 	{
 		World w = new GameWorld(100, 1000);
 	}
-	
+
 	@Test
 	public void gameWorldBadWidth()
 	{
-		try {
+		try
+		{
 			World w = new GameWorld(-100, 1000);
 			fail("GameWorld did not fail on invalid input");
-		} catch (Exception e) { }
+		}
+		catch (Exception e)
+		{
+		}
 	}
-	
+
 	@Test
 	public void gameWorldBadHeight()
 	{
-		try {
+		try
+		{
 			World w = new GameWorld(100, -1000);
 			fail("GameWorld did not fail on invalid input");
-		} catch (Exception e) { }
+		}
+		catch (Exception e)
+		{
+		}
 	}
 
 	@Test
@@ -44,19 +53,23 @@ public class GameWorldTest
 		Entity t = new MockTank();
 		w.addEntity(t);
 	}
-	
+
 	@Test
 	public void testAddEntityTwice()
 	{
 		World w = new GameWorld(1, 1);
 		Entity t = new MockTank();
 		w.addEntity(t);
-		try {
+		try
+		{
 			w.addEntity(t);
 			fail("Entity was added twice, but this is not allowed.");
-		} catch (Exception e) {}
+		}
+		catch (Exception e)
+		{
+		}
 	}
-	
+
 	@Test
 	public void testGetEntity()
 	{
@@ -81,12 +94,16 @@ public class GameWorldTest
 		w.addEntity(new MockTank());
 		WeakReference<Entity> e = new WeakReference<Entity>(w.getEntities().get(0));
 		UUID id = e.get().getId();
-		
+
 		w.removeEntity(e.get());
-		try {
+		try
+		{
 			w.getEntity(id);
 			fail("The entity remained in the world after calling world.removeEntity");
-		} catch (Exception exception) {}
+		}
+		catch (Exception exception)
+		{
+		}
 	}
 
 	@Test
@@ -95,12 +112,16 @@ public class GameWorldTest
 		World w = new GameWorld(1, 1);
 		w.addEntity(new MockTank());
 		UUID id = w.getEntities().get(0).getId();
-		
+
 		w.removeEntity(id);
-		try {
+		try
+		{
 			w.getEntity(id);
 			fail("The entity remained in the world after calling world.removeEntity");
-		} catch (Exception exception) {}
+		}
+		catch (Exception exception)
+		{
+		}
 	}
 
 	@Test

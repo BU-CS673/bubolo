@@ -1,6 +1,6 @@
 package bubolo.graphics;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * A mock Tank class used for testing the Graphics system.

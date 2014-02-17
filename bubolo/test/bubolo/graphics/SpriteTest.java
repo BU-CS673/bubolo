@@ -7,10 +7,10 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
-import bubolo.world.Grass;
-import bubolo.world.Road;
-import bubolo.world.Tank;
-import bubolo.world.Tree;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
 
 public class SpriteTest
 {
