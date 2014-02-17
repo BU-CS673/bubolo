@@ -11,12 +11,18 @@ import com.badlogic.gdx.Gdx;
 
 public class BuboloApplicationTest
 {
-	private GameApplication ga;
+	private BuboloApplication ga;
 	
 	@Before
 	public void setup()
 	{
 		ga = new BuboloApplication(500, 400);
+	}
+	
+	@Test
+	public void testIsReady()
+	{
+		assertFalse(ga.isReady());
 	}
 
 
@@ -26,9 +32,13 @@ public class BuboloApplicationTest
 		synchronized(LibGdxAppTester.getLock())
 		{
 			ga.create();
+			assertTrue(ga.isReady());
 		}
 	}
 
+	// NOTE: This test currently freezes. Continuing to research. However, this is the full
+	//   game loop, so it may make sense to test it in integration.
+	
 //	@Test
 //	public void testRender()
 //	{
