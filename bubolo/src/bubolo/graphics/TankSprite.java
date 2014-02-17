@@ -9,7 +9,7 @@ import bubolo.world.Tank;
 
 /**
  * The graphical representation of a Tank.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 class TankSprite extends Sprite<Tank>
 {

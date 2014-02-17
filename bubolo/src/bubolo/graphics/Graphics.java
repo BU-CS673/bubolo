@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * The top-level class for the Graphics system.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 public class Graphics
 {
