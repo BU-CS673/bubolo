@@ -1,5 +1,6 @@
 package bubolo.graphics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bubolo.world.Entity;
@@ -11,7 +12,8 @@ import bubolo.world.Tank;
  */
 public class Sprites
 {
-	private static List<Sprite<? extends Entity>> sprites;
+	private static List<Sprite<? extends Entity>> sprites = 
+			new ArrayList<Sprite<? extends Entity>>();
 	
 	/**
 	 * Private constructor to prevent this class from being instantiated.
