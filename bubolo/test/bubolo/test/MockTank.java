@@ -1,4 +1,4 @@
-package bubolo.graphics;
+package bubolo.test;
 
 import bubolo.world.entity.concrete.Tank;
 

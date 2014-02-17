@@ -1,7 +1,5 @@
 package bubolo.graphics;
 
-import java.util.UUID;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +8,7 @@ import bubolo.world.entity.concrete.Tank;
 
 /**
  * The graphical representation of a Tank.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 class TankSprite extends Sprite<Tank>
 {
@@ -27,8 +25,7 @@ class TankSprite extends Sprite<Tank>
 	 */
 	TankSprite(Tank tank)
 	{
-		super(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"),
-				DrawLayer.TANKS, tank);
+		super(DrawLayer.TANKS, tank);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
 	}

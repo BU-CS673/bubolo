@@ -2,16 +2,9 @@ package bubolo.world.entity;
 
 import static org.junit.Assert.*;
 
-import java.util.UUID;
-
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.Gdx;
-
-import bubolo.graphics.LibGdxAppTester;
-import bubolo.graphics.MockSprite;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.concrete.Tank;
 
@@ -25,13 +18,13 @@ public class ActorTest
 	@BeforeClass
 	public static void setup()
 	{
-		act = new Tank(new MockSprite<Tank>());
+		act = new Tank();
 		EntityTestCase.setTestParams(act);
 	}
 	
 	@Test
 	public void constructId(){
-		Actor act2 = new Tank(new MockSprite<Tank>());
+		Actor act2 = new Tank();
 	}
 
 	@Test
@@ -69,7 +62,7 @@ public class ActorTest
 	@Test
 	public void destroy()
 	{
-		Actor act2 = new Tank(new MockSprite<Tank>());
+		Actor act2 = new Tank();
 		act2.destroy();
 		// Should check to make sure the Actor was removed properly.
 		// Useless until we have some conditions to test whether a Actor has been

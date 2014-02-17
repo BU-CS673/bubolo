@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
-public class SpriteTest
+public class SpritesTest
 {
 	private static boolean isComplete;
 	private static boolean hadException;
@@ -34,7 +34,7 @@ public class SpriteTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprite.create(new Tank());
+					Sprite<?> sprite = Sprites.getInstance().create(new Tank());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -64,7 +64,7 @@ public class SpriteTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprite.create(new Tree());
+					Sprite<?> sprite = Sprites.getInstance().create(new Tree());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -94,7 +94,7 @@ public class SpriteTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprite.create(new Grass());
+					Sprite<?> sprite = Sprites.getInstance().create(new Grass());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -124,7 +124,7 @@ public class SpriteTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprite.create(new Road());
+					Sprite<?> sprite = Sprites.getInstance().create(new Road());
 					assertNotNull(sprite);
 					hadException = false;
 				}
