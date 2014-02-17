@@ -1,7 +1,6 @@
 package bubolo.controllers;
 
 import bubolo.world.entity.Entity;
-import bubolo.world.World;
 
 /**
  * Interface for controller factories, which allow a 
