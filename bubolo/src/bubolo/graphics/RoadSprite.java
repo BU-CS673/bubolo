@@ -1,7 +1,5 @@
 package bubolo.graphics;
 
-import java.util.UUID;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,7 +25,7 @@ class RoadSprite extends Sprite<Road>
 	 */
 	RoadSprite(Road road)
 	{
-		super(UUID.fromString("ff36aca0-96bf-11e3-a5e2-0800200c9a66"), DrawLayer.OBJECTS, road);
+		super(DrawLayer.OBJECTS, road);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
 		// TODO: Create a Tree texture!

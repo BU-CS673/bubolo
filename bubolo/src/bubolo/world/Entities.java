@@ -6,6 +6,7 @@ import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
+import bubolo.world.entity.Entity;
 
 /**
  * Contains static methods for adding creating new entities. The <code>initialize</code>
