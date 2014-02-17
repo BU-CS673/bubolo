@@ -15,6 +15,10 @@ import bubolo.world.entity.Entity;
  */
 public class Entities 
 {
+	private static World world;
+	private static Sprites sprites;
+	private static Controllers controllers;
+	
 	/**
 	 * private constructor to prevent Entities from being instantiated.
 	 */
@@ -22,16 +26,18 @@ public class Entities
 	{
 	}
 	
-	private static World world;
-	
 	/**
 	 * Initializes the world. This must be called before any of the other methods
 	 * are called.
 	 * @param w reference to the world.
+	 * @param s reference to Sprites system.
+	 * @param c reference to controllers system.
 	 */
-	static void initialize(World w)
+	static void initialize(World w, Sprites s, Controllers c)
 	{
 		Entities.world = w;
+		Entities.sprites = s;
+		Entities.controllers = c;
 	}
 	
 	/**
@@ -120,10 +126,11 @@ public class Entities
 		}
 
         entity.setId(id);
-        Sprites.create(entity);
-        Controllers.create(entity, controllerFactory);
-       
+        
+        sprites.create(entity);
+        controllers.create(entity, controllerFactory);
         world.addEntity(entity);
+        
         return entity;
     }
 }

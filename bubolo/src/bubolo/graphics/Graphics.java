@@ -34,6 +34,8 @@ public class Graphics
 	private SpriteBatch batch;
 	private Camera camera;
 	
+	private Sprites spriteSystem;
+	
 	// The list of camera controllers.
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
 	
@@ -68,7 +70,7 @@ public class Graphics
 	 * @throws FileNotFoundException if the file is not found on the file system
 	 * (can only occur if the file has not yet been loaded).
 	 */
-	public static Texture getTexture(String path)
+	static Texture getTexture(String path)
 	{
 		//TODO: Throw FileNotFoundException for this method or remove the @throws from the javadoc.
 		Texture texture = textures.get(path);
@@ -101,6 +103,7 @@ public class Graphics
 	{
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
+		spriteSystem = Sprites.getInstance();
 		
 		synchronized(Graphics.class)
 		{
@@ -115,7 +118,7 @@ public class Graphics
 	public void draw(World world)
 	{
 		// 1. Get list of entities from the World/Model.
-		List<Sprite<? extends Entity>> sprites = Sprites.getSprites();
+		List<Sprite<? extends Entity>> sprites = spriteSystem.getSprites();
 		
 		// 2. Perform clipping: remove entities that are outside of the bounding window.
 		// TODO - Implement this
