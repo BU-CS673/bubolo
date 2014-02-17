@@ -29,7 +29,7 @@ final class Coordinates
 	}
 	
 	/**
-	 * Converts camera coordinates to camera coordinates.
+	 * Converts camera coordinates to world coordinates.
 	 * @param camera the game's camera.
 	 * @param cameraCoordinates the coordinates to convert.
 	 * @return the converted coordinates.
