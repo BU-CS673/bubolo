@@ -10,10 +10,12 @@ import java.util.UUID;
 import com.google.common.base.Preconditions;
 
 import bubolo.util.GameLogicException;
+import bubolo.world.entity.Entity;
 
 /**
- * The concrete implementation of the World interface. GameWorld is the sole
- * owner of Entity objects.
+ * The concrete implementation of the World interface. GameWorld is the sole owner of
+ * Entity objects.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class GameWorld implements World
@@ -23,28 +25,34 @@ public class GameWorld implements World
 
 	private int worldMapWidth;
 	private int worldMapHeight;
-	
+
 	/**
 	 * Constructs the GameWorld object.
-	 * @param worldMapWidth the width of the game world map.
-	 * @param worldMapHeight the height of the game world map.
+	 * 
+	 * @param worldMapWidth
+	 *            the width of the game world map.
+	 * @param worldMapHeight
+	 *            the height of the game world map.
 	 */
 	public GameWorld(int worldMapWidth, int worldMapHeight)
 	{
-		Preconditions.checkArgument(worldMapWidth > 0, "worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
-		Preconditions.checkArgument(worldMapHeight > 0, "worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
-		
+		Preconditions.checkArgument(worldMapWidth > 0,
+				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
+		Preconditions.checkArgument(worldMapHeight > 0,
+				"worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
+
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 	}
-	
+
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
 		Entity entity = entityMap.get(id);
 		if (entity == null)
 		{
-			throw new GameLogicException("The specified entity does not exist in the game world. Entity id: " + id);
+			throw new GameLogicException(
+					"The specified entity does not exist in the game world. Entity id: " + id);
 		}
 		return entity;
 	}
@@ -61,9 +69,10 @@ public class GameWorld implements World
 	{
 		if (entityMap.containsKey(e.getId()))
 		{
-			throw new GameLogicException("The specified entity already exists. Entity id: " + e.getId());
+			throw new GameLogicException("The specified entity already exists. Entity id: "
+					+ e.getId());
 		}
-		
+
 		entities.add(e);
 		entityMap.put(e.getId(), e);
 	}
@@ -92,7 +101,7 @@ public class GameWorld implements World
 	{
 		return worldMapHeight;
 	}
-	
+
 	@Override
 	public void update()
 	{

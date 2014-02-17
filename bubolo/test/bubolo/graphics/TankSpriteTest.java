@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 public class TankSpriteTest
 {
@@ -29,6 +29,7 @@ public class TankSpriteTest
 		
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(100, 100);
+		Graphics g = new Graphics(50, 500);
 	}
 	
 	@Test
@@ -56,6 +57,7 @@ public class TankSpriteTest
 		assertTrue(passed);
 	}
 
+	
 	@Test
 	public void drawTankSprite()
 	{
@@ -81,6 +83,7 @@ public class TankSpriteTest
 		
 		assertTrue(passed);
 	}
+	
 	
 	@Test
 	public void getId()

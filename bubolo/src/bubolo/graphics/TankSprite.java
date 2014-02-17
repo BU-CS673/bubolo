@@ -5,7 +5,8 @@ import java.util.UUID;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import bubolo.world.Tank;
+
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * The graphical representation of a Tank.

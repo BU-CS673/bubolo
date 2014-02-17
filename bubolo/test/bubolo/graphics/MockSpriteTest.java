@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.junit.Test;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 public class MockSpriteTest
 {
