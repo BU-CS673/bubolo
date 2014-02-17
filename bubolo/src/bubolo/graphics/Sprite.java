@@ -1,31 +1,19 @@
 package bubolo.graphics;
 
-import java.util.UUID;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Grass;
-import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
 
 /**
  * Interface for sprites, which draw textures to a quad at a specific x,y location.
  * 
  * @author BU CS673 - Clone Productions
- * @param <T>
- *            is any object that extends the Entity class.
  */
-public abstract class Sprite<T extends Entity>
+abstract class Sprite<T extends Entity>
 {
-	// Each concrete sprite class has a unique ID. These IDs are shared across
-	// each instance of the concrete sprite.
-	private UUID id;
-
 	// The layer that this sprite is drawn to.
 	private DrawLayer drawLayer;
 
@@ -35,29 +23,15 @@ public abstract class Sprite<T extends Entity>
 	/**
 	 * Constructor for the base Sprite class.
 	 * 
-	 * @param spriteId
-	 *            an id that identifies the sprite's type.
 	 * @param layer
 	 *            the layer that the sprite is drawn to.
 	 * @param entity
 	 *            reference to the Entity that this sprite represents.
 	 */
-	Sprite(UUID spriteId, DrawLayer layer, T entity)
+	Sprite(DrawLayer layer, T entity)
 	{
-		this.id = spriteId;
 		this.drawLayer = layer;
 		this.entity = entity;
-	}
-
-	/**
-	 * Returns an id that identifies the sprite's type. This exists so that the world
-	 * system can delegate the entity.getSpriteId() method to this method.
-	 * 
-	 * @return A UUID that identifies the sprite's type
-	 */
-	public UUID getId()
-	{
-		return id;
 	}
 
 	/**
@@ -92,7 +66,7 @@ public abstract class Sprite<T extends Entity>
 	 *            The layer that is currently being drawn. Note that this is not
 	 *            necessarily the DrawLayer that this entity belongs to.
 	 */
-	public abstract void draw(SpriteBatch batch, Camera camera, DrawLayer layer);
+	abstract void draw(SpriteBatch batch, Camera camera, DrawLayer layer);
 
 	/**
 	 * Draws the texture to the screen.
@@ -116,47 +90,5 @@ public abstract class Sprite<T extends Entity>
 					.getX(), getEntity().getY()));
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y);
 		}
-	}
-
-	// Note (cdc - 2/10/2014): I initially tried to create a generic form of this
-	// static method. However, I wasn't able to create a version that would compile
-	// without warnings (unchecked class cast warning, despite performing a check).
-	// Instead, this method will be overloaded.
-
-	/**
-	 * Static factory method for creating concrete sprites. This ensures that the world
-	 * system does not need to know about any of the concrete sprites.
-	 * 
-	 * @param entity
-	 *            Reference to the entity that is creating the sprite.
-	 * @return A new concrete Sprite.
-	 */
-	public static Sprite<Tank> create(Tank entity)
-	{
-		return new TankSprite(entity);
-	}
-
-	/**
-	 * @see Sprite#create(Tree)
-	 */
-	public static Sprite<Tree> create(Tree entity)
-	{
-		return new TreeSprite(entity);
-	}
-
-	/**
-	 * @see Sprite#create(Road)
-	 */
-	public static Sprite<Road> create(Road entity)
-	{
-		return new RoadSprite(entity);
-	}
-
-	/**
-	 * @see Sprite#create(Grass)
-	 */
-	public static Sprite<Grass> create(Grass entity)
-	{
-		return new GrassSprite(entity);
 	}
 }

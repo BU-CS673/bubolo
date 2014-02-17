@@ -3,8 +3,9 @@ package bubolo.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import bubolo.world.Entity;
-import bubolo.world.Tank;
+import bubolo.util.GameLogicException;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * Contains static methods for adding new sprites.
@@ -38,7 +39,7 @@ public class Sprites
 	 */
 	public static void create(Entity entity)
 	{
-		throw new UnsupportedOperationException(
+		throw new GameLogicException(
 				"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
 				"Entity id: " + entity.getId());
 	}

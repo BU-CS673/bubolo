@@ -115,7 +115,7 @@ public class Graphics
 	public void draw(World world)
 	{
 		// 1. Get list of entities from the World/Model.
-		List<Entity> entities = world.getEntities();
+		List<Sprite<? extends Entity>> sprites = Sprites.getSprites();
 		
 		// 2. Perform clipping: remove entities that are outside of the bounding window.
 		// TODO - Implement this
@@ -124,10 +124,10 @@ public class Graphics
 		// TODO - Implement this.
 		
 		// 4. Render sprites by layer.
-		drawEntities(entities, DrawLayer.TERRAIN);
-		drawEntities(entities, DrawLayer.TERRAIN_MODIFIERS);
-		drawEntities(entities, DrawLayer.OBJECTS);
-		drawEntities(entities, DrawLayer.TANKS);
+		drawEntities(sprites, DrawLayer.TERRAIN);
+		drawEntities(sprites, DrawLayer.TERRAIN_MODIFIERS);
+		drawEntities(sprites, DrawLayer.OBJECTS);
+		drawEntities(sprites, DrawLayer.TANKS);
 		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
@@ -151,11 +151,11 @@ public class Graphics
 	 * @param entities the list of entities.
 	 * @param currentLayer the current layer to draw.
 	 */
-	private void drawEntities(List<Entity> entities, DrawLayer currentLayer)
+	private void drawEntities(List<Sprite<? extends Entity>> entities, DrawLayer currentLayer)
 	{
-		for (Entity e : entities)
+		for (Sprite<? extends Entity> sprite : entities)
 		{
-			e.draw(batch, camera, currentLayer);
+			sprite.draw(batch, camera, currentLayer);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package bubolo.controllers;
 
-import bubolo.world.Entity;
+import bubolo.world.entity.Entity;
 import bubolo.world.World;
 
 /**
