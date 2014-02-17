@@ -51,7 +51,7 @@ public class Sprites
 	 * Do not call this overload.
 	 * @param entity reference to an entity.
 	 */
-	public void create(Entity entity)
+	public Sprite<? extends Entity> create(Entity entity)
 	{
 		throw new GameLogicException(
 				"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
@@ -62,35 +62,43 @@ public class Sprites
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param tank reference to a tank entity.
 	 */
-	public void create(Tank tank)
+	public Sprite<? extends Entity> create(Tank tank)
 	{
-		sprites.add(new TankSprite(tank));
+		TankSprite sprite = new TankSprite(tank);
+		sprites.add(sprite);
+		return sprite;
 	}
 	
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param grass reference to a grass entity.
 	 */
-//	public void create(Grass grass)
+//	public Sprite<? extends Entity> create(Grass grass)
 //	{
-//		sprites.add(new GrassSprite(grass));
+//		GrassSprite sprite = new GrassSprite(grass);
+//		sprites.add(sprite);
+//		return sprite;
 //	}
 //	
 //	/**
 //	 * Creates a new sprite, and adds it to the list of drawables.
 //	 * @param road reference to a road entity.
 //	 */
-//	public void create(Road road)
+//	public Sprite<? extends Entity> create(Road road)
 //	{
-//		sprites.add(new RoadSprite(road));
+//		RoadSprite sprite = new RoadSprite(road);
+//		sprites.add(sprite);
+//		return sprite;
 //	}
 //	
 //	/**
 //	 * Creates a new sprite, and adds it to the list of drawables.
 //	 * @param tree reference to a tree entity.
 //	 */
-//	public void create(Tree tree)
+//	public Sprite<? extends Entity> create(Tree tree)
 //	{
-//		sprites.add((new TreeSprite(tree));
+//		TreeSprite sprite = new TreeSprite(tree);
+//		sprites.add(sprite);
+//		return sprite;
 //	}
 }

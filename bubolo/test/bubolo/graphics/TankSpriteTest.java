@@ -68,7 +68,7 @@ public class TankSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<Tank> sprite = Sprite.create(new Tank());
+				Sprite<?> sprite = Sprites.getInstance().create(new Tank());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.TANKS);
 				passed = true;
@@ -82,28 +82,5 @@ public class TankSpriteTest
 		}
 		
 		assertTrue(passed);
-	}
-	
-	
-	@Test
-	public void getId()
-	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				Sprite<Tank> sprite = Sprite.create(new Tank());
-				assertEquals(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"), sprite.getId()); 
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
-		}
 	}
 }
