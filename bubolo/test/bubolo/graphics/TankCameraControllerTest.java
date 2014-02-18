@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import bubolo.world.Tank;
+import bubolo.test.MockTank;
+import bubolo.test.MockWorld;
+import bubolo.world.entity.concrete.Tank;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;

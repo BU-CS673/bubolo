@@ -4,18 +4,16 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of a Tank.
- * @author BU CS673 - Clone Productions
+ * @author BU673 - Clone Industries
+ * @deprecated DO NOT USE - MAY BE DELETED IN THE FUTURE.
  */
-class TankSprite extends Sprite<Tank>
+class DefaultSprite extends Sprite<Entity>
 {
 	private Texture image;
-	
-	// true if the camera controller has been added.
-	private boolean addedCameraController;
 	
 	/**
 	 * Constructor for the TankSprite. This is Package-private because sprites
@@ -23,25 +21,16 @@ class TankSprite extends Sprite<Tank>
 	 * (instead, call the Sprite.create(entity) static method).
 	 * @param tank Reference to the tank that this TankSprite represents.
 	 */
-	TankSprite(Tank tank)
+	DefaultSprite(Entity e)
 	{
-		super(DrawLayer.TANKS, tank);
+		super(DrawLayer.OBJECTS, e);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		drawTexture(batch, camera, layer, image);
-		
-		if (!addedCameraController)
-		{
-			// TODO: the sprite needs to ask the Tank if it is the local player.
-			//	Something like tank.isLocalPlayer() would work.
-			CameraController controller = new TankCameraController(getEntity());
-			Graphics.getInstance().addCameraController(controller);
-			addedCameraController = true;
-		}
 	}
 }

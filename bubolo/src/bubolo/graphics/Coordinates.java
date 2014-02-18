@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Utility methods for working with coordinates.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 final class Coordinates
 {

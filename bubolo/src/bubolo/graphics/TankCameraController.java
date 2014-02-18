@@ -2,8 +2,8 @@ package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
 
-import bubolo.world.Tank;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Tank;
 import static com.google.common.base.Preconditions.*;
 
 /**
