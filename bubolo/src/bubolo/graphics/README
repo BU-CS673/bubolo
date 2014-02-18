@@ -1,1 +1,0 @@
-The Graphics system is responsible for drawing sprites to the screen, clipping sprites that are out of the camera's clipping boundary, and converting between world coordinates and camera coordinates.
