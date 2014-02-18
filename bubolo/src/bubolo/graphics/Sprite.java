@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import bubolo.world.entity.Entity;
 
 /**
- * Interface for sprites, which draw textures to a quad at a specific x,y location.
+ * Abstract base class for sprites, which draw textures to a quad at a specific x,y location.
  * 
  * @author BU CS673 - Clone Productions
  */
