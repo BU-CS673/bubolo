@@ -17,9 +17,9 @@ public class BuboloApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 	
-	private long lastUpdate;
+	private long lastUpdate;  // Do we need to initialize it?
 	
-	private boolean ready;
+	private boolean ready;  // Do we need to initialize it?
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
