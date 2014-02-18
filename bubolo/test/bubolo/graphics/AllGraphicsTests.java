@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ GraphicsTest.class, GrassSpriteTest.class,
 		RoadSpriteTest.class, SpritesTest.class, TankCameraControllerTest.class,
-		TankSpriteTest.class, TreeSpriteTest.class })
+		TankSpriteTest.class, TreeSpriteTest.class, SpriteTest.class })
 
 public class AllGraphicsTests
 {

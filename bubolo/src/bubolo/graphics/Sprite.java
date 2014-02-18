@@ -89,7 +89,7 @@ abstract class Sprite<T extends Entity>
 	 */
 	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
 	{
-		if (layer == drawLayer)
+		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, 
 					new Vector2(getEntity().getX(), getEntity().getY()));
@@ -118,7 +118,7 @@ abstract class Sprite<T extends Entity>
 	 */
 	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, TextureRegion texture)
 	{
-		if (layer == drawLayer)
+		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, 
 					new Vector2(getEntity().getX(), getEntity().getY()));
