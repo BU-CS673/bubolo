@@ -18,6 +18,7 @@ public interface Network
 	 * @throws IllegalStateException if <code>startServer</code> has been called before 
 	 * <code>connect</code> is called. A player can only be a server or a client, not
 	 * both.
+	 * @throws NetworkException if a network error occurs.
 	 */
 	void connect(InetSocketAddress serverIpAddress) throws IllegalStateException, NetworkException;
 	
