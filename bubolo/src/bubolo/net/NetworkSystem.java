@@ -14,28 +14,24 @@ public class NetworkSystem implements Network
 	public void connect(InetSocketAddress serverIpAddress) throws IllegalStateException,
 			NetworkException
 	{
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
 	public void startServer() throws IllegalStateException
 	{
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
 	public void send(NetworkCommand command)
 	{
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
 	public void update(World world)
 	{
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 }

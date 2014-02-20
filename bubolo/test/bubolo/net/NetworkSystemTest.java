@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.world.GameWorld;
+import bubolo.test.MockWorld;
+import static org.mockito.Mockito.*;
+
 
 public class NetworkSystemTest
 {
@@ -28,19 +30,19 @@ public class NetworkSystemTest
 	@Test
 	public void testStartServer()
 	{
-		fail("Not yet implemented");
+		network.startServer();
 	}
 
 	@Test
 	public void testSend()
 	{
-		fail("Not yet implemented");
+		NetworkCommand command = mock(NetworkCommand.class);
+		network.send(command);
 	}
 
 	@Test
 	public void testUpdate()
 	{
-		network.update(new GameWorld(100, 50));
+		network.update(new MockWorld());
 	}
-
 }
