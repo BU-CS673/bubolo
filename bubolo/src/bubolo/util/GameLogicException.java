@@ -18,12 +18,11 @@ public class GameLogicException extends GameException
 	}
 	
 	/**
-	 * Constructs a GameLogicException object with the specified message and cause. 
-	 * @param message the exception's detail message.
-	 * @param cause the exception's cause.
+	 * Constructs a GameLogicException object from the specified exception.
+	 * @param exception the exception to wrap.
 	 */
-	public GameLogicException(String message, Throwable cause)
+	public GameLogicException(Throwable exception)
 	{
-		super(message, cause);
+		super(exception);
 	}
 }

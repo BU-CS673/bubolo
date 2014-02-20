@@ -20,6 +20,20 @@ public class NetworkSystemTest
 	{
 		network = new NetworkSystem();
 	}
+	
+	
+	@Test
+	public void isActive()
+	{
+		assertFalse(network.isActive());
+	}
+
+	@Test
+	public void shutdown()
+	{
+		network.shutdown();
+		assertFalse(network.isActive());
+	}
 
 	@Test
 	public void testConnect()

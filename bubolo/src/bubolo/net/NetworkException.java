@@ -20,12 +20,11 @@ public class NetworkException extends GameException
 	}
 
 	/**
-	 * Constructs a NetworkException object with the specified message and cause. 
-	 * @param message the exception's detail message.
-	 * @param cause the exception's cause.
+	 * Constructs a NetworkException object from the specified exception.
+	 * @param exception the exception to wrap.
 	 */
-	public NetworkException(String message, Throwable cause)
+	public NetworkException(Throwable exception)
 	{
-		super(message, cause);
+		super(exception);
 	}
 }

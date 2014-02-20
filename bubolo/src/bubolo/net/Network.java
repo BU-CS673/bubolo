@@ -12,6 +12,17 @@ import bubolo.world.World;
 public interface Network
 {
 	/**
+	 * Returns true if the network is active, or false otherwise.
+	 * @return true if the network is active.
+	 */
+	boolean isActive();
+	
+	/**
+	 * Shuts down the network.
+	 */
+	void shutdown();
+	
+	/**
 	 * Identifies this player as a client, and attempts to connect to the 
 	 * 
 	 * @param serverIpAddress
@@ -29,8 +40,9 @@ public interface Network
 	 * @throws IllegalStateException if <code>connect</code> has been called before 
 	 * <code>startServer</code> is called. A player can only be a server or a client, not
 	 * both.
+	 * @throws NetworkException if a network error occurs.
 	 */
-	void startServer() throws IllegalStateException;
+	void startServer() throws IllegalStateException, NetworkException;
 	
 	/**
 	 * Sends a network command to the other players.

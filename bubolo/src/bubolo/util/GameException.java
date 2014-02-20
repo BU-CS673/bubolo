@@ -18,12 +18,11 @@ public abstract class GameException extends RuntimeException
 	}
 	
 	/**
-	 * Constructs a GameException object with the specified message and cause.
-	 * @param message the exception's detail message.
-	 * @param cause the exception's cause.
+	 * Constructs a GameException object from the specified exception.
+	 * @param exception the exception to wrap.
 	 */
-	public GameException(String message, Throwable cause)
+	public GameException(Throwable exception)
 	{
-		super(message, cause);
+		super(exception);
 	}
 }
