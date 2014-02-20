@@ -49,7 +49,7 @@ public class Controllers
 	
 	/**
 	 * Calls the <code>update</code> method on all controllers.
-	 * @param world 
+	 * @param w reference to the World object.
 	 */
 	public void update(World w)
 	{

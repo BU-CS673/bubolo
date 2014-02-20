@@ -10,6 +10,7 @@ import bubolo.world.entity.Entity;
 
 /**
  * Abstract base class for sprites, which draw textures to a quad at a specific x,y location.
+ * @param <T> the Entity type that this Sprite references.
  * 
  * @author BU CS673 - Clone Productions
  */

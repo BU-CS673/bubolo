@@ -52,7 +52,9 @@ public class Sprites
 	
 	/**
 	 * Do not call this overload.
+	 * 
 	 * @param entity reference to an entity.
+	 * @return reference to the new sprite.
 	 */
 	public Sprite<? extends Entity> create(Entity entity)
 	{
@@ -64,6 +66,7 @@ public class Sprites
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param tank reference to a tank entity.
+	 * @return reference to the new sprite.
 	 */
 	public Sprite<? extends Entity> create(Tank tank)
 	{
@@ -75,6 +78,7 @@ public class Sprites
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param grass reference to a grass entity.
+	 * @return reference to the new sprite.
 	 */
 	public Sprite<? extends Entity> create(Grass grass)
 	{
@@ -86,6 +90,7 @@ public class Sprites
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param road reference to a road entity.
+	 * @return reference to the new sprite.
 	 */
 	public Sprite<? extends Entity> create(Road road)
 	{
@@ -97,6 +102,7 @@ public class Sprites
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
 	 * @param tree reference to a tree entity.
+	 * @return reference to the new sprite.
 	 */
 	public Sprite<? extends Entity> create(Tree tree)
 	{

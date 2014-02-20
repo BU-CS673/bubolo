@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 
 public class NetworkSystemTest
