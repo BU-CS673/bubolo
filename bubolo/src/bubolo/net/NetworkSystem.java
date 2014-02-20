@@ -1,6 +1,7 @@
 package bubolo.net;
 
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 
 import bubolo.world.World;
 
@@ -9,7 +10,9 @@ import bubolo.world.World;
  * @author BU CS673 - Clone Productions
  */
 public class NetworkSystem implements Network
-{
+{	
+	private ServerSocket server;
+	
 	@Override
 	public void connect(InetSocketAddress serverIpAddress) throws IllegalStateException,
 			NetworkException
@@ -20,7 +23,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void startServer() throws IllegalStateException
 	{
-		throw new UnsupportedOperationException("Not yet implemented");
+		server = new ServerSocket(192014)
 	}
 
 	@Override
