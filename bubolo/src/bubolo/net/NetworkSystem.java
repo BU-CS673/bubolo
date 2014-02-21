@@ -94,7 +94,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void send(NetworkCommand command)
 	{
-		server.send(command);
+		throw new UnsupportedOperationException("Not yet implemented.");
 	}
 
 	@Override
