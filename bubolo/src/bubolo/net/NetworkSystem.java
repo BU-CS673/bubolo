@@ -32,13 +32,16 @@ public class NetworkSystem implements Network
 	public void shutdown()
 	{
 		isActive = false;
-		try
+		if (server != null)
 		{
-			server.close();
-		}
-		catch (IOException e)
-		{
-			// TODO: does this need to be handled?
+			try
+			{
+				server.close();
+			}
+			catch (IOException e)
+			{
+				// TODO: does this need to be handled?
+			}
 		}
 	}
 	
@@ -99,8 +102,6 @@ public class NetworkSystem implements Network
 	{
 		private ServerSocket server;
 		private Network network;
-		
-		private 
 		
 		/**
 		 * Constructs a new ServerRunnable object.
