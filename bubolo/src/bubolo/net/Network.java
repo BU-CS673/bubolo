@@ -18,41 +18,36 @@ public interface Network
 	boolean isActive();
 	
 	/**
-	 * Returns true if this player is the server, or false otherwise. Note that
+	 * Returns true if this player is the game server, or false otherwise. Note that
 	 * all players run clients and servers, because everyone connects to each other
 	 * to reduce latency. The official server is only used for certain non-game
 	 * functionality, such as acting as the central connection point and sending
 	 * out ip addresses of all players.
-	 * @return
+	 * @return true if this player is the game server, or false otherwise. 
 	 */
 	boolean isServer();
 	
 	/**
-	 * Shuts down the network.
+	 * Shuts down the network system.
 	 */
-	void shutdown();
+	void destroy();
 	
 	/**
-	 * Identifies this player as a client, and attempts to connect to the 
+	 * Attempts to connect to the specified IP address.
 	 * 
-	 * @param serverIpAddress
-	 * @throws IllegalStateException if <code>startServer</code> has been called before 
-	 * <code>connect</code> is called. A player can only be a server or a client, not
-	 * both.
+	 * @param serverIpAddress the IP address of a server. Note that this isn't necessary
+	 * the <i>game</i> server, since clients also connect directly to each other.
 	 * @throws NetworkException if a network error occurs.
 	 */
-	void connect(InetSocketAddress serverIpAddress) throws IllegalStateException, NetworkException;
+	void connect(InetSocketAddress serverIpAddress) throws NetworkException;
 	
 	/**
 	 * Identifies this player as the server, and begins accepting connections 
 	 * from other players.
 	 * 
-	 * @throws IllegalStateException if <code>connect</code> has been called before 
-	 * <code>startServer</code> is called. A player can only be a server or a client, not
-	 * both.
 	 * @throws NetworkException if a network error occurs.
 	 */
-	void startServer() throws IllegalStateException, NetworkException;
+	void startServer() throws NetworkException;
 	
 	/**
 	 * Sends a network command to the other players.

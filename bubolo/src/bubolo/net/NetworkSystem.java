@@ -20,17 +20,45 @@ public class NetworkSystem implements Network
 	private ServerSocket serverSocket;
 	
 	private Server server;
+	private Client client;
 	
 	private AtomicBoolean isActive = new AtomicBoolean(true);
 	
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 	
+	private static Network instance;
+	
+	/**
+	 * Returns the Network instance.
+	 * @return the Network instance.
+	 */
+	public static Network getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new NetworkSystem();
+		}
+		return instance;
+	}
+	
+	/**
+	 * Private constructor since only one network instance can be created.
+	 */
+	private NetworkSystem()
+	{
+	}
 	
 	@Override
 	public boolean isActive()
 	{
 		return isActive.get();
+	}
+	
+	@Override
+	public boolean isServer()
+	{
+		return isServer;
 	}
 
 	@Override
@@ -54,18 +82,11 @@ public class NetworkSystem implements Network
 	public void connect(InetSocketAddress serverIpAddress) throws IllegalStateException,
 			NetworkException
 	{
-		if (isServer)
-		{
-			throw new IllegalStateException(
-					"connect was called after calling startServer. A player can be a client or a server, but not both.");
-		}
-		isClient = true;
-		
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
-	public void startServer() throws IllegalStateException, NetworkException
+	public void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
 	{
 		if (isClient)
 		{

@@ -3,12 +3,13 @@ package bubolo.net;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Runnable that accepts client connection.
@@ -19,8 +20,11 @@ class Server implements Runnable
 	private ServerSocket serverSocket;
 	private Network network;
 	
-	private Queue<ClientConnection> clients;
+	private List<Socket> clients;
 	private Executor executor = Executors.newCachedThreadPool();
+	
+	// Queue of commands that will be sent over the network.
+	private Queue<NetworkCommand> networkCommands = new  ArrayDeque<NetworkCommand>();
 	
 	/**
 	 * Constructs a new Server object.
@@ -29,26 +33,57 @@ class Server implements Runnable
 	 */
 	Server(Network networkSystem, ServerSocket server)
 	{
+		// Use a CopyOnWriteArrayList since writes are rare, but reads are frequent.
+		this.clients = new CopyOnWriteArrayList<Socket>();
 		this.serverSocket = server;
 		this.network = networkSystem;
 	}
 	
 	/**
-	 * Sends a network command to the other players.
+	 * Queues a network command that will be sent to the other players.
 	 * @param command the network command to send.
 	 */
-	public void send(NetworkCommand command)
+	void addCommand(NetworkCommand command)
 	{
-		for (ConnectionReader cr : clients)
+		networkCommands.add(command);
+	}
+	
+	/**
+	 * Sends queued network commands across the network.
+	 */
+	void update()
+	{
+		if (!clients.isEmpty() && !networkCommands.isEmpty())
 		{
-			if (cr.isActive())
+			// Watch for performance problems with this.
+			List<ConnectionWriter> writers = new ArrayList<ConnectionWriter>(clients.size());
+			for (Socket client : clients)
 			{
-				cr.send(command);
+				if (client.isConnected() && !client.isClosed())
+				{
+					writers.add(new ConnectionWriter(client));
+				}
 			}
-			// TODO: remove inactive ClientProcessors?
+			
+			NetworkCommand command = null;
+			while ((command = networkCommands.poll()) != null)
+			{
+				for (ConnectionWriter writer : writers)
+				{
+					writer.addCommand(command);
+				}
+			}
+			
+			for (ConnectionWriter writer : writers)
+			{
+				executor.execute(writer);
+			}
 		}
 	}
 	
+	/**
+	 * Accepts connections from clients, and adds them to the client list.
+	 */
 	@Override
 	public void run()
 	{
@@ -56,9 +91,7 @@ class Server implements Runnable
 		{
 			try
 			{
-				ClientConnection client = new ClientConnection(this.network, serverSocket.accept()); 
-				clients.add(client);
-				executor.execute(client);
+				clients.add(serverSocket.accept());
 			}
 			catch (IOException e)
 			{
