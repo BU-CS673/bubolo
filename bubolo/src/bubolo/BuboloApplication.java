@@ -1,6 +1,9 @@
 package bubolo;
 
+import com.badlogic.gdx.Gdx;
+
 import bubolo.graphics.Graphics;
+import bubolo.net.NetworkInformation;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 
@@ -74,6 +77,8 @@ public class BuboloApplication implements GameApplication
 	@Override
 	public void render()
 	{
+		long startMillis = System.currentTimeMillis();
+		
 		graphics.draw(world);
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
@@ -82,6 +87,19 @@ public class BuboloApplication implements GameApplication
 		{
 			world.update();
 			lastUpdate = currentMillis;
+		}
+		
+		long millisUntilNextUpdate = System.currentTimeMillis() - startMillis - Graphics.MILLIS_PER_TICK;
+		if (millisUntilNextUpdate > 0)
+		{
+			try
+			{
+				Thread.sleep(millisUntilNextUpdate);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO: does this need to be handled?
+			}
 		}
 	}
 	

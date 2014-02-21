@@ -18,6 +18,16 @@ public interface Network
 	boolean isActive();
 	
 	/**
+	 * Returns true if this player is the server, or false otherwise. Note that
+	 * all players run clients and servers, because everyone connects to each other
+	 * to reduce latency. The official server is only used for certain non-game
+	 * functionality, such as acting as the central connection point and sending
+	 * out ip addresses of all players.
+	 * @return
+	 */
+	boolean isServer();
+	
+	/**
 	 * Shuts down the network.
 	 */
 	void shutdown();
