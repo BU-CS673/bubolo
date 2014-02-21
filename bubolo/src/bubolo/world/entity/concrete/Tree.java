@@ -2,8 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.graphics.MockSprite;
-import bubolo.graphics.Sprite;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -25,7 +23,6 @@ public class Tree extends StationaryElement
 	public Tree()
 	{
 		super();
-		// sprite = Sprite.create(this);
 	}
 
 	/**
@@ -37,20 +34,7 @@ public class Tree extends StationaryElement
 	public Tree(UUID id)
 	{
 		super(id);
-		sprite = Sprite.create(this);
 		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Construct a new Tree with a MockSprite. Used for unit testing with separation from
-	 * the Graphics system.
-	 * 
-	 * @param m
-	 *            is the MockSprite that should be used to represent this Tree.
-	 */
-	public Tree(MockSprite<Tree> m)
-	{
-		sprite = m;
 	}
 
 	// TODO: Add Tree functionality!

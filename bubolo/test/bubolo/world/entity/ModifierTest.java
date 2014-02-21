@@ -2,19 +2,11 @@ package bubolo.world.entity;
 
 import static org.junit.Assert.*;
 
-import java.util.UUID;
-
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.Gdx;
-
-import bubolo.graphics.LibGdxAppTester;
-import bubolo.graphics.MockSprite;
 import bubolo.world.entity.Modifier;
 import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Tank;
 
 public class ModifierTest
 {
@@ -26,7 +18,7 @@ public class ModifierTest
 	@BeforeClass
 	public static void setup()
 	{
-		mod = new Road(new MockSprite<Road>());
+		mod = new Road();
 
 		EntityTestCase.setTestParams(mod);
 	}
@@ -66,7 +58,7 @@ public class ModifierTest
 	@Test
 	public void destroy()
 	{
-		Modifier mod2 = new Road(new MockSprite<Road>());
+		Modifier mod2 = new Road();
 		mod2.destroy();
 		// Should check to make sure the Modifier was removed properly.
 		// Useless until we have some conditions to test whether a Modifier has been
