@@ -2,6 +2,7 @@ package bubolo.net;
 
 import static org.junit.Assert.*;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 import org.junit.Before;
@@ -21,7 +22,7 @@ public class NetworkSystemTest
 	@Before
 	public void setup()
 	{
-		network = new NetworkSystem();
+		network = NetworkSystem.getInstance();
 	}
 	
 	
@@ -32,34 +33,26 @@ public class NetworkSystemTest
 	}
 	
 	@Test
-	public void isActiveFalse()
+	public void isActiveFalseAndDestroyTest()
 	{
-		network.shutdown();
-		assertFalse(network.isActive());
-	}
-
-	@Test
-	public void shutdown()
-	{
-		network.shutdown();
+		network.destroy();
 		assertFalse(network.isActive());
 	}
 
 	@Test
 	public void connect()
 	{
-		// TODO: call network.connect.
-		network.connect(mock(InetSocketAddress.class));
+		network.startServer(false);
+		network.connect(mock(InetAddress.class));
 	}
 	
 	@Test
 	public void connectInvalid()
 	{
-		network.startServer();
 		try
 		{
-			network.connect(mock(InetSocketAddress.class));
-			fail("startServer should have failed, but did not.");
+			network.connect(mock(InetAddress.class));
+			fail("connect should have failed, but did not.");
 		}
 		catch (IllegalStateException e)
 		{
@@ -69,17 +62,17 @@ public class NetworkSystemTest
 	@Test
 	public void startServer()
 	{
-		network.startServer();
-		network.shutdown();
+		network.startServer(true);
+		network.destroy();
 	}
 	
 	@Test
 	public void startServerInvalid()
 	{
-		network.connect(mock(InetSocketAddress.class));
+		network.startServer(true);
 		try
 		{
-			network.startServer();
+			network.startServer(true);
 			fail("startServer should have failed, but did not.");
 		}
 		catch (IllegalStateException e)
@@ -98,5 +91,11 @@ public class NetworkSystemTest
 	public void update()
 	{
 		network.update(mock(World.class));
+	}
+	
+	@Test
+	public void postToGameThread()
+	{
+		network.postToGameThread(mock(NetworkCommand.class));
 	}
 }

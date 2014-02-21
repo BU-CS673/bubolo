@@ -16,13 +16,13 @@ import java.util.concurrent.Executors;
  * sends the queued commands over the network.
  * @author BU CS673 - Clone Productions
  */
-class Server implements Runnable
+class Connections implements Runnable
 {
 	private ServerSocket serverSocket;
 	private Network network;
 	
-	// The list of clients that are connected to this server.
-	private List<Socket> clients;
+	// The list of connections that are connected to this player.
+	private List<ConnectionReader> connections;
 	
 	// Thread pool for sending NetworkCommands.
 	private Executor executor = Executors.newCachedThreadPool();
@@ -35,10 +35,10 @@ class Server implements Runnable
 	 * @param networkSystem reference to the network system.
 	 * @param server reference to an instantiated server socket.
 	 */
-	Server(Network networkSystem, ServerSocket server)
+	Connections(Network networkSystem, ServerSocket server)
 	{
 		// Use a CopyOnWriteArrayList since writes are rare, but reads are frequent.
-		this.clients = new CopyOnWriteArrayList<Socket>();
+		this.connections = new CopyOnWriteArrayList<ConnectionReader>();
 		this.serverSocket = server;
 		this.network = networkSystem;
 	}
@@ -53,19 +53,39 @@ class Server implements Runnable
 	}
 	
 	/**
+	 * Adds a connection to the list.
+	 * @param socket a connected socket.
+	 */
+	void addConnection(Socket socket)
+	{
+		connections.add(new ConnectionReader(network, socket));
+	}
+	
+	/**
+	 * Closes all active connections.
+	 */
+	void destroy()
+	{
+		for (ConnectionReader reader : connections)
+		{
+			reader.destroy();
+		}
+	}
+	
+	/**
 	 * Sends queued network commands across the network.
 	 */
 	void update()
 	{
-		if (!clients.isEmpty() && !networkCommands.isEmpty())
+		if (!connections.isEmpty() && !networkCommands.isEmpty())
 		{
 			// Watch for performance problems with this.
-			List<ConnectionWriter> writers = new ArrayList<ConnectionWriter>(clients.size());
-			for (Socket client : clients)
+			List<ConnectionWriter> writers = new ArrayList<ConnectionWriter>(connections.size());
+			for (ConnectionReader client : connections)
 			{
-				if (client.isConnected() && !client.isClosed())
+				if (client.getSocket().isConnected() && !client.getSocket().isClosed())
 				{
-					writers.add(new ConnectionWriter(client));
+					writers.add(new ConnectionWriter(client.getSocket()));
 				}
 			}
 			
@@ -95,7 +115,7 @@ class Server implements Runnable
 		{
 			try
 			{
-				clients.add(serverSocket.accept());
+				connections.add(new ConnectionReader(network, serverSocket.accept()));
 			}
 			catch (IOException e)
 			{

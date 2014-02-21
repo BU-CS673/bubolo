@@ -1,9 +1,6 @@
 package bubolo;
 
-import com.badlogic.gdx.Gdx;
-
 import bubolo.graphics.Graphics;
-import bubolo.net.NetworkInformation;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 

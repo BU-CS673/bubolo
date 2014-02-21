@@ -1,7 +1,6 @@
 package bubolo.net;
 
-import java.net.InetSocketAddress;
-
+import java.net.InetAddress;
 import bubolo.world.World;
 
 /**
@@ -35,17 +34,9 @@ public interface Network
 	void destroy();
 	
 	/**
-	 * Attempts to connect to the specified IP address.
-	 * 
-	 * @param serverIpAddress the IP address of a server. Note that this isn't necessary
-	 * the <i>game</i> server, since clients also connect directly to each other.
-	 * @throws NetworkException if a network error occurs.
-	 */
-	void connect(InetSocketAddress serverIpAddress) throws NetworkException;
-	
-	/**
 	 * Identifies this player as the server, and begins accepting connections 
-	 * from other players.
+	 * from other players. <code>startServer</code> must be called before
+	 * calling <code>connect</code>.
 	 * 
 	 * @param isGameServer true if this player is the game server, or false otherwise. 
 	 * There should only be one game server per game.
@@ -53,6 +44,18 @@ public interface Network
 	 * @throws IllegalStateException if the server was already started.
 	 */
 	void startServer(boolean isGameServer) throws NetworkException, IllegalStateException;
+	
+	/**
+	 * Attempts to connect to the specified IP address. <code>startServer</code> must be called before
+	 * calling <code>connect</code>.
+	 * 
+	 * @param serverIpAddress the IP address of a server. Note that this isn't necessarily
+	 * the <i>game</i> server, since clients also connect directly to each other.
+	 * @throws NetworkException if a network error occurs.
+	 * @throws IllegalStateException if <code>connect</code> is called before 
+	 * <code>startServer</code> was called.
+	 */
+	void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException;
 	
 	/**
 	 * Queues a network command to be sent to the other players.

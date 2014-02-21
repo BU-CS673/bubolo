@@ -1,8 +1,9 @@
 package bubolo.net;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,21 +20,25 @@ public class NetworkSystem implements Network
 	
 	private ServerSocket serverSocket;
 	
-	private Server server;
-	private Client client;
+	private Connections connections;
 	
 	private AtomicBoolean isActive = new AtomicBoolean(true);
 	
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 	
-	private static Network instance;
+	// The last time the network system was updated, in milliseconds.
+	private long lastUpdateMillis = 0;
+	
+	// Volatile to eliminate FindBugs warning: "This method contains an unsynchronized lazy initialization of a non-volatile static field. 
+	// Because the compiler or processor may reorder instructions, threads are not guaranteed to see a completely initialized object"
+	private static volatile NetworkSystem instance = null;
 	
 	/**
 	 * Returns the Network instance.
 	 * @return the Network instance.
 	 */
-	public static Network getInstance()
+	public static NetworkSystem getInstance()
 	{
 		if (instance == null)
 		{
@@ -79,17 +84,47 @@ public class NetworkSystem implements Network
 	}
 	
 	@Override
-	public void connect(InetSocketAddress serverIpAddress) throws IllegalStateException,
+	public void connect(InetAddress serverIpAddress) throws IllegalStateException,
 			NetworkException
 	{
-		// TODO: implement connection to server.
-		throw new UnsupportedOperationException("Not yet implemented");
+		if (connections == null)
+		{
+			throw new IllegalStateException("startServer must be called before calling connect.");
+		}
+		
+		class Connector implements Runnable
+		{
+			private InetAddress ipAddress;
+			private Connections networkConnections;
+			
+			Connector(InetAddress ipAddress, Connections connections)
+			{
+				this.ipAddress = ipAddress;
+				this.networkConnections = connections;
+			}
+
+			@Override
+			public void run()
+			{
+				try
+				{
+					networkConnections.addConnection(new Socket(ipAddress, NetworkInformation.GAME_PORT));
+				}
+				catch (IOException e)
+				{
+					// TODO: Need a way to return this error.
+					throw new NetworkException(e);
+				}
+			}
+		}
+		
+		new Thread(new Connector(serverIpAddress, connections)).start();;
 	}
 
 	@Override
 	public void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
 	{
-		if (server != null)
+		if (connections != null)
 		{
 			throw new IllegalStateException("The server was already started.");
 		}
@@ -98,8 +133,8 @@ public class NetworkSystem implements Network
 		try
 		{
 			serverSocket = new ServerSocket(NetworkInformation.GAME_PORT);
-			server = new Server(this, serverSocket);
-			new Thread(server).start();
+			connections = new Connections(this, serverSocket);
+			new Thread(connections).start();
 		}
 		catch (IOException e)
 		{
@@ -110,7 +145,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void send(NetworkCommand command)
 	{
-		server.addCommand(command);
+		connections.addCommand(command);
 	}
 
 	@Override
@@ -123,8 +158,14 @@ public class NetworkSystem implements Network
 			c.execute(world);
 		}
 		
-		// Send queued commands.
-		server.update();
+		// The network system runs less frequently than the game logic.
+		long differenceMillis = System.currentTimeMillis() - lastUpdateMillis - NetworkInformation.MILLIS_PER_TICK;
+		if (differenceMillis >= 0)
+		{
+			// Send queued commands to servers.
+			connections.update();
+		}
+		lastUpdateMillis = System.currentTimeMillis();
 	}
 	
 	@Override

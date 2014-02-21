@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -19,9 +17,6 @@ class ConnectionReader implements Runnable
 	
 	// AtomicBoolean since this may be read by different threads.
 	private AtomicBoolean isActive;
-	
-	// Queue of commands that will be sent across to other players.
-	private Queue<NetworkCommand> commands = new ConcurrentLinkedQueue<NetworkCommand>();
 	
 	/**
 	 * Constructs a ConnectionReader object.
@@ -41,16 +36,7 @@ class ConnectionReader implements Runnable
 		{
 			throw new NetworkException(e);
 		}
-		this.isActive = new AtomicBoolean();
-	}
-	
-	/**
-	 * Enqueues a command to be sent across the network.
-	 * @param command the command that will be sent.
-	 */
-	void send(NetworkCommand command)
-	{
-		commands.add(command);
+		this.isActive = new AtomicBoolean(true);
 	}
 	
 	/**
@@ -60,6 +46,23 @@ class ConnectionReader implements Runnable
 	boolean isActive()
 	{
 		return isActive.get();
+	}
+	
+	/**
+	 * Returns a reference to the underlying <code>Socket</code>.
+	 * @return a reference to the underlying <code>Socket</code>.
+	 */
+	Socket getSocket()
+	{
+		return socket;
+	}
+	
+	/**
+	 * Shuts down the ConnectionReader object.
+	 */
+	void destroy()
+	{
+		isActive.set(false);
 	}
 	
 	@Override
