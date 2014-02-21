@@ -3,6 +3,11 @@ package bubolo.net;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import bubolo.world.World;
 
@@ -19,19 +24,19 @@ public class NetworkSystem implements Network
 	
 	private Thread serverThread;
 	
-	private boolean isActive;
+	private AtomicBoolean isActive;
 	
 	
 	@Override
 	public boolean isActive()
 	{
-		return isActive;
+		return isActive.get();
 	}
 
 	@Override
 	public void shutdown()
 	{
-		isActive = false;
+		isActive.set(false);
 		if (server != null)
 		{
 			try
@@ -100,8 +105,10 @@ public class NetworkSystem implements Network
 	 */
 	private class ServerRunnable implements Runnable
 	{
-		private ServerSocket server;
+		private ServerSocket serverSocket;
 		private Network network;
+		
+		private Executor executor = Executors.newCachedThreadPool();
 		
 		/**
 		 * Constructs a new ServerRunnable object.
@@ -110,7 +117,7 @@ public class NetworkSystem implements Network
 		 */
 		ServerRunnable(Network networkSystem, ServerSocket server)
 		{
-			this.server = server;
+			this.serverSocket = server;
 			this.network = networkSystem;
 		}
 		
@@ -121,13 +128,64 @@ public class NetworkSystem implements Network
 			{
 				try
 				{
-					server.accept();
+					executor.execute(new ClientProcessor(this.network, serverSocket.accept()));
 				}
 				catch (IOException e)
 				{
 					// TODO: does this need to be handled?
 				}
 			}
+		}
+	}
+	
+	
+	/**
+	 * Processes client requests, and sends data to a client.
+	 * @author BU CS673 - Clone Productions
+	 */
+	private static class ClientProcessor implements Runnable
+	{
+		private Network network;
+		private Socket socket;
+		
+		private AtomicBoolean isActive;
+		
+		ClientProcessor(Network network, Socket socket) throws SocketException
+		{
+			this.network = network;
+			this.socket = socket;
+			socket.setTcpNoDelay(true);
+			this.isActive = new AtomicBoolean();
+		}
+		
+		/**
+		 * Returns true if the ClientProcessor is active, or false if not.
+		 * @return true if the ClientProcessor is active.
+		 */
+		boolean isActive()
+		{
+			return isActive.get();
+		}
+		
+		@Override
+		public void run()
+		{
+			while (network.isActive())
+			{
+				// TODO: accept data from the client, and send data to it.
+
+			}
+		
+			try
+			{
+				socket.close();
+			}
+			catch (IOException e)
+			{
+				// TODO: does this need to be handled?
+			}
+			
+			isActive.set(false);
 		}
 	}
 }
