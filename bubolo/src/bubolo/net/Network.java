@@ -58,4 +58,11 @@ public interface Network
 	 * @param world reference to the game world. 
 	 */
 	void update(World world);
+	
+	/**
+	 * Runs a NetworkCommand in the game logic thread.
+	 * 
+	 * @param command
+	 */
+	void postToGameThread(NetworkCommand command);
 }
