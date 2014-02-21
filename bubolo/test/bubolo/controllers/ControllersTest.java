@@ -4,10 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import bubolo.test.MockWorld;
+import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
+import static org.mockito.Mockito.*;
 
 public class ControllersTest
 {
@@ -21,7 +22,7 @@ public class ControllersTest
 	@Test
 	public void testUpdate()
 	{
-		Controllers.getInstance().update(new MockWorld());
+		Controllers.getInstance().update(mock(World.class));
 	}
 
 	@Test

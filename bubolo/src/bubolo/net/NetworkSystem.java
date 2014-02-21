@@ -24,7 +24,7 @@ public class NetworkSystem implements Network
 	
 	private Thread serverThread;
 	
-	private AtomicBoolean isActive;
+	private AtomicBoolean isActive = new AtomicBoolean(true);
 	
 	
 	@Override

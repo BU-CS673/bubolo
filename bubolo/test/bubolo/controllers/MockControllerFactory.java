@@ -3,7 +3,6 @@ package bubolo.controllers;
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
 import bubolo.test.MockController;
-import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
 /**
