@@ -19,7 +19,7 @@ class Server implements Runnable
 	private ServerSocket serverSocket;
 	private Network network;
 	
-	private Queue<ClientProcessor> clients;
+	private Queue<ClientConnection> clients;
 	private Executor executor = Executors.newCachedThreadPool();
 	
 	/**
@@ -39,11 +39,11 @@ class Server implements Runnable
 	 */
 	public void send(NetworkCommand command)
 	{
-		for (ClientProcessor c : clients)
+		for (ConnectionReader cr : clients)
 		{
-			if (c.isActive())
+			if (cr.isActive())
 			{
-				c.send(command);
+				cr.send(command);
 			}
 			// TODO: remove inactive ClientProcessors?
 		}
@@ -56,7 +56,7 @@ class Server implements Runnable
 		{
 			try
 			{
-				ClientProcessor client = new ClientProcessor(this.network, serverSocket.accept()); 
+				ClientConnection client = new ClientConnection(this.network, serverSocket.accept()); 
 				clients.add(client);
 				executor.execute(client);
 			}
@@ -64,83 +64,6 @@ class Server implements Runnable
 			{
 				// TODO: does this need to be handled?
 			}
-		}
-	}
-	
-	
-	/**
-	 * Processes client requests, and sends data to a client.
-	 * @author BU CS673 - Clone Productions
-	 */
-	private static class ClientProcessor implements Runnable
-	{
-		private Network network;
-		private Socket socket;
-		
-		private AtomicBoolean isActive;
-		
-		private Queue<NetworkCommand> commands = new ConcurrentLinkedQueue<NetworkCommand>();
-		
-		ClientProcessor(Network network, Socket socket) throws SocketException
-		{
-			this.network = network;
-			this.socket = socket;
-			socket.setTcpNoDelay(true);
-			this.isActive = new AtomicBoolean();
-		}
-		
-		/**
-		 * Enqueues a command to be sent across the network.
-		 * @param command the command that will be sent.
-		 */
-		void send(NetworkCommand command)
-		{
-			commands.add(command);
-		}
-		
-		/**
-		 * Returns true if the ClientProcessor is active, or false if not.
-		 * @return true if the ClientProcessor is active.
-		 */
-		boolean isActive()
-		{
-			return isActive.get();
-		}
-		
-		@Override
-		public void run()
-		{
-			while (network.isActive())
-			{
-				long startMillis = System.currentTimeMillis();
-				// TODO: accept data from the client, and send data to it.
-				// 1. Check for data in the queue, and send it if there is.
-				// 2. Check for data coming in, and process it if there is.
-
-				long differenceMillis = System.currentTimeMillis() - startMillis;
-				if (differenceMillis > 0)
-				{
-					try
-					{
-						Thread.sleep(NetworkInformation.MILLIS_PER_TICK - differenceMillis);
-					}
-					catch (InterruptedException e)
-					{
-						isActive.set(false);
-					}
-				}
-			}
-		
-			try
-			{
-				socket.close();
-			}
-			catch (IOException e)
-			{
-				// TODO: does this need to be handled?
-			}
-			
-			isActive.set(false);
 		}
 	}
 }
