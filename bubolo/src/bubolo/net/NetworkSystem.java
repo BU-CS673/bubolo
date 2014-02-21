@@ -56,13 +56,13 @@ public class NetworkSystem implements Network
 	}
 	
 	@Override
-	public boolean isServer()
+	public boolean isGameServer()
 	{
 		return isServer;
 	}
 
 	@Override
-	public void shutdown()
+	public void destroy()
 	{
 		isActive.set(false);
 		if (serverSocket != null)
@@ -82,18 +82,18 @@ public class NetworkSystem implements Network
 	public void connect(InetSocketAddress serverIpAddress) throws IllegalStateException,
 			NetworkException
 	{
+		// TODO: implement connection to server.
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
 	public void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
 	{
-		if (isClient)
+		if (server != null)
 		{
-			throw new IllegalStateException(
-					"startServer was called after calling connect. A player can be a client or a server, but not both.");
+			throw new IllegalStateException("The server was already started.");
 		}
-		isServer = true;
+		isServer = isGameServer;
 		
 		try
 		{
@@ -110,7 +110,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void send(NetworkCommand command)
 	{
-		throw new UnsupportedOperationException("Not yet implemented.");
+		server.addCommand(command);
 	}
 
 	@Override
@@ -123,8 +123,8 @@ public class NetworkSystem implements Network
 			c.execute(world);
 		}
 		
-		// TODO: remove this once NetworkSystem.update is implemented.
-		throw new UnsupportedOperationException("Not yet implemented");
+		// Send queued commands.
+		server.update();
 	}
 	
 	@Override

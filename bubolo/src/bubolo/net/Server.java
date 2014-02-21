@@ -12,7 +12,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * Runnable that accepts client connection.
+ * Runnable that accepts client connections, queues <code>NetworkCommand</code>s, and 
+ * sends the queued commands over the network.
  * @author BU CS673 - Clone Productions
  */
 class Server implements Runnable
@@ -20,7 +21,10 @@ class Server implements Runnable
 	private ServerSocket serverSocket;
 	private Network network;
 	
+	// The list of clients that are connected to this server.
 	private List<Socket> clients;
+	
+	// Thread pool for sending NetworkCommands.
 	private Executor executor = Executors.newCachedThreadPool();
 	
 	// Queue of commands that will be sent over the network.

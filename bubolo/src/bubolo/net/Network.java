@@ -13,6 +13,7 @@ public interface Network
 {
 	/**
 	 * Returns true if the network is active, or false otherwise.
+	 * 
 	 * @return true if the network is active.
 	 */
 	boolean isActive();
@@ -23,9 +24,10 @@ public interface Network
 	 * to reduce latency. The official server is only used for certain non-game
 	 * functionality, such as acting as the central connection point and sending
 	 * out ip addresses of all players.
+	 * 
 	 * @return true if this player is the game server, or false otherwise. 
 	 */
-	boolean isServer();
+	boolean isGameServer();
 	
 	/**
 	 * Shuts down the network system.
@@ -45,12 +47,15 @@ public interface Network
 	 * Identifies this player as the server, and begins accepting connections 
 	 * from other players.
 	 * 
+	 * @param isGameServer true if this player is the game server, or false otherwise. 
+	 * There should only be one game server per game.
 	 * @throws NetworkException if a network error occurs.
+	 * @throws IllegalStateException if the server was already started.
 	 */
-	void startServer() throws NetworkException;
+	void startServer(boolean isGameServer) throws NetworkException, IllegalStateException;
 	
 	/**
-	 * Sends a network command to the other players.
+	 * Queues a network command to be sent to the other players.
 	 * 
 	 * @param command the network command to send.
 	 */
