@@ -37,8 +37,11 @@ class RoadSprite extends Sprite<Road>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-//		drawTexture(batch, camera, layer, image);
+		drawTexture(batch, camera, layer, image);
 //		
+//	    Reminder Texture Region for Pillbox Sprite
+//      Poll Pillbox entity poll for hit point status
+//
 //		if (!addedCameraController)
 //		{
 //			// TODO: the sprite needs to ask the Road if it is the local player.
