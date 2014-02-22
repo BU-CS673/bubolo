@@ -1,4 +1,4 @@
-package bubolo.graphics;
+package bubolo.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import bubolo.world.entity.Entity;
  * (Which is not available at the time that this was implemented).
  * @author BU CS673 - Clone Productions
  */
-class MockWorld implements World
+public class MockWorld implements World
 {
 
 	@Override

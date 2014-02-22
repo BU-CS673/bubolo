@@ -3,12 +3,13 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 /**
- * Terrain objects represent the base of the game world at a given grid
- * position. A grid location must contain one Terrain object.
+ * Terrain objects represent the base of the game world at a given grid position. A grid
+ * location must contain one Terrain object.
  * 
  * @author BU CS673 - Clone Productions
  */
-public abstract class Terrain extends StationaryEntity {
+public abstract class Terrain extends StationaryEntity
+{
 
 	/**
 	 * Used when serializing and de-serializing.
@@ -18,7 +19,8 @@ public abstract class Terrain extends StationaryEntity {
 	/**
 	 * Construct a new Terrain with a random UUID.
 	 */
-	public Terrain() {
+	public Terrain()
+	{
 		super();
 	}
 
@@ -28,7 +30,8 @@ public abstract class Terrain extends StationaryEntity {
 	 * @param id
 	 *            is the existing UUID to be applied to the new Terrain.
 	 */
-	public Terrain(UUID id) {
+	public Terrain(UUID id)
+	{
 		super(id);
 		// TODO Auto-generated constructor stub
 	}

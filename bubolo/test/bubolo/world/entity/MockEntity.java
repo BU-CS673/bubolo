@@ -3,7 +3,6 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
-import bubolo.graphics.MockSprite;
 import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -29,10 +28,9 @@ public class MockEntity extends Entity
 	 * @param id
 	 *            is the existing UUID to be applied to the new DummyEntity.
 	 */
-	public MockEntity(UUID id, MockSprite<?> m)
+	public MockEntity(UUID id)
 	{
 		super(id);
-		sprite = m;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -42,10 +40,9 @@ public class MockEntity extends Entity
 	 * @param id
 	 *            is the existing UUID to be applied to the new DummyEntity.
 	 */
-	public MockEntity(MockSprite<?> m)
+	public MockEntity()
 	{
 		super();
-		sprite = m;
 		// TODO Auto-generated constructor stub
 	}
 
