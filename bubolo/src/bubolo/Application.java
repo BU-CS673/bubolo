@@ -3,7 +3,7 @@ package bubolo;
 
 /**
  * The application's entry point.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 public class Application
 {

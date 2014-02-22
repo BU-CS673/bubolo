@@ -1,7 +1,5 @@
 package bubolo.graphics;
 
-import java.util.UUID;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,8 +22,7 @@ class GrassSprite extends Sprite<Grass>
 	 */
 	GrassSprite(Grass grass)
 	{
-		super(UUID.fromString("ff36aca0-96bf-11e3-a5e2-0800200c9a66"),
-				DrawLayer.OBJECTS, grass);
+		super(DrawLayer.OBJECTS, grass);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
 		//TODO: Create a Tree texture!

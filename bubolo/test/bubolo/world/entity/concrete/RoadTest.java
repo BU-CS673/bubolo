@@ -1,12 +1,8 @@
 package bubolo.world.entity.concrete;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bubolo.graphics.MockSprite;
 import bubolo.world.entity.EntityTestCase;
 
 public class RoadTest
@@ -19,7 +15,7 @@ public class RoadTest
 	@BeforeClass
 	public static void setup()
 	{
-		road = new Road(new MockSprite<Road>());
+		road = new Road();
 		EntityTestCase.setTestParams(road);
 	}
 
