@@ -33,7 +33,7 @@ public class Entities
 	 * @param s reference to Sprites system.
 	 * @param c reference to controllers system.
 	 */
-	static void initialize(World w, Sprites s, Controllers c)
+	public static void initialize(World w, Sprites s, Controllers c)
 	{
 		Entities.world = w;
 		Entities.sprites = s;

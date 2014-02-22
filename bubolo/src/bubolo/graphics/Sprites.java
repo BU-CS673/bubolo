@@ -50,16 +50,17 @@ public class Sprites
 		return sprites;
 	}
 	
+	
 	/**
 	 * Do not call this overload.
 	 * @param entity reference to an entity.
 	 */
-	public Sprite<? extends Entity> create(Entity entity)
-	{
-		throw new GameLogicException(
-				"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
-				"Entity id: " + entity.getId());
-	}
+	//public Sprite<? extends Entity> create(Entity entity)
+	//{
+	//	throw new GameLogicException(
+	//			"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
+	//			"Entity id: " + entity.getId());
+	//}
 	
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.
