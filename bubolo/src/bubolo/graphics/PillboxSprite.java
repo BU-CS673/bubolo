@@ -5,13 +5,13 @@ import java.util.UUID;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import bubolo.world.Road;
+import bubolo.world.Pillbox;
 
 /**
- * The graphical representation of a Road
+ * The graphical representation of a Pillbox
  * @author BU673 - Clone Industries
  */
-class RoadSprite extends Sprite<Road>
+class PillboxSprite extends Sprite<Pillbox>
 {
 	private Texture image;
 	
@@ -19,20 +19,21 @@ class RoadSprite extends Sprite<Road>
 	private boolean addedCameraController;
 	
 	/**
-	 * Constructor for the RoadSprite. This is Package-private because sprites
+	 * Constructor for the PillboxSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system
 	 * (instead, call the Sprite.create(entity) static method).
-	 * @param road Reference to the road that this RoadSprite represents.
+	 * @param pillbox Reference to the pillbox that this PillboxSprite represents.
 	 */
-	RoadSprite(Road road)
+	PillboxSprite(Pillbox pillbox)
 	{
 		super(UUID.fromString("a297c142-716a-431f-8ea2-742a105fbbef"),
-				DrawLayer.TERRAIN_MODIFIERS, road);
+				DrawLayer.TERRAIN_MODIFIERS, pillbox);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "pillbox.png");
+		
 	}
 
-	// EMS Commented out because I don't know to handle this--do we need a draw method for road?
+	// EMS Commented out because I don't know to handle this--do we need a draw method for pillbox?
 	// ...or is the layer itself drawn?
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
@@ -44,9 +45,9 @@ class RoadSprite extends Sprite<Road>
 //
 //		if (!addedCameraController)
 //		{
-//			// TODO: the sprite needs to ask the Road if it is the local player.
-//			//	Something like road.isLocalPlayer() would work.
-//			CameraController controller = new RoadCameraController(getEntity());
+//			// TODO: the sprite needs to ask the Pillbox if it is the local player.
+//			//	Something like pillbox.isLocalPlayer() would work.
+//			CameraController controller = new PillboxCameraController(getEntity());
 //			Graphics.getInstance().addCameraController(controller);
 //			addedCameraController = true;
 //		}
