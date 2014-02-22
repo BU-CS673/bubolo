@@ -33,4 +33,5 @@ public class GameApplicationTest
 		GameApplication ga = new GameApplication(500, 400);
 		ga.dispose();
 	}
+	
 }
