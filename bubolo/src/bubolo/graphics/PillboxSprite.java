@@ -1,10 +1,10 @@
 package bubolo.graphics;
 
-
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import bubolo.world.entity.*;
 
 /**
@@ -15,8 +15,7 @@ class PillboxSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
-	// true if the camera controller has been added.
-	private boolean addedCameraController;
+	private TextureRegion specificImage;
 	
 	/**
 	 * Constructor for the PillboxSprite. This is Package-private because sprites
@@ -26,29 +25,72 @@ class PillboxSprite extends Sprite<Entity>
 	 */
 	PillboxSprite(Entity pillbox)
 	{
-		super(DrawLayer.TERRAIN_MODIFIERS, pillbox);
+		super(DrawLayer.OBJECTS, pillbox);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "pillbox.png");
+		specificImage.setTexture(image);
 		
 	}
 
-	// EMS Commented out because I don't know to handle this--do we need a draw method for pillbox?
-	// ...or is the layer itself drawn?
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		drawTexture(batch, camera, layer, image);
-//		
-//	    Reminder Texture Region for Pillbox Sprite
-//      Poll Pillbox entity poll for hit point status
-//
-//		if (!addedCameraController)
-//		{
-//			// TODO: the sprite needs to ask the Pillbox if it is the local player.
-//			//	Something like pillbox.isLocalPlayer() would work.
-//			CameraController controller = new PillboxCameraController(getEntity());
-//			Graphics.getInstance().addCameraController(controller);
-//			addedCameraController = true;
-//		}
+		
+		/** 
+		 * Get the current HP of this object and determine currentState
+		 * currentState = 1 is full health
+		 * currentState = 0 to .99 represents percentage of total health available
+		 * for Pillbox we have 3 appearances
+		 *  100 = 5
+		 *  99 - 75 = 4
+		 *  74 - 50 = 3
+		 *  49 - 25 = 2
+		 *  24 - 1 = 1
+		 *  0 = 0 ("dead" for Pillbox is inactive, but still present on screen) 
+		 */
+		
+		// Below line may be very very wrong... but hopefully the goal is clear, a 0-5 value
+
+		// int currentState = round(((getEntity().getHP() / getEntity().getMaxHP()) * 100) / 20);
+		
+		// this is here to prevent errors--will always show a "dead" pillbox
+		int currentState = 0;	
+		
+		switch(currentState){
+		case 5:			
+			specificImage.setRegion(0,0,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
+		case 4:
+			specificImage.setRegion(0,32,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
+		case 3:
+			specificImage.setRegion(0,64,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
+		case 2:
+			specificImage.setRegion(0,96,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
+		case 1:			
+			specificImage.setRegion(0,128,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
+		case 0:	
+			specificImage.setRegion(0,160,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+		
+		default:
+			// Something has gone horribly wrong... I'm sad :(
+			break;
+		}
 	}
 }
