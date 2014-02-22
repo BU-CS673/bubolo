@@ -1,17 +1,17 @@
 package bubolo.graphics;
 
-import java.util.UUID;
+
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import bubolo.world.Pillbox;
+import bubolo.world.entity.*;
 
 /**
  * The graphical representation of a Pillbox
  * @author BU673 - Clone Industries
  */
-class PillboxSprite extends Sprite<Pillbox>
+class PillboxSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
@@ -24,10 +24,9 @@ class PillboxSprite extends Sprite<Pillbox>
 	 * (instead, call the Sprite.create(entity) static method).
 	 * @param pillbox Reference to the pillbox that this PillboxSprite represents.
 	 */
-	PillboxSprite(Pillbox pillbox)
+	PillboxSprite(Entity pillbox)
 	{
-		super(UUID.fromString("a297c142-716a-431f-8ea2-742a105fbbef"),
-				DrawLayer.TERRAIN_MODIFIERS, pillbox);
+		super(DrawLayer.TERRAIN_MODIFIERS, pillbox);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "pillbox.png");
 		
