@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 public class TankSpriteTest
 {
@@ -25,82 +25,71 @@ public class TankSpriteTest
 	@Before
 	public void setUp()
 	{	
-		LibGdxAppTester.createApp();
-		
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera(100, 100);
+		synchronized(LibGdxAppTester.getLock())
+		{
+			LibGdxAppTester.createApp();
+			
+			batch = new SpriteBatch();
+			camera = new OrthographicCamera(100, 100);
+			Graphics g = new Graphics(50, 500);
+		}
 	}
 	
 	@Test
 	public void constructTankSprite() throws InterruptedException
 	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				// Fails if the constructor throws an exception.
-				Sprite<Tank> sprite = new TankSprite(new Tank());
-				passed = true;
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
+		synchronized(LibGdxAppTester.getLock())
 		{
-			Thread.yield();
+			isComplete = false;
+			passed = false;
+			
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run()
+				{
+					// Fails if the constructor throws an exception.
+					Sprite<Tank> sprite = new TankSprite(new Tank());
+					passed = true;
+					isComplete = true;
+				}
+			});
+	
+			while (!isComplete)
+			{
+				Thread.yield();
+			}
+			
+			assertTrue(passed);
 		}
-		
-		assertTrue(passed);
 	}
 
+	
 	@Test
 	public void drawTankSprite()
 	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				Sprite<Tank> sprite = Sprite.create(new Tank());
-				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TANKS);
-				passed = true;
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
+		synchronized(LibGdxAppTester.getLock())
 		{
-			Thread.yield();
-		}
-		
-		assertTrue(passed);
-	}
+			isComplete = false;
+			passed = false;
+			
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run()
+				{
+					Sprite<?> sprite = Sprites.getInstance().create(new Tank());
+					batch.begin();
+					sprite.draw(batch, camera, DrawLayer.TANKS);
+					passed = true;
+					isComplete = true;
+				}
+			});
 	
-	@Test
-	public void getId()
-	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
+			while (!isComplete)
 			{
-				Sprite<Tank> sprite = Sprite.create(new Tank());
-				assertEquals(UUID.fromString("13eb9d6a-8965-43fc-a4aa-82fb70c9045f"), sprite.getId()); 
-				isComplete = true;
+				Thread.yield();
 			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
+			
+			assertTrue(passed);
 		}
 	}
 }

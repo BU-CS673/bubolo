@@ -5,141 +5,69 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.badlogic.gdx.Gdx;
+import bubolo.world.entity.concrete.Tank;
 
-import bubolo.world.Grass;
-import bubolo.world.Road;
-import bubolo.world.Tank;
-import bubolo.world.Tree;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SpriteTest
 {
-	private static boolean isComplete;
-	private static boolean hadException;
+	private SpriteBatch batch;
+	private Camera camera;
+	
+	private boolean isComplete;
+	private boolean passed;
 	
 	@Before
 	public void setUp()
 	{	
-		LibGdxAppTester.createApp();
+		synchronized(LibGdxAppTester.getLock())
+		{
+			LibGdxAppTester.createApp();
+			
+			batch = new SpriteBatch();
+			camera = new OrthographicCamera(100, 100);
+			Graphics g = new Graphics(50, 500);
+		}
 	}
 	
 	@Test
-	public void spriteCreateTank() throws InterruptedException
+	public void testDrawTextureRegion()
 	{
-		isComplete = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				try
-				{
-					Sprite<?> sprite = Sprite.create(new Tank());
-					assertNotNull(sprite);
-					hadException = false;
-				}
-				catch (Exception e)
-				{
-					hadException = true;
-				}
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
+		synchronized(LibGdxAppTester.getLock())
 		{
-			Thread.yield();
+			isComplete = false;
+			passed = false;
+			
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run()
+				{
+					Sprite<?> sprite = new MockSpriteTextureRegion();
+					batch.begin();
+					sprite.draw(batch, camera, sprite.getDrawLayer());
+					passed = true;
+					isComplete = true;
+				}
+			});
+	
+			while (!isComplete)
+			{
+				Thread.yield();
+			}
+			
+			assertTrue(passed);
 		}
-		assertFalse("Exception thrown when creating sprite.", hadException);
 	}
 	
 	@Test
-	public void spriteCreateTree() throws InterruptedException
+	public void testDrawTextureRegionWrongLayer()
 	{
-		isComplete = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				try
-				{
-					Sprite<?> sprite = Sprite.create(new Tree());
-					assertNotNull(sprite);
-					hadException = false;
-				}
-				catch (Exception e)
-				{
-					hadException = true;
-				}
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
-		}
-		assertFalse("Exception thrown when creating sprite.", hadException);
-	}
-	
-	@Test
-	public void spriteCreateGrass() throws InterruptedException
-	{
-		isComplete = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				try
-				{
-					Sprite<?> sprite = Sprite.create(new Grass());
-					assertNotNull(sprite);
-					hadException = false;
-				}
-				catch (Exception e)
-				{
-					hadException = true;
-				}
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
-		}
-		assertFalse("Exception thrown when creating sprite.", hadException);
-	}
-	
-	@Test
-	public void spriteCreateRoad() throws InterruptedException
-	{
-		isComplete = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				try
-				{
-					Sprite<?> sprite = Sprite.create(new Road());
-					assertNotNull(sprite);
-					hadException = false;
-				}
-				catch (Exception e)
-				{
-					hadException = true;
-				}
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
-		}
-		assertFalse("Exception thrown when creating sprite.", hadException);
+		Camera camera = new OrthographicCamera();
+		SpriteBatch batch = new SpriteBatch();
+		Sprite<?> sprite = new MockSpriteTextureRegion();
+		sprite.draw(batch, camera, DrawLayer.TERRAIN_MODIFIERS);
 	}
 }
