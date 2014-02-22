@@ -55,12 +55,19 @@ public class Sprites
 	 * Do not call this overload.
 	 * @param entity reference to an entity.
 	 */
-	//public Sprite<? extends Entity> create(Entity entity)
-	//{
-	//	throw new GameLogicException(
-	//			"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
-	//			"Entity id: " + entity.getId());
-	//}
+	public Sprite<? extends Entity> create(Entity entity)
+	{
+		// TODO: this is obviously wrong: fix it.
+		if (entity.getClass() == Tank.class)
+		{
+			return create((Tank)entity);
+		}
+		else if (entity.getClass() == Grass.class)
+		{
+			return create((Grass)entity);
+		}
+		return null;
+	}
 	
 	/**
 	 * Creates a new sprite, and adds it to the list of drawables.

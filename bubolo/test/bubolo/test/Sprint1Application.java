@@ -76,7 +76,9 @@ public class Sprint1Application implements GameApplication
 				Entities.create(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
 			}
 		}
-		Entities.create(Tank.class).setParams(15 * 32, 15 * 32, 32, 32, 0);
+		Tank tank = Entities.create(Tank.class);
+		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
+		
 		
 		// TODO: add other systems here.
 		
