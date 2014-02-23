@@ -2,8 +2,12 @@ package bubolo.net;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.World;
 import static org.mockito.Mockito.*;
 
 public class ConnectionsTest
@@ -13,43 +17,53 @@ public class ConnectionsTest
 	@Before
 	public void setup()
 	{
-		connections = new Connections(mock(Network.class), new MockSocket());
-	}
-
-	@Test
-	public void testConnections()
-	{
-		fail("Not yet implemented");
+		try
+		{
+			connections = new Connections(mock(Network.class), new MockServerSocket());
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Test
 	public void testAddCommand()
 	{
-		fail("Not yet implemented");
+		connections.addCommand(new NetworkCommand() {
+			@Override
+			public void execute(World world)
+			{
+				// Do nothing. This is a mock object.
+			}
+		});
 	}
 
 	@Test
 	public void testAddConnection()
 	{
-		fail("Not yet implemented");
+		connections.addConnection(new MockSocket());
 	}
 
 	@Test
 	public void testDestroy()
 	{
-		fail("Not yet implemented");
+		connections.destroy();
+		assertFalse(connections.isActive());
 	}
 
 	@Test
 	public void testUpdate()
 	{
-		fail("Not yet implemented");
+		connections.update();
 	}
 
 	@Test
 	public void testRun()
 	{
-		fail("Not yet implemented");
+		Thread t = new Thread(connections);
+		t.start();
+		t.interrupt();
 	}
 
 }

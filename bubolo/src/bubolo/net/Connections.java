@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Runnable that accepts client connections, queues <code>NetworkCommand</code>s, and 
@@ -30,6 +31,8 @@ class Connections implements Runnable
 	// Queue of commands that will be sent over the network.
 	private Queue<NetworkCommand> networkCommands = new  ArrayDeque<NetworkCommand>();
 	
+	private AtomicBoolean isActive = new AtomicBoolean(true);
+	
 	/**
 	 * Constructs a new Server object.
 	 * @param networkSystem reference to the network system.
@@ -41,6 +44,15 @@ class Connections implements Runnable
 		this.connections = new CopyOnWriteArrayList<ConnectionReader>();
 		this.serverSocket = server;
 		this.network = networkSystem;
+	}
+	
+	/**
+	 * Specifies whether the Connections object is active.
+	 * @return true if the Connections object is active.
+	 */
+	boolean isActive()
+	{
+		return isActive.get();
 	}
 	
 	/**
@@ -70,6 +82,7 @@ class Connections implements Runnable
 		{
 			reader.destroy();
 		}
+		isActive.set(false);
 	}
 	
 	/**

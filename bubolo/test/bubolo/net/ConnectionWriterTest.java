@@ -1,16 +1,9 @@
 package bubolo.net;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.world.World;
-import static org.mockito.Mockito.*;
 
 public class ConnectionWriterTest
 {
