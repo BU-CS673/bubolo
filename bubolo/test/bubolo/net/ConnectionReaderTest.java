@@ -42,7 +42,15 @@ public class ConnectionReaderTest
 	@Test
 	public void testRun()
 	{
-		cr.run();
+		Thread t = new Thread(cr);
+		t.start();
+		
+		try
+		{
+			// Kill the thread.
+			t.interrupt();
+		}
+		catch (Exception e) {}
 	}
 
 }

@@ -94,7 +94,7 @@ class ConnectionReader implements Runnable
 				catch (ClassNotFoundException | IOException e)
 				{
 					// TODO This may need to be handled.
-					e.printStackTrace();
+					throw new NetworkException(e);
 				}
 			}
 		}
@@ -103,11 +103,15 @@ class ConnectionReader implements Runnable
 			try
 			{
 				isActive.set(false);
-				socket.close();
+				if (socket != null)
+				{
+					socket.close();
+				}
 			}
 			catch (IOException e)
 			{
 				// TODO: does this need to be handled?
+				throw new NetworkException(e);
 			}
 		}
 	}

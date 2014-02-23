@@ -34,6 +34,11 @@ public interface Network
 	void destroy();
 	
 	/**
+	 * Resets the network system.
+	 */
+	void reset();
+	
+	/**
 	 * Identifies this player as the server, and begins accepting connections 
 	 * from other players. <code>startServer</code> must be called before
 	 * calling <code>connect</code>.

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +24,12 @@ public class NetworkSystemTest
 	public void setup()
 	{
 		network = NetworkSystem.getInstance();
+	}
+	
+	@After
+	public void teardown()
+	{
+		network.reset();
 	}
 	
 	
@@ -63,7 +70,6 @@ public class NetworkSystemTest
 	public void startServer()
 	{
 		network.startServer(true);
-		network.destroy();
 	}
 	
 	@Test
@@ -83,14 +89,21 @@ public class NetworkSystemTest
 	@Test
 	public void send()
 	{
-		NetworkCommand command = mock(NetworkCommand.class);
+		NetworkCommand command = new NetworkCommand() {
+			@Override
+			public void execute(World world)
+			{	
+			}
+		};
+		network.startServer(false);
 		network.send(command);
 	}
 
 	@Test
 	public void update()
 	{
-		network.update(mock(World.class));
+		network.startServer(false);
+		network.update(new MockWorld());
 	}
 	
 	@Test

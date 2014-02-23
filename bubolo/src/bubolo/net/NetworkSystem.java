@@ -48,6 +48,14 @@ public class NetworkSystem implements Network
 	}
 	
 	/**
+	 * Resets the instance variable.
+	 */
+	private static void resetInstance()
+	{
+		instance = null;
+	}
+	
+	/**
 	 * Private constructor since only one network instance can be created.
 	 */
 	private NetworkSystem()
@@ -172,5 +180,12 @@ public class NetworkSystem implements Network
 	public void postToGameThread(NetworkCommand command)
 	{
 		postedCommands.add(command);
+	}
+
+	@Override
+	public void reset()
+	{
+		destroy();
+		resetInstance();
 	}
 }
