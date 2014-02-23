@@ -4,19 +4,29 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import static org.mockito.Mockito.*;
+
 public class NetworkExceptionTest
 {
 
 	@Test
 	public void testNetworkExceptionString()
 	{
-		fail("Not yet implemented");
+		try
+		{
+			throw new NetworkException("");
+		}
+		catch (Exception e) {}
 	}
 
 	@Test
 	public void testNetworkExceptionThrowable()
 	{
-		fail("Not yet implemented");
+		try
+		{
+			throw new NetworkException(mock(RuntimeException.class));
+		}
+		catch (Exception e) {}
 	}
 
 }

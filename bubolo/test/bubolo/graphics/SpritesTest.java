@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.test.MockTank;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
@@ -142,5 +144,16 @@ public class SpritesTest
 			Thread.yield();
 		}
 		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void createSpriteInvalid()
+	{
+		try
+		{
+			Sprite<?> sprite = Sprites.getInstance().createSprite(new MockTank());
+			fail("createSprite should have failed, since it is not designed to handle MockTank objects, but did not.");
+		}
+		catch (Exception e) {}
 	}
 }

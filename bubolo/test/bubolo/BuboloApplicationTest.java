@@ -26,11 +26,7 @@ public class BuboloApplicationTest
 	@Test
 	public void testCreate()
 	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			ga.create();
-			assertTrue(ga.isReady());
-		}
+		ga.create();
 	}
 
 	@Test

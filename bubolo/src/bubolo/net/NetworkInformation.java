@@ -6,6 +6,11 @@ package bubolo.net;
  */
 public class NetworkInformation
 {
+	// Private, since NetworkInformation should never be instantiated.
+	private NetworkInformation()
+	{
+	}
+	
 	/**
 	 * The port that the game server listens to.
 	 */

@@ -6,12 +6,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import bubolo.test.MockTank;
 import bubolo.test.MockWorld;
+import bubolo.world.World;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+
+import static org.mockito.Mockito.*;
 
 public class GraphicsTest extends ApplicationAdapter
 {

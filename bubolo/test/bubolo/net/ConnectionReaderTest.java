@@ -12,36 +12,37 @@ import static org.mockito.Mockito.*;
 
 public class ConnectionReaderTest
 {
-	private ConnectionReader reader;
+	private ConnectionReader cr;
 	
 	@Before
 	public void setup()
 	{
-		reader = new ConnectionReader(mock(Network.class), mock(Socket.class));
+		cr = new ConnectionReader(mock(Network.class), new MockSocket());
 	}
 
 	@Test
 	public void testIsActive()
 	{
-		assertTrue(reader.isActive());
+		assertTrue(cr.isActive());
 	}
 
 	@Test
 	public void testGetSocket()
 	{
-		fail("Not yet implemented");
+		assertNotNull(cr.getSocket());
 	}
 
 	@Test
 	public void testDestroy()
 	{
-		fail("Not yet implemented");
+		cr.destroy();
+		assertFalse(cr.isActive());
 	}
 
 	@Test
 	public void testRun()
 	{
-		fail("Not yet implemented");
+		cr.run();
 	}
 
 }
