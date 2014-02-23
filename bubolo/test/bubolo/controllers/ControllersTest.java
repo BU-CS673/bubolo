@@ -37,7 +37,7 @@ public class ControllersTest
 	public void testCreateTankControllerFactory()
 	{
 		Controllers controllerSystem = Controllers.getInstance();
-		controllerSystem.createController(new Tank(), new MockTankControllerFactory());
+		controllerSystem.createController(new Tank(), new MockControllerFactory());
 		assertEquals(1, controllerSystem.getCount());
 	}
 

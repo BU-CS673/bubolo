@@ -8,7 +8,7 @@ import bubolo.world.World;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class MockTankController implements Controller
+public class MockController implements Controller
 {
 	@Override
 	public void update(World world)
