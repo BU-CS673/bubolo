@@ -113,10 +113,16 @@ Package Functions</h2></td></tr>
 <tr class="separator:a9bac008d9d564a134733761d5c34bd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract base class for sprites, which draw textures to a quad at a specific x,y location.</p>
+<div class="textblock"><p>Abstract base class for sprites, which draw textures to a quad at a specific x,y location. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&lt;T&gt;</td><td>the least derived <code>Entity</code> type that this <code>Sprite</code> needs to draw itself. For example, a very simple <code>Sprite</code>, such as <code><a class="el" href="classbubolo_1_1graphics_1_1_grass_sprite.html">GrassSprite</a></code>, can derive from <code>Sprite{ &lt;Entity&gt;}</code>, while a more complex <code>Sprite</code>, such as <code>PillboxSprite</code>, will likely need to derive from <code>Sprite{ &lt;Pillbox&gt;}</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section author"><dt>Author</dt><dd>BU CS673 - Clone Productions </dd></dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00016">16</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00020">20</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a67a2542c87e3fc6424ae500de636dacc"></a>
 <div class="memitem">
@@ -158,7 +164,7 @@ Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00036">36</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00040">40</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 
 </div>
 </div>
@@ -266,7 +272,7 @@ Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00090">90</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00094">94</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 
 </div>
 </div>
@@ -324,7 +330,7 @@ Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00119">119</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00123">123</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 
 </div>
 </div>
@@ -351,7 +357,7 @@ Package Functions</h2></td></tr>
 <p>Returns the sprite's draw layer.</p>
 <dl class="section return"><dt>Returns</dt><dd>the sprite's draw layer. </dd></dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00047">47</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00051">51</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 
 </div>
 </div>
@@ -378,14 +384,14 @@ Package Functions</h2></td></tr>
 <p>Returns the entity that this sprite represents.</p>
 <dl class="section return"><dt>Returns</dt><dd>the entity that this sprite represents. </dd></dl>
 
-<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00057">57</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
+<p>Definition at line <a class="el" href="_sprite_8java_source.html#l00061">61</a> of file <a class="el" href="_sprite_8java_source.html">Sprite.java</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:46 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:40 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['millis_5fper_5ftick',['MILLIS_PER_TICK',['../classbubolo_1_1_bubolo_application.html#a34ca7a04e7979395dd47579878be7df0',1,'bubolo::BuboloApplication']]]
+  ['game_5fport',['GAME_PORT',['../classbubolo_1_1net_1_1_network_information.html#a09903645ab2cceb5e3a304c75a7a77ff',1,'bubolo::net::NetworkInformation']]]
 ];

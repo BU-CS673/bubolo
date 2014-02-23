@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>bubolo: bubolo/controllers/Controllers.java Source File</title>
+<title>bubolo: C:/Users/Canfield/Documents/GitHub/bubolo/bubolo/src/bubolo/controllers/Controllers.java Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c036324e01e3480a20a5b440eb40c9cd.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_688ac34473b2bc3d1a71db6e570d957b.html">controllers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_059177a2de90adf08b9286e5dab90271.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_afad3289e03d63d691db26ebfdca80a6.html">src</a></li><li class="navelem"><a class="el" href="dir_17fe9f086991e6181787112e2db3e980.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_5c0e1318b5a6b29736d67f333299e8aa.html">controllers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -84,102 +84,90 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>bubolo.controllers;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">import</span> java.util.ArrayList;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.util.List;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> <a class="code" href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a>;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">bubolo.world.entity.concrete.Tank</a>;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">bubolo.world.entity.concrete.Tree</a>;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.util.HashMap;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> java.util.List;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> java.util.Map;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">import</span> <a class="code" href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a>;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html">   15</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">private</span> List&lt;Controller&gt; controllers = <span class="keyword">new</span> ArrayList&lt;Controller&gt;();</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a> instance;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">private</span> Map&lt;Class&lt;? extends Entity&gt;, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a>&gt; defaultFactories;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">   25</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">getInstance</a>()</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordflow">if</span> (instance == null)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            instance = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> instance;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">private</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a>()</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">   45</a></span>&#160;    <span class="keywordtype">long</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">getCount</a>()</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> controllers.size();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">   54</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">update</a>(<a class="code" href="interfacebubolo_1_1world_1_1_world.html">World</a> w)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">for</span> (<a class="code" href="interfacebubolo_1_1controllers_1_1_controller.html">Controller</a> c : controllers)</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            c.update(w);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#adf17ac15d82ff74c0adc36f5aa0a9dd5">   71</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#adf17ac15d82ff74c0adc36f5aa0a9dd5">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> entity, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> factory)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">if</span> (factory != null)</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            factory.create(entity, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    </div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a56e4aeea2ee4be2501b75882abc3b150">   85</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a56e4aeea2ee4be2501b75882abc3b150">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">Tank</a> tank, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> factory)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">if</span> (factory != null)</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            factory.create(tank, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="comment">// TODO: implement this once at least one tank controller has been implemented.</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="stringliteral">&quot;Not yet implemented&quot;</span>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a0ce1679cfc7fbbb32ecb4179aed8c4c9">  104</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a0ce1679cfc7fbbb32ecb4179aed8c4c9">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">Tree</a> tree, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> factory)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">if</span> (factory != null)</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            factory.create(tree, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        {</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="comment">// WARNING NOTE: The warnings will be eliminated once this method has been implemented.</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordflow">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="stringliteral">&quot;Not yet implemented&quot;</span>);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">  121</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">addController</a>(<a class="code" href="interfacebubolo_1_1controllers_1_1_controller.html">Controller</a> controller)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        controllers.add(controller);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a3498bb9309c04125fd475729ebae4499"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">bubolo.controllers.Controllers.getCount</a></div><div class="ttdeci">long getCount()</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00045">Controllers.java:45</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a34fca3874e6fe901017fcaa6ade9f903"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">bubolo.controllers.Controllers.getInstance</a></div><div class="ttdeci">static Controllers getInstance()</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00025">Controllers.java:25</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a56e4aeea2ee4be2501b75882abc3b150"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a56e4aeea2ee4be2501b75882abc3b150">bubolo.controllers.Controllers.create</a></div><div class="ttdeci">void create(Tank tank, ControllerFactory factory)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00085">Controllers.java:85</a></div></div>
-<div class="ttc" id="interfacebubolo_1_1world_1_1_world_html"><div class="ttname"><a href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a></div><div class="ttdef"><b>Definition:</b> <a href="_world_8java_source.html#l00014">World.java:14</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a797cee6be9a1477fef41c74fd10e2032"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">bubolo.controllers.Controllers.update</a></div><div class="ttdeci">void update(World w)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00054">Controllers.java:54</a></div></div>
-<div class="ttc" id="interfacebubolo_1_1controllers_1_1_controller_factory_html"><div class="ttname"><a href="interfacebubolo_1_1controllers_1_1_controller_factory.html">bubolo.controllers.ControllerFactory</a></div><div class="ttdef"><b>Definition:</b> <a href="_controller_factory_8java_source.html#l00009">ControllerFactory.java:9</a></div></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a> instance;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">   27</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">getInstance</a>()</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">if</span> (instance == null)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            instance = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a>();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> instance;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html">Controllers</a>()</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        defaultFactories = setDefaultControllerFactories();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">   48</a></span>&#160;    <span class="keywordtype">long</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">getCount</a>()</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> controllers.size();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">   57</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">update</a>(<a class="code" href="interfacebubolo_1_1world_1_1_world.html">World</a> w)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">for</span> (<a class="code" href="interfacebubolo_1_1controllers_1_1_controller.html">Controller</a> c : controllers)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            c.update(w);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#ad8bda48039f8efdc62bda4658a664b1f">   74</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#ad8bda48039f8efdc62bda4658a664b1f">createController</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> entity, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> factory)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> controllerFactory = factory;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">if</span> (controllerFactory == null)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            controllerFactory = defaultFactories.get(entity.getClass());</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> (controllerFactory != null)</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            controllerFactory.create(entity, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">   92</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">addController</a>(<a class="code" href="interfacebubolo_1_1controllers_1_1_controller.html">Controller</a> controller)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        controllers.add(controller);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Class&lt;? extends Entity&gt;, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a>&gt; setDefaultControllerFactories()</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        Map&lt;Class&lt;? extends Entity&gt;, <a class="code" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a>&gt; factories = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// TODO: No default factories exist yet. Add default factories here.</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span> factories;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a3498bb9309c04125fd475729ebae4499"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a3498bb9309c04125fd475729ebae4499">bubolo.controllers.Controllers.getCount</a></div><div class="ttdeci">long getCount()</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00048">Controllers.java:48</a></div></div>
+<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a34fca3874e6fe901017fcaa6ade9f903"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a34fca3874e6fe901017fcaa6ade9f903">bubolo.controllers.Controllers.getInstance</a></div><div class="ttdeci">static Controllers getInstance()</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00027">Controllers.java:27</a></div></div>
+<div class="ttc" id="interfacebubolo_1_1world_1_1_world_html"><div class="ttname"><a href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a></div><div class="ttdef"><b>Definition:</b> <a href="_world_8java_source.html#l00015">World.java:15</a></div></div>
+<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a797cee6be9a1477fef41c74fd10e2032"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a797cee6be9a1477fef41c74fd10e2032">bubolo.controllers.Controllers.update</a></div><div class="ttdeci">void update(World w)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00057">Controllers.java:57</a></div></div>
+<div class="ttc" id="interfacebubolo_1_1controllers_1_1_controller_factory_html"><div class="ttname"><a href="interfacebubolo_1_1controllers_1_1_controller_factory.html">bubolo.controllers.ControllerFactory</a></div><div class="ttdef"><b>Definition:</b> <a href="_controller_factory_8java_source.html#l00011">ControllerFactory.java:11</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1_entity_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a></div><div class="ttdef"><b>Definition:</b> <a href="_entity_8java_source.html#l00014">Entity.java:14</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a9d37d11014c440179090b293b15bd59f"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">bubolo.controllers.Controllers.addController</a></div><div class="ttdeci">void addController(Controller controller)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00121">Controllers.java:121</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a0ce1679cfc7fbbb32ecb4179aed8c4c9"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a0ce1679cfc7fbbb32ecb4179aed8c4c9">bubolo.controllers.Controllers.create</a></div><div class="ttdeci">void create(Tree tree, ControllerFactory factory)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00104">Controllers.java:104</a></div></div>
+<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_a9d37d11014c440179090b293b15bd59f"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#a9d37d11014c440179090b293b15bd59f">bubolo.controllers.Controllers.addController</a></div><div class="ttdeci">void addController(Controller controller)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00092">Controllers.java:92</a></div></div>
 <div class="ttc" id="interfacebubolo_1_1controllers_1_1_controller_html"><div class="ttname"><a href="interfacebubolo_1_1controllers_1_1_controller.html">bubolo.controllers.Controller</a></div><div class="ttdef"><b>Definition:</b> <a href="_controller_8java_source.html#l00011">Controller.java:11</a></div></div>
 <div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html">bubolo.controllers.Controllers</a></div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00015">Controllers.java:15</a></div></div>
-<div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">bubolo.world.entity.concrete.Tree</a></div><div class="ttdef"><b>Definition:</b> <a href="_tree_8java_source.html#l00013">Tree.java:13</a></div></div>
-<div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">bubolo.world.entity.concrete.Tank</a></div><div class="ttdef"><b>Definition:</b> <a href="_tank_8java_source.html#l00012">Tank.java:12</a></div></div>
-<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_adf17ac15d82ff74c0adc36f5aa0a9dd5"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#adf17ac15d82ff74c0adc36f5aa0a9dd5">bubolo.controllers.Controllers.create</a></div><div class="ttdeci">void create(Entity entity, ControllerFactory factory)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00071">Controllers.java:71</a></div></div>
+<div class="ttc" id="classbubolo_1_1controllers_1_1_controllers_html_ad8bda48039f8efdc62bda4658a664b1f"><div class="ttname"><a href="classbubolo_1_1controllers_1_1_controllers.html#ad8bda48039f8efdc62bda4658a664b1f">bubolo.controllers.Controllers.createController</a></div><div class="ttdeci">void createController(Entity entity, ControllerFactory factory)</div><div class="ttdef"><b>Definition:</b> <a href="_controllers_8java_source.html#l00074">Controllers.java:74</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:46 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:39 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

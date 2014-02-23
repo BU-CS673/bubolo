@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>bubolo: bubolo/graphics/TankCameraController.java Source File</title>
+<title>bubolo: C:/Users/Canfield/Documents/GitHub/bubolo/bubolo/src/bubolo/graphics/TankCameraController.java Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c036324e01e3480a20a5b440eb40c9cd.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_80c6624905d370dcf6d5a093715b33c6.html">graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_059177a2de90adf08b9286e5dab90271.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_afad3289e03d63d691db26ebfdca80a6.html">src</a></li><li class="navelem"><a class="el" href="dir_17fe9f086991e6181787112e2db3e980.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_37df648825c7e73b61a7443f54d01fd4.html">graphics</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -115,51 +115,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_tank_camera_controller.html#aec5e3901f7d4455e5944139cfa347097">   41</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classbubolo_1_1graphics_1_1_tank_camera_controller.html#aec5e3901f7d4455e5944139cfa347097">update</a>(<a class="code" href="interfacebubolo_1_1world_1_1_world.html">World</a> world)</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span> (camera == null)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">throw</span>  <span class="keyword">new</span> IllegalStateException(<span class="stringliteral">&quot;No camera has been set for this TankCameraController.&quot;</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">float</span> tankX = calculateCameraX(camera, tank, world);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">float</span> tankY = calculateCameraY(camera, tank, world);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="comment">//throw  new IllegalStateException(&quot;No camera has been set for this TankCameraController.&quot;);</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="comment">// The libgdx camera&#39;s position is from the bottom left corner: https://github.com/libgdx/libgdx/wiki/Orthographic-camera </span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        camera.position.set(tankY, tankX, 0.f);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        camera.update();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keywordtype">float</span> calculateCameraX(Camera camera, <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">Tank</a> tank, <a class="code" href="interfacebubolo_1_1world_1_1_world.html">World</a> world)</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">float</span> tankX = tank.getX() + tank.<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html#aec8b005e39062692b04035e318694ecb">getWidth</a>() / 2.f;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">float</span> cameraX = tankX - camera.viewportWidth / 2.f;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span> (cameraX &lt; 0)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            cameraX = 0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (cameraX &gt; camera.viewportWidth + world.<a class="code" href="interfacebubolo_1_1world_1_1_world.html#ad45fd2c7644b2e2af027422df66937f3">getMapWidth</a>()) </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            cameraX = world.getMapWidth() - camera.viewportWidth;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> cameraX;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keywordtype">float</span> calculateCameraY(Camera camera, Tank tank, World world)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">float</span> tankY = tank.getY() + tank.getHeight() / 2.f;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">float</span> cameraY = tankY - camera.viewportHeight / 2.f;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">if</span> (cameraY &lt; 0)</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            cameraY = 0;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (cameraY &gt; camera.viewportHeight + world.getMapHeight()) </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            cameraY = world.getMapHeight() - camera.viewportHeight;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> cameraY;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="ttc" id="interfacebubolo_1_1world_1_1_world_html"><div class="ttname"><a href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a></div><div class="ttdef"><b>Definition:</b> <a href="_world_8java_source.html#l00014">World.java:14</a></div></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">float</span> tankX = calculateCameraX(camera, tank, world);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">float</span> tankY = calculateCameraY(camera, tank, world);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// The libgdx camera&#39;s position is from the bottom left corner: https://github.com/libgdx/libgdx/wiki/Orthographic-camera </span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        camera.position.set(tankY, tankX, 0.f);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        camera.update();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keywordtype">float</span> calculateCameraX(Camera camera, <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">Tank</a> tank, <a class="code" href="interfacebubolo_1_1world_1_1_world.html">World</a> world)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">float</span> tankX = tank.getX() + tank.<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html#aec8b005e39062692b04035e318694ecb">getWidth</a>() / 2.f;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">float</span> cameraX = tankX - camera.viewportWidth / 2.f;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">if</span> (cameraX &lt; 0)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            cameraX = 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (cameraX &gt; camera.viewportWidth + world.<a class="code" href="interfacebubolo_1_1world_1_1_world.html#ad45fd2c7644b2e2af027422df66937f3">getMapWidth</a>()) </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            cameraX = world.getMapWidth() - camera.viewportWidth;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> cameraX;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keywordtype">float</span> calculateCameraY(Camera camera, Tank tank, World world)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">float</span> tankY = tank.getY() + tank.getHeight() / 2.f;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordtype">float</span> cameraY = tankY - camera.viewportHeight / 2.f;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">if</span> (cameraY &lt; 0)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            cameraY = 0;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (cameraY &gt; camera.viewportHeight + world.getMapHeight()) </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            cameraY = world.getMapHeight() - camera.viewportHeight;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">return</span> cameraY;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="ttc" id="interfacebubolo_1_1world_1_1_world_html"><div class="ttname"><a href="interfacebubolo_1_1world_1_1_world.html">bubolo.world.World</a></div><div class="ttdef"><b>Definition:</b> <a href="_world_8java_source.html#l00015">World.java:15</a></div></div>
 <div class="ttc" id="classbubolo_1_1graphics_1_1_tank_camera_controller_html_a3c00cb0ed072af9b91b1e62d4cbd70e7"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_tank_camera_controller.html#a3c00cb0ed072af9b91b1e62d4cbd70e7">bubolo.graphics.TankCameraController.hasCamera</a></div><div class="ttdeci">boolean hasCamera()</div><div class="ttdef"><b>Definition:</b> <a href="_tank_camera_controller_8java_source.html#l00035">TankCameraController.java:35</a></div></div>
 <div class="ttc" id="classbubolo_1_1graphics_1_1_tank_camera_controller_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_tank_camera_controller.html">bubolo.graphics.TankCameraController</a></div><div class="ttdef"><b>Definition:</b> <a href="_tank_camera_controller_8java_source.html#l00013">TankCameraController.java:13</a></div></div>
 <div class="ttc" id="interfacebubolo_1_1world_1_1_world_html_ad45fd2c7644b2e2af027422df66937f3"><div class="ttname"><a href="interfacebubolo_1_1world_1_1_world.html#ad45fd2c7644b2e2af027422df66937f3">bubolo.world.World.getMapWidth</a></div><div class="ttdeci">int getMapWidth()</div></div>
@@ -172,7 +175,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:46 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:39 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

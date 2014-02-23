@@ -114,6 +114,10 @@ Static Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:abe1dce558319307b922daef4a9d363f3"><td class="memItemLeft" align="right" valign="top">static final String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbubolo_1_1graphics_1_1_graphics.html#abe1dce558319307b922daef4a9d363f3">TEXTURE_PATH</a> = &quot;res/textures/&quot;</td></tr>
 <tr class="separator:abe1dce558319307b922daef4a9d363f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1625e7ec566775c5e42c6a35f2c3dc7"><td class="memItemLeft" align="right" valign="top">static final int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbubolo_1_1graphics_1_1_graphics.html#ae1625e7ec566775c5e42c6a35f2c3dc7">TICKS_PER_SECOND</a> = 60</td></tr>
+<tr class="separator:ae1625e7ec566775c5e42c6a35f2c3dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65266c957aba1c8ee7fa942fbaf4db5d"><td class="memItemLeft" align="right" valign="top">static final long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbubolo_1_1graphics_1_1_graphics.html#a65266c957aba1c8ee7fa942fbaf4db5d">MILLIS_PER_TICK</a> = 1000 / <a class="el" href="classbubolo_1_1graphics_1_1_graphics.html#ae1625e7ec566775c5e42c6a35f2c3dc7">TICKS_PER_SECOND</a></td></tr>
+<tr class="separator:a65266c957aba1c8ee7fa942fbaf4db5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pac-static-methods"></a>
 Static Package Functions</h2></td></tr>
@@ -160,7 +164,7 @@ Static Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00102">102</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00112">112</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
 
 </div>
 </div>
@@ -186,7 +190,7 @@ Static Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00147">147</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00157">157</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
 
 </div>
 </div>
@@ -212,7 +216,7 @@ Static Package Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Destroys all textures. </p>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00089">89</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00099">99</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
 
 </div>
 </div>
@@ -237,7 +241,9 @@ Static Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00118">118</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00128">128</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+
+<p>References <a class="el" href="_draw_layer_8java_source.html#l00023">bubolo.graphics.DrawLayer.OBJECTS</a>, <a class="el" href="_draw_layer_8java_source.html#l00028">bubolo.graphics.DrawLayer.TANKS</a>, <a class="el" href="_draw_layer_8java_source.html#l00013">bubolo.graphics.DrawLayer.TERRAIN</a>, and <a class="el" href="_draw_layer_8java_source.html#l00018">bubolo.graphics.DrawLayer.TERRAIN_MODIFIERS</a>.</p>
 
 </div>
 </div>
@@ -270,7 +276,7 @@ Static Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00055">55</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00065">65</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
 
 </div>
 </div>
@@ -310,11 +316,36 @@ Static Package Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00073">73</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00083">83</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a65266c957aba1c8ee7fa942fbaf4db5d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final long bubolo.graphics.Graphics.MILLIS_PER_TICK = 1000 / <a class="el" href="classbubolo_1_1graphics_1_1_graphics.html#ae1625e7ec566775c5e42c6a35f2c3dc7">TICKS_PER_SECOND</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The number of milliseconds per draw tick. </p>
+
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00038">38</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+
+<p>Referenced by <a class="el" href="_bubolo_application_8java_source.html#l00075">bubolo.BuboloApplication.render()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="abe1dce558319307b922daef4a9d363f3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -338,10 +369,33 @@ Static Package Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae1625e7ec566775c5e42c6a35f2c3dc7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">final int bubolo.graphics.Graphics.TICKS_PER_SECOND = 60</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The target number of draw ticks per second. </p>
+
+<p>Definition at line <a class="el" href="_graphics_8java_source.html#l00033">33</a> of file <a class="el" href="_graphics_8java_source.html">Graphics.java</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:46 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:39 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

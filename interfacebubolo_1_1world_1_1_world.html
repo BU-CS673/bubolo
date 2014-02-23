@@ -108,8 +108,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5b7c26cd90c67ca5d2ca04aed2345509"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4cf3c2ffc149cafc908581573163a69"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#af4cf3c2ffc149cafc908581573163a69">getEntities</a> ()</td></tr>
 <tr class="separator:af4cf3c2ffc149cafc908581573163a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d1ec56b4e0e9d5debbdb99f8f116e6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#a4d1ec56b4e0e9d5debbdb99f8f116e6f">addEntity</a> (<a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> e)  throws GameLogicException</td></tr>
-<tr class="separator:a4d1ec56b4e0e9d5debbdb99f8f116e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc75bbd516a8845afd7de068e8244094"><td class="memItemLeft" align="right" valign="top">public&lt; T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> &gt; T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#abc75bbd516a8845afd7de068e8244094">addEntity</a> (Class&lt; T &gt; c)  throws GameLogicException</td></tr>
+<tr class="separator:abc75bbd516a8845afd7de068e8244094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9c7274f3c33d0142266317b9ce93ebf"><td class="memItemLeft" align="right" valign="top">public&lt; T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> &gt; T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#ae9c7274f3c33d0142266317b9ce93ebf">addEntity</a> (Class&lt; T &gt; c, UUID id)  throws GameLogicException</td></tr>
+<tr class="separator:ae9c7274f3c33d0142266317b9ce93ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6580a7bfc116a42457b8ac5d7318b7fe"><td class="memItemLeft" align="right" valign="top">public&lt; T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> &gt; T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#a6580a7bfc116a42457b8ac5d7318b7fe">addEntity</a> (Class&lt; T &gt; c, <a class="el" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> controllerFactory)  throws GameLogicException</td></tr>
+<tr class="separator:a6580a7bfc116a42457b8ac5d7318b7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7527389e5be7812c1692802fef744fb7"><td class="memItemLeft" align="right" valign="top">public&lt; T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> &gt; T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#a7527389e5be7812c1692802fef744fb7">addEntity</a> (Class&lt; T &gt; c, UUID id, <a class="el" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a> controllerFactory)  throws GameLogicException</td></tr>
+<tr class="separator:a7527389e5be7812c1692802fef744fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2829784ef96d09085ac0f4a9b213215a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#a2829784ef96d09085ac0f4a9b213215a">removeEntity</a> (<a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> e)</td></tr>
 <tr class="separator:a2829784ef96d09085ac0f4a9b213215a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8085bcbdc723d8b0bd77d33cf240fb67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacebubolo_1_1world_1_1_world.html#a8085bcbdc723d8b0bd77d33cf240fb67">removeEntity</a> (UUID id)  throws GameLogicException</td></tr>
@@ -125,36 +131,184 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Provides access to game entities. This is the primary interface between the Model and other systems. </p>
 <dl class="section author"><dt>Author</dt><dd>BU CS673 - Clone Productions </dd></dl>
 
-<p>Definition at line <a class="el" href="_world_8java_source.html#l00014">14</a> of file <a class="el" href="_world_8java_source.html">World.java</a>.</p>
+<p>Definition at line <a class="el" href="_world_8java_source.html#l00015">15</a> of file <a class="el" href="_world_8java_source.html">World.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a4d1ec56b4e0e9d5debbdb99f8f116e6f"></a>
+<a class="anchor" id="abc75bbd516a8845afd7de068e8244094"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bubolo.world.World.addEntity </td>
+          <td class="memname">public&lt;T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a>&gt; T bubolo.world.World.addEntity </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a>&#160;</td>
-          <td class="paramname"><em>e</em></td><td>)</td>
+          <td class="paramtype">Class&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
           <td> throws <a class="el" href="classbubolo_1_1util_1_1_game_logic_exception.html">GameLogicException</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Adds an entity to the world. </p>
+<p>Performs the following actions: </p>
+<ol>
+<li>
+A new Entity of the specified type is created. </li>
+<li>
+The new Entity is added to the <a class="el" href="interfacebubolo_1_1world_1_1_world.html">World</a> </li>
+<li>
+A new Sprite is created and added to the Sprites list. </li>
+<li>
+One or more Controllers are created and added to the Controllers list. </li>
+</ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">e</td><td>the entity to add. </td></tr>
+    <tr><td class="paramname">c</td><td>the entity's class object. For example, to create a new Tank, call this method using the following form: <code><a class="el" href="interfacebubolo_1_1world_1_1_world.html#abc75bbd516a8845afd7de068e8244094">World.addEntity</a>(Tank.class).</code> </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the new entity. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">GameLogicException</td><td>if the entity already exists in the game world. </td></tr>
+    <tr><td class="paramname">GameLogicException</td><td>if the entity cannot be instantiated, or if the UUID already belongs to an entity. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classbubolo_1_1world_1_1_game_world.html#a7d649313a5e0fc9055daf6afbd07ab6b">bubolo.world.GameWorld</a>.</p>
+<p>Implemented in <a class="el" href="classbubolo_1_1world_1_1_game_world.html#aaf06561f150803b86ba9eb4f45d0f0e8">bubolo.world.GameWorld</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae9c7274f3c33d0142266317b9ce93ebf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">public&lt;T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a>&gt; T bubolo.world.World.addEntity </td>
+          <td>(</td>
+          <td class="paramtype">Class&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UUID&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> throws <a class="el" href="classbubolo_1_1util_1_1_game_logic_exception.html">GameLogicException</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See Also</dt><dd>World::addEntity(Class) </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+    <tr><td class="paramname">c</td><td>the entity's class object. For example, to create a new Tank, call this method using the following form: <code><a class="el" href="interfacebubolo_1_1world_1_1_world.html#abc75bbd516a8845afd7de068e8244094">World.addEntity</a>(Tank.class).</code> </td></tr>
+    <tr><td class="paramname">id</td><td>the UUID that will be used for the entity. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the new entity. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GameLogicException</td><td>if the entity cannot be instantiated, or if the UUID already belongs to an entity. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classbubolo_1_1world_1_1_game_world.html#a9e052495c951178247a834ca6364fccb">bubolo.world.GameWorld</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6580a7bfc116a42457b8ac5d7318b7fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">public&lt;T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a>&gt; T bubolo.world.World.addEntity </td>
+          <td>(</td>
+          <td class="paramtype">Class&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a>&#160;</td>
+          <td class="paramname"><em>controllerFactory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> throws <a class="el" href="classbubolo_1_1util_1_1_game_logic_exception.html">GameLogicException</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See Also</dt><dd>World::addEntity(Class) </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>the entity's class object. For example, to create a new Tank, call this method using the following form: <code><a class="el" href="interfacebubolo_1_1world_1_1_world.html#abc75bbd516a8845afd7de068e8244094">World.addEntity</a>(Tank.class).</code> </td></tr>
+    <tr><td class="paramname">controllerFactory</td><td>an object that implements the ControllerFactory interface. This should be used to override the default controller settings. In other words, use a controller factory to set different controller(s) for an entity than the default. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the new entity. Note that the entity has already been added to the <a class="el" href="interfacebubolo_1_1world_1_1_world.html">World</a>. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GameLogicException</td><td>if the entity cannot be instantiated, or if the UUID already belongs to an entity. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classbubolo_1_1world_1_1_game_world.html#a63b5ee77bcd51f3a3d40c6edb3448b7c">bubolo.world.GameWorld</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7527389e5be7812c1692802fef744fb7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">public&lt;T extends <a class="el" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a>&gt; T bubolo.world.World.addEntity </td>
+          <td>(</td>
+          <td class="paramtype">Class&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UUID&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interfacebubolo_1_1controllers_1_1_controller_factory.html">ControllerFactory</a>&#160;</td>
+          <td class="paramname"><em>controllerFactory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> throws <a class="el" href="classbubolo_1_1util_1_1_game_logic_exception.html">GameLogicException</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See Also</dt><dd>World::addEntity(Class) </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>the entity's class object. For example, to create a new Tank, call this method using the following form: <code><a class="el" href="interfacebubolo_1_1world_1_1_world.html#abc75bbd516a8845afd7de068e8244094">World.addEntity</a>(Tank.class).</code> </td></tr>
+    <tr><td class="paramname">id</td><td>the UUID that will be used for the entity. </td></tr>
+    <tr><td class="paramname">controllerFactory</td><td>an object that implements the ControllerFactory interface. This should be used to override the default controller settings. In other words, use a controller factory to set different controller(s) for an entity than the default. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the new entity. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">GameLogicException</td><td>if the entity cannot be instantiated, or if the UUID already belongs to an entity. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classbubolo_1_1world_1_1_game_world.html#a80eb47dcf534fb02e52248cfb382a2cb">bubolo.world.GameWorld</a>.</p>
 
 </div>
 </div>
@@ -324,7 +478,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:47 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:40 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

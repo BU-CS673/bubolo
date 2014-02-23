@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>bubolo: bubolo/graphics/Sprites.java Source File</title>
+<title>bubolo: C:/Users/Canfield/Documents/GitHub/bubolo/bubolo/src/bubolo/graphics/Sprites.java Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c036324e01e3480a20a5b440eb40c9cd.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_80c6624905d370dcf6d5a093715b33c6.html">graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_059177a2de90adf08b9286e5dab90271.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_afad3289e03d63d691db26ebfdca80a6.html">src</a></li><li class="navelem"><a class="el" href="dir_17fe9f086991e6181787112e2db3e980.html">bubolo</a></li><li class="navelem"><a class="el" href="dir_37df648825c7e73b61a7443f54d01fd4.html">graphics</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -84,97 +84,114 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>bubolo.graphics;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">import</span> java.util.ArrayList;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.util.List;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1util_1_1_game_logic_exception.html">bubolo.util.GameLogicException</a>;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_grass.html">bubolo.world.entity.concrete.Grass</a>;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_road.html">bubolo.world.entity.concrete.Road</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">bubolo.world.entity.concrete.Tank</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">bubolo.world.entity.concrete.Tree</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html">   17</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">private</span> List&lt;Sprite&lt;? extends Entity&gt;&gt; sprites = <span class="keyword">new</span> ArrayList&lt;Sprite&lt;? extends Entity&gt;&gt;();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a> instance;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">   27</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">getInstance</a>()</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">if</span> (instance == null)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            instance = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> instance;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a>()</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">   48</a></span>&#160;    List&lt;Sprite&lt;? extends Entity&gt;&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">getSprites</a>()</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> sprites;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a27a37eada2feaa5c9002e6730715b7f8">   57</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a27a37eada2feaa5c9002e6730715b7f8">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> entity)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="classbubolo_1_1util_1_1_game_logic_exception.html">GameLogicException</a>(</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="stringliteral">&quot;Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads.&quot;</span> +</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <span class="stringliteral">&quot;Entity id: &quot;</span> + entity.<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html#a8243cf5f90180db4a3d9b9a90555ca86">getId</a>());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a115e33b05652fa5991e5d84b8e3e6f4f">   68</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a115e33b05652fa5991e5d84b8e3e6f4f">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">Tank</a> tank)</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classbubolo_1_1graphics_1_1_tank_sprite.html">TankSprite</a> sprite = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_tank_sprite.html">TankSprite</a>(tank);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        sprites.add(sprite);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> sprite;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    </div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a23918e15a64eef0b89cb5a55ce4fc4cc">   79</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a23918e15a64eef0b89cb5a55ce4fc4cc">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_grass.html">Grass</a> grass)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classbubolo_1_1graphics_1_1_grass_sprite.html">GrassSprite</a> sprite = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_grass_sprite.html">GrassSprite</a>(grass);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        sprites.add(sprite);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> sprite;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a4486a58d0d542e652993db0231e00d0a">   90</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a4486a58d0d542e652993db0231e00d0a">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_road.html">Road</a> road)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="classbubolo_1_1graphics_1_1_road_sprite.html">RoadSprite</a> sprite = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_road_sprite.html">RoadSprite</a>(road);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        sprites.add(sprite);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> sprite;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    </div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a23e58e5a651d808711fcf81ffaaf2fc5">  101</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a23e58e5a651d808711fcf81ffaaf2fc5">create</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">Tree</a> tree)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classbubolo_1_1graphics_1_1_tree_sprite.html">TreeSprite</a> sprite = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_tree_sprite.html">TreeSprite</a>(tree);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        sprites.add(sprite);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> sprite;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a4486a58d0d542e652993db0231e00d0a"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a4486a58d0d542e652993db0231e00d0a">bubolo.graphics.Sprites.create</a></div><div class="ttdeci">Sprite&lt;?extends Entity &gt; create(Road road)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00090">Sprites.java:90</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a946274df7fcff2fc263e13171fe958b2"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">bubolo.graphics.Sprites.getInstance</a></div><div class="ttdeci">static Sprites getInstance()</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00027">Sprites.java:27</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_road_sprite_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_road_sprite.html">bubolo.graphics.RoadSprite</a></div><div class="ttdef"><b>Definition:</b> <a href="_road_sprite_8java_source.html#l00014">RoadSprite.java:14</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_tank_sprite_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_tank_sprite.html">bubolo.graphics.TankSprite</a></div><div class="ttdef"><b>Definition:</b> <a href="_tank_sprite_8java_source.html#l00013">TankSprite.java:13</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a46a91bd92c2d33094cb49d396cfb5eff"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">bubolo.graphics.Sprites.getSprites</a></div><div class="ttdeci">List&lt; Sprite&lt;?extends Entity &gt; &gt; getSprites()</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00048">Sprites.java:48</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html">bubolo.graphics.Sprites</a></div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00017">Sprites.java:17</a></div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.util.HashMap;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> java.util.List;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> java.util.Map;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_grass.html">bubolo.world.entity.concrete.Grass</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_road.html">bubolo.world.entity.concrete.Road</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">bubolo.world.entity.concrete.Tank</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">import</span> <a class="code" href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">bubolo.world.entity.concrete.Tree</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html">   18</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">private</span> Map&lt;Class&lt;? extends Entity&gt;, SpriteFactory&gt; spriteFactories;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">private</span> List&lt;Sprite&lt;? extends Entity&gt;&gt; sprites = <span class="keyword">new</span> ArrayList&lt;Sprite&lt;? extends Entity&gt;&gt;();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a> instance;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">   30</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">getInstance</a>()</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">if</span> (instance == null)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            instance = <span class="keyword">new</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">return</span> instance;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span> <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html">Sprites</a>()</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        spriteFactories = setSpriteFactories();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">   52</a></span>&#160;    List&lt;Sprite&lt;? extends Entity&gt;&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">getSprites</a>()</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> sprites;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classbubolo_1_1graphics_1_1_sprites.html#a64a6df66188221b1554e148dd54e8528">   63</a></span>&#160;    <span class="keyword">public</span> Sprite&lt;?&gt; <a class="code" href="classbubolo_1_1graphics_1_1_sprites.html#a64a6df66188221b1554e148dd54e8528">createSprite</a>(<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> entity)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span> (!spriteFactories.containsKey(entity.getClass()))</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="stringliteral">&quot;createSprite is unable to create a sprite from entity type &quot;</span> + </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                    entity.getClass().getName());</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        Sprite&lt;? extends Entity&gt; sprite = spriteFactories.get(entity.getClass()).create(entity);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        sprites.add(sprite);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> sprite;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">private</span> <span class="keyword">interface </span>SpriteFactory</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;         Sprite&lt;? extends Entity&gt; create(<a class="code" href="classbubolo_1_1world_1_1entity_1_1_entity.html">Entity</a> e);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;Class&lt;? extends Entity&gt;, SpriteFactory&gt; setSpriteFactories()</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        Map&lt;Class&lt;? extends Entity&gt;, SpriteFactory&gt; factories = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        factories.put(Grass.class, <span class="keyword">new</span> SpriteFactory() {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            @Override</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; create(Entity e)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> GrassSprite((Grass)e);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        });</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        factories.put(Road.class, <span class="keyword">new</span> SpriteFactory() {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            @Override </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; create(Entity e) </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> RoadSprite((Road)e);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        });</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        factories.put(Tank.class, <span class="keyword">new</span> SpriteFactory() {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            @Override </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; create(Entity e) </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> TankSprite((Tank)e);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        });</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        factories.put(Tree.class, <span class="keyword">new</span> SpriteFactory() {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            @Override </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keyword">public</span> Sprite&lt;? extends Entity&gt; create(Entity e) </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            {</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">new</span> TreeSprite((Tree)e);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        });</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> factories;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a946274df7fcff2fc263e13171fe958b2"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a946274df7fcff2fc263e13171fe958b2">bubolo.graphics.Sprites.getInstance</a></div><div class="ttdeci">static Sprites getInstance()</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00030">Sprites.java:30</a></div></div>
+<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a46a91bd92c2d33094cb49d396cfb5eff"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a46a91bd92c2d33094cb49d396cfb5eff">bubolo.graphics.Sprites.getSprites</a></div><div class="ttdeci">List&lt; Sprite&lt;?extends Entity &gt; &gt; getSprites()</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00052">Sprites.java:52</a></div></div>
+<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html">bubolo.graphics.Sprites</a></div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00018">Sprites.java:18</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1_entity_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1_entity.html">bubolo.world.entity.Entity</a></div><div class="ttdef"><b>Definition:</b> <a href="_entity_8java_source.html#l00014">Entity.java:14</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_road_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_road.html">bubolo.world.entity.concrete.Road</a></div><div class="ttdef"><b>Definition:</b> <a href="_road_8java_source.html#l00014">Road.java:14</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a23e58e5a651d808711fcf81ffaaf2fc5"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a23e58e5a651d808711fcf81ffaaf2fc5">bubolo.graphics.Sprites.create</a></div><div class="ttdeci">Sprite&lt;?extends Entity &gt; create(Tree tree)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00101">Sprites.java:101</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_grass_sprite_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_grass_sprite.html">bubolo.graphics.GrassSprite</a></div><div class="ttdef"><b>Definition:</b> <a href="_grass_sprite_8java_source.html#l00013">GrassSprite.java:13</a></div></div>
-<div class="ttc" id="classbubolo_1_1util_1_1_game_logic_exception_html"><div class="ttname"><a href="classbubolo_1_1util_1_1_game_logic_exception.html">bubolo.util.GameLogicException</a></div><div class="ttdef"><b>Definition:</b> <a href="_game_logic_exception_8java_source.html#l00007">GameLogicException.java:7</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a27a37eada2feaa5c9002e6730715b7f8"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a27a37eada2feaa5c9002e6730715b7f8">bubolo.graphics.Sprites.create</a></div><div class="ttdeci">Sprite&lt;?extends Entity &gt; create(Entity entity)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00057">Sprites.java:57</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_tree_sprite_html"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_tree_sprite.html">bubolo.graphics.TreeSprite</a></div><div class="ttdef"><b>Definition:</b> <a href="_tree_sprite_8java_source.html#l00014">TreeSprite.java:14</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tree.html">bubolo.world.entity.concrete.Tree</a></div><div class="ttdef"><b>Definition:</b> <a href="_tree_8java_source.html#l00013">Tree.java:13</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_tank.html">bubolo.world.entity.concrete.Tank</a></div><div class="ttdef"><b>Definition:</b> <a href="_tank_8java_source.html#l00012">Tank.java:12</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a115e33b05652fa5991e5d84b8e3e6f4f"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a115e33b05652fa5991e5d84b8e3e6f4f">bubolo.graphics.Sprites.create</a></div><div class="ttdeci">Sprite&lt;?extends Entity &gt; create(Tank tank)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00068">Sprites.java:68</a></div></div>
+<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a64a6df66188221b1554e148dd54e8528"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a64a6df66188221b1554e148dd54e8528">bubolo.graphics.Sprites.createSprite</a></div><div class="ttdeci">Sprite&lt;?&gt; createSprite(Entity entity)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00063">Sprites.java:63</a></div></div>
 <div class="ttc" id="classbubolo_1_1world_1_1entity_1_1concrete_1_1_grass_html"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1concrete_1_1_grass.html">bubolo.world.entity.concrete.Grass</a></div><div class="ttdef"><b>Definition:</b> <a href="_grass_8java_source.html#l00012">Grass.java:12</a></div></div>
-<div class="ttc" id="classbubolo_1_1graphics_1_1_sprites_html_a23918e15a64eef0b89cb5a55ce4fc4cc"><div class="ttname"><a href="classbubolo_1_1graphics_1_1_sprites.html#a23918e15a64eef0b89cb5a55ce4fc4cc">bubolo.graphics.Sprites.create</a></div><div class="ttdeci">Sprite&lt;?extends Entity &gt; create(Grass grass)</div><div class="ttdef"><b>Definition:</b> <a href="_sprites_8java_source.html#l00079">Sprites.java:79</a></div></div>
-<div class="ttc" id="classbubolo_1_1world_1_1entity_1_1_entity_html_a8243cf5f90180db4a3d9b9a90555ca86"><div class="ttname"><a href="classbubolo_1_1world_1_1entity_1_1_entity.html#a8243cf5f90180db4a3d9b9a90555ca86">bubolo.world.entity.Entity.getId</a></div><div class="ttdeci">UUID getId()</div><div class="ttdef"><b>Definition:</b> <a href="_entity_8java_source.html#l00073">Entity.java:73</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 17 2014 22:19:46 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 23 2014 16:00:39 for bubolo by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
