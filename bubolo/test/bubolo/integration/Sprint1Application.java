@@ -1,9 +1,10 @@
-package bubolo.test;
+package bubolo.integration;
 
 import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
@@ -67,7 +68,7 @@ public class Sprint1Application implements GameApplication
 		
 		for (int i = 0; i < 30; i++)
 		{
-			for (int j = 0; i < 30; i++)
+			for (int j = 0; j < 30; j++)
 			{
 				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
 			}
