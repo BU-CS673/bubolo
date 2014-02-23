@@ -3,7 +3,12 @@ package bubolo.test;
 import bubolo.controllers.Controller;
 import bubolo.world.World;
 
-public class MockTankController implements Controller
+/**
+ * For use in testing only.
+ * 
+ * @author BU CS673 - Clone Productions
+ */
+public class MockController implements Controller
 {
 	@Override
 	public void update(World world)

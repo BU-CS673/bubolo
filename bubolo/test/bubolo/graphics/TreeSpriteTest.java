@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
@@ -47,7 +49,7 @@ public class TreeSpriteTest
 				@Override
 				public void run()
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Tree());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
 					batch.begin();
 					sprite.draw(batch, camera, DrawLayer.OBJECTS);
 					passed = true;

@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.test.MockTank;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
@@ -34,7 +36,8 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Tank());
+					Sprites.getInstance().createSprite(new Tank());
+					Sprite<?> sprite = Sprites.getInstance().getSprites().get(0);
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -64,7 +67,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Tree());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -94,7 +97,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Grass());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -124,7 +127,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Road());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -141,5 +144,16 @@ public class SpritesTest
 			Thread.yield();
 		}
 		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void createSpriteInvalid()
+	{
+		try
+		{
+			Sprite<?> sprite = Sprites.getInstance().createSprite(new MockTank());
+			fail("createSprite should have failed, since it is not designed to handle MockTank objects, but did not.");
+		}
+		catch (Exception e) {}
 	}
 }

@@ -3,6 +3,7 @@ package bubolo.world;
 import java.util.List;
 import java.util.UUID;
 
+import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
 
@@ -30,11 +31,61 @@ public interface World
 	public List<Entity> getEntities();
 	
 	/**
-	 * Adds an entity to the world.
-	 * @param e the entity to add.
-	 * @throws GameLogicException if the entity already exists in the game world.
+	 * Performs the following actions:
+	 * <ol>
+	 * <li>A new Entity of the specified type is created.</li>
+	 * <li>The new Entity is added to the World</li>
+	 * <li>A new Sprite is created and added to the Sprites list.</li>
+	 * <li>One or more Controllers are created and added to the Controllers list.</li>
+	 * </ol>
+	 * @param c the entity's class object. For example, to create a new Tank, 
+	 * call this method using the following form: <code>World.addEntity(Tank.class).</code>
+	 * @return reference to the new entity.
+	 * @throws GameLogicException if the entity cannot be instantiated, or if the 
+	 * UUID already belongs to an entity.
 	 */
-	public void addEntity(Entity e) throws GameLogicException;
+    public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException;
+    
+    /**
+     * @see World#addEntity(Class)
+     * @param c @param c the entity's class object. For example, to create a new Tank, 
+	 * call this method using the following form: <code>World.addEntity(Tank.class).</code>
+     * @param id the UUID that will be used for the entity.
+     * @return reference to the new entity.
+     * @throws GameLogicException if the entity cannot be instantiated, or if the 
+	 * UUID already belongs to an entity.
+     */
+    public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException;
+
+    /**
+     * @see World#addEntity(Class)
+     * @param c the entity's class object. For example, to create a new Tank, 
+	 * call this method using the following form: <code>World.addEntity(Tank.class).</code>
+     * @param controllerFactory an object that implements the ControllerFactory 
+     * interface. This should be used to override the default controller settings.
+     * In other words, use a controller factory to set different controller(s) for
+     * an entity than the default.
+     * @return reference to the new entity. Note that the entity has already been added
+	 * to the World.
+     * @throws GameLogicException if the entity cannot be instantiated, or if the 
+	 * UUID already belongs to an entity.
+     */
+    public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory) throws GameLogicException;
+   
+    /**
+     * @see World#addEntity(Class)
+     * @param c the entity's class object. For example, to create a new Tank, 
+	 * call this method using the following form: <code>World.addEntity(Tank.class).</code>
+	 * @param id the UUID that will be used for the entity.
+     * @param controllerFactory an object that implements the ControllerFactory 
+     * interface. This should be used to override the default controller settings.
+     * In other words, use a controller factory to set different controller(s) for
+     * an entity than the default.
+     * @return reference to the new entity.
+     * @throws GameLogicException if the entity cannot be instantiated, or if the 
+	 * UUID already belongs to an entity.
+     */
+    public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory) throws GameLogicException;
 	
 	/**
 	 * Removes an entity from the world. After this method is called, the 
