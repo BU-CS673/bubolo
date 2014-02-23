@@ -4,13 +4,12 @@ import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
- * The Game: this is where the subsystems are initialized, as well as where
- * the main game loop is. 
+ * For testing only.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class Sprint1Application implements GameApplication
