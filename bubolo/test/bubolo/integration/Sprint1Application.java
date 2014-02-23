@@ -1,15 +1,19 @@
-package bubolo;
+package bubolo.integration;
 
+import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * The Game: this is where the subsystems are initialized, as well as where
  * the main game loop is. 
  * @author BU CS673 - Clone Productions
  */
-public class BuboloApplication implements GameApplication
+public class Sprint1Application implements GameApplication
 {
 	private int windowWidth;
 	private int windowHeight;
@@ -37,7 +41,7 @@ public class BuboloApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public BuboloApplication(int windowWidth, int windowHeight)
+	public Sprint1Application(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -60,7 +64,18 @@ public class BuboloApplication implements GameApplication
 		
 		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
 		// and then the map loader or creator could set the size.
-		world = new GameWorld(500, 500);
+		world = new GameWorld(32*30, 32*30);
+		
+		for (int i = 0; i < 30; i++)
+		{
+			for (int j = 0; j < 30; j++)
+			{
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+			}
+		}
+		Tank tank = world.addEntity(Tank.class);
+		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
+		
 		
 		// TODO: add other systems here.
 		
@@ -74,8 +89,6 @@ public class BuboloApplication implements GameApplication
 	@Override
 	public void render()
 	{
-		long startMillis = System.currentTimeMillis();
-		
 		graphics.draw(world);
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
@@ -84,19 +97,6 @@ public class BuboloApplication implements GameApplication
 		{
 			world.update();
 			lastUpdate = currentMillis;
-		}
-		
-		long millisUntilNextUpdate = System.currentTimeMillis() - startMillis - Graphics.MILLIS_PER_TICK;
-		if (millisUntilNextUpdate > 0)
-		{
-			try
-			{
-				Thread.sleep(millisUntilNextUpdate);
-			}
-			catch (InterruptedException e)
-			{
-				// TODO: does this need to be handled?
-			}
 		}
 	}
 	
