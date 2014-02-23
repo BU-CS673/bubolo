@@ -10,6 +10,10 @@ import bubolo.world.entity.Entity;
 
 /**
  * Abstract base class for sprites, which draw textures to a quad at a specific x,y location.
+ * @param <T> the least derived <code>Entity</code> type that this <code>Sprite</code> needs
+ * to draw itself. For example, a very simple <code>Sprite</code>, such as <code>GrassSprite</code>,
+ * can derive from <code>Sprite{@literal <Entity>}</code>, while a more complex <code>Sprite</code>,
+ * such as <code>PillboxSprite</code>, will likely need to derive from <code>Sprite{@literal <Pillbox>}</code>.
  * 
  * @author BU CS673 - Clone Productions
  */

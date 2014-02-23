@@ -1,10 +1,7 @@
 package bubolo.test;
 
 import bubolo.GameApplication;
-import bubolo.controllers.Controllers;
 import bubolo.graphics.Graphics;
-import bubolo.graphics.Sprites;
-import bubolo.world.Entities;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -67,16 +64,15 @@ public class Sprint1Application implements GameApplication
 		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
 		// and then the map loader or creator could set the size.
 		world = new GameWorld(32*30, 32*30);
-		Entities.initialize(world, Sprites.getInstance(), Controllers.getInstance());
 		
 		for (int i = 0; i < 30; i++)
 		{
 			for (int j = 0; i < 30; i++)
 			{
-				Entities.create(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
 			}
 		}
-		Tank tank = Entities.create(Tank.class);
+		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
 		
 		
