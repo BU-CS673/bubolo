@@ -11,10 +11,8 @@ import java.text.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-org.json.simple.parser.ParseException;
-
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.GameWorld;
+import bubolo.world.entity.concrete.Grass;
 
 public class Parser
 {
@@ -86,7 +84,7 @@ public class Parser
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		catch (ParseException e)
+		catch (org.json.simple.parser.ParseException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
