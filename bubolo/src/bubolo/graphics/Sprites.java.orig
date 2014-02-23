@@ -54,11 +54,43 @@ public class Sprites
 		return sprites;
 	}
 	
+<<<<<<< HEAD
 	
 	/**
 	 * Creates a new sprite based on the type of entity provided.
 	 * @param entity reference to an entity.
+	 * @return the new sprite object.
+=======
+	/**
+	 * Do not call this overload.
+	 * 
+	 * @param entity reference to an entity.
 	 * @return reference to the new sprite.
+	 */
+	public Sprite<? extends Entity> create(Entity entity)
+	{
+		throw new GameLogicException(
+				"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
+				"Entity id: " + entity.getId());
+	}
+	
+	/**
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param tank reference to a tank entity.
+	 * @return reference to the new sprite.
+	 */
+	public Sprite<? extends Entity> create(Tank tank)
+	{
+		TankSprite sprite = new TankSprite(tank);
+		sprites.add(sprite);
+		return sprite;
+	}
+	
+	/**
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param grass reference to a grass entity.
+	 * @return reference to the new sprite.
+>>>>>>> Canfield
 	 */
 	public Sprite<?> createSprite(Entity entity)
 	{
@@ -74,8 +106,14 @@ public class Sprites
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Wrapper for sprite creation functions.
 	 * @author BU CS673 - Clone Productions
+=======
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param road reference to a road entity.
+	 * @return reference to the new sprite.
+>>>>>>> Canfield
 	 */
 	private interface SpriteFactory
 	{
@@ -88,8 +126,14 @@ public class Sprites
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Creates the sprite factory objects, which map concrete classes to sprite creation.
 	 * @return map of the concrete classes to sprite creator classes.
+=======
+	 * Creates a new sprite, and adds it to the list of drawables.
+	 * @param tree reference to a tree entity.
+	 * @return reference to the new sprite.
+>>>>>>> Canfield
 	 */
 	private static Map<Class<? extends Entity>, SpriteFactory> setSpriteFactories()
 	{

@@ -34,7 +34,8 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Tank());
+					Sprites.getInstance().createSprite(new Tank());
+					Sprite<?> sprite = Sprites.getInstance().getSprites().get(0);
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -64,7 +65,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Tree());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -94,7 +95,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Grass());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -124,7 +125,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Road());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
 					assertNotNull(sprite);
 					hadException = false;
 				}
