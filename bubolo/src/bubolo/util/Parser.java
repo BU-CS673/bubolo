@@ -39,13 +39,12 @@ public class Parser
 		 *  TODO: Modify the path line to choose from an assortment of maps either randomly or user selected iff we add more maps. 
 		 */
 		
-		Path path = FileSystems.getDefault().getPath("res/maps", "Map 1.json");
 		Charset charset = Charset.forName("US-ASCII");
 		BufferedReader reader = null;		
 		
 		try
 		{
-			reader = Files.newBufferedReader(path, charset);
+			reader = Files.newBufferedReader(mapPath, charset);
 			JSONParser parser = new JSONParser();
 			obj = parser.parse(reader);
 			reader.close();
