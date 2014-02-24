@@ -35,7 +35,35 @@ public class GrassSpriteTest
 			Graphics g = new Graphics(50, 500);
 		}
 	}
+
+	@Test
+	public void constructTankSprite() throws InterruptedException
+	{
+		synchronized(LibGdxAppTester.getLock())
+		{
+			isComplete = false;
+			passed = false;
+			
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run()
+				{
+					// Fails if the constructor throws an exception.
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
+					
+					passed = true;
+					isComplete = true;
+				}
+			});
 	
+			while (!isComplete)
+			{
+				Thread.yield();
+			}
+			
+			assertTrue(passed);
+		}
+	}	
 
 	@Test
 	public void drawSprite()
