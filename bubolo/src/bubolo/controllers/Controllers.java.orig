@@ -52,7 +52,11 @@ public class Controllers
 	
 	/**
 	 * Calls the <code>update</code> method on all controllers.
+<<<<<<< HEAD
 	 * @param w the world object.
+=======
+	 * @param w reference to the World object.
+>>>>>>> Canfield
 	 */
 	public void update(World w)
 	{
