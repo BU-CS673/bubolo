@@ -14,7 +14,7 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP){
-        	Command cmd = new TankMoveForward(myTank);
+        	Command cmd = new MoveForward(myTank);
         	ActionQueue.q.add(cmd);
         }
     }

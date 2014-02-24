@@ -1,5 +1,6 @@
 package bubolo.controllers;
 
+import bubolo.world.Entity;
 import bubolo.world.World;
 
 /**
@@ -12,7 +13,7 @@ public interface Controller
 {
 	/**
 	 * Allows the controller to perform its processing. Called once per game tick.
-	 * @param world reference to the World/Model object.
+	 * @param Entity reference to the Model object.
 	 */
 	public void update(World world);
 }

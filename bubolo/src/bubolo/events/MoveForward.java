@@ -3,9 +3,9 @@ package bubolo.events;
 import bubolo.world.Entity;
 
 
-public class TankMoveForward implements Command{
+public class MoveForward implements Command{
 
-	public TankMoveForward(Entity tank){
+	public MoveForward(Entity tank){
 		//move forward one space
 		tank.setY(tank.getY()+1);
 	}
