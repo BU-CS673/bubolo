@@ -54,16 +54,6 @@ public class TankCameraControllerTest
 	}
 	
 	@Test
-	public void testUpdateBad()
-	{
-		CameraController controller = new TankCameraController(new MockTank());
-		try {
-			controller.update(new MockWorld());
-			fail("CameraController does not have a camera, but was able to update");
-		} catch (Exception e) {}
-	}
-	
-	@Test
 	public void testUpdateLessThanZero()
 	{
 		Camera camera = new OrthographicCamera(20, 30);

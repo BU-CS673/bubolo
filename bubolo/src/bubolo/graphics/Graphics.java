@@ -27,6 +27,16 @@ public class Graphics
 	 */
 	public static final String TEXTURE_PATH = "res/textures/";
 	
+	/**
+	 * The target number of draw ticks per second.
+	 */
+	public static final int TICKS_PER_SECOND = 60;
+	
+	/**
+	 * The number of milliseconds per draw tick.
+	 */
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	
 	// Stores the textures, ensuring that only one is needed for all instances
 	// of a given sprite. 
 	private static Map<String, Texture> textures = new HashMap<String, Texture>();
