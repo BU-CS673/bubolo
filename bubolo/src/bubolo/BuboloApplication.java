@@ -2,14 +2,12 @@ package bubolo;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.controllers.*;
-import bubolo.world.Entities.*;
-import bubolo.world.entity.Entity;
+
 import bubolo.world.entity.concrete.Tank;
 import bubolo.inputs.*;
 

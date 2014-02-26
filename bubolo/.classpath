@@ -14,5 +14,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx-openal.jar"/>
+	<classpathentry kind="lib" path="libs/libgdx/gdx.jar"/>
+	<classpathentry kind="lib" path="libs/mockito/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

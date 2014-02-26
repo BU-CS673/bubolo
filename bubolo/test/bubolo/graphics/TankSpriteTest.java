@@ -1,26 +1,26 @@
 package bubolo.graphics;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import bubolo.world.Tank;
+import bubolo.world.entity.concrete.Tank;
 
 public class TankSpriteTest
 {
 
 	@Test
-	public void constructTankSprite()
+	public Sprite<Tank> constructTankSprite()
 	{
 		// Fails if the constructor throws an exception.
-		Sprite<Tank> sprite = new TankSprite();
+		Tank tank = new Tank();
+		Sprite<Tank> sprite = new TankSprite(tank);
+		return sprite;
 	}
 
 	@Test
 	public void drawTankSprite()
 	{
-		Sprite<Tank> sprite = new TankSprite();
 		Tank tank = new Tank();
-		sprite.draw(DrawLayer.test, tank);
+		Sprite<Tank> sprite = new TankSprite(tank);
+		sprite.draw(null, null, null);
 	}
 }

@@ -11,7 +11,7 @@ public class MoveForward implements Command{
 	@Override
 	public void Execute() {
 		// TODO Auto-generated method stub
-		
+		actor.setY(actor.getY()+1);
 	}
 
 }

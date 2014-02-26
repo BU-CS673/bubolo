@@ -1,7 +1,5 @@
 package bubolo.world;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import bubolo.world.Entity;
@@ -12,10 +10,11 @@ public class TankTest
 {
 
 	@Test
-	public void constructTank()
+	public Entity constructTank()
 	{
 		// Fails if an exception is thrown in the constructor.
 		Entity tank = new Tank();
+		return tank;
 	}
 
 }
