@@ -54,37 +54,47 @@ class PillboxSprite extends Sprite<Entity>
 
 		// int currentState = round(((getEntity().getHP() / getEntity().getMaxHP()) * 100) / 20);
 		
+		
 		// this is here to prevent errors--will always show a "dead" pillbox
 		int currentState = 0;	
 		
+		/*
+		 * setRegion stuff is from:
+		 * http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/graphics/g2d/TextureRegion.html#setRegion(int, int, int, int)
+		 * 
+		 * x,y,width,height
+		 * 
+		 * Assuming our focus is on lower left... i.e. start at 0,32 and increase X as we move right?
+		 */
+		
 		switch(currentState){
 		case 5:			
-			specificImage.setRegion(0,0,32,32);
-			drawTexture(batch, camera, layer, specificImage);
-			break;
-			
-		case 4:
 			specificImage.setRegion(0,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
+		case 4:
+			specificImage.setRegion(32,32,32,32);
+			drawTexture(batch, camera, layer, specificImage);
+			break;
+			
 		case 3:
-			specificImage.setRegion(0,64,32,32);
+			specificImage.setRegion(64,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 2:
-			specificImage.setRegion(0,96,32,32);
+			specificImage.setRegion(96,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 1:			
-			specificImage.setRegion(0,128,32,32);
+			specificImage.setRegion(128,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 0:	
-			specificImage.setRegion(0,160,32,32);
+			specificImage.setRegion(160,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 		
