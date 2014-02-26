@@ -28,6 +28,9 @@ class PillboxSprite extends Sprite<Entity>
 		super(DrawLayer.OBJECTS, pillbox);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "pillbox.png");
+		
+		specificImage = new TextureRegion();
+		
 		specificImage.setTexture(image);
 		
 	}
