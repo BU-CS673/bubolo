@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -48,7 +45,7 @@ public class RoadSpriteTest
 				@Override
 				public void run()
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Road());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
 					batch.begin();
 					sprite.draw(batch, camera, DrawLayer.OBJECTS);
 					passed = true;

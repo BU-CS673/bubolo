@@ -1,12 +1,12 @@
 package bubolo.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
 
 /**
  * Contains static methods for creating controllers.
@@ -15,6 +15,8 @@ import bubolo.world.entity.concrete.Tree;
 public class Controllers
 {
 	private List<Controller> controllers = new ArrayList<Controller>();
+	
+	private Map<Class<? extends Entity>, ControllerFactory> defaultFactories;
 	
 	private static Controllers instance;
 	
@@ -36,6 +38,7 @@ public class Controllers
 	 */
 	private Controllers()
 	{
+		defaultFactories = setDefaultControllerFactories();
 	}
 	
 	/**
@@ -49,7 +52,7 @@ public class Controllers
 	
 	/**
 	 * Calls the <code>update</code> method on all controllers.
-	 * @param world 
+	 * @param w the world object.
 	 */
 	public void update(World w)
 	{
@@ -68,49 +71,17 @@ public class Controllers
 	 * @param factory reference to a controller factory, or null if the default
 	 * behavior should be used.
 	 */
-	public void create(Entity entity, ControllerFactory factory)
+	public void createController(Entity entity, ControllerFactory factory)
 	{
-		if (factory != null)
+		ControllerFactory controllerFactory = factory;
+		if (controllerFactory == null)
 		{
-			factory.create(entity, this);
+			controllerFactory = defaultFactories.get(entity.getClass());
 		}
-	}
-	
-	/**
-	 * @see Controllers#create(Entity, ControllerFactory).
-	 * @param tank reference to the entity.
-	 * @param factory reference to a controller factory, or null if the default
-	 * behavior should be used.
-	 */
-	public void create(Tank tank, ControllerFactory factory)
-	{
-		if (factory != null)
+		
+		if (controllerFactory != null)
 		{
-			factory.create(tank, this);
-		}
-		else
-		{
-			// TODO: implement this once at least one tank controller has been implemented.
-			throw new UnsupportedOperationException("Not yet implemented");
-		}
-	}
-	
-	/**
-	 * @see Controllers#create(Entity, ControllerFactory).
-	 * @param tree reference to the entity.
-	 * @param factory reference to a controller factory, or null if the default
-	 * behavior should be used.
-	 */
-	public void create(Tree tree, ControllerFactory factory)
-	{
-		if (factory != null)
-		{
-			factory.create(tree, this);
-		}
-		else
-		{
-			// WARNING NOTE: The warnings will be eliminated once this method has been implemented.
-			throw new UnsupportedOperationException("Not yet implemented");
+			controllerFactory.create(entity, this);
 		}
 	}
 	
@@ -121,5 +92,18 @@ public class Controllers
 	void addController(Controller controller)
 	{
 		controllers.add(controller);
+	}
+	
+	/**
+	 * Creates a map that maps entity classes to default factories.
+	 * @return reference to the ControllerFactory map.
+	 */
+	private static Map<Class<? extends Entity>, ControllerFactory> setDefaultControllerFactories()
+	{
+		Map<Class<? extends Entity>, ControllerFactory> factories = new HashMap<>();
+		
+		// TODO: No default factories exist yet. Add default factories here.
+		
+		return factories;
 	}
 }

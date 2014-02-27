@@ -49,7 +49,7 @@ public class GrassSpriteTest
 				@Override
 				public void run()
 				{
-					Sprite<?> sprite = Sprites.getInstance().create(new Grass());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
 					batch.begin();
 					sprite.draw(batch, camera, DrawLayer.OBJECTS);
 					passed = true;
