@@ -13,9 +13,7 @@ import bubolo.world.entity.concrete.Tank;
  */
 class TankSprite extends Sprite<Tank>
 {
-	private Texture image;
-	private TextureRegion localImage;
-	private TextureRegion enemyImage;
+	private TextureRegion image;
 	
 	// true if the camera controller has been added.
 	private boolean addedCameraController;
@@ -30,18 +28,30 @@ class TankSprite extends Sprite<Tank>
 	{
 		super(DrawLayer.TANKS, tank);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		
+		// TODO: the sprite needs to ask the Tank if it is the local player.
+		//	Something like tank.isLocalPlayer() would work.
+		
+		// TODO: use this once tank.isLocalPlayer() or equivalent exists. Please do not remove these commented out lines.
+	//	if (tank.isLocalPlayer())
+	//	{
+			image = new TextureRegion(texture, 36, 1, 24, 29);
+	//	}
+		//else
+		//{
+			//enemyImage = new TextureRegion(image, 4, 1, 25, 29);
+		//}
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
-	{
+	{ 
 		drawTexture(batch, camera, layer, image);
-		
+
+		// TODO: this should only be added for the local tank.
 		if (!addedCameraController)
 		{
-			// TODO: the sprite needs to ask the Tank if it is the local player.
-			//	Something like tank.isLocalPlayer() would work.
 			CameraController controller = new TankCameraController(getEntity());
 			Graphics.getInstance().addCameraController(controller);
 			addedCameraController = true;
