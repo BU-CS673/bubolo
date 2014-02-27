@@ -3,6 +3,7 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.world.entity.concrete.Tank;
 
@@ -13,6 +14,8 @@ import bubolo.world.entity.concrete.Tank;
 class TankSprite extends Sprite<Tank>
 {
 	private Texture image;
+	private TextureRegion localImage;
+	private TextureRegion enemyImage;
 	
 	// true if the camera controller has been added.
 	private boolean addedCameraController;
