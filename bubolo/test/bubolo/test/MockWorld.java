@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -26,11 +27,6 @@ public class MockWorld implements World
 	public List<Entity> getEntities()
 	{
 		return new ArrayList<Entity>();
-	}
-
-	@Override
-	public void addEntity(Entity e)
-	{
 	}
 
 	@Override
@@ -60,6 +56,36 @@ public class MockWorld implements World
 	public void update()
 	{
 		// do nothing...
+	}
+
+	@Override
+	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
+			throws GameLogicException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
+			throws GameLogicException
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
