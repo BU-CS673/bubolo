@@ -105,7 +105,6 @@ class PillboxSprite extends Sprite<Entity>
 		default:
 			// Something has gone horribly wrong... I'm sad :(
 			throw new GameLogicException("Programming error in PillboxSprite: default case reached.");
-			break;
 		}
 	}
 }
