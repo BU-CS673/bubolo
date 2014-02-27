@@ -28,7 +28,10 @@ class TankSprite extends Sprite<Tank>
 	// The number of milliseconds per frame.
 	private static final long millisPerFrame = 100;
 
+	// The amount of time remaining for the current frame.
 	private long frameTimeRemaining;
+	
+	// The time of the last frame, in milliseconds.
 	private long lastFrameTime;
 	
 	/**
