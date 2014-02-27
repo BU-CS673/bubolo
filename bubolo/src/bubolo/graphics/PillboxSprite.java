@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import bubolo.util.GameLogicException;
 import bubolo.world.entity.*;
 
 /**
@@ -32,7 +33,6 @@ class PillboxSprite extends Sprite<Entity>
 		specificImage = new TextureRegion();
 		
 		specificImage.setTexture(image);
-		
 	}
 
 	@Override
@@ -59,6 +59,7 @@ class PillboxSprite extends Sprite<Entity>
 		
 		
 		// this is here to prevent errors--will always show a "dead" pillbox
+		// TODO: update this once the Pillbox entity has been created.
 		int currentState = 0;	
 		
 		/*
@@ -103,7 +104,7 @@ class PillboxSprite extends Sprite<Entity>
 		
 		default:
 			// Something has gone horribly wrong... I'm sad :(
-			break;
+			throw new GameLogicException("Programming error in PillboxSprite: default case reached.");
 		}
 	}
 }
