@@ -1,9 +1,10 @@
 package bubolo.graphics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
@@ -16,6 +17,8 @@ import bubolo.world.entity.concrete.Tree;
  */
 public class Sprites
 {
+	private Map<Class<? extends Entity>, SpriteFactory> spriteFactories;
+	
 	private List<Sprite<? extends Entity>> sprites = new ArrayList<Sprite<? extends Entity>>();
 	
 	private static Sprites instance;
@@ -38,6 +41,7 @@ public class Sprites
 	 */
 	private Sprites()
 	{
+		spriteFactories = setSpriteFactories();
 	}
 	
 	/**
@@ -50,58 +54,79 @@ public class Sprites
 		return sprites;
 	}
 	
+	
 	/**
-	 * Do not call this overload.
+	 * Creates a new sprite based on the type of entity provided.
 	 * @param entity reference to an entity.
+	 * @return reference to the new sprite.
 	 */
-	public Sprite<? extends Entity> create(Entity entity)
+	public Sprite<?> createSprite(Entity entity)
 	{
-		throw new GameLogicException(
-				"Sprites.create(Entity) should not be called. Call one of the strongly-typed overloads." +
-				"Entity id: " + entity.getId());
-	}
-	
-	/**
-	 * Creates a new sprite, and adds it to the list of drawables.
-	 * @param tank reference to a tank entity.
-	 */
-	public Sprite<? extends Entity> create(Tank tank)
-	{
-		TankSprite sprite = new TankSprite(tank);
+		if (!spriteFactories.containsKey(entity.getClass()))
+		{
+			throw new IllegalStateException("createSprite is unable to create a sprite from entity type " + 
+					entity.getClass().getName());
+		}
+		
+		Sprite<? extends Entity> sprite = spriteFactories.get(entity.getClass()).create(entity);
 		sprites.add(sprite);
 		return sprite;
 	}
 	
 	/**
-	 * Creates a new sprite, and adds it to the list of drawables.
-	 * @param grass reference to a grass entity.
+	 * Wrapper for sprite creation functions.
+	 * @author BU CS673 - Clone Productions
 	 */
-	public Sprite<? extends Entity> create(Grass grass)
+	private interface SpriteFactory
 	{
-		GrassSprite sprite = new GrassSprite(grass);
-		sprites.add(sprite);
-		return sprite;
+		/**
+		 * Executes the sprite creation function.
+		 * @param e reference to the entity that the sprite represents.
+		 * @return reference to the new sprite.
+		 */
+		 Sprite<? extends Entity> create(Entity e);
 	}
 	
 	/**
-	 * Creates a new sprite, and adds it to the list of drawables.
-	 * @param road reference to a road entity.
+	 * Creates the sprite factory objects, which map concrete classes to sprite creation.
+	 * @return map of the concrete classes to sprite creator classes.
 	 */
-	public Sprite<? extends Entity> create(Road road)
+	private static Map<Class<? extends Entity>, SpriteFactory> setSpriteFactories()
 	{
-		RoadSprite sprite = new RoadSprite(road);
-		sprites.add(sprite);
-		return sprite;
-	}
-	
-	/**
-	 * Creates a new sprite, and adds it to the list of drawables.
-	 * @param tree reference to a tree entity.
-	 */
-	public Sprite<? extends Entity> create(Tree tree)
-	{
-		TreeSprite sprite = new TreeSprite(tree);
-		sprites.add(sprite);
-		return sprite;
+		Map<Class<? extends Entity>, SpriteFactory> factories = new HashMap<>();
+		
+		factories.put(Grass.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new GrassSprite(e);
+			}
+		});
+		
+		factories.put(Road.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new RoadSprite((Road)e);
+			}
+		});
+		
+		factories.put(Tank.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new TankSprite((Tank)e);
+			}
+		});
+		
+		factories.put(Tree.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new TreeSprite((Tree)e);
+			}
+		});
+		
+		return factories;
 	}
 }

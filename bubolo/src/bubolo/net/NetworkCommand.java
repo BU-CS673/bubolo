@@ -7,7 +7,9 @@ import bubolo.world.World;
 /**
  * A command that will be sent across the network to other users. The execute method 
  * will be called exactly once when it reaches the other player, so any processing
- * (such as the creation of new Entities) should be performed in this method.
+ * (such as the creation of new Entities) should be performed in this method. 
+ * <code>NetworkCommand</clone>s must be immutable.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public interface NetworkCommand extends Serializable

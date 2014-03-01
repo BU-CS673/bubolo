@@ -29,7 +29,7 @@ public class ControllersTest
 	{
 		Controllers controllerSystem = Controllers.getInstance();
 		// Pass Grass entity, since it does not have any controllers normally.
-		controllerSystem.create(new Grass(), null);
+		controllerSystem.createController(new Grass(), null);
 		assertEquals(0, controllerSystem.getCount());
 	}
 
@@ -37,7 +37,7 @@ public class ControllersTest
 	public void testCreateTankControllerFactory()
 	{
 		Controllers controllerSystem = Controllers.getInstance();
-		controllerSystem.create(new Tank(), new MockTankControllerFactory());
+		controllerSystem.createController(new Tank(), new MockControllerFactory());
 		assertEquals(1, controllerSystem.getCount());
 	}
 
@@ -46,7 +46,7 @@ public class ControllersTest
 	public void testCreateTreeControllerFactory()
 	{
 		Controllers controllerSystem = Controllers.getInstance();
-		controllerSystem.create(new Tree(), null);
+		controllerSystem.createController(new Tree(), null);
 		assertEquals(1, controllerSystem.getCount());
 	}
 
