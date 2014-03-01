@@ -3,7 +3,6 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.world.entity.concrete.Tank;
 
@@ -14,8 +13,6 @@ import bubolo.world.entity.concrete.Tank;
 class TankSprite extends Sprite<Tank>
 {
 	private Texture image;
-	
-	private TextureRegion specificTankImg;
 	
 	// true if the camera controller has been added.
 	private boolean addedCameraController;
@@ -31,23 +28,12 @@ class TankSprite extends Sprite<Tank>
 		super(DrawLayer.TANKS, tank);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
-		
-		specificTankImg = new TextureRegion();
-		
-		specificTankImg.setTexture(image);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		
-		// Yellow Tank
-		//specificTankImg.setRegion(32,0,32,32);
-		 
-		//Blue Tank
-		specificTankImg.setRegion(0,0,32,32);
-		drawTexture(batch, camera, layer, specificTankImg);
-		//drawTexture(batch, camera, layer, image);
+		drawTexture(batch, camera, layer, image);
 		
 		if (!addedCameraController)
 		{

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import bubolo.world.entity.Entity;
+import bubolo.world.entity.*;
 
 /**
  * The graphical representation of a Pillbox
@@ -72,32 +72,32 @@ class PillboxSprite extends Sprite<Entity>
 		
 		switch(currentState){
 		case 5:			
-			specificImage.setRegion(0,0,32,32);
+			specificImage.setRegion(0,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 4:
-			specificImage.setRegion(32,0,32,32);
+			specificImage.setRegion(32,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 3:
-			specificImage.setRegion(64,0,32,32);
+			specificImage.setRegion(64,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 2:
-			specificImage.setRegion(96,0,32,32);
+			specificImage.setRegion(96,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 1:			
-			specificImage.setRegion(128,0,32,32);
+			specificImage.setRegion(128,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 			
 		case 0:	
-			specificImage.setRegion(160,0,32,32);
+			specificImage.setRegion(160,32,32,32);
 			drawTexture(batch, camera, layer, specificImage);
 			break;
 		
