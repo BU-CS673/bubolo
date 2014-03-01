@@ -24,7 +24,7 @@ class GrassSprite extends Sprite<Grass>
 	{
 		super(DrawLayer.OBJECTS, grass);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "grass.png");
 		//TODO: Create a Tree texture!
 	}
 
