@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.Entity;
 
 /**
- * The graphical representation of a Tank.
+ * The graphical representation of grass entity.
  * @author BU673 - Clone Industries
  */
-class GrassSprite extends Sprite<Grass>
+class GrassSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
@@ -20,12 +20,11 @@ class GrassSprite extends Sprite<Grass>
 	 * (instead, call the Sprite.create(entity) static method).
 	 * @param grass Reference to the Grass that this GrassSprite represents.
 	 */
-	GrassSprite(Grass grass)
+	GrassSprite(Entity grass)
 	{
 		super(DrawLayer.TERRAIN, grass);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
-		//TODO: Create a Tree texture!
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "grass.png");
 	}
 
 	@Override
