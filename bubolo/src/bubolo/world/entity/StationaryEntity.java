@@ -3,12 +3,13 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 /**
- * Basic class for DrawableEntities that do not move (i.e., those that are fixed
- * a single location on the map grid).
+ * Basic class for DrawableEntities that do not move (i.e., those that are fixed a single
+ * location on the map grid).
  * 
  * @author BU CS673 - Clone Productions
  */
-public abstract class StationaryEntity extends Entity {
+public abstract class StationaryEntity extends Entity
+{
 
 	/**
 	 * Used when serializing and de-serializing.
@@ -18,7 +19,8 @@ public abstract class StationaryEntity extends Entity {
 	/**
 	 * Construct a new StationaryEntity with a random UUID.
 	 */
-	public StationaryEntity() {
+	public StationaryEntity()
+	{
 		super();
 	}
 
@@ -26,10 +28,10 @@ public abstract class StationaryEntity extends Entity {
 	 * Construct a new StationaryEntity with the specified UUID.
 	 * 
 	 * @param id
-	 *            is the existing UUID to be applied to the new
-	 *            StationaryEntity.
+	 *            is the existing UUID to be applied to the new StationaryEntity.
 	 */
-	public StationaryEntity(UUID id) {
+	public StationaryEntity(UUID id)
+	{
 		super(id);
 		// TODO Auto-generated constructor stub
 	}

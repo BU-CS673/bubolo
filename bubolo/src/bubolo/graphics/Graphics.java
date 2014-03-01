@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * The top-level class for the Graphics system.
- * @author BU673 - Clone Industries
+ * @author BU CS673 - Clone Productions
  */
 public class Graphics
 {
@@ -27,12 +27,24 @@ public class Graphics
 	 */
 	public static final String TEXTURE_PATH = "res/textures/";
 	
+	/**
+	 * The target number of draw ticks per second.
+	 */
+	public static final int TICKS_PER_SECOND = 60;
+	
+	/**
+	 * The number of milliseconds per draw tick.
+	 */
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	
 	// Stores the textures, ensuring that only one is needed for all instances
 	// of a given sprite. 
 	private static Map<String, Texture> textures = new HashMap<String, Texture>();
 	
 	private SpriteBatch batch;
 	private Camera camera;
+	
+	private Sprites spriteSystem;
 	
 	// The list of camera controllers.
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
@@ -68,7 +80,7 @@ public class Graphics
 	 * @throws FileNotFoundException if the file is not found on the file system
 	 * (can only occur if the file has not yet been loaded).
 	 */
-	public static Texture getTexture(String path)
+	static Texture getTexture(String path)
 	{
 		//TODO: Throw FileNotFoundException for this method or remove the @throws from the javadoc.
 		Texture texture = textures.get(path);
@@ -101,6 +113,7 @@ public class Graphics
 	{
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
+		spriteSystem = Sprites.getInstance();
 		
 		synchronized(Graphics.class)
 		{
@@ -115,7 +128,7 @@ public class Graphics
 	public void draw(World world)
 	{
 		// 1. Get list of entities from the World/Model.
-		List<Entity> entities = world.getEntities();
+		List<Sprite<? extends Entity>> sprites = spriteSystem.getSprites();
 		
 		// 2. Perform clipping: remove entities that are outside of the bounding window.
 		// TODO - Implement this
@@ -124,10 +137,10 @@ public class Graphics
 		// TODO - Implement this.
 		
 		// 4. Render sprites by layer.
-		drawEntities(entities, DrawLayer.TERRAIN);
-		drawEntities(entities, DrawLayer.TERRAIN_MODIFIERS);
-		drawEntities(entities, DrawLayer.OBJECTS);
-		drawEntities(entities, DrawLayer.TANKS);
+		drawEntities(sprites, DrawLayer.TERRAIN);
+		drawEntities(sprites, DrawLayer.TERRAIN_MODIFIERS);
+		drawEntities(sprites, DrawLayer.OBJECTS);
+		drawEntities(sprites, DrawLayer.TANKS);
 		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
@@ -151,11 +164,27 @@ public class Graphics
 	 * @param entities the list of entities.
 	 * @param currentLayer the current layer to draw.
 	 */
-	private void drawEntities(List<Entity> entities, DrawLayer currentLayer)
+	private void drawEntities(List<Sprite<? extends Entity>> sprites, DrawLayer currentLayer)
 	{
-		for (Entity e : entities)
+		if (sprites.size() == 0)
 		{
-			e.draw(batch, camera, currentLayer);
+			return;
 		}
+		
+		Class<?> lastTexture = null;
+		for (Sprite<? extends Entity> sprite : sprites)
+		{
+			if (sprite.getClass() != lastTexture)
+			{
+				if (lastTexture != null)
+				{
+					batch.end();
+				}
+				batch.begin();
+			}
+			sprite.draw(batch, camera, currentLayer);
+			lastTexture = sprite.getClass();
+		}
+		batch.end();
 	}
 }

@@ -2,8 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.graphics.MockSprite;
-import bubolo.graphics.Sprite;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -24,7 +22,6 @@ public class Grass extends Terrain
 	public Grass()
 	{
 		super();
-		sprite = Sprite.create(this);
 	}
 
 	/**
@@ -36,20 +33,6 @@ public class Grass extends Terrain
 	public Grass(UUID id)
 	{
 		super(id);
-		sprite = Sprite.create(this);
-	}
-
-	/**
-	 * Construct a new Grass with a MockSprite. Used for unit testing with separation from
-	 * the Graphics system.
-	 * 
-	 * @param m
-	 *            is the MockSprite that should be used to represent this Grass.
-	 */
-	public Grass(MockSprite<Grass> m)
-	{
-		super();
-		sprite = m;
 	}
 
 	// TODO: Add Grass functionality!

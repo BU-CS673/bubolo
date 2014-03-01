@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import com.google.common.base.Preconditions;
 
+import bubolo.controllers.ControllerFactory;
+import bubolo.controllers.Controllers;
+import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
 
@@ -63,19 +66,54 @@ public class GameWorld implements World
 		List<Entity> copyOfEntities = Collections.unmodifiableList(entities);
 		return copyOfEntities;
 	}
+	
+    @Override
+	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
+    {
+        return addEntity(c, UUID.randomUUID(), null);
+    }
+    
+    @Override
+	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
+    {
+        return addEntity(c, id, null);
+    }
 
-	@Override
-	public void addEntity(Entity e) throws GameLogicException
-	{
-		if (entityMap.containsKey(e.getId()))
+    @Override
+	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory) throws GameLogicException
+    {
+        return addEntity(c, UUID.randomUUID(), controllerFactory);
+    }
+   
+    @Override
+	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory) 
+    		throws GameLogicException, IllegalStateException
+    {
+    	if (entityMap.containsKey(id))
 		{
-			throw new GameLogicException("The specified entity already exists. Entity id: "
-					+ e.getId());
+			throw new GameLogicException("The specified entity already exists. Entity id: " + id);
+		}
+    	
+        T entity;
+		try
+		{
+			entity = c.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			throw new GameLogicException(e.getMessage());
 		}
 
-		entities.add(e);
-		entityMap.put(e.getId(), e);
-	}
+        entity.setId(id);
+        
+        Sprites.getInstance().createSprite(entity);
+        Controllers.getInstance().createController(entity, controllerFactory);
+        
+        entities.add(entity);
+		entityMap.put(entity.getId(), entity);
+        
+        return entity;
+    }
 
 	@Override
 	public void removeEntity(Entity e)

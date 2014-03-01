@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import bubolo.test.MockTank;
+import bubolo.test.MockWorld;
 import bubolo.world.entity.concrete.Tank;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -49,16 +51,6 @@ public class TankCameraControllerTest
 		CameraController controller = new TankCameraController(new MockTank());
 		controller.setCamera(camera);
 		controller.update(new MockWorld());
-	}
-	
-	@Test
-	public void testUpdateBad()
-	{
-		CameraController controller = new TankCameraController(new MockTank());
-		try {
-			controller.update(new MockWorld());
-			fail("CameraController does not have a camera, but was able to update");
-		} catch (Exception e) {}
 	}
 	
 	@Test

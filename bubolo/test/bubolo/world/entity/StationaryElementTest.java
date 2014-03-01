@@ -2,18 +2,10 @@ package bubolo.world.entity;
 
 import static org.junit.Assert.*;
 
-import java.util.UUID;
-
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.Gdx;
-
-import bubolo.graphics.LibGdxAppTester;
-import bubolo.graphics.MockSprite;
 import bubolo.world.entity.StationaryElement;
-import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
 public class StationaryElementTest
@@ -26,7 +18,7 @@ public class StationaryElementTest
 	@BeforeClass
 	public static void setUpApp()
 	{
-		sta = new Tree(new MockSprite<Tree>());
+		sta = new Tree();
 		EntityTestCase.setTestParams(sta);
 
 	}
@@ -67,7 +59,7 @@ public class StationaryElementTest
 	@Test
 	public void destroy()
 	{
-		StationaryElement sta2 = new Tree(new MockSprite<Tree>());
+		StationaryElement sta2 = new Tree();
 		sta2.destroy();
 		// Should check to make sure the StationaryElement was removed properly.
 		// Useless until we have some conditions to test whether a StationaryElement has
