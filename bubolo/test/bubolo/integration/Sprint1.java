@@ -22,6 +22,7 @@ public class Sprint1
 
 			s.dispose();
 			MenuScreen fp = new MenuScreen(new Runnable() {
+				@Override
 				public void run()
 				{
 					setup();
