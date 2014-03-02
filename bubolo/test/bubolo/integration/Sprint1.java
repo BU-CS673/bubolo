@@ -43,6 +43,7 @@ public class Sprint1
 		cfg.title = "test";
 		cfg.width = 600;
 		cfg.height = 600;
+		cfg.useGL20 = true;
 		new LwjglApplication(app, cfg);
 	}
 }
