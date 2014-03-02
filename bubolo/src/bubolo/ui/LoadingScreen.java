@@ -5,8 +5,9 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
  
-public class Splash extends JFrame {
+public class LoadingScreen extends JFrame {
  
+	private static String SPLASH_PATH = "res/splash/";
     private JLabel imglabel;
     private ImageIcon img;
     private static JProgressBar pbar;
@@ -14,14 +15,14 @@ public class Splash extends JFrame {
     private JLabel label;
     Thread t = null;
  
-    public Splash() {
+    public LoadingScreen() {
         super("Splash");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setUndecorated(true);
         
-        img = new ImageIcon(getClass().getResource("image1.jpg"));
+        img = new ImageIcon(SPLASH_PATH + "bubolo_splash.jpg");
         
         imglabel = new JLabel(img);
         
@@ -38,11 +39,6 @@ public class Splash extends JFrame {
         add(pbar);
         pbar.setPreferredSize(new Dimension(310, 30));
         pbar.setBounds(0, 350, 500, 20);
-        
-        
-        
-        
-        
        
         Thread t = new Thread() {
  
@@ -51,9 +47,9 @@ public class Splash extends JFrame {
                 while (i <= 100) {
                     pbar.setValue(i);
                     try {
-                        sleep(90);
+                        sleep(25);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Splash.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(LoadingScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     i++;
                 }

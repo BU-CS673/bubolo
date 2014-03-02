@@ -6,15 +6,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class FirstPage extends javax.swing.JFrame {
-
+public class MenuScreen extends javax.swing.JFrame {
+	Runnable myTarget = null;
+	
     /**
-     * Creates new form FirstPage
+     * Creates new form MenuScreen
      */
-    public FirstPage() throws InterruptedException {
-//         
-        
-        
+    public MenuScreen(Runnable targetApp) throws InterruptedException {
+      myTarget = targetApp;
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -32,10 +31,10 @@ public class FirstPage extends javax.swing.JFrame {
 
         UserPrcoessContainer = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        startButton = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
+        preferencesButton = new javax.swing.JToggleButton();
+        quitButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -43,9 +42,9 @@ public class FirstPage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("B.U.B.O.L.O");
 
-        jToggleButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jToggleButton1.setText("New Game ");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        startButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        startButton.setText("New Game ");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
@@ -54,12 +53,12 @@ public class FirstPage extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setText("Clone Productions");
 
-        jToggleButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jToggleButton2.setText("Preferences");
+        preferencesButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        preferencesButton.setText("Preferences");
 
-        jToggleButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jToggleButton3.setText("Exit");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        quitButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        quitButton.setText("Exit");
+        quitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton3ActionPerformed(evt);
             }
@@ -72,11 +71,11 @@ public class FirstPage extends javax.swing.JFrame {
             .addGroup(UserPrcoessContainerLayout.createSequentialGroup()
                 .addGap(178, 178, 178)
                 .addGroup(UserPrcoessContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jToggleButton3)
+                    .addComponent(quitButton)
                     .addComponent(jLabel1)
-                    .addComponent(jToggleButton1)
+                    .addComponent(startButton)
                     .addComponent(jLabel2)
-                    .addComponent(jToggleButton2))
+                    .addComponent(preferencesButton))
                 .addGap(130, 130, 130))
         );
         UserPrcoessContainerLayout.setVerticalGroup(
@@ -87,11 +86,11 @@ public class FirstPage extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
+                .addComponent(startButton)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton2)
+                .addComponent(preferencesButton)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton3)
+                .addComponent(quitButton)
                 .addGap(48, 48, 48))
         );
 
@@ -101,7 +100,7 @@ public class FirstPage extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        
+        (new Thread(myTarget)).start();
     }                                              
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
@@ -109,51 +108,12 @@ public class FirstPage extends javax.swing.JFrame {
         this.dispose();
     }                                              
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FirstPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FirstPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FirstPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FirstPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new FirstPage().setVisible(true);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FirstPage.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
     // Variables declaration - do not modify                     
     private javax.swing.JPanel UserPrcoessContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton startButton;
+    private javax.swing.JToggleButton preferencesButton;
+    private javax.swing.JToggleButton quitButton;
     // End of variables declaration                   
 }
