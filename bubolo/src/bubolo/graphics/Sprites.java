@@ -99,7 +99,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new GrassSprite((Grass)e);
+				return new GrassSprite(e);
 			}
 		});
 		

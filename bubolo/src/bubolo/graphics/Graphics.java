@@ -94,7 +94,7 @@ public class Graphics
 	}
 	
 	/**
-	 * Destroys all textures.
+	 * Destroys all textures, and destroys the Graphics instance.
 	 */
 	public static void dispose()
 	{
@@ -102,6 +102,7 @@ public class Graphics
 		{
 			texture.dispose();
 		}
+		instance = null;
 	}
 	
 	/**
