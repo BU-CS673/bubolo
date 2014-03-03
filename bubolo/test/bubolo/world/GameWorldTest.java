@@ -8,8 +8,10 @@ import java.util.UUID;
 
 import org.junit.Test;
 
-import bubolo.test.MockTank;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Tank;
 
 public class GameWorldTest
 {
@@ -49,33 +51,15 @@ public class GameWorldTest
 	@Test
 	public void testAddEntity()
 	{
-		World w = new GameWorld(1, 1);
-		Entity t = new MockTank();
-		w.addEntity(t);
-	}
-
-	@Test
-	public void testAddEntityTwice()
-	{
-		World w = new GameWorld(1, 1);
-		Entity t = new MockTank();
-		w.addEntity(t);
-		try
-		{
-			w.addEntity(t);
-			fail("Entity was added twice, but this is not allowed.");
-		}
-		catch (Exception e)
-		{
-		}
+		World world = new GameWorld(1, 2);
+		world.addEntity(Grass.class);
 	}
 
 	@Test
 	public void testGetEntity()
 	{
 		World w = new GameWorld(1, 1);
-		Entity t = new MockTank();
-		w.addEntity(t);
+		Entity t = w.addEntity(Tank.class);
 		assertEquals(t, w.getEntity(t.getId()));
 	}
 
@@ -91,7 +75,7 @@ public class GameWorldTest
 	public void testRemoveEntityEntity()
 	{
 		World w = new GameWorld(1, 1);
-		w.addEntity(new MockTank());
+		w.addEntity(Road.class);
 		WeakReference<Entity> e = new WeakReference<Entity>(w.getEntities().get(0));
 		UUID id = e.get().getId();
 
@@ -110,7 +94,7 @@ public class GameWorldTest
 	public void testRemoveEntityUUID()
 	{
 		World w = new GameWorld(1, 1);
-		w.addEntity(new MockTank());
+		w.addEntity(Tank.class);
 		UUID id = w.getEntities().get(0).getId();
 
 		w.removeEntity(id);

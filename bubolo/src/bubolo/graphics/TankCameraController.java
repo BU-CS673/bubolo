@@ -41,7 +41,10 @@ class TankCameraController implements CameraController
 	public void update(World world)
 	{
 		if (camera == null)
-			throw  new IllegalStateException("No camera has been set for this TankCameraController.");
+		{
+			return;
+		}
+			//throw  new IllegalStateException("No camera has been set for this TankCameraController.");
 		
 		float tankX = calculateCameraX(camera, tank, world);
 		float tankY = calculateCameraY(camera, tank, world);

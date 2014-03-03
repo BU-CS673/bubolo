@@ -3,7 +3,9 @@ package bubolo.controllers;
 import bubolo.world.entity.Entity;
 
 /**
- * Interface for controller factories, which allow a 
+ * Interface for controller factories, which allow the controllers that will be
+ * used with an entity to be defined. If a controller factory is not used, the
+ * default controllers for the entity will be used.
  * @author BU CS673 - Clone Productions
  */
 public interface ControllerFactory
