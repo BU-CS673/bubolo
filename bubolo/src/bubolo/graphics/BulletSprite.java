@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import bubolo.world.entity.Entity;
 
 /**
- * 
+ * The graphical representation of a bullet entity.
  * @author BU673 - Clone Industries
  */
 class BulletSprite extends Sprite<Entity>
