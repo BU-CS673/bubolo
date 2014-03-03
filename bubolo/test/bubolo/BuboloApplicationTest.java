@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
+
 import bubolo.graphics.LibGdxAppTester;
 
 public class BuboloApplicationTest
@@ -26,7 +28,11 @@ public class BuboloApplicationTest
 	@Test
 	public void testCreate()
 	{
-		ga.create();
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				ga.create();
+			}
+		});
 	}
 
 	@Test
