@@ -2,8 +2,6 @@ package bubolo.ui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A Menu Screen that should follow the splash screen. Allows users to start the game or
@@ -13,6 +11,8 @@ import java.util.logging.Logger;
  */
 public class MenuScreen extends javax.swing.JFrame
 {
+	private static final long serialVersionUID = -5355152035949516532L;
+	
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
