@@ -21,6 +21,10 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
+	
+	// true if this entity should be removed from the game, or false otherwise. This is
+	// used by sprites.
+	private boolean destroyed;
 
 	/**
 	 * Construct a new Entity with a random UUID.
@@ -188,5 +192,24 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		height = size;
 		return this;
+	}
+	
+	/**
+	 * Returns true if the entity should be removed from the game. This is needed
+	 * by the graphics system.
+	 * 
+	 * @return true if the entity should be removed from the game.
+	 */
+	public boolean isDestroyed()
+	{
+		return destroyed;
+	}
+	
+	/**
+	 * This method must be called when the entity should be removed from the game.
+	 */
+	protected void destroy()
+	{
+		destroyed = true;
 	}
 }

@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * The top-level class for the Graphics system.
@@ -137,8 +136,6 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
-		long startMillis = System.currentTimeMillis();
-		
 		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's view.
 		spritesInView.clear();
 		for (Sprite<?> sprite : spriteSystem.getSprites())
@@ -164,10 +161,14 @@ public class Graphics
 			c.update(world);
 		}
 		
-		System.out.println(System.currentTimeMillis() - startMillis);
-		if (System.currentTimeMillis() - startMillis > 10)
+		// Remove destroyed sprites from the list.
+		List<Sprite<?>> sprites = spriteSystem.getSprites();
+		for (int i = 0; i < sprites.size(); ++i)
 		{
-			System.out.println("");
+			if (sprites.get(i).isEntityDestroyed())
+			{
+				sprites.remove(i);
+			}
 		}
 	}
 	
