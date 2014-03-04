@@ -17,7 +17,7 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU CS673 - Clone Productions
  */
-abstract class Sprite<T extends Entity>
+abstract class Sprite<T extends Entity> implements Drawable
 {
 	// The layer that this sprite is drawn to.
 	private DrawLayer drawLayer;
@@ -61,6 +61,36 @@ abstract class Sprite<T extends Entity>
 	protected T getEntity()
 	{
 		return entity;
+	}
+	
+	@Override
+	public float getX()
+	{
+		return entity.getX();
+	}
+
+	@Override
+	public float getY()
+	{
+		return entity.getY();
+	}
+
+	@Override
+	public int getWidth()
+	{
+		return entity.getWidth();
+	}
+
+	@Override
+	public int getHeight()
+	{
+		return entity.getHeight();
+	}
+
+	@Override
+	public float getRotation()
+	{
+		return entity.getRotation();
 	}
 
 	/**

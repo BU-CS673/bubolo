@@ -3,6 +3,8 @@ package bubolo.graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * The top-level class for the Graphics system.
@@ -50,7 +53,12 @@ public class Graphics
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
 	
 	// Static reference to this object for the getInstance() method.
-	private static Graphics instance = null; 
+	private static Graphics instance = null;
+	
+	// The comparator used to sort sprites.
+	private static Comparator<Sprite<?>> spriteComparator;
+	
+	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
 	
 	/**
 	 * Gets a reference to the Graphics system. The Graphics system must be 
@@ -119,6 +127,7 @@ public class Graphics
 		synchronized(Graphics.class)
 		{
 			Graphics.instance = this;
+			spriteComparator = new SpriteComparator();
 		}
 	}
 	
@@ -128,25 +137,37 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
-		// 1. Get list of entities from the World/Model.
-		List<Sprite<? extends Entity>> sprites = spriteSystem.getSprites();
+		long startMillis = System.currentTimeMillis();
 		
-		// 2. Perform clipping: remove entities that are outside of the bounding window.
-		// TODO - Implement this
-		 
-		// 3. Sort list by entity.getSpriteId()
-		// TODO - Implement this.
+		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's view.
+		spritesInView.clear();
+		for (Sprite<?> sprite : spriteSystem.getSprites())
+		{
+			if (withinCameraView(camera, sprite))
+			{
+				spritesInView.add(sprite);
+			}
+		}
+		
+		// 3. Sort list by sprite type, to facilitate batching.
+		Collections.sort(spritesInView, spriteComparator);
 		
 		// 4. Render sprites by layer.
-		drawEntities(sprites, DrawLayer.TERRAIN);
-		drawEntities(sprites, DrawLayer.TERRAIN_MODIFIERS);
-		drawEntities(sprites, DrawLayer.OBJECTS);
-		drawEntities(sprites, DrawLayer.TANKS);
+		drawEntities(spritesInView, DrawLayer.TERRAIN);
+		drawEntities(spritesInView, DrawLayer.TERRAIN_MODIFIERS);
+		drawEntities(spritesInView, DrawLayer.OBJECTS);
+		drawEntities(spritesInView, DrawLayer.TANKS);
 		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
 		{
 			c.update(world);
+		}
+		
+		System.out.println(System.currentTimeMillis() - startMillis);
+		if (System.currentTimeMillis() - startMillis > 10)
+		{
+			System.out.println("");
 		}
 	}
 	
@@ -172,20 +193,39 @@ public class Graphics
 			return;
 		}
 		
-		Class<?> lastTexture = null;
+		batch.begin();
 		for (Sprite<? extends Entity> sprite : sprites)
 		{
-			if (sprite.getClass() != lastTexture)
-			{
-				if (lastTexture != null)
-				{
-					batch.end();
-				}
-				batch.begin();
-			}
 			sprite.draw(batch, camera, currentLayer);
-			lastTexture = sprite.getClass();
 		}
 		batch.end();
+	}
+	
+	/**
+	 * Returns true if the x, y, height and width of the sprite are within the 
+	 * camera's view.
+	 * @param camera the game camera.
+	 * @param sprite the sprite to check.
+	 * @return true if the sprite is within the camera's view, or false otherwise.
+	 */
+	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
+	{
+		return (sprite.getX() + sprite.getWidth() + camera.position.x > 0 &&
+				sprite.getX() + camera.position.x < camera.viewportWidth * 2 &&
+				sprite.getY() + sprite.getHeight() + camera.position.y > 0 &&
+				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
+	}
+	
+	/**
+	 * Comparator that is used when sorting sprites.
+	 * @author BU CS673 - Clone Productions
+	 */
+	private static class SpriteComparator implements Comparator<Sprite<?>>
+	{
+		@Override
+		public int compare(Sprite<?> o1, Sprite<?> o2)
+		{
+			return (o1.getClass().getName().compareTo(o2.getClass().getName()));
+		}
 	}
 }
