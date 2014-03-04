@@ -31,7 +31,7 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public Entity()
 	{
-		myID = UUID.randomUUID();
+		this(UUID.randomUUID());
 	}
 
 	/**
