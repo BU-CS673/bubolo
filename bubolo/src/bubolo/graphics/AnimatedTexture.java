@@ -3,6 +3,7 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -17,22 +18,21 @@ import java.util.List;
 
 public class AnimatedTexture
 {
-	private Texture texture;
 	private List<TextureRegion> frames;
 	private TextureRegion currentFrame;
 	private long millisPerFrame;
 	private long nextFrameChangeTime;
 	private boolean loop;
 	private boolean finished;
+	Iterator<TextureRegion> frameItr = frames.iterator();
 	
 	/**
 	 * Protected constructor
 	 */
-	protected AnimatedTexture(Texture texture, List<TextureRegion> frames, long millisPerFrame, boolean loop){
-		this.texture = texture;
+	protected AnimatedTexture(List<TextureRegion> frames, long millisPerFrame, boolean loop){
 		this.frames = frames;
 		this.millisPerFrame = millisPerFrame;
-		this.loop = loop;
+		this.loop = loop;	
 	}
 	
 	/**
@@ -44,13 +44,21 @@ public class AnimatedTexture
 	 * @return 
 	 */
 	public void animate(){
+		//loop once 
+		animateWithoutLoop();
+		//while loop is true, keep looping
+		while (loop){
+			animateWithoutLoop();
+		}
+	}
+	public void animateWithoutLoop(){
 		if (System.currentTimeMillis()> nextFrameChangeTime){
 			//Changes the currentTextureRegion to point at the next frame
-			currentFrame = frames.iterator().next();
+			currentFrame = frameItr.next();
 			
 			nextFrameChangeTime = System.currentTimeMillis() + millisPerFrame;
 			
-			if (!frames.iterator().hasNext()){
+			if (!frameItr.hasNext()){
 				finished = true;
 				loop = false;
 			}
