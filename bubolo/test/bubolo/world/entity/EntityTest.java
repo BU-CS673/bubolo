@@ -78,5 +78,18 @@ public class EntityTest
 	{
 		assertEquals("Entity height matches target.", EntityTestCase.TARGET_HEIGHT, ent.getHeight());
 	}
+	
+	@Test
+	public void isDestroyed()
+	{
+		Entity e = new MockEntity();
+		assertFalse(e.isDestroyed());
+	}
 
+	@Test
+	public void destroyTest()
+	{
+		ent.destroy();
+		assertTrue(ent.isDestroyed());
+	}
 }

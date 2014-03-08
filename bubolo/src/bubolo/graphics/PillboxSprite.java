@@ -71,7 +71,8 @@ class PillboxSprite extends Sprite<Entity>
 		 * Assuming our focus is on lower left... i.e. start at 0,32 and increase X as we move right?
 		 */
 		
-		switch(currentState){
+		switch(currentState)
+		{
 		case 5:			
 			specificImage.setRegion(0,0,32,32);
 			drawTexture(batch, camera, layer, specificImage);
