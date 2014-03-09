@@ -2,16 +2,15 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.entity.Modifier;
+import bubolo.world.entity.Terrain;
 
 
 /**
- * Roads are Modifiers for Terrain that allow Tanks to drive more quickly. They can be
- * created and destroyed by Tanks.
+ * Road is a Terrain type that offers tanks improved movement speed. 
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Road extends Modifier
+public class Road extends Terrain
 {
 	/**
 	 * Used when serializing and de-serializing.
