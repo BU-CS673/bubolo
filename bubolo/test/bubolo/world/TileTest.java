@@ -6,7 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import bubolo.util.GameLogicException;
-import bubolo.world.entity.Modifier;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.Grass;
@@ -20,17 +19,14 @@ public class TileTest
 	static int TARGET_X_GRID = 2;
 	static int TARGET_Y_GRID = 3;
 	Terrain tempTerrain = new Grass();
-	Modifier tempMod = new Road();
 	StationaryElement tempElement = new Tree();
 	static Terrain t = new Grass();
-	static Modifier m = new Road();
 	static StationaryElement e = new Tree();
 
 	@BeforeClass
 	public static void setup()
 	{
 		testTile = new Tile(TARGET_X_GRID, TARGET_Y_GRID, t);
-		testTile.setModifier(m);
 		testTile.setElement(e);
 	}
 
@@ -81,12 +77,6 @@ public class TileTest
 	}
 
 	@Test
-	public void getModifier()
-	{
-		assertEquals("Tile returns Modifier object correctly.", testTile.getModifier(), m);
-	}
-
-	@Test
 	public void getElement()
 	{
 		assertEquals("Tile returns StationaryElement object correctly.", testTile.getElement(), e);
@@ -105,21 +95,7 @@ public class TileTest
 		assertEquals("Tile checks element absence correctly.",
 				(new Tile(0, 1, tempTerrain)).hasElement(), false);
 	}
-
-	@Test
-	public void hasModifier()
-	{
-		assertEquals("Tile checks modifier presence correctly.", testTile.hasModifier(), true);
-	}
-
-	@Test
-	public void hasNoModifier()
-	{
-
-		assertEquals("Tile checks modifier absence correctly.",
-				(new Tile(0, 1, tempTerrain)).hasModifier(), false);
-	}
-
+	
 	@Test
 	public void setTerrain()
 	{
@@ -134,22 +110,6 @@ public class TileTest
 		tempTile.setElement(tempElement);
 		tempTile.clearElement();
 		assertEquals("Tile has null Element after clear", tempTile.getElement(), null);
-	}
-
-	@Test(expected = GameLogicException.class)
-	public void clearModifier() throws GameLogicException
-	{
-		Tile tempTile = new Tile(0, 1, tempTerrain);
-		tempTile.setModifier(tempMod);
-		tempTile.clearModifier();
-		assertEquals("Tile has null Modifier after clear", tempTile.getModifier(), null);
-	}
-
-	@Test(expected = GameLogicException.class)
-	public void noModifierFound() throws GameLogicException
-	{
-		Tile tempTile = new Tile(0, 1, tempTerrain);
-		tempTile.getModifier();
 	}
 
 	@Test(expected = GameLogicException.class)
