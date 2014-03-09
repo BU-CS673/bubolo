@@ -2,6 +2,8 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
+import bubolo.world.Tile;
+
 /**
  * Basic class for DrawableEntities that do not move (i.e., those that are fixed a single
  * location on the map grid).
@@ -10,6 +12,10 @@ import java.util.UUID;
  */
 public abstract class StationaryEntity extends Entity
 {
+	/**
+	 * The Tile object to which this StationaryEntity belongs. Used for positioning.
+	 */
+	private Tile myTile;
 
 	/**
 	 * Used when serializing and de-serializing.
@@ -34,6 +40,41 @@ public abstract class StationaryEntity extends Entity
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public StationaryEntity setTile(Tile t){
+		myTile = t;
+		return this;
+	}
+
+	/**
+	 * Get the x position of this StationaryEntity in World coordinates. Uses the grid position of this entity's Tile object to calculate its world position.
+	 * If this StationaryEntity does not belong to a Tile, it returns the Entity default getX() method.
+	 */
+	@Override
+	public float getX()
+	{
+		if (myTile != null)
+		{
+			return myTile.getX();
+		}
+		else
+			return super.getX();
+	}
+	
+	/**
+	 * Get the y position of this StationaryEntity in World coordinates. Uses the grid position of this entity's Tile object to calculate its world position.
+	 * If this StationaryEntity does not belong to a Tile, it returns the Entity default getY() method.
+	 */
+	@Override
+	public float getY()
+	{
+		if (myTile != null)
+		{
+			return myTile.getY();
+		}
+		else
+			return super.getY();
 	}
 
 	// TODO: Add StationaryEntity functionality!
