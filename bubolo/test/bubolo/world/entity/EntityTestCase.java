@@ -6,7 +6,9 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import bubolo.world.Tile;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
 
 public class EntityTestCase
 {
@@ -20,6 +22,8 @@ public class EntityTestCase
 	static final float TARGET_ROT = (float) Math.PI / 2;
 	static final int TARGET_WIDTH = 50;
 	static final int TARGET_HEIGHT = 100;
+	
+	static Tile TARGET_TILE= new Tile(2, 3, new Grass());
 
 	public static Entity setTestParams(Entity e)
 	{
