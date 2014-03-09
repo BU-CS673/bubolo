@@ -11,7 +11,9 @@ import java.text.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import bubolo.world.GameWorld;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 
 public class Parser
@@ -28,6 +30,7 @@ public class Parser
 		int mapHeight = 0;
 		int mapWidth = 0;
 		Object obj = null;
+		Entity newEntity; 
 		JSONObject layerObject = null;
 		JSONArray tileData = null;
 		JSONArray layerArray = null;
@@ -69,7 +72,8 @@ public class Parser
 					switch (tileData.get(i * mapWidth + j).toString())
 					{
 						case "1":
-							world.addEntity(new Grass());
+							newEntity = world.addEntity(Grass.class);
+							newEntity.setParams(i, j, 32, 32, 0);
 							break;
 							
 						default:
