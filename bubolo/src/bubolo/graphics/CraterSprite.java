@@ -3,9 +3,6 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import bubolo.util.GameLogicException;
 import bubolo.world.entity.concrete.Crater;
 
 /**
