@@ -5,17 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.concrete.Swamp;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TreeSpriteTest
+public class SwampSpriteTest
 {
 	private SpriteBatch batch;
 	private Camera camera;
@@ -38,7 +35,7 @@ public class TreeSpriteTest
 	}
 	
 	@Test
-	public void constructTreeSprite() throws InterruptedException
+	public void constructSwampSprite() throws InterruptedException
 	{
 		synchronized(LibGdxAppTester.getLock())
 		{
@@ -50,7 +47,7 @@ public class TreeSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
 					
 					passed = true;
 					isComplete = true;
@@ -67,7 +64,7 @@ public class TreeSpriteTest
 	}	
 
 	@Test
-	public void drawTreeSprite()
+	public void drawSwampSprite()
 	{
 		isComplete = false;
 		passed = false;
@@ -76,9 +73,9 @@ public class TreeSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 				passed = true;
 				isComplete = true;
 			}
