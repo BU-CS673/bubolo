@@ -41,15 +41,25 @@ public abstract class StationaryEntity extends Entity
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public StationaryEntity setTile(Tile t){
+
+	/**
+	 * Sets the Tile object that this StationaryEntity belongs to.
+	 * 
+	 * @param t
+	 *            is the Tile object into which this StationaryEntity should be stored.
+	 * @return a reference to this StationaryEntity.
+	 */
+	public StationaryEntity setTile(Tile t)
+	{
 		myTile = t;
 		return this;
 	}
 
 	/**
-	 * Get the x position of this StationaryEntity in World coordinates. Uses the grid position of this entity's Tile object to calculate its world position.
-	 * If this StationaryEntity does not belong to a Tile, it returns the Entity default getX() method.
+	 * Get the x position of this StationaryEntity in World coordinates. Uses the grid
+	 * position of this entity's Tile object to calculate its world position. If this
+	 * StationaryEntity does not belong to a Tile, it returns the Entity default getX()
+	 * method.
 	 */
 	@Override
 	public float getX()
@@ -61,10 +71,12 @@ public abstract class StationaryEntity extends Entity
 		else
 			return super.getX();
 	}
-	
+
 	/**
-	 * Get the y position of this StationaryEntity in World coordinates. Uses the grid position of this entity's Tile object to calculate its world position.
-	 * If this StationaryEntity does not belong to a Tile, it returns the Entity default getY() method.
+	 * Get the y position of this StationaryEntity in World coordinates. Uses the grid
+	 * position of this entity's Tile object to calculate its world position. If this
+	 * StationaryEntity does not belong to a Tile, it returns the Entity default getY()
+	 * method.
 	 */
 	@Override
 	public float getY()

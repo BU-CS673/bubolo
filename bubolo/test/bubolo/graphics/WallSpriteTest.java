@@ -5,17 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.StationaryElement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TreeSpriteTest
+import static org.mockito.Mockito.*;
+
+
+public class WallSpriteTest
 {
 	private SpriteBatch batch;
 	private Camera camera;
@@ -27,7 +27,7 @@ public class TreeSpriteTest
 	public void setUp()
 	{	
 		LibGdxAppTester.createApp();
-		
+			
 		Gdx.app.postRunnable(new Runnable() {
 			@Override public void run() {
 				batch = new SpriteBatch();
@@ -37,37 +37,9 @@ public class TreeSpriteTest
 		});
 	}
 	
-	@Test
-	public void constructTreeSprite() throws InterruptedException
-	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			isComplete = false;
-			passed = false;
-			
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run()
-				{
-					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
-					
-					passed = true;
-					isComplete = true;
-				}
-			});
-	
-			while (!isComplete)
-			{
-				Thread.yield();
-			}
-			
-			assertTrue(passed);
-		}
-	}	
 
 	@Test
-	public void drawTreeSprite()
+	public void drawSprite()
 	{
 		isComplete = false;
 		passed = false;
@@ -76,7 +48,8 @@ public class TreeSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+			//	Sprite<?> sprite = Sprites.getInstance().createSprite(new Wall());
+				Sprite<?> sprite = new WallSprite(mock(StationaryElement.class));
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.OBJECTS);
 				passed = true;
