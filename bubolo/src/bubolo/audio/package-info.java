@@ -1,4 +1,4 @@
 /**
  * The Sound System.
  */
-package bubolo.sound;
+package bubolo.audio;
