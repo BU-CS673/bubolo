@@ -6,21 +6,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 
-
 /**
- * An explosion sound effect.
+ * A tank in shallow water sound effect.
  * 
  * @author BU673 - Clone Industries
  */
-public class Explosion extends SoundEffect
+public class TankInShallowWaterSfx extends SoundEffect
 {
 	/**
-	 * Constructs an explosion sound effect. External systems should not 
+	 * Constructs a tank in shallow water sound effect. External systems should not 
 	 * construct <code>SoundEffect</code>s directly.
 	 */
-	Explosion()
+	TankInShallowWaterSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "explosion.ogg"));
+		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tank_in_shallow_water.ogg"));
 		Sound sound = Gdx.audio.newSound(soundFile);
 		setSound(sound);
 	}

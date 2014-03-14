@@ -82,6 +82,16 @@ public class Audio
 	}
 	
 	/**
+	 * **Testing Only** Sets the list of music that will be played. This is inaccessible to
+	 * systems outside of the audio system, since it should only be used for testing.
+	 * @param musicList the list of <code>Music</code> files.
+	 */
+	static void setMusicList(List<Music> musicList)
+	{
+		music = musicList;
+	}
+	
+	/**
 	 * Sets the sound effect volume, from 0 (mute) to 100 (max volume).
 	 * @param volume the new sound effect volume, ranging from 0 to 100.
 	 * @throws IllegalArgumentException if volume is less than 0 or greater than 100.

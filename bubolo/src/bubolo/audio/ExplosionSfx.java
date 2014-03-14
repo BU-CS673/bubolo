@@ -8,19 +8,19 @@ import com.badlogic.gdx.files.FileHandle;
 
 
 /**
- * A cannon fired sound effect.
+ * An explosion sound effect.
  * 
  * @author BU673 - Clone Industries
  */
-public class CannonFired extends SoundEffect
+public class ExplosionSfx extends SoundEffect
 {
 	/**
-	 * Constructs a cannon fired sound effect. External systems should not 
+	 * Constructs an explosion sound effect. External systems should not 
 	 * construct <code>SoundEffect</code>s directly.
 	 */
-	CannonFired()
+	ExplosionSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannonfired.ogg"));
+		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "explosion.ogg"));
 		Sound sound = Gdx.audio.newSound(soundFile);
 		setSound(sound);
 	}

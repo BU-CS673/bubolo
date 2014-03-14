@@ -11,15 +11,15 @@ public abstract class Sfx
 	/**
 	 * An explosion sound effect.
 	 */
-	public static final SoundEffect EXPLOSION = new Explosion();
+	public static final SoundEffect EXPLOSION = new ExplosionSfx();
 	
 	/**
 	 * A tank hit sound effect.
 	 */
-	public static final SoundEffect TANK_HIT = new TankHit();
+	public static final SoundEffect TANK_HIT = new TankHitSfx();
 	
 	/**
 	 * A cannon fired sound effect.
 	 */
-	public static final SoundEffect CANNON_FIRED = new CannonFired();
+	public static final SoundEffect CANNON_FIRED = new CannonFiredSfx();
 }

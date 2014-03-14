@@ -7,19 +7,19 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 
 /**
- * A tank hit sound effect.
+ * A tree gathered sound effect.
  * 
  * @author BU673 - Clone Industries
  */
-public class TankHit extends SoundEffect
+public class TreeGatheredSfx extends SoundEffect
 {
 	/**
-	 * Constructs a tank hit sound effect. External systems should not 
+	 * Constructs a tree gathered sound effect. External systems should not 
 	 * construct <code>SoundEffect</code>s directly.
 	 */
-	TankHit()
+	TreeGatheredSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tankhit.ogg"));
+		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannon_fired.ogg"));
 		Sound sound = Gdx.audio.newSound(soundFile);
 		setSound(sound);
 	}
