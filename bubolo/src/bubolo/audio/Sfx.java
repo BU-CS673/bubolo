@@ -6,10 +6,8 @@ package bubolo.audio;
  * 
  * @author BU673 - Clone Industries
  */
-public class Sfx
+public abstract class Sfx
 {
-	public static final String SFX_PATH = "res/sfx/";
-	
 	/**
 	 * An explosion sound effect.
 	 */

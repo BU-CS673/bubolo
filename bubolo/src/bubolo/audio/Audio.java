@@ -1,6 +1,12 @@
 package bubolo.audio;
 
 
+import java.io.File;
+import java.util.List;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.google.common.base.Preconditions;
 
 /**
@@ -10,8 +16,15 @@ import com.google.common.base.Preconditions;
  */
 public class Audio
 {
+	public static final String MUSIC_PATH = "/res/music/";
+	
+	public static final String SFX_PATH = "res/sfx/";
+	
 	private static int soundEffectVolume;
 	private static int musicVolume;
+	
+	private static List<Music> music;
+	private static int currentMusicFile;
 	
 	public static void play(SoundEffect soundEffect)
 	{
@@ -20,12 +33,24 @@ public class Audio
 	
 	public static void startMusic()
 	{
-		// TODO: Implement this.
+		if (music == null)
+		{
+			loadMusic();
+		}
+		
+		// TODO: play the music; set callback handler for when song ends.
+	}
+	
+	private static void loadMusic()
+	{
+		// TODO: update this with the correct file names.
+		music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song1.ogg"))));
+		music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song2.ogg"))));
 	}
 	
 	public static void stopMusic()
 	{
-		// TODO: Implement this.
+		music.get(currentMusicFile).stop();
 	}
 	
 	public static void setSoundEffectVolume(int volume)
@@ -52,5 +77,12 @@ public class Audio
 	public static int getMusicVolume()
 	{
 		return musicVolume;
+	}
+	
+	public static void dispose()
+	{
+		Sfx.CANNON_FIRED.dispose();
+		Sfx.EXPLOSION.dispose();
+		Sfx.TANK_HIT.dipose();
 	}
 }

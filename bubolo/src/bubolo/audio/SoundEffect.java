@@ -28,4 +28,12 @@ public abstract class SoundEffect
 	{
 		sound.play(volume / 100.f);
 	}
+	
+	/**
+	 * Disposes the loaded sound.
+	 */
+	protected void dispose()
+	{
+		sound.dispose();
+	}
 }
