@@ -19,7 +19,7 @@ public class TankHit extends SoundEffect
 	 */
 	TankHit()
 	{
-		FileHandle soundFile = new FileHandle(new File(Sfx.SFX_PATH + "tankhit.ogg"));
+		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tankhit.ogg"));
 		Sound sound = Gdx.audio.newSound(soundFile);
 		setSound(sound);
 	}

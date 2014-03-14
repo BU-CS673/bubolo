@@ -20,7 +20,7 @@ public class Explosion extends SoundEffect
 	 */
 	Explosion()
 	{
-		FileHandle soundFile = new FileHandle(new File(Sfx.SFX_PATH + "explosion.ogg"));
+		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "explosion.ogg"));
 		Sound sound = Gdx.audio.newSound(soundFile);
 		setSound(sound);
 	}

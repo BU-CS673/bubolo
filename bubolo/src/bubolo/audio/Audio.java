@@ -83,6 +83,6 @@ public class Audio
 	{
 		Sfx.CANNON_FIRED.dispose();
 		Sfx.EXPLOSION.dispose();
-		Sfx.TANK_HIT.dipose();
+		Sfx.TANK_HIT.dispose();
 	}
 }
