@@ -103,6 +103,20 @@ public class Audio implements Music.OnCompletionListener
 	}
 	
 	/**
+	 * ***Testing only*** 
+	 * Provides a hook to the Music OnCompletionListener for testing.
+	 */
+	static void testMusicOnCompletionListener()
+	{
+		if (music == null)
+		{
+			loadMusic();
+		}
+		
+		musicOnCompletionListener.onCompletion(null);
+	}
+	
+	/**
 	 * Callback that is invoked when a music stream has completed.
 	 */
 	@Override

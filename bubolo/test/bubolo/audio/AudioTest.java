@@ -115,6 +115,12 @@ public class AudioTest
 	}
 	
 	@Test
+	public void testMusicOnCompletionListener()
+	{
+		Audio.testMusicOnCompletionListener();
+	}
+	
+	@Test
 	public void setSoundEffectVolume()
 	{
 		Audio.setSoundEffectVolume(75);
