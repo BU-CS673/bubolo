@@ -102,32 +102,17 @@ public class AudioTest
 	@Test
 	public void startStopMusic()
 	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				try {
-					Audio.startMusic();
-					Audio.stopMusic();
-					passed = true;
-					isComplete = true;
-				} catch (Exception e) {
-					System.out.println(e);
-					isComplete = true;
-					fail("Exception in startStopMusic");
-				}
-			}
-		});
-		
-		while (!isComplete)
+		try
 		{
-			Thread.yield();
+			Thread.sleep(500);
+			Audio.startMusic();
+			Audio.stopMusic();
 		}
-		
-		assertTrue(passed);
+		catch (Exception e)
+		{
+			LibGdxAppTester.createApp();
+			fail("Exception in startStopMusic()");
+		}
 	}
 	
 	@Test
