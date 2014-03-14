@@ -97,18 +97,61 @@ public class AudioTest
 	@Test
 	public void setSoundEffectVolume()
 	{
-		fail("Not yet implemented");
+		Audio.setSoundEffectVolume(75);
+		assertEquals(75, Audio.getSoundEffectVolume());
+		
+		Audio.setSoundEffectVolume(50);
+		assertEquals(50, Audio.getSoundEffectVolume());
+	}
+	
+	@Test
+	public void setSoundEffectVolumeInvalidPrecondition1()
+	{
+		try {
+			Audio.setSoundEffectVolume(101);
+			fail("Precondition not enforced.");
+		} catch (Exception e) {}
+	}
+	
+	@Test
+	public void setSoundEffectVolumeInvalidPrecondition2()
+	{
+		try {
+			Audio.setSoundEffectVolume(-1);
+			fail("Precondition not enforced.");
+		} catch (Exception e) {}
 	}
 	
 	@Test
 	public void setMusicVolume()
 	{
-		fail("Not yet implemented");
+		Audio.setMusicVolume(80);
+		assertEquals(80, Audio.getMusicVolume());
+		
+		Audio.setMusicVolume(50);
+		assertEquals(50, Audio.getMusicVolume());
+	}
+	
+	@Test
+	public void setMusicVolumeInvalidPrecondition1()
+	{
+		try {
+			Audio.setMusicVolume(101);
+			fail("Precondition not enforced.");
+		} catch (Exception e) {}
+	}
+	
+	public void setMusicVolumeInvalidPrecondition2()
+	{
+		try {
+			Audio.setMusicVolume(-1);
+			fail("Precondition not enforced.");
+		} catch (Exception e) {}
 	}
 	
 	@Test
 	public void disposeAudioSystem()
 	{
-		fail("Not yet implemented");
+		Audio.dispose();
 	}
 }
