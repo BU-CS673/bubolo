@@ -2,10 +2,19 @@ package bubolo.audio;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bubolo.graphics.LibGdxAppTester;
 
 public class AudioTest
 {
+	@Before
+	public void setUp()
+	{	
+		LibGdxAppTester.createApp();
+	}
 
 	@Test
 	public void playSoundEffectCannonFired()

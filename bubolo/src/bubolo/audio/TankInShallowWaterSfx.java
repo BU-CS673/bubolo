@@ -19,8 +19,17 @@ public class TankInShallowWaterSfx extends SoundEffect
 	 */
 	TankInShallowWaterSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tank_in_shallow_water.ogg"));
-		Sound sound = Gdx.audio.newSound(soundFile);
-		setSound(sound);
+		try
+		{
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tank_in_shallow_water.ogg"));
+			Sound sound = Gdx.audio.newSound(soundFile);
+			setSound(sound);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+			e.printStackTrace();
+			throw e;
+		}
 	}
 }

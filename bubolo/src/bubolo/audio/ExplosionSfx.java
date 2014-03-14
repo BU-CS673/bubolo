@@ -20,8 +20,17 @@ public class ExplosionSfx extends SoundEffect
 	 */
 	ExplosionSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "explosion.ogg"));
-		Sound sound = Gdx.audio.newSound(soundFile);
-		setSound(sound);
+		try
+		{
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "explosion.ogg"));
+			Sound sound = Gdx.audio.newSound(soundFile);
+			setSound(sound);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+			e.printStackTrace();
+			throw e;
+		}
 	}
 }

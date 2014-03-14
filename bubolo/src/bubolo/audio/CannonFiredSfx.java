@@ -20,8 +20,17 @@ public class CannonFiredSfx extends SoundEffect
 	 */
 	CannonFiredSfx()
 	{
-		FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannon_fired.ogg"));
-		Sound sound = Gdx.audio.newSound(soundFile);
-		setSound(sound);
+		try
+		{
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannon_fired.wav"));
+			Sound sound = Gdx.audio.newSound(soundFile);
+			setSound(sound);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+			e.printStackTrace();
+			throw e;
+		}
 	}
 }

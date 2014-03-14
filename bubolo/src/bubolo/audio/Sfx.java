@@ -10,7 +10,7 @@ package bubolo.audio;
  * @author BU673 - Clone Industries
  */
 public abstract class Sfx
-{
+{	
 	/**
 	 * A cannon fired sound effect.
 	 */

@@ -18,9 +18,14 @@ import com.google.common.base.Preconditions;
 public class Audio
 {
 	/**
+	 * Instances of this class should not be directly constructed. 
+	 */
+	private Audio() {}
+	
+	/**
 	 * The path to the music files.
 	 */
-	public static final String MUSIC_PATH = "/res/music/";
+	public static final String MUSIC_PATH = "res/music/";
 	
 	/**
 	 * The path to the sound effect files.
@@ -59,6 +64,7 @@ public class Audio
 			loadMusic();
 		}
 		
+		
 		// TODO: play the music; set callback handler for when song ends.
 	}
 	
@@ -79,8 +85,11 @@ public class Audio
 	 */
 	public static void stopMusic()
 	{
-		music.get(currentMusicFile).stop();
-		currentMusicFile = -1;
+		if (music != null)
+		{
+			music.get(currentMusicFile).stop();
+			currentMusicFile = -1;
+		}
 	}
 	
 	/**
