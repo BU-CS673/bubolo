@@ -1,5 +1,11 @@
 package bubolo.audio.sfx;
 
+import java.io.File;
+
+import bubolo.audio.SoundEffect;
+
+import com.badlogic.gdx.files.FileHandle;
+
 /**
  * A tank hit sound effect.
  * 
@@ -13,12 +19,6 @@ public class TankHit extends SoundEffect
 	 */
 	TankHit()
 	{
-		// TODO: implement this.
-	}
-	
-	@Override
-	protected void play(int volume)
-	{
-		// TODO: implement this.
+		FileHandle soundFile = new FileHandle(new File(path)));
 	}
 }

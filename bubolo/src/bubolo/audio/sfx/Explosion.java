@@ -1,5 +1,7 @@
 package bubolo.audio.sfx;
 
+import bubolo.audio.SoundEffect;
+
 /**
  * An explosion sound effect.
  * 
@@ -12,12 +14,6 @@ public class Explosion extends SoundEffect
 	 * construct <code>SoundEffect</code>s directly.
 	 */
 	Explosion()
-	{
-		// TODO: implement this.
-	}
-	
-	@Override
-	protected void play(int volume)
 	{
 		// TODO: implement this.
 	}

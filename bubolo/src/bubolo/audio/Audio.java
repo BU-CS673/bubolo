@@ -1,11 +1,8 @@
 package bubolo.audio;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import bubolo.audio.sfx.SoundEffect;
 
 import com.badlogic.gdx.audio.Sound;
+import com.google.common.base.Preconditions;
 
 /**
  * The top-level class for the Sound system.
@@ -14,12 +11,12 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class Audio
 {
-	// Stores the sounds, ensuring that only one is needed for all instances. 
-	private static Map<String, Sound> sounds = new HashMap<String, Sound>();
+	private static int soundEffectVolume;
+	private static int musicVolume;
 	
 	public static void play(SoundEffect soundEffect)
 	{
-		
+		soundEffect.play(soundEffectVolume);
 	}
 	
 	public static void startMusic()
@@ -34,7 +31,10 @@ public class Audio
 	
 	public static void setSoundEffectVolume(int volume)
 	{
+		Preconditions.checkArgument(volume >= 0, "Sound effect volume was less than zero: %s", volume);
+		Preconditions.checkArgument(volume <= 100, "Sound effect volume was greater than 100: %s", volume);
 		
+		soundEffectVolume = volume;
 	}
 	
 	public static int getSoundEffectVolume()

@@ -1,4 +1,8 @@
-package bubolo.audio.sfx;
+package bubolo.audio;
+
+import bubolo.audio.sfx.CannonFired;
+import bubolo.audio.sfx.Explosion;
+import bubolo.audio.sfx.TankHit;
 
 /**
  * Stores instances of the sound effects.
@@ -7,6 +11,8 @@ package bubolo.audio.sfx;
  */
 public class Sfx
 {
+	public static final String SFX_PATH = "res/sfx/";
+	
 	/**
 	 * An explosion sound effect.
 	 */

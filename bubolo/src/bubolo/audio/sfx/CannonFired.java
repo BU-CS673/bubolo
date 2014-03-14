@@ -1,5 +1,7 @@
 package bubolo.audio.sfx;
 
+import bubolo.audio.SoundEffect;
+
 /**
  * A cannon fired sound effect.
  * 
@@ -12,12 +14,6 @@ public class CannonFired extends SoundEffect
 	 * construct <code>SoundEffect</code>s directly.
 	 */
 	CannonFired()
-	{
-		// TODO: implement this.
-	}
-	
-	@Override
-	protected void play(int volume)
 	{
 		// TODO: implement this.
 	}
