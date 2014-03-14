@@ -42,6 +42,9 @@ public class AudioIntegrationApplication implements GameApplication
 	
 	private boolean ready;
 	
+	private int frame = 0;
+	private int MAX_FRAMES = TICKS_PER_SECOND * 10;
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -50,7 +53,7 @@ public class AudioIntegrationApplication implements GameApplication
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -93,31 +96,35 @@ public class AudioIntegrationApplication implements GameApplication
 	@Override
 	public void render()
 	{
-		Audio.play(Sfx.CANNON_FIRED);
-		Audio.play(Sfx.ENGINEER_KILLED);
-		Audio.play(Sfx.EXPLOSION);
-		Audio.play(Sfx.PILLBOX_BUILT);
-		Audio.play(Sfx.PILLBOX_HIT);
-		Audio.play(Sfx.ROAD_BUILT);
-		Audio.play(Sfx.TANK_DROWNED);
-		Audio.play(Sfx.TANK_HIT);
-		Audio.play(Sfx.TANK_IN_SHALLOW_WATER);
-		Audio.play(Sfx.TREE_GATHERED);
-		Audio.play(Sfx.TREE_HIT);
-		Audio.play(Sfx.WALL_BUILT);
-		Audio.play(Sfx.WALL_HIT);
+		if (frame == 0) Audio.play(Sfx.CANNON_FIRED);
+		if (frame == 15) Audio.play(Sfx.ENGINEER_KILLED);
+		if (frame == 30) Audio.play(Sfx.EXPLOSION);
+		if (frame == 45) Audio.play(Sfx.PILLBOX_BUILT);
+		if (frame == 60) Audio.play(Sfx.PILLBOX_HIT);
+		if (frame == 75) Audio.play(Sfx.ROAD_BUILT);
+		if (frame == 90) Audio.play(Sfx.TANK_DROWNED);
+		if (frame == 105) Audio.play(Sfx.TANK_HIT);
+		if (frame == 120) Audio.play(Sfx.TANK_IN_SHALLOW_WATER);
+		if (frame == 135) Audio.play(Sfx.TREE_GATHERED);
+		if (frame == 150) Audio.play(Sfx.TREE_HIT);
+		if (frame == 165) Audio.play(Sfx.WALL_BUILT);
+		if (frame == 180) Audio.play(Sfx.WALL_HIT);
 		
 		graphics.draw(world);
 		
-		try
+		if (frame > MAX_FRAMES)
 		{
-			Thread.sleep(1250);
+			Gdx.app.exit();
 		}
-		catch (InterruptedException e)
-		{
-		}
+		++frame;
 		
-		Gdx.app.exit();
+		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
+		long currentMillis = System.currentTimeMillis();
+		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+		{
+			world.update();
+			lastUpdate = currentMillis;
+		}
 	}
 	
 	/**
