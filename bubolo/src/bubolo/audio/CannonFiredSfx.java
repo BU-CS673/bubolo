@@ -22,7 +22,7 @@ public class CannonFiredSfx extends SoundEffect
 	{
 		try
 		{
-			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannon_fired.wav"));
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "cannon_fired.ogg"));
 			Sound sound = Gdx.audio.newSound(soundFile);
 			setSound(sound);
 		}

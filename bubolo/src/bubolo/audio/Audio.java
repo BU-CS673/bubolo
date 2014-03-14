@@ -4,6 +4,9 @@ package bubolo.audio;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import bubolo.util.GameLogicException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -15,7 +18,7 @@ import com.google.common.base.Preconditions;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Audio
+public class Audio implements Music.OnCompletionListener
 {
 	/**
 	 * Instances of this class should not be directly constructed. 
@@ -42,6 +45,9 @@ public class Audio
 	// The index of the currently playing music file, or -1 if no music is playing. 
 	private static int currentMusicFile = -1;
 	
+	// The music on completion listener. This is used when a song has finished playing.
+	private static Music.OnCompletionListener musicOnCompletionListener = new Audio();
+	
 	/**
 	 * Plays a sound effect. This should be called in the following way:<br><br>
 	 * <code>Audio.play(Sfx.EXPLOSION);<br>
@@ -62,10 +68,16 @@ public class Audio
 		if (music == null)
 		{
 			loadMusic();
+			if (music.size() < 2)
+			{
+				throw new GameLogicException("At least two songs must be specified.");
+			}
 		}
 		
-		
-		// TODO: play the music; set callback handler for when song ends.
+		currentMusicFile = 0;
+		music.get(currentMusicFile).setVolume(musicVolume / 100.f);
+		music.get(currentMusicFile).play();
+		music.get(currentMusicFile).setOnCompletionListener(musicOnCompletionListener);
 	}
 	
 	/**
@@ -76,8 +88,46 @@ public class Audio
 	{
 		// TODO: update this with the correct file names.
 		music = new ArrayList<Music>();
-		music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song1.ogg"))));
-		music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song2.ogg"))));
+		
+		try
+		{
+			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song1.ogg"))));
+			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song2.ogg"))));
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Callback that is invoked when a music stream has completed.
+	 */
+	@Override
+	public void onCompletion(Music completedMusic)
+	{
+		// Plays a randomly selected next song. The completed song will not be played multiple
+		// times in a row. Note that this will not work with only one song.
+		int nextSong = -1;
+		while (nextSong == -1 || nextSong == currentMusicFile)
+		{
+			nextSong = (new Random()).nextInt(music.size());
+		}
+		
+		music.get(nextSong).setVolume(musicVolume / 100.f);
+		music.get(nextSong).play();
+		
+		setMusicFileIndex(nextSong);
+	}
+	
+	private static void setMusicFileIndex(int index)
+	{
+		Preconditions.checkArgument(index >= 0, "Song index must be greater than zero: %s", index);
+		Preconditions.checkArgument(index < music.size(), "song index exceeds music file count: %s", index);
+		
+		currentMusicFile = index;
 	}
 	
 	/**
@@ -85,7 +135,7 @@ public class Audio
 	 */
 	public static void stopMusic()
 	{
-		if (music != null)
+		if (music != null && currentMusicFile != -1)
 		{
 			music.get(currentMusicFile).stop();
 			currentMusicFile = -1;
@@ -145,9 +195,13 @@ public class Audio
 		Sfx.EXPLOSION.dispose();
 		Sfx.TANK_HIT.dispose();
 		
-		for (Music m : music)
+		if (music != null)
 		{
-			m.dispose();
+			for (Music m : music)
+			{
+				m.stop();
+				m.dispose();
+			}
 		}
 	}
 }

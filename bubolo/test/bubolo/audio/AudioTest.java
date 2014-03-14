@@ -6,14 +6,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
+
 import bubolo.graphics.LibGdxAppTester;
 
 public class AudioTest
 {
-	@Before
-	public void setUp()
+	static boolean isComplete = false;
+	static boolean passed = false;
+	
+	@BeforeClass
+	public static void setUp()
 	{	
-		LibGdxAppTester.createApp();
+		LibGdxAppTester.createApp(true);
 	}
 
 	@Test
@@ -87,12 +92,42 @@ public class AudioTest
 	{
 		Audio.play(Sfx.WALL_HIT);
 	}
-
+	
+	// This works when run by itself, but not with all other tests. I will look into this
+	// in the future, as I did with the graphics tests, but for now I am going to leave it, 
+	// since it does work. The issue is similar to the graphics issue we experienced, where
+	// either OpenAL isn't initialized in time for the test, or multiple OpenAL contexts are
+	// attempted to be created since multiple threads are running concurrently. 
+	// (Christopher D. Canfield: 3/14/2014)
 	@Test
 	public void startStopMusic()
 	{
-		Audio.startMusic();
-		Audio.stopMusic();
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try {
+					Audio.startMusic();
+					Audio.stopMusic();
+					passed = true;
+					isComplete = true;
+				} catch (Exception e) {
+					System.out.println(e);
+					isComplete = true;
+					fail("Exception in startStopMusic");
+				}
+			}
+		});
+		
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		
+		assertTrue(passed);
 	}
 	
 	@Test
