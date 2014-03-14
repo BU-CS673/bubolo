@@ -3,6 +3,8 @@ package bubolo.audio;
 import java.util.HashMap;
 import java.util.Map;
 
+import bubolo.audio.sfx.SoundEffect;
+
 import com.badlogic.gdx.audio.Sound;
 
 /**
@@ -14,4 +16,39 @@ public class Audio
 {
 	// Stores the sounds, ensuring that only one is needed for all instances. 
 	private static Map<String, Sound> sounds = new HashMap<String, Sound>();
+	
+	public static void play(SoundEffect soundEffect)
+	{
+		
+	}
+	
+	public static void startMusic()
+	{
+		
+	}
+	
+	public static void stopMusic()
+	{
+		
+	}
+	
+	public static void setSoundEffectVolume(int volume)
+	{
+		
+	}
+	
+	public static int getSoundEffectVolume()
+	{
+		
+	}
+	
+	public static void setMusicVolume(int volume)
+	{
+		
+	}
+	
+	public static int getMusicVolume()
+	{
+		
+	}
 }
