@@ -1,9 +1,9 @@
-package bubolo.audio.sfx;
+package bubolo.audio;
 
 import java.io.File;
 
-import bubolo.audio.SoundEffect;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 
 /**
@@ -19,6 +19,8 @@ public class TankHit extends SoundEffect
 	 */
 	TankHit()
 	{
-		FileHandle soundFile = new FileHandle(new File(path)));
+		FileHandle soundFile = new FileHandle(new File(Sfx.SFX_PATH + "tankhit.ogg"));
+		Sound sound = Gdx.audio.newSound(soundFile);
+		setSound(sound);
 	}
 }

@@ -1,8 +1,5 @@
 package bubolo.audio;
 
-import bubolo.audio.sfx.CannonFired;
-import bubolo.audio.sfx.Explosion;
-import bubolo.audio.sfx.TankHit;
 
 /**
  * Stores instances of the sound effects.

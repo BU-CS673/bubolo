@@ -1,7 +1,6 @@
 package bubolo.audio;
 
 
-import com.badlogic.gdx.audio.Sound;
 import com.google.common.base.Preconditions;
 
 /**
@@ -21,12 +20,12 @@ public class Audio
 	
 	public static void startMusic()
 	{
-		
+		// TODO: Implement this.
 	}
 	
 	public static void stopMusic()
 	{
-		
+		// TODO: Implement this.
 	}
 	
 	public static void setSoundEffectVolume(int volume)
@@ -39,16 +38,19 @@ public class Audio
 	
 	public static int getSoundEffectVolume()
 	{
-		
+		return soundEffectVolume;
 	}
 	
 	public static void setMusicVolume(int volume)
 	{
+		Preconditions.checkArgument(volume >= 0, "Music volume was less than zero: %s", volume);
+		Preconditions.checkArgument(volume <= 100, "Music volume was greater than 100: %s", volume);
 		
+		musicVolume = volume;
 	}
 	
 	public static int getMusicVolume()
 	{
-		
+		return musicVolume;
 	}
 }
