@@ -18,7 +18,7 @@ public class AudioTest
 	@BeforeClass
 	public static void setUp()
 	{	
-		LibGdxAppTester.createApp(true);
+		LibGdxAppTester.createApp();
 	}
 
 	@Test
@@ -102,17 +102,8 @@ public class AudioTest
 	@Test
 	public void startStopMusic()
 	{
-		try
-		{
-			Thread.sleep(500);
-			Audio.startMusic();
-			Audio.stopMusic();
-		}
-		catch (Exception e)
-		{
-			LibGdxAppTester.createApp();
-			fail("Exception in startStopMusic()");
-		}
+		Audio.startMusic();
+		Audio.stopMusic();
 	}
 	
 	@Test
