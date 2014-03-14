@@ -8,15 +8,45 @@ public class AudioTest
 {
 
 	@Test
+	public void playSoundEffectCannonFired()
+	{
+		Audio.play(Sfx.CANNON_FIRED);
+	}
+	
+	@Test
+	public void playSoundEffectEngineerKilled()
+	{
+		Audio.play(Sfx.ENGINEER_KILLED);
+	}
+	
+	@Test
 	public void playSoundEffectExplosion()
 	{
 		Audio.play(Sfx.EXPLOSION);
 	}
 	
 	@Test
-	public void playSoundEffectCannonFired()
+	public void playSoundEffectPillboxBuilt()
 	{
-		Audio.play(Sfx.CANNON_FIRED);
+		Audio.play(Sfx.PILLBOX_BUILT);
+	}
+	
+	@Test
+	public void playSoundEffectPillboxHit()
+	{
+		Audio.play(Sfx.PILLBOX_HIT);
+	}
+	
+	@Test
+	public void playSoundEffectRoadBuilt()
+	{
+		Audio.play(Sfx.ROAD_BUILT);
+	}
+	
+	@Test
+	public void playSoundEffectTankDrowned()
+	{
+		Audio.play(Sfx.TANK_DROWNED);
 	}
 	
 	@Test
@@ -24,17 +54,44 @@ public class AudioTest
 	{
 		Audio.play(Sfx.TANK_HIT);
 	}
-
+	
 	@Test
-	public void playMusic()
+	public void playSoundEffectTankInShallowWater()
 	{
-		fail("Not yet implemented");
+		Audio.play(Sfx.TANK_IN_SHALLOW_WATER);
 	}
 	
 	@Test
-	public void stopMusic()
+	public void playSoundEffectTreeGathered()
 	{
-		fail("Not yet implemented");
+		Audio.play(Sfx.TREE_GATHERED);
+	}
+	
+	@Test
+	public void playSoundEffectWallBuilt()
+	{
+		Audio.play(Sfx.WALL_BUILT);
+	}
+	
+	@Test
+	public void playSoundEffectWallHit()
+	{
+		Audio.play(Sfx.WALL_HIT);
+	}
+
+	@Test
+	public void startStopMusic()
+	{
+		Audio.startMusic();
+		Audio.stopMusic();
+	}
+	
+	@Test
+	public void stopMusicMultiple()
+	{
+		// Ensure that Audio.stopMusic() can be called multiple times without issues.
+		Audio.stopMusic();
+		Audio.stopMusic();
 	}
 	
 	@Test

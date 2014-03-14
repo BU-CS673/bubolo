@@ -27,8 +27,10 @@ public class Audio
 	 */
 	public static final String SFX_PATH = "res/sfx/";
 	
-	private static int soundEffectVolume;
-	private static int musicVolume;
+	// The sound effects volume. The default is 50%.
+	private static int soundEffectVolume = 50;
+	// The music volume. The default is 50%.
+	private static int musicVolume = 50;
 	
 	// A list of all music files.
 	private static List<Music> music;
