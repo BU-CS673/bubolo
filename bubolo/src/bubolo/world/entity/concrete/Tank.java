@@ -39,6 +39,9 @@ public class Tank extends Actor
 	// The last time that the cannon was fired. Populate this with System.currentTimeMillis().
 	private long cannonFireTime = 0;
 	
+	// Specifies whether the tank is local. The default is true.
+	private boolean local = true;
+	
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
@@ -56,6 +59,24 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
+	}
+	
+	/**
+	 * Specifies whether the tank is local.
+	 * @return true if the tank is local.
+	 */
+	public boolean isLocal()
+	{
+		return local;
+	}
+	
+	/**
+	 * Sets whether the tank is local.
+	 * @param isLocalPlayer true if the tank is local, false otherwise.
+	 */
+	public void setLocal(boolean isLocalPlayer)
+	{
+		this.local = isLocalPlayer;
 	}
 
 	/**

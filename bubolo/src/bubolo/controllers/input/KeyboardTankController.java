@@ -36,7 +36,7 @@ public class KeyboardTankController implements Controller
 	private static void processMovement(Tank tank)
 	{
 		// TODO (cdc - 3/14/2014): allow the key mappings to be changed.
-		// TODO (cdc - 3/14/2014): handle acceleration and deceleration.
+		// TODO (cdc - 3/14/2014): test this.
 		
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
 		{
@@ -64,13 +64,12 @@ public class KeyboardTankController implements Controller
 			float directionX = (float)Math.cos(tank.getRotation());
 			float directionY = (float)Math.sin(tank.getRotation());
 			
-			
-			
 			// TODO (cdc - 3/14/2014): calculate and update this with correct starting offset.
 			tank.fireCannon(world, tank.getX(), tank.getY(), directionX, directionY);
 		}
 	}
 	
+	// TODO (cdc - 3/15/2014): Uncomment this once it's ready to be implemented.
 //	private static void processMineLaying(Tank tank, World world)
 //	{
 //		// TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
