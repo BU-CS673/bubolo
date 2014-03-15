@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.GameMath;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -106,16 +107,22 @@ public class Tank extends Actor
 	
 	/**
 	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
+	 * @param world reference to the world.
 	 * @param startX the bullet's start x position.
 	 * @param startY the bullet's start y position.
-	 * @param targetX the bullet's target x position.
-	 * @param targetY the bullet's target y position.
+	 * @param directionX the bullet's x direction.
+	 * @param directionY the bullet's y direction.
 	 */
-	public void fireCannon(int startX, int startY, int targetX, int targetY)
+	public void fireCannon(World world, float startX, float startY, float directionX, float directionY)
 	{
 		cannonFireTime = System.currentTimeMillis();
 		
-		// TODO: create a new bullet, and notify the network.
+		Bullet bullet = world.addEntity(Bullet.class);
+		bullet.setX(startX).setY(startY);
+		// TODO: test this; the angle portion may be wrong.
+		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY + directionY));
+		
+		// TODO: Notify the network.
 	}
 
 	@Override
@@ -124,9 +131,8 @@ public class Tank extends Actor
 		updateControllers(world);
 		
 		// TODO (cdc - 3/14/2014): turn this into another controller?
+		// TODO (cdc - 3/14/2014): move the tank.
 		// TODO (cdc - 3/14/2014): check for movement collisions.
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the responsibility of a bullet.
-		
-
 	}
 }

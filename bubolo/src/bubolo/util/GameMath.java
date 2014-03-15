@@ -14,10 +14,10 @@ public abstract class GameMath
 	 * @param point2y the y ending point.
 	 * @return the angle between two points, in radians.
 	 */
-	public static <T extends Number> double angleInRadians(T point1x, T point1y, T point2x, T point2y)
+	public static <T extends Number> float angleInRadians(T point1x, T point1y, T point2x, T point2y)
 	{
 		double deltaX = point2x.doubleValue() - point1x.doubleValue();
 		double deltaY = point2y.doubleValue() - point1y.doubleValue();
-		return Math.atan2(deltaY, deltaX);
+		return (float)Math.atan2(deltaY, deltaX);
 	}
 }
