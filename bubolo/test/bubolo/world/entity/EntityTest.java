@@ -1,10 +1,13 @@
 package bubolo.world.entity;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 
+import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
 public class EntityTest
@@ -36,7 +39,7 @@ public class EntityTest
 	@Test
 	public void update()
 	{
-		ent.update();
+		ent.update(mock(World.class));
 	}
 
 	@Test
@@ -80,16 +83,16 @@ public class EntityTest
 	}
 	
 	@Test
-	public void isDestroyed()
+	public void isDisposed()
 	{
 		Entity e = new MockEntity();
-		assertFalse(e.isDestroyed());
+		assertFalse(e.isDisposed());
 	}
 
 	@Test
-	public void destroyTest()
+	public void disposeTest()
 	{
-		ent.destroy();
-		assertTrue(ent.isDestroyed());
+		ent.dispose();
+		assertTrue(ent.isDisposed());
 	}
 }
