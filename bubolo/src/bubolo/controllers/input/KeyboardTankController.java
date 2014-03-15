@@ -40,30 +40,37 @@ public class KeyboardTankController implements Controller
 		
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
 		{
-			
+			tank.accelerate();
 		}
 		else if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
 		{
-			
+			tank.decelerate();
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
 		{
-			
+			tank.rotateRight();
 		}
 		else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
 		{
-			
+			tank.rotateLeft();
 		}
 	}
 	
 	private static void processCannon(World world, Tank tank)
 	{
-		
+		if (Gdx.input.isKeyPressed(Keys.SPACE))
+		{
+			
+		}
 	}
 	
 	private static void processMineLaying(World world, Tank tank)
 	{
-		
+		// TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
+		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT))
+		{
+			// TODO: lay a mine.
+		}
 	}
 }

@@ -24,7 +24,7 @@ public abstract class Entity implements Serializable, Drawable
 	
 	// true if this entity should be removed from the game, or false otherwise. This is
 	// used by sprites.
-	private boolean destroyed;
+	private boolean disposed;
 
 	/**
 	 * Construct a new Entity with a random UUID.
@@ -200,16 +200,16 @@ public abstract class Entity implements Serializable, Drawable
 	 * 
 	 * @return true if the entity should be removed from the game.
 	 */
-	public boolean isDestroyed()
+	public final boolean isDisposed()
 	{
-		return destroyed;
+		return disposed;
 	}
 	
 	/**
 	 * This method must be called when the entity should be removed from the game.
 	 */
-	protected void destroy()
+	protected final void dispose()
 	{
-		destroyed = true;
+		disposed = true;
 	}
 }
