@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bubolo.controllers.input.KeyboardTankController;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * Contains static methods for creating controllers.
@@ -81,7 +83,7 @@ public class Controllers
 		
 		if (controllerFactory != null)
 		{
-			controllerFactory.create(entity, this);
+			controllerFactory.create(entity);
 		}
 	}
 	
@@ -102,7 +104,15 @@ public class Controllers
 	{
 		Map<Class<? extends Entity>, ControllerFactory> factories = new HashMap<>();
 		
-		// TODO: No default factories exist yet. Add default factories here.
+		// TODO: Add default factories here.
+		
+		factories.put(Tank.class, new ControllerFactory() {
+			@Override
+			public void create(Entity entity)
+			{
+				entity.addController(new KeyboardTankController((Tank)entity));
+			}
+		});
 		
 		return factories;
 	}
