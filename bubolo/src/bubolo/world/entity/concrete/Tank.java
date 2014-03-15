@@ -150,10 +150,20 @@ public class Tank extends Actor
 	public void update(World world)
 	{
 		updateControllers(world);
-		
+		moveTank();
 		// TODO (cdc - 3/14/2014): turn this into another controller?
 		// TODO (cdc - 3/14/2014): move the tank.
-		// TODO (cdc - 3/14/2014): check for movement collisions.
+		
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the responsibility of a bullet.
+	}
+	
+	private void moveTank()
+	{
+		// TODO (cdc - 3/14/2014): check for movement collisions.
+		if (speed > 0)
+		{
+			// TODO: include x; adjust for rotation.
+			setY(getY() + speed);
+		}
 	}
 }
