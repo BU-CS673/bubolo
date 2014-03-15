@@ -42,34 +42,6 @@ class TankSprite extends Sprite<Tank>
 	TankSprite(Tank tank)
 	{
 		super(DrawLayer.TANKS, tank);
-		
-		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
-		images = new ArrayList<TextureRegion>(8);
-		
-		// TODO: the sprite needs to ask the Tank if it is the local player.
-		//	Something like tank.isLocalPlayer() would work.
-		
-		// TODO: use this once tank.isLocalPlayer() or equivalent exists. Please do not remove these commented out lines.
-	//	if (tank.isLocalPlayer())
-	//	{
-		
-			images.add(new TextureRegion(texture, 4, 33, 25, 29));
-			images.add(new TextureRegion(texture, 37, 33, 25, 29));
-			images.add(new TextureRegion(texture, 70, 33, 25, 29));
-	//	}
-		//else
-		//{
-//			images.add(new TextureRegion(texture, 4, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 37, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 70, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 103, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 136, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 169, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 202, 1, 24, 29));
-//			images.add(new TextureRegion(texture, 235, 1, 24, 29));
-		//}
-		imageIndex = 0;
-		frameTimeRemaining = millisPerFrame;
 	}
 
 	@Override
@@ -79,6 +51,10 @@ class TankSprite extends Sprite<Tank>
 		{
 			Sprites.getInstance().removeSprite(this);
 			return;
+		}
+		else if (images == null)
+		{
+			initialize();
 		}
 		
 		drawTexture(batch, camera, layer, images.get(imageIndex));
@@ -101,5 +77,31 @@ class TankSprite extends Sprite<Tank>
 			Graphics.getInstance().addCameraController(controller);
 			addedCameraController = true;
 		}
+	}
+	
+	/**
+	 * Initializes the tank. This is needed because the Tank entity may not know
+	 * whether it is local or not at construction time.
+	 */
+	private void initialize()
+	{
+		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		images = new ArrayList<TextureRegion>(3);
+		
+		if (getEntity().isLocal())
+		{
+		
+			images.add(new TextureRegion(texture, 4, 33, 25, 29));
+			images.add(new TextureRegion(texture, 37, 33, 25, 29));
+			images.add(new TextureRegion(texture, 70, 33, 25, 29));
+		}
+		else
+		{
+			images.add(new TextureRegion(texture, 4, 1, 24, 29));
+			images.add(new TextureRegion(texture, 37, 1, 24, 29));
+			images.add(new TextureRegion(texture, 70, 1, 24, 29));
+		}
+		imageIndex = 0;
+		frameTimeRemaining = millisPerFrame;
 	}
 }

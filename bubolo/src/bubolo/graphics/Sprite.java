@@ -67,7 +67,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * Returns true if the underlying entity is destroyed, or false otherwise.
 	 * @return true if the underlying entity is destroyed, or false otherwise.
 	 */
-	boolean isEntityDisposed()
+	protected boolean isEntityDisposed()
 	{
 		return entity.isDisposed();
 	}
