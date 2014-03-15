@@ -79,6 +79,22 @@ public class Sprites
 	}
 	
 	/**
+	 * Removes the specified sprite.
+	 * @param sprite the sprite to remove.
+	 */
+	public void removeSprite(Sprite<?> sprite)
+	{
+		for (int i = 0; i < sprites.size(); ++i)
+		{
+			if (sprites.get(i) == sprite)
+			{
+				sprites.remove(i);
+				break;
+			}
+		}
+	}
+	
+	/**
 	 * Wrapper for sprite creation functions.
 	 * @author BU CS673 - Clone Productions
 	 */

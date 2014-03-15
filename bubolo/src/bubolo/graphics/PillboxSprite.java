@@ -37,6 +37,12 @@ class PillboxSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+			return;
+		}
+
 		drawTexture(batch, camera, layer, image);
 		
 		/** 

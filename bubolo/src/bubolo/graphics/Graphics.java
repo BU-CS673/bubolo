@@ -165,7 +165,7 @@ public class Graphics
 		List<Sprite<?>> sprites = spriteSystem.getSprites();
 		for (int i = 0; i < sprites.size(); ++i)
 		{
-			if (sprites.get(i).isEntityDestroyed())
+			if (sprites.get(i).isEntityDisposed())
 			{
 				sprites.remove(i);
 			}

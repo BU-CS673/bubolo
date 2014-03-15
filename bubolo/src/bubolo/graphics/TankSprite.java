@@ -75,6 +75,12 @@ class TankSprite extends Sprite<Tank>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{ 
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+			return;
+		}
+		
 		drawTexture(batch, camera, layer, images.get(imageIndex));
 		
 		// Play the tank movement animation.
