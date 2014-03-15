@@ -16,8 +16,6 @@ import bubolo.world.entity.concrete.Tank;
  */
 public class Controllers
 {
-	private List<Controller> controllers = new ArrayList<Controller>();
-	
 	private Map<Class<? extends Entity>, ControllerFactory> defaultFactories;
 	
 	private static Controllers instance;
@@ -44,27 +42,6 @@ public class Controllers
 	}
 	
 	/**
-	 * Returns the number of controllers.
-	 * @return the number of controllers.
-	 */
-	long getCount()
-	{
-		return controllers.size();
-	}
-	
-	/**
-	 * Calls the <code>update</code> method on all controllers.
-	 * @param w the world object.
-	 */
-	public void update(World w)
-	{
-		for (Controller c : controllers)
-		{
-			c.update(w);
-		}
-	}
-	
-	/**
 	 * Instantiates controllers for the specified entity. The optional ControllerFactory
 	 * can be used to specify the exact controllers that will be created for the
 	 * entity. Alternatively, passing a null reference will result in the creation
@@ -85,15 +62,6 @@ public class Controllers
 		{
 			controllerFactory.create(entity);
 		}
-	}
-	
-	/**
-	 * Adds a controller to the list.
-	 * @param controller the controller to add.
-	 */
-	void addController(Controller controller)
-	{
-		controllers.add(controller);
 	}
 	
 	/**
