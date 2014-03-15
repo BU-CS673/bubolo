@@ -37,7 +37,7 @@ class WallSprite extends Sprite<StationaryElement>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!isEntityDisposed())
+		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
