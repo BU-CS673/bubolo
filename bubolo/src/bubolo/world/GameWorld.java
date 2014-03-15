@@ -145,7 +145,6 @@ public class GameWorld implements World
 	{
 		for (Entity e : entities)
 		{
-			// TODO: reference to World (this) must be passed to entities.
 			e.update(this);
 		}
 	}
