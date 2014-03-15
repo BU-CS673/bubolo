@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
 /**
@@ -36,6 +37,12 @@ public class Man extends Actor
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void update(World world)
+	{
+		// TODO Implement this.
 	}
 
 	// TODO: Add Man functionality!

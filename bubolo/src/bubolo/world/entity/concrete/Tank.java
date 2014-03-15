@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
 /**
@@ -23,10 +24,13 @@ public class Tank extends Actor
 	private float speed = 0.f;
 	
 	// The rate of acceleration, in pixels per tick.
-	private static final float maxAccelerationRate = 0.02f;
+	private static final float accelerationRate = 0.02f;
 	
 	// The rate of deceleration, in pixels per tick.
-	private static final float maxDecelerationRate = 0.04f;
+	private static final float decelerationRate = 0.04f;
+	
+	// The tank's rate of rotation per tick.
+	private static final float rotationRate = 0.03f;
 	
 	/**
 	 * Construct a new Tank with a random UUID.
@@ -52,7 +56,10 @@ public class Tank extends Actor
 	 */
 	public void accelerate()
 	{
-		
+		if (speed < maxSpeed)
+		{
+			speed += accelerationRate;
+		}
 	}
 	
 	/**
@@ -60,7 +67,10 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
-		
+		if (speed > 0)
+		{
+			speed = (speed < decelerationRate) ? 0 : decelerationRate;
+		}
 	}
 	
 	/**
@@ -68,7 +78,7 @@ public class Tank extends Actor
 	 */
 	public void rotateRight()
 	{
-		
+		setRotation(getRotation() + rotationRate);
 	}
 	
 	/**
@@ -76,6 +86,12 @@ public class Tank extends Actor
 	 */
 	public void rotateLeft()
 	{
-		
+		setRotation(getRotation() - rotationRate);
+	}
+
+	@Override
+	public void update(World world)
+	{
+		updateControllers(world);
 	}
 }
