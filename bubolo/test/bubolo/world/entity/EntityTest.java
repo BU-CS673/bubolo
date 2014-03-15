@@ -7,8 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import bubolo.controllers.Controller;
+import bubolo.test.MockWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 public class EntityTest
 {
@@ -80,6 +83,28 @@ public class EntityTest
 	public void getHeight()
 	{
 		assertEquals("Entity height matches target.", EntityTestCase.TARGET_HEIGHT, ent.getHeight());
+	}
+	
+	@Test
+	public void addController()
+	{
+		Entity tank = new Tank();
+		tank.addController(mock(Controller.class));
+		assertEquals(1, tank.getControllerCount());
+	}
+	
+	@Test
+	public void updateTest()
+	{
+		Entity tank = new Tank();
+		tank.addController(new Controller() {
+			@Override
+			public void update(World world)
+			{
+				// Do nothing.
+			}
+		});
+		tank.update(new MockWorld());
 	}
 	
 	@Test

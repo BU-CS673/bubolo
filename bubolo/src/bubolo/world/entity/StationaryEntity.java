@@ -93,7 +93,7 @@ public abstract class StationaryEntity extends Entity
 	@Override
 	public void update(World world)
 	{
-		// Default Stationary Entity behavior: do nothing.
+		updateControllers(world);
 	}
 
 	// TODO: Add StationaryEntity functionality!

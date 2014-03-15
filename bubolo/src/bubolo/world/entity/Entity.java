@@ -227,6 +227,15 @@ public abstract class Entity implements Serializable, Drawable
 	}
 	
 	/**
+	 * Returns the number of controllers attached to this Entity.
+	 * @return the number of controllers attached to this Entity.
+	 */
+	public int getControllerCount()
+	{
+		return controllers.size();
+	}
+	
+	/**
 	 * Returns true if the entity should be removed from the game. This is needed
 	 * by the graphics system.
 	 * 

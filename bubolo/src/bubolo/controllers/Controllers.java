@@ -1,12 +1,9 @@
 package bubolo.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import bubolo.controllers.input.KeyboardTankController;
-import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
 
