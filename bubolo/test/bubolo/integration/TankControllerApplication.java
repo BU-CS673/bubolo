@@ -1,15 +1,11 @@
 package bubolo.integration;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
-import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
-import bubolo.ui.LoadingScreen;
-import bubolo.ui.MenuScreen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -25,7 +21,7 @@ public class TankControllerApplication implements GameApplication
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Sprint 1";
+		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 600;
 		cfg.height = 600;
 		cfg.useGL20 = true;
@@ -41,9 +37,6 @@ public class TankControllerApplication implements GameApplication
 	private long lastUpdate;
 	
 	private boolean ready;
-	
-	private int frame = 0;
-	private int MAX_FRAMES = TICKS_PER_SECOND * 10;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -107,12 +100,6 @@ public class TankControllerApplication implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
-		
-		if (frame > MAX_FRAMES)
-		{
-			Gdx.app.exit();
-		}
-		++frame;
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();

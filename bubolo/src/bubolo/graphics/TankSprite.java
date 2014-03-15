@@ -15,10 +15,7 @@ import bubolo.world.entity.concrete.Tank;
  * @author BU CS673 - Clone Productions
  */
 class TankSprite extends Sprite<Tank>
-{
-	// true if the camera controller has been added.
-	private boolean addedCameraController;
-	
+{	
 	// The index of the texture region that will be drawn.
 	private int imageIndex;
 	
@@ -68,15 +65,6 @@ class TankSprite extends Sprite<Tank>
 			frameTimeRemaining = millisPerFrame;
 			imageIndex = (imageIndex == images.size() - 1) ? 0 : imageIndex + 1;
 		}
-		
-		// TODO: This should only be added for the local tank.
-		// TODO: This may be moved into the constructor.
-		if (!addedCameraController)
-		{
-			CameraController controller = new TankCameraController(getEntity());
-			Graphics.getInstance().addCameraController(controller);
-			addedCameraController = true;
-		}
 	}
 	
 	/**
@@ -103,5 +91,11 @@ class TankSprite extends Sprite<Tank>
 		}
 		imageIndex = 0;
 		frameTimeRemaining = millisPerFrame;
+		
+		if (getEntity().isLocal())
+		{
+			CameraController controller = new TankCameraController(getEntity());
+			Graphics.getInstance().addCameraController(controller);
+		}
 	}
 }
