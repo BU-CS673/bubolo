@@ -19,14 +19,13 @@ import bubolo.world.entity.concrete.Grass;
 
 public class Parser
 {
-	private Path mapPath;
 	
-	public Parser(Path path)
+	public Parser()
 	{
-		this.mapPath = path;
+
 	}
 	
-	private void parse(GameWorld world) throws ParseException
+	private Tile[][] parseMap(GameWorld world, Path mapPath) throws ParseException
 	{ 
 		int mapHeight = 0;
 		int mapWidth = 0;
@@ -46,7 +45,7 @@ public class Parser
 		Charset charset = Charset.forName("US-ASCII");
 		BufferedReader reader = null;		
 		
-		try
+		try 
 		{
 			reader = Files.newBufferedReader(mapPath, charset);
 			JSONParser parser = new JSONParser();
@@ -82,6 +81,7 @@ public class Parser
 					}
 				}
 			}
+			return mapTiles;
 		}
 		catch (IOException e1)
 		{
@@ -92,6 +92,19 @@ public class Parser
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}	
+		
+		return null;
+	}
+	
+	private Object layerOneSwitch(String input)
+	{
+		switch (input)
+		{
+		case "1":
+			return Grass.class;
+		default:
+			return Grass.class;
+		}
 	}
 }
