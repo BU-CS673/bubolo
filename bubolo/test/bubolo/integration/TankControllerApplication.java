@@ -81,8 +81,17 @@ public class TankControllerApplication implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-
+		
 		world = new GameWorld(32*30, 32*30);
+		
+		for (int i = 0; i < 30; i++)
+		{
+			for (int j = 0; j < 30; j++)
+			{
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+			}
+		}
+		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0.f);
 		
