@@ -12,8 +12,10 @@ import java.util.Map;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -136,6 +138,9 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
+		Gdx.gl20.glClearColor(0, 0, 0, 1);
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+		
 		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's view.
 		spritesInView.clear();
 		for (Sprite<?> sprite : spriteSystem.getSprites())
