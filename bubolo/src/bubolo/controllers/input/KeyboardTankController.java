@@ -28,12 +28,12 @@ public class KeyboardTankController implements Controller
 	@Override
 	public void update(World world)
 	{
-		processMovement(world, tank);
-		processCannon(world, tank);
-		processMineLaying(world, tank);
+		processMovement(tank);
+		processCannon(tank, world);
+		//processMineLaying(tank, world);
 	}
 	
-	private static void processMovement(World world, Tank tank)
+	private static void processMovement(Tank tank)
 	{
 		// TODO (cdc - 3/14/2014): allow the key mappings to be changed.
 		// TODO (cdc - 3/14/2014): handle acceleration and deceleration.
@@ -57,20 +57,20 @@ public class KeyboardTankController implements Controller
 		}
 	}
 	
-	private static void processCannon(World world, Tank tank)
+	private static void processCannon(Tank tank, World world)
 	{
-		if (Gdx.input.isKeyPressed(Keys.SPACE))
+		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady())
 		{
 			
 		}
 	}
 	
-	private static void processMineLaying(World world, Tank tank)
-	{
-		// TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
-		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT))
-		{
-			// TODO: lay a mine.
-		}
-	}
+//	private static void processMineLaying(Tank tank, World world)
+//	{
+//		// TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
+//		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT))
+//		{
+//			// TODO: lay a mine.
+//		}
+//	}
 }

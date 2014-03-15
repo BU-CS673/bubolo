@@ -32,6 +32,12 @@ public class Tank extends Actor
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.03f;
 	
+	// The reload speed of the tank's cannon, in milliseconds.
+	private static final long cannonReloadSpeed = 500;
+	
+	// The last time that the cannon was fired. Populate this with System.currentTimeMillis().
+	private long cannonFireTime = 0;
+	
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
@@ -88,6 +94,29 @@ public class Tank extends Actor
 	{
 		setRotation(getRotation() - rotationRate);
 	}
+	
+	/**
+	 * Returns true if the cannon is ready to fire.
+	 * @return true if the cannon is ready to fire.
+	 */
+	public boolean isCannonReady()
+	{
+		return (System.currentTimeMillis() - cannonFireTime > cannonReloadSpeed);
+	}
+	
+	/**
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
+	 * @param startX the bullet's start x position.
+	 * @param startY the bullet's start y position.
+	 * @param targetX the bullet's target x position.
+	 * @param targetY the bullet's target y position.
+	 */
+	public void fireCannon(int startX, int startY, int targetX, int targetY)
+	{
+		cannonFireTime = System.currentTimeMillis();
+		
+		// TODO: create a new bullet, and notify the network.
+	}
 
 	@Override
 	public void update(World world)
@@ -98,6 +127,6 @@ public class Tank extends Actor
 		// TODO (cdc - 3/14/2014): check for movement collisions.
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the responsibility of a bullet.
 		
-		
+
 	}
 }
