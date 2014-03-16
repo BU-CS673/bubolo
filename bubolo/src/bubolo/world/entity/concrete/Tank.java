@@ -28,10 +28,10 @@ public class Tank extends Actor
 	private static final float accelerationRate = 0.02f;
 	
 	// The rate of deceleration, in pixels per tick.
-	private static final float decelerationRate = 0.04f;
+	private static final float decelerationRate = 0.03f;
 	
 	// The tank's rate of rotation per tick.
-	private static final float rotationRate = 0.03f;
+	private static final float rotationRate = 0.25f;
 	
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
@@ -97,7 +97,7 @@ public class Tank extends Actor
 	{
 		if (speed > 0)
 		{
-			speed = (speed < decelerationRate) ? 0 : decelerationRate;
+			speed -= (speed < 0) ? 0 : decelerationRate;
 		}
 	}
 	
@@ -159,6 +159,8 @@ public class Tank extends Actor
 	
 	private void moveTank()
 	{
+		// TODO (cdc - 3/15/2014): decelerate automatically.
+		
 		// TODO (cdc - 3/14/2014): check for movement collisions.
 		if (speed > 0)
 		{
