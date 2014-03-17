@@ -143,6 +143,7 @@ public class Tank extends Actor
 		cannonFireTime = System.currentTimeMillis();
 		
 		Bullet bullet = world.addEntity(Bullet.class);
+		// TODO: start the bullet at an offset to the cannon.
 		bullet.setX(startX).setY(startY);
 		// TODO: test this; the angle portion may be wrong.
 		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY + directionY));
@@ -169,11 +170,21 @@ public class Tank extends Actor
 		if (speed > 0)
 		{
 			// TODO: adjust for rotation.
-			float x = getX() + (float)Math.cos(getRotation()) * speed;
-			float y = getY() + (float)Math.sin(getRotation()) * speed;
+			float newX = (float)(getX() + Math.cos(getRotation() + Math.PI / 4.f) * speed);
+			float newY = (float)(getY() + Math.sin(getRotation() + Math.PI / 4.f) * speed);
 			
-			setX(x);
-			setY(y);
+//			double xVector = Math.sin(getRotation());
+//			double yVector = Math.cos(getRotation());
+//			
+//			double magnitude = Math.sqrt(xVector * xVector + yVector * yVector);
+//			double unitVectorX = xVector / magnitude;
+//			double unitVectorY = yVector / magnitude;
+//			
+//			float newX = (float)(getCenterX() + unitVectorX * speed);
+//			float newY = (float)(getCenterY() + unitVectorY * speed);
+			
+			setX(newX);
+			setY(newY);
 			
 			if (!accelerated)
 			{

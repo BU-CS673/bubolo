@@ -86,7 +86,7 @@ public class TankControllerApplication implements GameApplication
 		}
 		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 32, 32, 0.f);
+		tank.setParams(100, 100, 32, 32, (float)(Math.PI - Math.PI / 4.f));
 		
 		ready = true;
 	}

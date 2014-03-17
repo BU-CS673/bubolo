@@ -131,6 +131,16 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return yPos;
 	}
+	
+	public float getCenterX()
+	{
+		return (xPos - (width / 2.f));
+	}
+	
+	public float getCenterY()
+	{
+		return (yPos - (height / 2.f));
+	}
 
 	/**
 	 * Set the rotation of this Entity.
