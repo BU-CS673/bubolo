@@ -74,7 +74,7 @@ public class ExplosionSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Explosion());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.TANKS);
 				passed = true;
 				isComplete = true;
 			}
