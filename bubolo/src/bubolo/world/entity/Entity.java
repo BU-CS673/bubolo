@@ -242,7 +242,7 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public int getControllerCount()
 	{
-		return controllers.size();
+		return (controllers == null) ? 0 : controllers.size();
 	}
 	
 	/**
