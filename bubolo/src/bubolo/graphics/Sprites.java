@@ -15,6 +15,7 @@ import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 import bubolo.world.entity.concrete.Water;
+import bubolo.world.entity.concrete.Explosion;
 
 /**
  * Contains static methods for adding new sprites.
@@ -121,6 +122,14 @@ public class Sprites
 			public Sprite<? extends Entity> create(Entity e) 
 			{
 				return new TankSprite((Tank)e);
+			}
+		});
+
+		factories.put(Explosion.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new ExplosionSprite((Explosion)e);
 			}
 		});
 		
