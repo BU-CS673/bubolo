@@ -28,13 +28,13 @@ public class Tank extends Actor
 	private static final float accelerationRate = 0.01f;
 	
 	// The rate of deceleration, in pixels per tick.
-	private static final float decelerationRate = 0.015f;
+	private static final float decelerationRate = 0.02f;
 	
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;
 	
 	// The tank's rate of rotation per tick.
-	private static final float rotationRate = 0.35f;
+	private static final float rotationRate = 0.05f;
 	
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
@@ -169,19 +169,8 @@ public class Tank extends Actor
 		// TODO (cdc - 3/14/2014): check for movement collisions.
 		if (speed > 0)
 		{
-			// TODO: adjust for rotation.
-			float newX = (float)(getX() + Math.cos(getRotation() + Math.PI / 4.f) * speed);
-			float newY = (float)(getY() + Math.sin(getRotation() + Math.PI / 4.f) * speed);
-			
-//			double xVector = Math.sin(getRotation());
-//			double yVector = Math.cos(getRotation());
-//			
-//			double magnitude = Math.sqrt(xVector * xVector + yVector * yVector);
-//			double unitVectorX = xVector / magnitude;
-//			double unitVectorY = yVector / magnitude;
-//			
-//			float newX = (float)(getCenterX() + unitVectorX * speed);
-//			float newY = (float)(getCenterY() + unitVectorY * speed);
+			float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+			float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 			
 			setX(newX);
 			setY(newY);

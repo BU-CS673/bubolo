@@ -142,7 +142,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
-					MathUtils.radiansToDegrees * getEntity().getRotation(),
+					(float)(MathUtils.radiansToDegrees * getEntity().getRotation() - Math.PI / 2.f),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -172,7 +172,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
-					MathUtils.radiansToDegrees * getEntity().getRotation());
+					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
 	
