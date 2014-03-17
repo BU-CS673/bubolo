@@ -25,7 +25,10 @@ public class GameWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
-
+	
+	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
+	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
+	
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -109,7 +112,7 @@ public class GameWorld implements World
         Sprites.getInstance().createSprite(entity);
         Controllers.getInstance().createController(entity, controllerFactory);
         
-        entities.add(entity);
+        entitiesToAdd.add(entity);
 		entityMap.put(entity.getId(), entity);
         
         return entity;
@@ -118,7 +121,8 @@ public class GameWorld implements World
 	@Override
 	public void removeEntity(Entity e)
 	{
-		entities.remove(e);
+		e.dispose();
+		entitiesToRemove.add(e);
 		entityMap.remove(e.getId());
 	}
 
@@ -143,9 +147,16 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+		// Update all entities.
 		for (Entity e : entities)
 		{
 			e.update(this);
 		}
+		
+		entities.removeAll(entitiesToRemove);
+		entitiesToRemove.clear();
+		
+		entities.addAll(entitiesToAdd);
+		entitiesToAdd.clear();
 	}
 }

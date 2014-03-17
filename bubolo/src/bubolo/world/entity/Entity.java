@@ -249,7 +249,7 @@ public abstract class Entity implements Serializable, Drawable
 	/**
 	 * This method must be called when the entity should be removed from the game.
 	 */
-	protected final void dispose()
+	public final void dispose()
 	{
 		disposed = true;
 	}

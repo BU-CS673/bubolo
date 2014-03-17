@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Crater;
 import bubolo.world.entity.concrete.DeepWater;
 import bubolo.world.entity.concrete.Grass;
@@ -185,6 +186,14 @@ public class Sprites
 			public Sprite<? extends Entity> create(Entity e) 
 			{
 				return new MineSprite((Mine)e);
+			}
+		});
+		
+		factories.put(Bullet.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new BulletSprite(e);
 			}
 		});
 		

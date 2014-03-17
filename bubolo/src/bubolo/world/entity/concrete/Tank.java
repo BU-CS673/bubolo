@@ -19,7 +19,7 @@ public class Tank extends Actor
 	private static final long serialVersionUID = 457933513574468829L;
 	
 	// Max speed in pixels per tick.
-	private static final float maxSpeed = 1.f;
+	private static final float maxSpeed = 4.f;
 	
 	// The tank's current speed.
 	private float speed = 0.f;
@@ -164,14 +164,17 @@ public class Tank extends Actor
 	private void moveTank()
 	{
 		// TODO (cdc - 3/14/2014): turn this into another controller?
-		// TODO (cdc - 3/15/2014): decelerate automatically.
 		
 		// TODO (cdc - 3/14/2014): check for movement collisions.
 		if (speed > 0)
 		{
-			// TODO: include x; adjust for rotation.
-			setY(getY() + speed);
-		
+			// TODO: adjust for rotation.
+			float x = getX() + (float)Math.cos(getRotation()) * speed;
+			float y = getY() + (float)Math.sin(getRotation()) * speed;
+			
+			setX(x);
+			setY(y);
+			
 			if (!accelerated)
 			{
 				decelerate();
