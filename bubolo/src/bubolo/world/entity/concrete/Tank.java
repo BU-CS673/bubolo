@@ -25,13 +25,16 @@ public class Tank extends Actor
 	private float speed = 0.f;
 	
 	// The rate of acceleration, in pixels per tick.
-	private static final float accelerationRate = 0.02f;
+	private static final float accelerationRate = 0.01f;
 	
 	// The rate of deceleration, in pixels per tick.
-	private static final float decelerationRate = 0.03f;
+	private static final float decelerationRate = 0.015f;
+	
+	// Specifies whether the tank accelerated this tick.
+	private boolean accelerated;
 	
 	// The tank's rate of rotation per tick.
-	private static final float rotationRate = 0.25f;
+	private static final float rotationRate = 0.35f;
 	
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
@@ -87,6 +90,7 @@ public class Tank extends Actor
 		if (speed < maxSpeed)
 		{
 			speed += accelerationRate;
+			accelerated = true;
 		}
 	}
 	
@@ -149,16 +153,17 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
+		accelerated = false;
+		
 		updateControllers(world);
 		moveTank();
-		// TODO (cdc - 3/14/2014): turn this into another controller?
-		// TODO (cdc - 3/14/2014): move the tank.
 		
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the responsibility of a bullet.
 	}
 	
 	private void moveTank()
 	{
+		// TODO (cdc - 3/14/2014): turn this into another controller?
 		// TODO (cdc - 3/15/2014): decelerate automatically.
 		
 		// TODO (cdc - 3/14/2014): check for movement collisions.
@@ -166,6 +171,11 @@ public class Tank extends Actor
 		{
 			// TODO: include x; adjust for rotation.
 			setY(getY() + speed);
+		
+			if (!accelerated)
+			{
+				decelerate();
+			}
 		}
 	}
 }
