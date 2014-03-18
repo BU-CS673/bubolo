@@ -129,7 +129,7 @@ public class GameWorldTest
 		isComplete = false;
 		passed = false;
 		
-		Gdx.app.postRunnable(new AddEntityRunnable(Man.class));
+		Gdx.app.postRunnable(new AddEntityRunnable(Engineer.class));
 		
 		while (!isComplete) { Thread.yield(); }		
 		assertTrue(passed);

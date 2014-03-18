@@ -12,7 +12,7 @@ import bubolo.world.entity.Actor;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Man extends Actor
+public class Engineer extends Actor
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -22,7 +22,7 @@ public class Man extends Actor
 	/**
 	 * Construct a new Man with a random UUID.
 	 */
-	public Man()
+	public Engineer()
 	{
 		super();
 	}
@@ -33,7 +33,7 @@ public class Man extends Actor
 	 * @param id
 	 *            is the existing UUID to be applied to the new Man.
 	 */
-	public Man(UUID id)
+	public Engineer(UUID id)
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
