@@ -17,8 +17,7 @@ class TreeSprite extends Sprite<Tree>
 
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param tree
 	 *            Reference to the Tree that this TreeSprite represents.

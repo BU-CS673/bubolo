@@ -13,6 +13,7 @@ import bubolo.world.entity.Entity;
 class EngineerSprite extends Sprite<Entity>
 {
 	private Texture image;
+	
 	/**
 	 * Constructor for the EngineerSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
