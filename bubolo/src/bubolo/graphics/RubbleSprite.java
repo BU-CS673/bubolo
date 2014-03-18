@@ -7,23 +7,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import bubolo.world.entity.Entity;
 
 /**
- * The graphical representation of a bullet entity.
+ * The graphical representation of a rubble entity.
  * @author BU673 - Clone Industries
  */
-class BulletSprite extends Sprite<Entity>
+class RubbleSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
 	/**
-	 * Constructor for the BulletSprite. This is Package-private because sprites
+	 * Constructor for the RubbleSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
-	 * @param bullet Reference to the Bullet that this BulletSprite represents.
+	 * @param base reference to the base that this RubbleSprite represents.
 	 */
-	BulletSprite(Entity bullet)
+	RubbleSprite(Entity rubble)
 	{
-		super(DrawLayer.OBJECTS, bullet);
+		super(DrawLayer.OBJECTS, rubble);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "bullet.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "rubble.png");
 	}
 
 	@Override

@@ -4,26 +4,26 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Base;
 
 /**
- * The graphical representation of a bullet entity.
+ * The graphical representation of a base entity.
  * @author BU673 - Clone Industries
  */
-class BulletSprite extends Sprite<Entity>
+class BaseSprite extends Sprite<Base>
 {
 	private Texture image;
 	
 	/**
-	 * Constructor for the BulletSprite. This is Package-private because sprites
+	 * Constructor for the BaseSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
-	 * @param bullet Reference to the Bullet that this BulletSprite represents.
+	 * @param base reference to the base that this BaseSprite represents.
 	 */
-	BulletSprite(Entity bullet)
+	BaseSprite(Base base)
 	{
-		super(DrawLayer.OBJECTS, bullet);
+		super(DrawLayer.OBJECTS, base);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "bullet.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "base.png");
 	}
 
 	@Override
