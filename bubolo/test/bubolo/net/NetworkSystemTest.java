@@ -42,7 +42,7 @@ public class NetworkSystemTest
 	@Test
 	public void isActiveFalseAndDestroyTest()
 	{
-		network.destroy();
+		network.dispose();
 		assertFalse(network.isActive());
 	}
 

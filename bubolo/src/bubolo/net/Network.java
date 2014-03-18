@@ -31,7 +31,7 @@ public interface Network
 	/**
 	 * Shuts down the network system.
 	 */
-	void destroy();
+	void dispose();
 	
 	/**
 	 * Resets the network system.

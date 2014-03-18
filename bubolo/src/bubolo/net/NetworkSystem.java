@@ -75,7 +75,7 @@ public class NetworkSystem implements Network
 	}
 
 	@Override
-	public void destroy()
+	public void dispose()
 	{
 		isActive.set(false);
 		if (serverSocket != null)
@@ -185,7 +185,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void reset()
 	{
-		destroy();
+		dispose();
 		resetInstance();
 	}
 }
