@@ -217,7 +217,7 @@ public class Graphics
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
 		return (sprite.getX() + sprite.getWidth() + camera.position.x > 0 &&
-				sprite.getX() + camera.position.x < camera.viewportWidth * 2 &&
+				sprite.getX() - camera.position.x < camera.viewportWidth * 2 &&
 				sprite.getY() + sprite.getHeight() + camera.position.y > 0 &&
 				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
 	}
