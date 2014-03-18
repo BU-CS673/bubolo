@@ -15,8 +15,7 @@ class BulletSprite extends Sprite<Entity>
 	private Texture image;
 	/**
 	 * Constructor for the BulletSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
+	 * should not be directly created outside of the graphics system.
 	 * @param bullet Reference to the Bullet that this BulletSprite represents.
 	 */
 	BulletSprite(Entity bullet)

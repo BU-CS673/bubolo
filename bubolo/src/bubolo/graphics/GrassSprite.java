@@ -16,8 +16,7 @@ class GrassSprite extends Sprite<Entity>
 	
 	/**
 	 * Constructor for the GrassSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
+	 * should not be directly created outside of the graphics system.
 	 * @param grass Reference to the Grass that this GrassSprite represents.
 	 */
 	GrassSprite(Entity grass)

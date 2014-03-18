@@ -1,34 +1,37 @@
 package bubolo.graphics;
 
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Crater;
 
 /**
- * The graphical representation of a Road
+ * The graphical representation of a Crater
  * @author BU673 - Clone Industries
  */
-class RoadSprite extends Sprite<Road>
+class CraterSprite extends Sprite<Crater>
 {
 	private Texture image;
-	
+
 	/**
-	 * Constructor for the RoadSprite. This is Package-private because sprites
+	 * Constructor for the CraterSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
-	 * @param road Reference to the road that this RoadSprite represents.
+	 * 
+	 ** @param crater
+	 *            Reference to the crater that this CraterSprite represents.
 	 */
-	RoadSprite(Road road)
+	CraterSprite(Crater crater)
 	{
-		super(DrawLayer.TERRAIN_MODIFIERS, road);
+		super(DrawLayer.TERRAIN, crater);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "crater.png");
+
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		drawTexture(batch, camera, layer, image);
+
 	}
 }
