@@ -2,8 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.net.Network;
-import bubolo.net.NetworkSystem;
 import bubolo.util.GameMath;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -152,7 +150,7 @@ public class Tank extends Actor
 		
 		
 		// TODO: Notify the network.
-		Network net = NetworkSystem.getInstance();
+		//Network net = NetworkSystem.getInstance();
 		
 	}
 

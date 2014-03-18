@@ -58,29 +58,184 @@ public class GameWorldTest
 		{
 		}
 	}
-
+	
 	@Test
-	public void testAddEntity()
+	public void testAddEntityBase()
 	{
 		isComplete = false;
 		passed = false;
 		
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run()
-			{
-				World world = new GameWorld(1, 2);
-				world.addEntity(Grass.class);
-				passed = true;
-				isComplete = true;
-			}
-		});
-
-		while (!isComplete)
-		{
-			Thread.yield();
-		}
+		Gdx.app.postRunnable(new AddEntityRunnable(Base.class));
 		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityBullet()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Bullet.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityCrater()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Crater.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityDeepWater()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(DeepWater.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityGrass()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Grass.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityMan()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Man.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityMine()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Mine.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityPillbox()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Pillbox.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityRoad()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Road.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityRubble()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Rubble.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntitySwamp()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Swamp.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityTank()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Tank.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityTree()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Tree.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityWall()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Wall.class));
+		
+		while (!isComplete) { Thread.yield(); }		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testAddEntityWater()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new AddEntityRunnable(Water.class));
+		
+		while (!isComplete) { Thread.yield(); }		
 		assertTrue(passed);
 	}
 
@@ -223,4 +378,33 @@ public class GameWorldTest
 		assertEquals(50, w.getMapHeight());
 	}
 
+	
+	
+	private class AddEntityRunnable implements Runnable
+	{
+		private Class<? extends Entity> c;
+		
+		AddEntityRunnable(Class<? extends Entity> c)
+		{
+			this.c = c;
+		}
+		
+		@Override 
+		public void run() 
+		{
+			try 
+			{
+				isComplete = false;
+				passed = false;
+				World world = new GameWorld(1, 2);
+				world.addEntity(c);
+				passed = true;
+				isComplete = true;
+			} 
+			catch (Exception e) 
+			{ 
+				isComplete = true; 
+			}
+		}
+	};
 }
