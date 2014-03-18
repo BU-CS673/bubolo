@@ -20,6 +20,20 @@ public class AudioTest
 	{	
 		LibGdxAppTester.createApp();
 	}
+	
+
+	@Test
+	public void checkDefaultSoundEffectVolume()
+	{
+		assertEquals(50, Audio.getSoundEffectVolume());
+	}
+	
+
+	@Test
+	public void checkDefaultMusicVolume()
+	{
+		assertEquals(50, Audio.getMusicVolume());
+	}
 
 	@Test
 	public void playSoundEffectCannonFired()
@@ -82,6 +96,12 @@ public class AudioTest
 	}
 	
 	@Test
+	public void playSoundEffectTreeHit()
+	{
+		Audio.play(Sfx.TREE_HIT);
+	}
+	
+	@Test
 	public void playSoundEffectWallBuilt()
 	{
 		Audio.play(Sfx.WALL_BUILT);
@@ -93,7 +113,7 @@ public class AudioTest
 		Audio.play(Sfx.WALL_HIT);
 	}
 	
-	// This works when run by itself, but not with all other tests. I will look into this
+	// This works when run by itself, but not always with all other tests. I will look into this
 	// in the future, as I did with the graphics tests, but for now I am going to leave it, 
 	// since it does work. The issue is similar to the graphics issue we experienced, where
 	// either OpenAL isn't initialized in time for the test, or multiple OpenAL contexts are

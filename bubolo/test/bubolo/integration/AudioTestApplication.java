@@ -25,7 +25,7 @@ public class AudioTestApplication implements GameApplication
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Sprint 1";
+		cfg.title = "BUBOLO Audio Integration";
 		cfg.width = 600;
 		cfg.height = 600;
 		cfg.useGL20 = true;
@@ -43,7 +43,7 @@ public class AudioTestApplication implements GameApplication
 	private boolean ready;
 	
 	private int frame = 0;
-	private int MAX_FRAMES = TICKS_PER_SECOND * 10;
+	private int MAX_FRAMES = TICKS_PER_SECOND * 15;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
