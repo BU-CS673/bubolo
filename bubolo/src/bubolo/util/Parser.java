@@ -1,6 +1,7 @@
 package bubolo.util;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -14,43 +15,46 @@ import org.json.simple.parser.JSONParser;
 
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
+import bubolo.world.World;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.Terrain;
+import bubolo.world.entity.concrete.*;
 
 public class Parser
 {
+	private static Parser currentParser = null;
 	
-	public Parser()
+	protected Parser()
 	{
 
 	}
 	
-	private Tile[][] parseMap(GameWorld world, Path mapPath) throws ParseException
+	public static Parser getInstance()
+	{
+		if(currentParser == null)
+		{
+			currentParser = new Parser();			
+		}
+		
+		return currentParser;
+	}
+	
+	public Tile[][] parseMap(World world, Path mapPath) throws ParseException
 	{ 
 		int mapHeight = 0;
 		int mapWidth = 0;
 		Object obj = null;
-		Entity newEntity; 
 		JSONObject layerObject = null;
 		JSONArray tileData = null;
 		JSONArray layerArray = null;
 		
-		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
-		// and then the map loader or creator could set the size.
-
-		/*
-		 *  TODO: Modify the path line to choose from an assortment of maps either randomly or user selected iff we add more maps. 
-		 */
-		
 		Charset charset = Charset.forName("US-ASCII");
-		BufferedReader reader = null;		
+				
 		
-		try 
+		try (BufferedReader reader = Files.newBufferedReader(mapPath, charset);)
 		{
-			reader = Files.newBufferedReader(mapPath, charset);
 			JSONParser parser = new JSONParser();
 			obj = parser.parse(reader);
-			reader.close();
 			JSONObject jsonObject = (JSONObject) obj;		
 			mapHeight = (int) ((long) jsonObject.get("height"));
 			mapWidth = (int) ((long) jsonObject.get("width"));
@@ -58,6 +62,9 @@ public class Parser
 			layerArray = (JSONArray) jsonObject.get("layers");
 			layerObject = (JSONObject) layerArray.get(0);
 			tileData = (JSONArray) layerObject.get("data");
+			String dataString = null;
+			Terrain newTerrain = null;
+			Entity newEntity = null;
 			
 			world = new GameWorld(mapHeight, mapWidth);
 			
@@ -69,40 +76,44 @@ public class Parser
 					 * TODO: Add cases to interpret all of the tileset ID's from tiled.
 					 * Convert string outputs to generate "tiles" within the map
 					 */
-					
-					switch (tileData.get(i * mapWidth + j).toString())
-					{
-						case "1":
-							mapTiles[i][j] = new Tile(i, j, world.addEntity(Grass.class));
-							break;
+							dataString = tileData.get(i * mapWidth + j).toString();
+							newTerrain = world.addEntity(layerOneSwitch(dataString));
+							newTerrain.setParams(i * 32, j * 32, 32, 32, 0);
+							mapTiles[i][j] = new Tile(i, j, newTerrain);
 							
-						default:
-							break;
-					}
+							
 				}
 			}
 			return mapTiles;
 		}
 		catch (IOException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		catch (org.json.simple.parser.ParseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
 		return null;
 	}
 	
-	private Object layerOneSwitch(String input)
+	private static Class<? extends Terrain> layerOneSwitch(String input)
 	{
 		switch (input)
 		{
 		case "1":
 			return Grass.class;
+			
+		case "2":
+			return Swamp.class;
+			
+		case "3":
+			return Water.class;
+				
+		case "4":
+			return DeepWater.class;
+			
 		default:
 			return Grass.class;
 		}
