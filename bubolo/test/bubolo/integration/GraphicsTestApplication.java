@@ -9,8 +9,20 @@ import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Base;
+import bubolo.world.entity.concrete.Bullet;
+import bubolo.world.entity.concrete.Crater;
+import bubolo.world.entity.concrete.DeepWater;
+import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Mine;
+import bubolo.world.entity.concrete.Pillbox;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.concrete.Wall;
+import bubolo.world.entity.concrete.Water;
 
 /**
  * For testing only.
@@ -26,7 +38,7 @@ public class GraphicsTestApplication implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new GraphicsTestApplication(1067, 1067), cfg);
+		new LwjglApplication(new GraphicsTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -76,20 +88,35 @@ public class GraphicsTestApplication implements GameApplication
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(32*30, 32*30);
+		world = new GameWorld(50*30, 50*30);
 		
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 50; i++)
 		{
-			for (int j = 0; j < 30; j++)
+			for (int j = 0; j < 50; j++)
 			{
 				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
 			}
 		}
 		
+		// TODO: Adjust as needed.
 		world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
 		world.addEntity(Base.class).setParams(32*6, 32*4, 32, 32, 0);
+		world.addEntity(Bullet.class).setParams(32*7, 32*4, 32, 32, 90);
+		world.addEntity(Crater.class).setParams(32*8, 32*5, 32, 32, 0);
+		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 32, 32, 0);
+		world.addEntity(Engineer.class).setParams(32*8, 32*6, 32, 32, 0);
+		world.addEntity(Mine.class).setParams(32*8, 32*7, 32, 32, 0);
+		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
 		
+		// 2 roads
+		world.addEntity(Road.class).setParams(32*10, 32*10, 32, 32, 0);
+		world.addEntity(Road.class).setParams(32*10, 32*11, 32, 32, 0);
 		
+		world.addEntity(Rubble.class).setParams(32*11, 32*6, 32, 32, 0);
+		world.addEntity(Swamp.class).setParams(32*12, 32*11, 32, 32, 0);
+		world.addEntity(Tree.class).setParams(32*12, 32*12, 32, 32, 0);
+		world.addEntity(Wall.class).setParams(32*13, 32*12, 32, 32, 0);
+		world.addEntity(Water.class).setParams(32*14, 32*12, 32, 32, 0);
 		
 		ready = true;
 	}
