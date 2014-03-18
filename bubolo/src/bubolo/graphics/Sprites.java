@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Crater;
 import bubolo.world.entity.concrete.DeepWater;
@@ -13,6 +14,7 @@ import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Rubble;
 import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
@@ -119,6 +121,14 @@ public class Sprites
 	{
 		Map<Class<? extends Entity>, SpriteFactory> factories = new HashMap<>();
 		
+		factories.put(Base.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new BaseSprite((Base)e);
+			}
+		});
+		
 		factories.put(Bullet.class, new SpriteFactory() {
 			@Override 
 			public Sprite<? extends Entity> create(Entity e) 
@@ -172,6 +182,14 @@ public class Sprites
 			public Sprite<? extends Entity> create(Entity e) 
 			{
 				return new RoadSprite((Road)e);
+			}
+		});
+		
+		factories.put(Rubble.class, new SpriteFactory() {
+			@Override 
+			public Sprite<? extends Entity> create(Entity e) 
+			{
+				return new RubbleSprite(e);
 			}
 		});
 		
