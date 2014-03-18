@@ -87,7 +87,9 @@ public class GraphicsTestApplication implements GameApplication
 		}
 		
 		world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
-		world.addEntity(Base.class).setParams(300, y, w, h, rot)
+		world.addEntity(Base.class).setParams(32*6, 32*4, 32, 32, 0);
+		
+		
 		
 		ready = true;
 	}
