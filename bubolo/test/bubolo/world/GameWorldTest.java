@@ -1,6 +1,7 @@
 package bubolo.world;
 
 import static org.junit.Assert.*;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,9 @@ import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.concrete.Wall;
+import bubolo.world.entity.concrete.Water;
 
 public class GameWorldTest
 {
