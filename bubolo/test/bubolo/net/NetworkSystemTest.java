@@ -49,36 +49,22 @@ public class NetworkSystemTest
 	@Test
 	public void connect()
 	{
-		network.startServer(false);
 		network.connect(mock(InetAddress.class));
-	}
-	
-	@Test
-	public void connectInvalid()
-	{
-		try
-		{
-			network.connect(mock(InetAddress.class));
-			fail("connect should have failed, but did not.");
-		}
-		catch (IllegalStateException e)
-		{
-		}
 	}
 
 	@Test
 	public void startServer()
 	{
-		network.startServer(true);
+		network.startServer();
 	}
 	
 	@Test
 	public void startServerInvalid()
 	{
-		network.startServer(true);
+		network.startServer();
 		try
 		{
-			network.startServer(true);
+			network.startServer();
 			fail("startServer should have failed, but did not.");
 		}
 		catch (IllegalStateException e)
@@ -95,14 +81,14 @@ public class NetworkSystemTest
 			{	
 			}
 		};
-		network.startServer(false);
+		network.startServer();
 		network.send(command);
 	}
 
 	@Test
 	public void update()
 	{
-		network.startServer(false);
+		network.startServer();
 		network.update(new MockWorld());
 	}
 	
