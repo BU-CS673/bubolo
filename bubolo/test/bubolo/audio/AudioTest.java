@@ -113,7 +113,7 @@ public class AudioTest
 		Audio.play(Sfx.WALL_HIT);
 	}
 	
-	// This works when run by itself, but not with all other tests. I will look into this
+	// This works when run by itself, but not always with all other tests. I will look into this
 	// in the future, as I did with the graphics tests, but for now I am going to leave it, 
 	// since it does work. The issue is similar to the graphics issue we experienced, where
 	// either OpenAL isn't initialized in time for the test, or multiple OpenAL contexts are
