@@ -20,6 +20,20 @@ public class AudioTest
 	{	
 		LibGdxAppTester.createApp();
 	}
+	
+
+	@Test
+	public void checkDefaultSoundEffectVolume()
+	{
+		assertEquals(50, Audio.getSoundEffectVolume());
+	}
+	
+
+	@Test
+	public void checkDefaultMusicVolume()
+	{
+		assertEquals(50, Audio.getMusicVolume());
+	}
 
 	@Test
 	public void playSoundEffectCannonFired()
@@ -79,6 +93,12 @@ public class AudioTest
 	public void playSoundEffectTreeGathered()
 	{
 		Audio.play(Sfx.TREE_GATHERED);
+	}
+	
+	@Test
+	public void playSoundEffectTreeHit()
+	{
+		Audio.play(Sfx.TREE_HIT);
 	}
 	
 	@Test
