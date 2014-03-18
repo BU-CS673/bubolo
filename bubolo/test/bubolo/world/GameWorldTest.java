@@ -13,8 +13,17 @@ import com.badlogic.gdx.Gdx;
 
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Base;
+import bubolo.world.entity.concrete.Bullet;
+import bubolo.world.entity.concrete.Crater;
+import bubolo.world.entity.concrete.DeepWater;
+import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Mine;
+import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 import bubolo.world.entity.concrete.Wall;
