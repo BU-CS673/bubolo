@@ -16,16 +16,16 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TankControllerApplication implements GameApplication
+public class GraphicsTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Tank Controller Integration";
-		cfg.width = 600;
+		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new TankControllerApplication(300, 300), cfg);
+		new LwjglApplication(new GraphicsTestApplication(1067, 1067), cfg);
 	}
 	
 	private int windowWidth;
@@ -54,7 +54,7 @@ public class TankControllerApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public TankControllerApplication(int windowWidth, int windowHeight)
+	public GraphicsTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;

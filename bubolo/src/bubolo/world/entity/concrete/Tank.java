@@ -150,6 +150,7 @@ public class Tank extends Actor
 		// TODO: test this; the angle portion may be wrong.
 		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY + directionY));
 		
+		
 		// TODO: Notify the network.
 		Network net = NetworkSystem.getInstance();
 		

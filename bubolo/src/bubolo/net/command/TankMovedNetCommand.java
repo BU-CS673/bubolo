@@ -9,6 +9,9 @@ import bubolo.world.World;
  */
 public class TankMovedNetCommand implements NetworkCommand
 {
+	private static final long serialVersionUID = -8840820092829583044L;
+
+
 	// TODO: add attributes.
 	
 	@Override

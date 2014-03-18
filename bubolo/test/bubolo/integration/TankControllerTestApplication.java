@@ -1,15 +1,11 @@
 package bubolo.integration;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
-import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
-import bubolo.ui.LoadingScreen;
-import bubolo.ui.MenuScreen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -20,16 +16,16 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class AudioIntegrationApplication implements GameApplication
+public class TankControllerTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Sprint 1";
-		cfg.width = 600;
+		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new AudioIntegrationApplication(300, 300), cfg);
+		new LwjglApplication(new TankControllerTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -41,9 +37,6 @@ public class AudioIntegrationApplication implements GameApplication
 	private long lastUpdate;
 	
 	private boolean ready;
-	
-	private int frame = 0;
-	private int MAX_FRAMES = TICKS_PER_SECOND * 10;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -61,7 +54,7 @@ public class AudioIntegrationApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public AudioIntegrationApplication(int windowWidth, int windowHeight)
+	public TankControllerTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -81,10 +74,19 @@ public class AudioIntegrationApplication implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-
-		world = new GameWorld(32*30, 32*30);
 		
-		Audio.startMusic();
+		world = new GameWorld(32*94, 32*94);
+		
+		for (int row = 0; row < 94; row++)
+		{
+			for (int column = 0; column < 94; column++)
+			{
+				world.addEntity(Grass.class).setParams(column * 32, row * 32, 32, 32, 0);
+			}
+		}
+		
+		Tank tank = world.addEntity(Tank.class);
+		tank.setParams(100, 100, 32, 32, 0);
 		
 		ready = true;
 	}
@@ -96,27 +98,8 @@ public class AudioIntegrationApplication implements GameApplication
 	@Override
 	public void render()
 	{
-		if (frame == 0) Audio.play(Sfx.CANNON_FIRED);
-		if (frame == 15) Audio.play(Sfx.ENGINEER_KILLED);
-		if (frame == 30) Audio.play(Sfx.EXPLOSION);
-		if (frame == 45) Audio.play(Sfx.PILLBOX_BUILT);
-		if (frame == 60) Audio.play(Sfx.PILLBOX_HIT);
-		if (frame == 75) Audio.play(Sfx.ROAD_BUILT);
-		if (frame == 90) Audio.play(Sfx.TANK_DROWNED);
-		if (frame == 105) Audio.play(Sfx.TANK_HIT);
-		if (frame == 120) Audio.play(Sfx.TANK_IN_SHALLOW_WATER);
-		if (frame == 135) Audio.play(Sfx.TREE_GATHERED);
-		if (frame == 150) Audio.play(Sfx.TREE_HIT);
-		if (frame == 165) Audio.play(Sfx.WALL_BUILT);
-		if (frame == 180) Audio.play(Sfx.WALL_HIT);
-		
 		graphics.draw(world);
-		
-		if (frame > MAX_FRAMES)
-		{
-			Gdx.app.exit();
-		}
-		++frame;
+		world.update();
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();

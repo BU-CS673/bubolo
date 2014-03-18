@@ -51,7 +51,7 @@ class TankSprite extends Sprite<Tank>
 		}
 		else if (images == null)
 		{
-			initialize();
+			initialize(camera);
 		}
 		
 		drawTexture(batch, camera, layer, images.get(imageIndex));
@@ -70,8 +70,9 @@ class TankSprite extends Sprite<Tank>
 	/**
 	 * Initializes the tank. This is needed because the Tank entity may not know
 	 * whether it is local or not at construction time.
+	 * @param camera reference to the camera.
 	 */
-	private void initialize()
+	private void initialize(Camera camera)
 	{
 		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
 		images = new ArrayList<TextureRegion>(3);
@@ -96,6 +97,7 @@ class TankSprite extends Sprite<Tank>
 		{
 			CameraController controller = new TankCameraController(getEntity());
 			Graphics.getInstance().addCameraController(controller);
+			controller.setCamera(camera);
 		}
 	}
 }
