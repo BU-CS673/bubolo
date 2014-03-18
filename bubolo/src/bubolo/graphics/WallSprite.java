@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.GameLogicException;
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.concrete.Wall;
 
 
 /**
  * The graphical representation of a Wall
  * @author BU673 - Clone Industries
  */
-class WallSprite extends Sprite<StationaryElement>
+class WallSprite extends Sprite<Wall>
 {
 	private Texture image;
 	
@@ -23,7 +23,7 @@ class WallSprite extends Sprite<StationaryElement>
 	 * Constructor for the WallSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
 	 */
-	WallSprite(StationaryElement wall)
+	WallSprite(Wall wall)
 	{
 		super(DrawLayer.OBJECTS, wall);
 		

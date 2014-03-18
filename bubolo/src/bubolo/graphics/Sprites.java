@@ -10,6 +10,7 @@ import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Crater;
 import bubolo.world.entity.concrete.DeepWater;
+import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
@@ -153,6 +154,14 @@ public class Sprites
 			}
 		});
 		
+		factories.put(Engineer.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new EngineerSprite(e);
+			}
+		});
+		
 		factories.put(Grass.class, new SpriteFactory() {
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
@@ -221,7 +230,7 @@ public class Sprites
 			@Override 
 			public Sprite<? extends Entity> create(Entity e) 
 			{
-				return new WaterSprite((Water)e);
+				return new WallSprite((Wall)e);
 			}
 		});
 		

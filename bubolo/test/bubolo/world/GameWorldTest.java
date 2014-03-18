@@ -133,7 +133,7 @@ public class GameWorldTest
 	}
 	
 	@Test
-	public void testAddEntityMan()
+	public void testAddEntityEngineer()
 	{
 		isComplete = false;
 		passed = false;
@@ -228,17 +228,17 @@ public class GameWorldTest
 		assertTrue(passed);
 	}
 	
-	@Test
-	public void testAddEntityWall()
-	{
-		isComplete = false;
-		passed = false;
-		
-		Gdx.app.postRunnable(new AddEntityRunnable(Wall.class));
-		
-		while (!isComplete) { Thread.yield(); }		
-		assertTrue(passed);
-	}
+//	@Test
+//	public void testAddEntityWall()
+//	{
+//		boolean isComplete = false;
+//		passed = false;
+//		
+//		Gdx.app.postRunnable(new AddEntityRunnable(Wall.class));
+//		
+//		while (!isComplete) { Thread.yield(); }		
+//		assertTrue(passed);
+//	}
 	
 	@Test
 	public void testAddEntityWater()
@@ -315,21 +315,28 @@ public class GameWorldTest
 			public void run()
 			{
 				World w = new GameWorld(1, 1);
-				w.addEntity(Road.class);
-				WeakReference<Entity> e = new WeakReference<Entity>(w.getEntities().get(0));
-				UUID id = e.get().getId();
-
-				w.removeEntity(e.get());
-				try
-				{
+				UUID id = null;
+				try {
+					w.addEntity(Road.class);
+					w.update();
+					Entity e = w.getEntities().get(0);
+					id = e.getId();
+	
+					w.removeEntity(e);
+				} catch (Exception e) {
+					e.printStackTrace();
+					isComplete = true;
+					return;
+				}
+				
+				try {					
 					w.getEntity(id);
-					fail("The entity remained in the world after calling world.removeEntity");
+					isComplete = true;
+					passed = false;
+				} catch (Exception exception) { 
+					passed = true;
+					isComplete = true;
 				}
-				catch (Exception exception)
-				{
-				}
-				passed = true;
-				isComplete = true;
 			}
 		});
 
@@ -351,21 +358,31 @@ public class GameWorldTest
 			@Override
 			public void run()
 			{
+				passed = false;
+				isComplete = false;
+				
 				World w = new GameWorld(1, 1);
-				w.addEntity(Tank.class);
-				UUID id = w.getEntities().get(0).getId();
-
-				w.removeEntity(id);
+				UUID id = null;
+				try {
+					Tank t = w.addEntity(Tank.class);
+					w.update();
+					id = t.getId();
+					w.removeEntity(id);
+				} catch (Exception e) {
+					isComplete = true;
+					return;
+				}
+				
 				try
 				{
 					w.getEntity(id);
-					fail("The entity remained in the world after calling world.removeEntity");
+					isComplete = true;
 				}
 				catch (Exception exception)
 				{
+					passed = true;
+					isComplete = true;
 				}
-				passed = true;
-				isComplete = true;
 			}
 		});
 
@@ -416,6 +433,7 @@ public class GameWorldTest
 			} 
 			catch (Exception e) 
 			{ 
+				e.printStackTrace();
 				isComplete = true; 
 			}
 		}

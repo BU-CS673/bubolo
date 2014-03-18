@@ -8,6 +8,7 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
@@ -85,8 +86,8 @@ public class GraphicsTestApplication implements GameApplication
 			}
 		}
 		
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 32, 32, 0);
+		world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
+		world.addEntity(Base.class).setParams(300, y, w, h, rot)
 		
 		ready = true;
 	}
