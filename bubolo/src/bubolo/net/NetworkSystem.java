@@ -92,12 +92,11 @@ public class NetworkSystem implements Network
 	}
 	
 	@Override
-	public void connect(InetAddress serverIpAddress) throws IllegalStateException,
-			NetworkException
+	public void connect(InetAddress serverIpAddress) throws NetworkException
 	{
 		if (connections == null)
 		{
-			throw new IllegalStateException("startServer must be called before calling connect.");
+			startServer(false);
 		}
 		
 		class Connector implements Runnable
@@ -128,9 +127,23 @@ public class NetworkSystem implements Network
 		
 		new Thread(new Connector(serverIpAddress, connections)).start();;
 	}
-
+	
 	@Override
-	public void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
+	public void startServer() throws IllegalStateException, NetworkException
+	{
+		startServer(true);
+	}
+
+	/**
+	 * Begins accepting connections from other players. If this is the game server,
+	 * <code>startServer</code> must be called before calling <code>connect</code>.
+	 * 
+	 * @param isGameServer true if this player is the game server, or false otherwise. 
+	 * There should only be one game server per game.
+	 * @throws NetworkException if a network error occurs.
+	 * @throws IllegalStateException if isGameServer is true, and the server was already started.
+	 */
+	private void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
 	{
 		if (connections != null)
 		{

@@ -39,28 +39,23 @@ public interface Network
 	void reset();
 	
 	/**
-	 * Identifies this player as the server, and begins accepting connections 
+	 * Identifies this player as the game server, and begins accepting connections 
 	 * from other players. <code>startServer</code> must be called before
-	 * calling <code>connect</code>.
+	 * calling <code>connect</code>. There should only be one game server per game.
 	 * 
-	 * @param isGameServer true if this player is the game server, or false otherwise. 
-	 * There should only be one game server per game.
 	 * @throws NetworkException if a network error occurs.
 	 * @throws IllegalStateException if the server was already started.
 	 */
-	void startServer(boolean isGameServer) throws NetworkException, IllegalStateException;
+	void startServer() throws NetworkException, IllegalStateException;
 	
 	/**
-	 * Attempts to connect to the specified IP address. <code>startServer</code> must be called before
-	 * calling <code>connect</code>.
+	 * Attempts to connect to the specified IP address.
 	 * 
 	 * @param serverIpAddress the IP address of a server. Note that this isn't necessarily
 	 * the <i>game</i> server, since clients also connect directly to each other.
 	 * @throws NetworkException if a network error occurs.
-	 * @throws IllegalStateException if <code>connect</code> is called before 
-	 * <code>startServer</code> was called.
 	 */
-	void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException;
+	void connect(InetAddress serverIpAddress) throws NetworkException;
 	
 	/**
 	 * Queues a network command to be sent to the other players.
