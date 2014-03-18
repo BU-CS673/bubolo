@@ -16,8 +16,7 @@ class RoadSprite extends Sprite<Road>
 	
 	/**
 	 * Constructor for the RoadSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
+	 * should not be directly created outside of the graphics system.
 	 * @param road Reference to the road that this RoadSprite represents.
 	 */
 	RoadSprite(Road road)

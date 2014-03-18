@@ -16,8 +16,7 @@ class MineSprite extends Sprite<Mine>
 
 	/**
 	 * Constructor for the MineSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param mine
 	 *            Reference to the Mine that this MineSprite represents.

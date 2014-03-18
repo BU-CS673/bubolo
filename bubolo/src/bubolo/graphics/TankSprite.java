@@ -36,8 +36,7 @@ class TankSprite extends Sprite<Tank>
 	
 	/**
 	 * Constructor for the TankSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
+	 * should not be directly created outside of the graphics system.
 	 * @param tank Reference to the tank that this TankSprite represents.
 	 */
 	TankSprite(Tank tank)

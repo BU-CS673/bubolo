@@ -22,7 +22,12 @@ public class LibGdxAppTester extends ApplicationAdapter
 	
 	synchronized public static void createApp()
 	{
-		if (app == null)
+		createApp(false);
+	}
+	
+	synchronized public static void createApp(boolean forceCreate)
+	{
+		if (app == null || forceCreate)
 		{
 			ready.set(false);
 			LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
