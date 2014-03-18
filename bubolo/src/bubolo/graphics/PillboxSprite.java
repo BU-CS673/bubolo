@@ -20,8 +20,7 @@ class PillboxSprite extends Sprite<Entity>
 	
 	/**
 	 * Constructor for the PillboxSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
+	 * should not be directly created outside of the graphics system.
 	 * @param pillbox Reference to the pillbox that this PillboxSprite represents.
 	 */
 	PillboxSprite(Entity pillbox)

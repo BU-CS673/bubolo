@@ -16,6 +16,7 @@ public class BuboloApplicationTest
 	@Before
 	public void setup()
 	{
+		LibGdxAppTester.createApp();
 		ga = new BuboloApplication(500, 400);
 	}
 	
