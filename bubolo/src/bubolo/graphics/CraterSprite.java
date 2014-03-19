@@ -15,8 +15,7 @@ class CraterSprite extends Sprite<Crater>
 
 	/**
 	 * Constructor for the CraterSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method)
+	 * should not be directly created outside of the graphics system.
 	 * 
 	 ** @param crater
 	 *            Reference to the crater that this CraterSprite represents.

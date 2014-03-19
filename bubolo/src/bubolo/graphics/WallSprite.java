@@ -21,8 +21,7 @@ class WallSprite extends Sprite<StationaryElement>
 
 	/**
 	 * Constructor for the WallSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method)
+	 * should not be directly created outside of the graphics system.
 	 */
 	WallSprite(StationaryElement wall)
 	{
@@ -33,7 +32,6 @@ class WallSprite extends Sprite<StationaryElement>
 		specificImage = new TextureRegion();
 		
 		specificImage.setTexture(image);
-
 	}
 
 	@Override

@@ -16,8 +16,7 @@ class WaterSprite extends Sprite<Water>
 
 	/**
 	 * Constructor for the WaterSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param water
 	 *            Reference to the Water that this WaterSprite represents.
