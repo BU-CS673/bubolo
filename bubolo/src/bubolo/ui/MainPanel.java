@@ -9,9 +9,10 @@ import javax.swing.JPanel;
 public class MainPanel extends JPanel
 {
 	/**
-	 * Creates our main panel
+	 * 
 	 */
-	private static final long serialVersionUID = 13452345L;
+	private static final long serialVersionUID = 3979824711855571791L;
+	
 
 	private String title = "B.U.B.O.L.O.";
 	private String author = "Clone Productions";

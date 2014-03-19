@@ -34,9 +34,10 @@ public class AltMenuScreen extends JFrame
 		// Set the details of the Frame
 		setTitle("B.U.B.O.L.O.");
 		setSize(500,500);
-		setLayout(new GridLayout(3,1));
+		setLayout(new GridLayout(2,1));
 		setLocationRelativeTo(null);
-		setIconImage(new ImageIcon(Graphics.TEXTURE_PATH + "tank_icon.png").getImage());		
+		setIconImage(new ImageIcon(Graphics.TEXTURE_PATH + "tank_icon.png").getImage());
+		setResizable(false);
 		
 		// Add the MainPanel which contains our logo/title
 		add(new MainPanel(), BorderLayout.NORTH);

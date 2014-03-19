@@ -19,7 +19,8 @@ public class ButtonPanel extends JPanel implements ActionListener
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 12134123L;	
+	private static final long serialVersionUID = -1624357058854582729L;
+	
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
@@ -40,40 +41,58 @@ public class ButtonPanel extends JPanel implements ActionListener
 	 */
 	BUBOLOTarget = targetApp;
 		
-	JButton newGameBtn = new JButton("NEW GAME");
+	JButton singleBtn = new JButton("NEW SINGLE PLAYER GAME");
+	JButton newMPBtn = new JButton("NEW MULTI-PLAYER GAME");
+	JButton joinMPBtn = new JButton("JOIN MULTI-PLAYER GAME");
 	JButton prefBtn = new JButton("PREFERENCES");
 	JButton exitBtn = new JButton("EXIT");
 		
-	setLayout(new GridLayout(3,1));
+	setLayout(new GridLayout(5,1));
 	
 	// Set Button Sizes
-	newGameBtn.setPreferredSize(new Dimension(125,40));
-	prefBtn.setPreferredSize(new Dimension(125,40));		
-	exitBtn.setPreferredSize(new Dimension(125,40));
+	singleBtn.setPreferredSize(new Dimension(125,20));
+	newMPBtn.setPreferredSize(new Dimension(125,20));
+	joinMPBtn.setPreferredSize(new Dimension(125,20));
+	prefBtn.setPreferredSize(new Dimension(125,20));		
+	exitBtn.setPreferredSize(new Dimension(125,20));
 
 	
 	// Add Buttons to panel
-	add(newGameBtn);
+	add(singleBtn);
+	add(newMPBtn);
+	add(joinMPBtn);
 	add(prefBtn);
 	add(exitBtn);
 	
-	// Handle newGameBtn push
-	newGameBtn.addActionListener(new java.awt.event.ActionListener()
+	// Handle singleBtn push
+	singleBtn.addActionListener(new java.awt.event.ActionListener()
 	{
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
-			newGameBtnPerformed(evt);
+			singleBtnPerformed(evt);
 		}
 	});
 
-	// Handle exitGameBtn push
+	// Handle exitBtn push
 	exitBtn.addActionListener(new java.awt.event.ActionListener()
 	{
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
 			System.exit(0);
+		}
+	});
+	
+	
+	// Handle prefBtn push
+	prefBtn.addActionListener(new java.awt.event.ActionListener()
+	{
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent evt)
+		{
+			PreferenceScreen ps = new PreferenceScreen();
+			ps.setVisible(true);
 		}
 	});
 	
@@ -86,7 +105,7 @@ public class ButtonPanel extends JPanel implements ActionListener
 	 * @param evt
 	 *            is the event created by this button being pressed. Currently unused.
 	 */
-	private void newGameBtnPerformed(java.awt.event.ActionEvent evt)
+	private void singleBtnPerformed(java.awt.event.ActionEvent evt)
 	{
 		(new Thread(BUBOLOTarget)).start();
 	}
