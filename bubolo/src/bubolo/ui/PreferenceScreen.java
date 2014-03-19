@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.KeyStroke;
 
 import bubolo.graphics.Graphics;
 
@@ -18,6 +19,8 @@ public class PreferenceScreen extends JFrame
 	 * 
 	 */
 	private static final long serialVersionUID = 2997846132408492538L;
+	
+	private KeyStroke moveFwd;
 	
 	public PreferenceScreen()
 	{
@@ -88,5 +91,14 @@ public class PreferenceScreen extends JFrame
 		add(sfxPanel);
 		add(mfxPanel);
 		add(sizePanel);
+		
+		moveFwd = KeyStroke.getKeyStroke('f');
 	}
+	
+	public boolean setMoveFwd(KeyStroke keystroke)
+	{
+		moveFwd = keystroke;
+		return true;
+	}
+	
 }
