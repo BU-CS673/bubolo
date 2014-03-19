@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import com.google.common.base.Preconditions;
+
 import bubolo.util.GameMath;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -44,6 +46,8 @@ public class Tank extends Actor
 	
 	// Specifies whether the tank is local. The default is true.
 	private boolean local = true;
+	// Sanity check to ensure that local isn't modified after it has initially been set. 
+	private boolean localWasSet;
 	
 	/**
 	 * Construct a new Tank with a random UUID.
@@ -79,7 +83,18 @@ public class Tank extends Actor
 	 */
 	public void setLocal(boolean isLocalPlayer)
 	{
+		Preconditions.checkState(!localWasSet, "setLocal in entity Tank was already called. This cannot be called more than once.");
 		this.local = isLocalPlayer;
+		localWasSet = true;
+	}
+	
+	/**
+	 * Returns the tank's speed.
+	 * @return the tank's speed.
+	 */
+	public float getSpeed()
+	{
+		return speed;
 	}
 
 	/**
@@ -101,7 +116,7 @@ public class Tank extends Actor
 	{
 		if (speed > 0)
 		{
-			speed -= (speed < 0) ? 0 : decelerationRate;
+			speed -= (speed - decelerationRate < 0) ? 0 : decelerationRate;
 		}
 	}
 	

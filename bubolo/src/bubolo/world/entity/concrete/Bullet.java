@@ -24,10 +24,21 @@ public class Bullet extends Actor
 	 */
 	public Bullet()
 	{
+		this(false);
+	}
+	
+	/**
+	 * Package-private constructor for testing.
+	 */
+	Bullet(boolean noSound)
+	{
 		super();
 		
 		// Play cannon fired sound effect.
-		Audio.play(Sfx.CANNON_FIRED);
+		if (!noSound)
+		{
+			Audio.play(Sfx.CANNON_FIRED);
+		}
 	}
 
 	/**
