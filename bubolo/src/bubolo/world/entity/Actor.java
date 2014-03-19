@@ -73,12 +73,6 @@ public abstract class Actor extends Entity implements Damageable
 		return false;
 	}
 
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
 	// TODO: Add Actor functionality!
 
 }

@@ -7,7 +7,7 @@ import bubolo.world.entity.EntityTestCase;
 
 public class ManTest
 {
-	static Man man;
+	static Engineer man;
 
 	/**
 	 * Constructs a Man object and sets the default parameters.
@@ -15,7 +15,7 @@ public class ManTest
 	@BeforeClass
 	public static void setup()
 	{
-		man = new Man();
+		man = new Engineer();
 		EntityTestCase.setTestParams(man);
 	}
 

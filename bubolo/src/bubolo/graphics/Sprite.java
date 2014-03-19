@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import bubolo.world.entity.Entity;
@@ -67,9 +68,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * Returns true if the underlying entity is destroyed, or false otherwise.
 	 * @return true if the underlying entity is destroyed, or false otherwise.
 	 */
-	boolean isEntityDestroyed()
+	protected boolean isEntityDisposed()
 	{
-		return entity.isDestroyed();
+		return entity.isDisposed();
 	}
 	
 	@Override
@@ -140,7 +141,8 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 origin = getOrigin(getEntity());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, getEntity().getRotation(),
+					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
+					(float)(MathUtils.radiansToDegrees * getEntity().getRotation() - Math.PI / 2.f),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -169,7 +171,8 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 origin = getOrigin(getEntity());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, getEntity().getRotation());
+					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
+					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
 	

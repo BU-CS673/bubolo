@@ -1,6 +1,7 @@
 package bubolo.graphics;
 
 import bubolo.world.entity.concrete.Swamp;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,6 +32,13 @@ class SwampSprite extends Sprite<Swamp>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (!isEntityDisposed())
+		{
+			drawTexture(batch, camera, layer, image);
+		}
+		else
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
 	}
 }

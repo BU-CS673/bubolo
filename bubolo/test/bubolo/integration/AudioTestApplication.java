@@ -20,7 +20,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class AudioIntegrationApplication implements GameApplication
+public class AudioTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
@@ -29,7 +29,7 @@ public class AudioIntegrationApplication implements GameApplication
 		cfg.width = 600;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new AudioIntegrationApplication(300, 300), cfg);
+		new LwjglApplication(new AudioTestApplication(600, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -61,7 +61,7 @@ public class AudioIntegrationApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public AudioIntegrationApplication(int windowWidth, int windowHeight)
+	public AudioTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;

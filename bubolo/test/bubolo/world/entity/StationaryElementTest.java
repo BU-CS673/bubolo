@@ -57,10 +57,10 @@ public class StationaryElementTest
 	}
 
 	@Test
-	public void destroy()
+	public void dispose()
 	{
 		StationaryElement sta2 = new Tree();
-		sta2.destroy();
+		sta2.dispose();
 		// Should check to make sure the StationaryElement was removed properly.
 		// Useless until we have some conditions to test whether a StationaryElement has
 		// been destroyed.

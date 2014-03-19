@@ -32,7 +32,14 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (!isEntityDisposed())
+		{
+			drawTexture(batch, camera, layer, image);
+		}
+		else
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
 	}
 }
 

@@ -1,9 +1,13 @@
 package bubolo.world.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import bubolo.controllers.Controller;
 import bubolo.graphics.Drawable;
+import bubolo.world.World;
 
 /**
  * Base class for game objects. Anything that is part of the game logic should inherit
@@ -22,9 +26,12 @@ public abstract class Entity implements Serializable, Drawable
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
 	
+	// The list of controllers attached to this Entity.
+	private List<Controller> controllers;
+	
 	// true if this entity should be removed from the game, or false otherwise. This is
 	// used by sprites.
-	private boolean destroyed;
+	private boolean disposed;
 
 	/**
 	 * Construct a new Entity with a random UUID.
@@ -101,14 +108,11 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Updates the state of this Entity. Called multiple times per second to maintain
-	 * current Entity state.
-	 * 
+	 * Updates the state of this Entity. Must be called once per game tick to maintain
+	 * the Entity's state.
+	 * @param world reference to the World
 	 */
-	public void update()
-	{
-		// TODO: Implement update functionality for entities and subclasses!
-	}
+	public abstract void update(World world);
 
 	@Override
 	public float getRotation()
@@ -126,6 +130,24 @@ public abstract class Entity implements Serializable, Drawable
 	public float getY()
 	{
 		return yPos;
+	}
+	
+	/**
+	 * Returns the center x position.
+	 * @return the center x position.
+	 */
+	public float getCenterX()
+	{
+		return (xPos + (width / 2.f));
+	}
+	
+	/**
+	 * Returns the center y position.
+	 * @return the center y position.
+	 */
+	public float getCenterY()
+	{
+		return (yPos + (height / 2.f));
 	}
 
 	/**
@@ -195,21 +217,58 @@ public abstract class Entity implements Serializable, Drawable
 	}
 	
 	/**
+	 * Adds a controller to this Entity.
+	 * @param c the controller to add.
+	 */
+	public void addController(Controller c)
+	{
+		if (controllers == null)
+		{
+			controllers = new ArrayList<Controller>();
+		}
+		controllers.add(c);
+	}
+	
+	/**
+	 * Updates all attached controllers.
+	 * @param world reference to the World.
+	 */
+	protected void updateControllers(World world)
+	{
+		if (controllers != null)
+		{
+			for (Controller c : controllers)
+			{
+				c.update(world);
+			}
+		}
+	}
+	
+	/**
+	 * Returns the number of controllers attached to this Entity.
+	 * @return the number of controllers attached to this Entity.
+	 */
+	public int getControllerCount()
+	{
+		return (controllers == null) ? 0 : controllers.size();
+	}
+	
+	/**
 	 * Returns true if the entity should be removed from the game. This is needed
 	 * by the graphics system.
 	 * 
 	 * @return true if the entity should be removed from the game.
 	 */
-	public boolean isDestroyed()
+	public final boolean isDisposed()
 	{
-		return destroyed;
+		return disposed;
 	}
 	
 	/**
 	 * This method must be called when the entity should be removed from the game.
 	 */
-	protected void destroy()
+	public final void dispose()
 	{
-		destroyed = true;
+		disposed = true;
 	}
 }
