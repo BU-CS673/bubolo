@@ -1,30 +1,29 @@
 package bubolo.graphics;
 
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.Entity;
 
 /**
- * The graphical representation of a Road
+ * The graphical representation of an engineer entity.
  * @author BU673 - Clone Industries
  */
-class RoadSprite extends Sprite<Road>
+class EngineerSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
 	/**
-	 * Constructor for the RoadSprite. This is Package-private because sprites
+	 * Constructor for the EngineerSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
-	 * @param road Reference to the road that this RoadSprite represents.
+	 * @param engineer reference to the Engineer that this EngineerSprite represents.
 	 */
-	RoadSprite(Road road)
+	EngineerSprite(Entity engineer)
 	{
-		super(DrawLayer.TERRAIN_MODIFIERS, road);
-		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png");
+		super(DrawLayer.OBJECTS, engineer);
+
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "man.png");
 	}
 
 	@Override

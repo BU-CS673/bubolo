@@ -2,6 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
+import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
 /**
@@ -21,7 +24,21 @@ public class Bullet extends Actor
 	 */
 	public Bullet()
 	{
+		this(false);
+	}
+	
+	/**
+	 * Package-private constructor for testing.
+	 */
+	Bullet(boolean noSound)
+	{
 		super();
+		
+		// Play cannon fired sound effect.
+		if (!noSound)
+		{
+			Audio.play(Sfx.CANNON_FIRED);
+		}
 	}
 
 	/**
@@ -33,7 +50,15 @@ public class Bullet extends Actor
 	public Bullet(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+
+		// Play cannon fired sound effect.
+		Audio.play(Sfx.CANNON_FIRED);
+	}
+
+	@Override
+	public void update(World world)
+	{
+		// TODO Implement this.
 	}
 
 	// TODO: Add Bullet functionality!

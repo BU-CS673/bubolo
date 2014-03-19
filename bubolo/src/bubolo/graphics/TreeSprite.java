@@ -17,8 +17,7 @@ class TreeSprite extends Sprite<Tree>
 
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param tree
 	 *            Reference to the Tree that this TreeSprite represents.
@@ -33,6 +32,13 @@ class TreeSprite extends Sprite<Tree>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (!isEntityDisposed())
+		{
+			drawTexture(batch, camera, layer, image);
+		}
+		else
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
 	}
 }
