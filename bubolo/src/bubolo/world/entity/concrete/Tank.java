@@ -116,7 +116,11 @@ public class Tank extends Actor
 	{
 		if (speed > 0)
 		{
-			speed -= (speed - decelerationRate < 0) ? 0 : decelerationRate;
+			speed -= decelerationRate;
+			if (speed < 0)
+			{
+				speed = 0;
+			}
 		}
 	}
 	
