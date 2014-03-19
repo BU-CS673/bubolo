@@ -2,8 +2,10 @@ package bubolo.graphics;
 
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import bubolo.util.TextureUtil;
 import bubolo.world.entity.concrete.Road;
 
 /**
@@ -12,7 +14,7 @@ import bubolo.world.entity.concrete.Road;
  */
 class RoadSprite extends Sprite<Road>
 {
-	private Texture image;
+	private TextureRegion[] frames;
 	
 	/**
 	 * Constructor for the RoadSprite. This is Package-private because sprites
@@ -21,14 +23,14 @@ class RoadSprite extends Sprite<Road>
 	 */
 	RoadSprite(Road road)
 	{
-		super(DrawLayer.TERRAIN_MODIFIERS, road);
+		super(DrawLayer.TERRAIN, road);
 		
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png");
+		frames = TextureUtil.adaptiveSplit_16(Graphics.getTexture(Graphics.TEXTURE_PATH + "road.png"));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
 	}
 }

@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Adaptable;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -9,12 +10,14 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class DeepWater extends Terrain
+public class DeepWater extends Terrain implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -4427335167013500776L;
+
+	private int tilingState = 0;
 
 	/**
 	 * Construct a new DeepWater with a random UUID.
@@ -33,6 +36,24 @@ public class DeepWater extends Terrain
 	public DeepWater(UUID id)
 	{
 		super(id);
+	}
+
+	@Override
+	public void updateState()
+	{
+		// Do nothing -- this needs to be written!
+	}
+
+	@Override
+	public int getState()
+	{
+		return tilingState;
+	}
+
+	@Override
+	public void setState(int newState)
+	{
+		tilingState = newState;
 	}
 
 	// TODO: Add DeepWater functionality!

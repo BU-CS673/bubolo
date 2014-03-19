@@ -21,7 +21,7 @@ class GrassSprite extends Sprite<Entity>
 	 */
 	GrassSprite(Entity grass)
 	{
-		super(DrawLayer.TERRAIN, grass);
+		super(DrawLayer.BASE_TERRAIN, grass);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "grass.png");
 	}

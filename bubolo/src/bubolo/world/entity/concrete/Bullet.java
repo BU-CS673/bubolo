@@ -2,14 +2,14 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.entity.Actor;
+import bubolo.world.entity.Effect;
 
 /**
  * Bullets are shot by Tanks, and can cause damage to StationaryElements and other Actors.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Bullet extends Actor
+public class Bullet extends Effect
 {
 	/**
 	 * Used when serializing and de-serializing.

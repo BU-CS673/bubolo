@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,4 +27,24 @@ public class BaseTest
 		assert (true);
 	}
 
+	@Test
+	public void isLocalPlayer()
+	{
+		base.setLocalPlayer(true);
+		assertEquals("Base local player set correctly.", true, base.isLocalPlayer());
+	}
+
+	@Test
+	public void isOwned()
+	{
+		base.setOwned(true);
+		assertEquals("Base ownership state set correctly.", true, base.isOwned());
+	}
+	
+	@Test
+	public void isCharging()
+	{
+		base.setCharging(true);
+		assertEquals("Base charging state set correctly.", true, base.isCharging());
+	}
 }

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.concrete.Wall;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -48,10 +48,9 @@ public class WallSpriteTest
 			@Override
 			public void run()
 			{
-			//	Sprite<?> sprite = Sprites.getInstance().createSprite(new Wall());
-				Sprite<?> sprite = new WallSprite(mock(StationaryElement.class));
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Wall());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

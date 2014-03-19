@@ -1,8 +1,10 @@
 package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import bubolo.util.TextureUtil;
 import bubolo.world.entity.concrete.Water;
 
 /**
@@ -12,7 +14,7 @@ import bubolo.world.entity.concrete.Water;
  */
 class WaterSprite extends Sprite<Water>
 {
-	private Texture image;
+	private TextureRegion[] frames;
 
 	/**
 	 * Constructor for the WaterSprite. This is Package-private because sprites should not
@@ -25,13 +27,16 @@ class WaterSprite extends Sprite<Water>
 	{
 		super(DrawLayer.TERRAIN, water);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "water.png");
+		frames = TextureUtil.adaptiveSplit_16_9_9(Graphics.getTexture(Graphics.TEXTURE_PATH
+				+ "water.png"));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		
+		// TODO: Should pull adaptive tiling state from Entity, currently uses 'center'
+		// texture exclusively
+		drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
 	}
 }
-

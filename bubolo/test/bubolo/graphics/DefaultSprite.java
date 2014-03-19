@@ -23,7 +23,7 @@ class DefaultSprite extends Sprite<Entity>
 	 */
 	DefaultSprite(Entity e)
 	{
-		super(DrawLayer.OBJECTS, e);
+		super(DrawLayer.STATIONARY_ELEMENTS, e);
 		
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
 	}

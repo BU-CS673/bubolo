@@ -25,9 +25,9 @@ class TreeSprite extends Sprite<Tree>
 	 */
 	TreeSprite(Tree tree)
 	{
-		super(DrawLayer.OBJECTS, tree);
+		super(DrawLayer.STATIONARY_ELEMENTS, tree);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tree.png");
 	}
 
 	@Override

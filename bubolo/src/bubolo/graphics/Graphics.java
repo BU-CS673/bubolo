@@ -150,10 +150,12 @@ public class Graphics
 		Collections.sort(spritesInView, spriteComparator);
 		
 		// 4. Render sprites by layer.
+		drawEntities(spritesInView, DrawLayer.BACKGROUND);
+		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
 		drawEntities(spritesInView, DrawLayer.TERRAIN);
-		drawEntities(spritesInView, DrawLayer.TERRAIN_MODIFIERS);
-		drawEntities(spritesInView, DrawLayer.OBJECTS);
-		drawEntities(spritesInView, DrawLayer.TANKS);
+		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
+		drawEntities(spritesInView, DrawLayer.ACTORS);
+		drawEntities(spritesInView, DrawLayer.EFFECTS);
 		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)

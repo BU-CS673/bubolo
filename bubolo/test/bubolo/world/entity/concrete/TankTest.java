@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.*;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,5 +25,12 @@ public class TankTest
 	public void Tank()
 	{
 		assert (true);
+	}
+
+	@Test
+	public void isDrivingForward()
+	{
+		tank.setDrivingForward(true);
+		assertEquals("Tank set to drive forward correctly.", true, tank.isDrivingForward());
 	}
 }

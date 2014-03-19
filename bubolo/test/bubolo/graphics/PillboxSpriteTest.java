@@ -7,7 +7,9 @@ import org.junit.Test;
 
 
 
+
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Pillbox;
 // should be importing Pillbox, not tank, right?
 import bubolo.world.entity.concrete.Tank;
 
@@ -52,9 +54,9 @@ public class PillboxSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new PillboxSprite(mock(Entity.class));
+				Sprite<?> sprite = new PillboxSprite(new Pillbox());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

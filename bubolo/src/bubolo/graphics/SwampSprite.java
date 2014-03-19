@@ -23,7 +23,7 @@ class SwampSprite extends Sprite<Swamp>
 	 */
 	SwampSprite(Swamp swamp)
 	{
-		super(DrawLayer.TERRAIN, swamp);
+		super(DrawLayer.BASE_TERRAIN, swamp);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "swamp.png");
 	}

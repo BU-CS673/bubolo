@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Adaptable;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -9,12 +10,14 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Wall extends StationaryElement
+public class Wall extends StationaryElement implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -4591161497141031916L;
+
+	private int tilingState = 0;
 
 	/**
 	 * Construct a new Wall with a random UUID.
@@ -34,6 +37,24 @@ public class Wall extends StationaryElement
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void updateState()
+	{
+		// Do nothing -- this needs to be written!
+	}
+
+	@Override
+	public int getState()
+	{
+		return tilingState;
+	}
+
+	@Override
+	public void setState(int newState)
+	{
+		tilingState = newState;
 	}
 
 	// TODO: Add Wall functionality!
