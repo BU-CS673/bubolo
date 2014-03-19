@@ -3,6 +3,7 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 import bubolo.graphics.DrawLayer;
+import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -31,7 +32,6 @@ public class MockEntity extends Entity
 	public MockEntity(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +43,12 @@ public class MockEntity extends Entity
 	public MockEntity()
 	{
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void update(World world)
+	{
+		// Do nothing
 	}
 
 }

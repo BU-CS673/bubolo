@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.GameLogicException;
-import bubolo.world.entity.*;
+import bubolo.world.entity.concrete.Pillbox;
 
 /**
  * The graphical representation of a Pillbox
  * @author BU673 - Clone Industries
  */
-class PillboxSprite extends Sprite<Entity>
+class PillboxSprite extends Sprite<Pillbox>
 {
 	private Texture image;
 	
@@ -23,7 +23,7 @@ class PillboxSprite extends Sprite<Entity>
 	 * should not be directly created outside of the graphics system.
 	 * @param pillbox Reference to the pillbox that this PillboxSprite represents.
 	 */
-	PillboxSprite(Entity pillbox)
+	PillboxSprite(Pillbox pillbox)
 	{
 		super(DrawLayer.OBJECTS, pillbox);
 		
@@ -37,6 +37,12 @@ class PillboxSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+			return;
+		}
+
 		drawTexture(batch, camera, layer, image);
 		
 		/** 

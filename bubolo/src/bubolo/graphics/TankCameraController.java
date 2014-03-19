@@ -42,15 +42,14 @@ class TankCameraController implements CameraController
 	{
 		if (camera == null)
 		{
-			return;
+			throw  new IllegalStateException("No camera has been set for this TankCameraController.");
 		}
-			//throw  new IllegalStateException("No camera has been set for this TankCameraController.");
 		
 		float tankX = calculateCameraX(camera, tank, world);
 		float tankY = calculateCameraY(camera, tank, world);
 		
 		// The libgdx camera's position is from the bottom left corner: https://github.com/libgdx/libgdx/wiki/Orthographic-camera 
-		camera.position.set(tankY, tankX, 0.f);
+		camera.position.set(tankX, tankY, 0.f);
 		camera.update();
 	}
 	
@@ -63,7 +62,7 @@ class TankCameraController implements CameraController
 		{
 			cameraX = 0;
 		}
-		else if (cameraX > camera.viewportWidth + world.getMapWidth()) 
+		else if (cameraX > world.getMapWidth() - camera.viewportWidth) 
 		{
 			cameraX = world.getMapWidth() - camera.viewportWidth;
 		}
@@ -80,7 +79,7 @@ class TankCameraController implements CameraController
 		{
 			cameraY = 0;
 		}
-		else if (cameraY > camera.viewportHeight + world.getMapHeight()) 
+		else if (cameraY > world.getMapHeight() - camera.viewportHeight) 
 		{
 			cameraY = world.getMapHeight() - camera.viewportHeight;
 		}
