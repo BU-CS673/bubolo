@@ -26,7 +26,9 @@ class PillboxSprite extends Sprite<Pillbox>
 
 	/**
 	 * Represents the discrete damaged state that the sprite should be in, calculated from
-	 * the Entity's relative health.
+	 * the Entity's relative health. * 
+	 * NOTE: Currently throws a "field not used" warning,
+	 * as expected, since the damaged states aren't implemented yet.
 	 */
 	private int damagedState;
 
