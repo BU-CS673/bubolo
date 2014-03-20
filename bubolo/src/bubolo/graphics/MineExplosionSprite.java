@@ -52,16 +52,24 @@ class MineExplosionSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, frames[frameIndex][0]);
-
-		// Progress the Engineer running animation.
-		// TODO: only change frames when the Engineer is actually running.
-		frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-		lastFrameTime = System.currentTimeMillis();
-		if (frameTimeRemaining < 0)
+		if (isEntityDisposed())
 		{
-			frameTimeRemaining = millisPerFrame;
-			frameIndex = (frameIndex == frames.length - 1) ? 0 : frameIndex + 1;
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, frames[frameIndex][0]);
+
+			// Progress the Engineer running animation.
+			// TODO: only change frames when the Engineer is actually running.
+			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+			lastFrameTime = System.currentTimeMillis();
+			if (frameTimeRemaining < 0)
+			{
+				frameTimeRemaining = millisPerFrame;
+				frameIndex = (frameIndex == frames.length - 1) ? 0 : frameIndex + 1;
+			}
+
 		}
 	}
 }

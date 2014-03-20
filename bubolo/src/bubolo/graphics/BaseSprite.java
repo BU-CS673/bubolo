@@ -68,7 +68,7 @@ class BaseSprite extends Sprite<Base>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!isEntityDisposed())
+		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

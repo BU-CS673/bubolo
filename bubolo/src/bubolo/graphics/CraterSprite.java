@@ -36,7 +36,15 @@ class CraterSprite extends Sprite<Crater>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+
+		}
 
 	}
 }
