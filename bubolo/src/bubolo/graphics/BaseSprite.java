@@ -9,14 +9,7 @@ import bubolo.util.TextureUtil;
 import bubolo.world.entity.concrete.Base;
 
 /**
- * The graphical representation of a Base.
- * 
- * ======= import com.badlogic.gdx.graphics.Texture; import
- * com.badlogic.gdx.graphics.g2d.SpriteBatch;
- * 
- * import bubolo.world.entity.concrete.Base;
- * 
- * /** The graphical representation of a base entity. >>>>>>> production
+ * The graphical representation of a Base Entity.
  * 
  * @author BU673 - Clone Industries
  */
