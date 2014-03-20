@@ -10,6 +10,8 @@ import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
 import bubolo.ui.LoadingScreen;
 import bubolo.ui.MenuScreen;
+import bubolo.ui.Preferences.PreferencesModel;
+import bubolo.ui.Preferences.PreferencesView;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -29,6 +31,9 @@ public class AudioIntegrationApplication implements GameApplication
 		cfg.width = 600;
 		cfg.height = 600;
 		cfg.useGL20 = true;
+		PreferencesModel prefs = new PreferencesModel();
+		PreferencesView ps = new PreferencesView(prefs);
+		ps.setVisible(true);
 		new LwjglApplication(new AudioIntegrationApplication(300, 300), cfg);
 	}
 	

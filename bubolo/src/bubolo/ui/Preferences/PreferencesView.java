@@ -122,6 +122,7 @@ public class PreferencesView extends JFrame
 		screenSizeLabelTable.put(new Integer(SCREENSIZE_MAX), new JLabel("Large"));
 		screenSize.setLabelTable(screenSizeLabelTable);
 		screenSize.setPaintLabels(true);
+		screenSize.setEnabled(false);
 		// This mess will watch the Screen Size slider and constantly update our PreferencesModel
 		screenSize.addChangeListener(new ChangeListener()
 		{
