@@ -18,7 +18,7 @@ public class MineExplosion extends Effect
 	private static final long serialVersionUID = -8107393112729824023L;
 
 	/**
-	 * Construct a new Bullet with a random UUID.
+	 * Construct a new MineExplosion with a random UUID.
 	 */
 	public MineExplosion()
 	{
@@ -26,7 +26,7 @@ public class MineExplosion extends Effect
 	}
 
 	/**
-	 * Construct a new Bullet with the specified UUID.
+	 * Construct a new MineExplosion with the specified UUID.
 	 * 
 	 * @param id
 	 *            is the existing UUID to be applied to the new Tank.
@@ -44,5 +44,5 @@ public class MineExplosion extends Effect
 		
 	}
 
-	// TODO: Add Bullet functionality!
+	// TODO: Add MineExplosion functionality!
 }

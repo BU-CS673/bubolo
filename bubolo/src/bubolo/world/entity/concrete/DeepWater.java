@@ -41,7 +41,9 @@ public class DeepWater extends Terrain implements Adaptable
 	@Override
 	public void updateState()
 	{
-		// Do nothing -- this needs to be written!
+		//TODO: Add adaptive tiling logic for 3x3 grid.
+		throw new UnsupportedOperationException(
+				"Adaptive tiling state updates are not implemented for DeepWater yet!");
 	}
 
 	@Override

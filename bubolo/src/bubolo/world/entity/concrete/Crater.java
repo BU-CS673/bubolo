@@ -17,7 +17,7 @@ public class Crater extends Terrain implements Adaptable
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -6010471913649546792L;
-	
+
 	private int tilingState = 0;
 
 	/**
@@ -42,7 +42,9 @@ public class Crater extends Terrain implements Adaptable
 	@Override
 	public void updateState()
 	{
-		// Do nothing -- this needs to be written!
+		// TODO: Add adapative tiling state logic for 4x4 grid.
+		throw new UnsupportedOperationException(
+				"Adaptive tiling state updates are not implemented for Crater yet!");
 	}
 
 	@Override

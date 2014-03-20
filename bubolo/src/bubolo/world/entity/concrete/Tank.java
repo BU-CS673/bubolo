@@ -87,8 +87,7 @@ public class Tank extends Actor
 	 */
 	public void setLocal(boolean isLocalPlayer)
 	{
-		Preconditions
-				.checkState(!localWasSet,
+		Preconditions.checkState(!localWasSet,
 						"setLocal in entity Tank was already called. This cannot be called more than once.");
 		this.local = isLocalPlayer;
 		localWasSet = true;

@@ -42,7 +42,9 @@ public class Wall extends StationaryElement implements Adaptable
 	@Override
 	public void updateState()
 	{
-		// Do nothing -- this needs to be written!
+		// TODO: Add adaptive tiling state logic for 4x4 grid!
+		throw new UnsupportedOperationException(
+				"Adaptive tiling state updates are not implemented for Wall yet!");
 	}
 
 	@Override

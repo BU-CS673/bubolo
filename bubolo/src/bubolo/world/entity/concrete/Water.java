@@ -41,7 +41,8 @@ public class Water extends Terrain implements Adaptable
 	@Override
 	public void updateState()
 	{
-		// Do nothing -- this needs to be written!
+		//TODO: Add adaptive tiling state logic for 4x4 + 3x3 + 3x3 grid.
+		throw new UnsupportedOperationException("Adaptive tiling state updates are not implemented for Water yet!");
 	}
 
 	@Override

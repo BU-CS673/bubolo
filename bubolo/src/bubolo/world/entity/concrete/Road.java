@@ -40,7 +40,9 @@ public class Road extends Terrain implements Adaptable
 	@Override
 	public void updateState()
 	{
-		// Do nothing -- this needs to be written!
+		//TODO: Add adaptive tiling logic for 4x4 grid.
+		throw new UnsupportedOperationException("Adaptive tiling state updates are not implemented for Road yet!");
+
 	}
 
 	@Override

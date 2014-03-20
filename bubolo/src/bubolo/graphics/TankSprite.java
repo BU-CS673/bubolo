@@ -44,10 +44,10 @@ class TankSprite extends Sprite<Tank>
 	// The time of the last frame, in milliseconds.
 	private long lastFrameTime;
 
-	// The current animation state of the Engineer, determines which animation to play.
+	// The current animation state of the tank, determines which animation to play.
 	private int animationState = 1;
 
-	// The last animation state that the Engineer was in, used to determine when to reset
+	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
 
@@ -114,8 +114,8 @@ class TankSprite extends Sprite<Tank>
 			}
 			drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 
-			// Progress the Engineer building animation.
-			// TODO: only change frames when the Engineer is actually building.
+			// Progress the tank building animation.
+			// TODO: only change frames when the tank is actually building.
 			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
 			lastFrameTime = System.currentTimeMillis();
 			if (frameTimeRemaining < 0)
@@ -133,8 +133,8 @@ class TankSprite extends Sprite<Tank>
 			}
 			drawTexture(batch, camera, layer, backwardFrames[frameIndex][colorId]);
 
-			// Progress the Engineer building animation.
-			// TODO: only change frames when the Engineer is actually building.
+			// Progress the tank building animation.
+			// TODO: only change frames when the tank is actually building.
 			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
 			lastFrameTime = System.currentTimeMillis();
 			if (frameTimeRemaining < 0)
@@ -146,7 +146,7 @@ class TankSprite extends Sprite<Tank>
 
 		default:
 			throw new GameLogicException(
-					"Programming error in EngineerSprite: default case reached.");
+					"Programming error in tankSprite: default case reached.");
 		}
 	}
 
