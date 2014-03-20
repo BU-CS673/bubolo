@@ -79,7 +79,7 @@ public class Base extends StationaryElement implements Ownable
 	}
 
 	/**
-	 * Checks whether or not this base is currently charging a state.
+	 * Checks whether or not this base is currently charging a tank.
 	 * 
 	 * @return the current charging status of this base.
 	 */
@@ -89,7 +89,7 @@ public class Base extends StationaryElement implements Ownable
 	}
 
 	/**
-	 * Sets the charging state of this tank.
+	 * Sets the charging state of this base.
 	 * 
 	 * @param charge
 	 *            represents whether or not this base should be in a charging state. False
