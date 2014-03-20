@@ -25,6 +25,8 @@ public class GameWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	
+	private Tile[][] mapTiles;
 
 	private int worldMapWidth;
 	private int worldMapHeight;
@@ -46,6 +48,8 @@ public class GameWorld implements World
 
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+		
+		mapTiles = new Tile[worldMapWidth][worldMapHeight];
 	}
 
 	@Override

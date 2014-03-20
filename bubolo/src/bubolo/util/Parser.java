@@ -72,16 +72,10 @@ public class Parser
 			{
 				for(int j = 0; j < mapWidth; j++)
 				{
-					/*
-					 * TODO: Add cases to interpret all of the tileset ID's from tiled.
-					 * Convert string outputs to generate "tiles" within the map
-					 */
 							dataString = tileData.get(i * mapWidth + j).toString();
-							newTerrain = world.addEntity(layerOneSwitch(dataString));
+							newTerrain = world.addEntity(LayerOneSwitch(dataString));
 							newTerrain.setParams(i * 32, j * 32, 32, 32, 0);
 							mapTiles[i][j] = new Tile(i, j, newTerrain);
-							
-							
 				}
 			}
 			return mapTiles;
@@ -98,7 +92,7 @@ public class Parser
 		return null;
 	}
 	
-	private static Class<? extends Terrain> layerOneSwitch(String input)
+	private static Class<? extends Terrain> LayerOneSwitch(String input)
 	{
 		switch (input)
 		{
@@ -114,8 +108,44 @@ public class Parser
 		case "4":
 			return DeepWater.class;
 			
+		case "5":
+			return Road.class;
+			
 		default:
 			return Grass.class;
+		}
+	}
+	
+	private static Class<? extends Entity> LayerTwoSwitch(String input)
+	{
+		switch (input)
+		{
+		case "1":
+			return Pillbox.class;
+			
+		case "2":
+			return Tree.class;
+			
+		case "3":
+			return Mine.class;
+		
+		case "4":
+			return Wall.class;
+			
+		case "5":
+			return Base.class;
+			
+		case "6":
+			return Crater.class;
+			
+		case "7":
+			return Rubble.class;
+			
+		case "8":
+			return PlayerSpawn.class;
+			
+		default:
+			return Pillbox.class;
 		}
 	}
 }
