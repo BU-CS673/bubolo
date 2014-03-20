@@ -40,7 +40,7 @@ public class BaseTest
 		base.setOwned(true);
 		assertEquals("Base ownership state set correctly.", true, base.isOwned());
 	}
-	
+
 	@Test
 	public void isCharging()
 	{

@@ -29,5 +29,10 @@ public class EffectTest
 		Bullet bull2 = new Bullet(EntityTestCase.TARGET_UUID);
 		assertEquals("Effect UUID set correctly.", EntityTestCase.TARGET_UUID, bull2.getId());
 	}
+	
+	@Test 
+	public void update(){
+		//Implicitly checks that exceptions are not thrown.
+	}
 
 }

@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.*;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,5 +25,11 @@ public class CraterTest
 	public void Crater()
 	{
 		assert (true);
+	}
+	
+	@Test 
+	public void setState(){
+		crater.setState(7);
+		assertEquals("Crater's state does not match what it was set to!", 7, crater.getState());
 	}
 }

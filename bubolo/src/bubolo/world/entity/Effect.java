@@ -2,6 +2,9 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
+import bubolo.util.GameLogicException;
+import bubolo.world.World;
+
 /**
  * Basic class representing effects that are generally drawn overtop of other Entities.
  * Includes things like bullets and explosions, which can move, cause damage, and trigger
@@ -35,6 +38,12 @@ public abstract class Effect extends Entity
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public void update(World world)
+	{
+		// TODO Estblish updating logic for Effects.
 	}
 
 	// TODO: Add Actor functionality!

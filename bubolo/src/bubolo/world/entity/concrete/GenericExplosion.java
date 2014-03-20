@@ -39,12 +39,5 @@ public class GenericExplosion extends Effect
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void update(World world)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 	// TODO: Add Bullet functionality!
 }

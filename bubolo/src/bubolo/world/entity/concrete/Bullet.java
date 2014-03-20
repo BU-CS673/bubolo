@@ -55,11 +55,5 @@ public class Bullet extends Effect
 		Audio.play(Sfx.CANNON_FIRED);
 	}
 
-	@Override
-	public void update(World world)
-	{
-		// TODO Implement this.
-	}
-
 	// TODO: Add Bullet functionality!
 }

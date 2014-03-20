@@ -37,12 +37,5 @@ public class MineExplosion extends Effect
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void update(World world)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 	// TODO: Add MineExplosion functionality!
 }
