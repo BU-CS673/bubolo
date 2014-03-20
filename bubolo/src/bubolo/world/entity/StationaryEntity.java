@@ -3,6 +3,7 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 import bubolo.world.Tile;
+import bubolo.world.World;
 
 /**
  * Basic class for DrawableEntities that do not move (i.e., those that are fixed a single
@@ -87,6 +88,12 @@ public abstract class StationaryEntity extends Entity
 		}
 		else
 			return super.getY();
+	}
+	
+	@Override
+	public void update(World world)
+	{
+		updateControllers(world);
 	}
 
 	// TODO: Add StationaryEntity functionality!

@@ -11,6 +11,13 @@ import bubolo.world.entity.concrete.Base;
 /**
  * The graphical representation of a Base.
  * 
+ * ======= import com.badlogic.gdx.graphics.Texture; import
+ * com.badlogic.gdx.graphics.g2d.SpriteBatch;
+ * 
+ * import bubolo.world.entity.concrete.Base;
+ * 
+ * /** The graphical representation of a base entity. >>>>>>> production
+ * 
  * @author BU673 - Clone Industries
  */
 class BaseSprite extends Sprite<Base>
@@ -58,67 +65,77 @@ class BaseSprite extends Sprite<Base>
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, base);
 
-		allFrames = TextureUtil.splitFrames(Graphics.getTexture(Graphics.TEXTURE_PATH + "base.png"),
-				32, 32);
-		chargingFrames = new TextureRegion[][]{allFrames[0],allFrames[1],allFrames[2],allFrames[3],allFrames[4],allFrames[5],allFrames[6],allFrames[7]};
+		allFrames = TextureUtil.splitFrames(
+				Graphics.getTexture(Graphics.TEXTURE_PATH + "base.png"), 32, 32);
+		chargingFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2],
+				allFrames[3], allFrames[4], allFrames[5], allFrames[6], allFrames[7] };
 		idleFrames = allFrames[0];
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!this.getEntity().isOwned()){
-			animationState = 0;
-			colorId = ColorSets.NEUTRAL;
-			frameIndex = 0;
-			drawTexture(batch, camera, layer, idleFrames[colorId]);
-		}
-	else if (this.getEntity().isLocalPlayer())
+		if (!isEntityDisposed())
 		{
-			colorId = ColorSets.BLUE;
+			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
-			colorId = ColorSets.RED;
-		}
 
-		if (this.getEntity().isCharging())
-			animationState = 1;
-		else
-			animationState = 0;
-
-		switch (animationState)
-		{
-		case 0:
-			if (lastAnimationState != 0)
+			if (!this.getEntity().isOwned())
 			{
-				lastAnimationState = 0;
+				animationState = 0;
+				colorId = ColorSets.NEUTRAL;
 				frameIndex = 0;
+				drawTexture(batch, camera, layer, idleFrames[colorId]);
 			}
-			drawTexture(batch, camera, layer, idleFrames[colorId]);
-			break;
-
-		case 1:
-			if (lastAnimationState != 1)
+			else if (this.getEntity().isLocalPlayer())
 			{
-				frameIndex = 0;
-				lastAnimationState = 1;
+				colorId = ColorSets.BLUE;
 			}
-			drawTexture(batch, camera, layer, chargingFrames[frameIndex][colorId]);
-
-			// Progress the Base charging animation.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
+			else
 			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == chargingFrames.length - 1) ? 0 : frameIndex + 1;
+				colorId = ColorSets.RED;
 			}
-			break;
 
-		default:
-			throw new GameLogicException(
-					"Programming error in BaseSprite: default case reached.");
+			if (this.getEntity().isCharging())
+				animationState = 1;
+			else
+				animationState = 0;
+
+			switch (animationState)
+			{
+			case 0:
+				if (lastAnimationState != 0)
+				{
+					lastAnimationState = 0;
+					frameIndex = 0;
+				}
+				drawTexture(batch, camera, layer, idleFrames[colorId]);
+				break;
+
+			case 1:
+				if (lastAnimationState != 1)
+				{
+					frameIndex = 0;
+					lastAnimationState = 1;
+				}
+				drawTexture(batch, camera, layer, chargingFrames[frameIndex][colorId]);
+
+				// Progress the Base charging animation.
+				frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+				lastFrameTime = System.currentTimeMillis();
+				if (frameTimeRemaining < 0)
+				{
+					frameTimeRemaining = millisPerFrame;
+					frameIndex = (frameIndex == chargingFrames.length - 1) ? 0 : frameIndex + 1;
+				}
+				break;
+
+			default:
+				throw new GameLogicException(
+						"Programming error in BaseSprite: default case reached.");
+			}
 		}
 	}
 }

@@ -79,75 +79,89 @@ class EngineerSprite extends Sprite<Engineer>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (this.getEntity().isLocalPlayer())
+		if (isEntityDisposed())
 		{
-			colorId = ColorSets.BLUE;
+			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
-			colorId = ColorSets.RED;
+
+			if (this.getEntity().isLocalPlayer())
+			{
+				colorId = ColorSets.BLUE;
+			}
+			else
+			{
+				colorId = ColorSets.RED;
+			}
+
+			if (this.getEntity().isRunning())
+			{
+				animationState = 2;
+			}
+			else if (this.getEntity().isBuilding())
+			{
+				animationState = 1;
+			}
+			else
+			{
+				animationState = 0;
+			}
+
+			switch (animationState)
+			{
+			case 0:
+				if (lastAnimationState != 0)
+				{
+					lastAnimationState = 0;
+					frameIndex = 0;
+				}
+				drawTexture(batch, camera, layer, standingFrames[colorId]);
+				break;
+
+			case 1:
+				if (lastAnimationState != 1)
+				{
+					frameIndex = 0;
+					lastAnimationState = 1;
+				}
+				drawTexture(batch, camera, layer, buildingFrames[frameIndex][colorId]);
+
+				// Progress the Engineer building animation.
+				// TODO: only change frames when the Engineer is actually building.
+				frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+				lastFrameTime = System.currentTimeMillis();
+				if (frameTimeRemaining < 0)
+				{
+					frameTimeRemaining = millisPerFrame;
+					frameIndex = (frameIndex == buildingFrames.length - 1) ? 0 : frameIndex + 1;
+				}
+				break;
+
+			case 2:
+				if (lastAnimationState != 2)
+				{
+					frameIndex = 0;
+					lastAnimationState = 2;
+				}
+				drawTexture(batch, camera, layer, runningFrames[frameIndex][colorId]);
+
+				// Progress the Engineer running animation.
+				// TODO: only change frames when the Engineer is actually running.
+				frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+				lastFrameTime = System.currentTimeMillis();
+				if (frameTimeRemaining < 0)
+				{
+					frameTimeRemaining = millisPerFrame;
+					frameIndex = (frameIndex == runningFrames.length - 1) ? 0 : frameIndex + 1;
+				}
+				break;
+
+			default:
+				throw new GameLogicException(
+						"Programming error in EngineerSprite: default case reached.");
+			}
+
 		}
-
-		if (this.getEntity().isRunning())
-			animationState = 2;
-		else if (this.getEntity().isBuilding())
-			animationState = 1;
-		else
-			animationState = 0;
-
-		switch (animationState)
-		{
-		case 0:
-			if (lastAnimationState != 0)
-			{
-				lastAnimationState = 0;
-				frameIndex = 0;
-			}
-			drawTexture(batch, camera, layer, standingFrames[colorId]);
-			break;
-
-		case 1:
-			if (lastAnimationState != 1)
-			{
-				frameIndex = 0;
-				lastAnimationState = 1;
-			}
-			drawTexture(batch, camera, layer, buildingFrames[frameIndex][colorId]);
-
-			// Progress the Engineer building animation.
-			// TODO: only change frames when the Engineer is actually building.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == buildingFrames.length - 1) ? 0 : frameIndex + 1;
-			}
-			break;
-
-		case 2:
-			if (lastAnimationState != 2)
-			{
-				frameIndex = 0;
-				lastAnimationState = 2;
-			}
-			drawTexture(batch, camera, layer, runningFrames[frameIndex][colorId]);
-
-			// Progress the Engineer running animation.
-			// TODO: only change frames when the Engineer is actually running.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == runningFrames.length - 1) ? 0 : frameIndex + 1;
-			}
-			break;
-
-		default:
-			throw new GameLogicException(
-					"Programming error in EngineerSprite: default case reached.");
-		}
-
 	}
 }

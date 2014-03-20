@@ -6,6 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.world.entity.concrete.Engineer;
+import bubolo.world.entity.concrete.Base;
+import bubolo.world.entity.concrete.Engineer;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -37,7 +43,6 @@ public class EngineerSpriteTest
 			}
 		});
 	}
-	
 
 	@Test
 	public void drawSprite()
@@ -49,7 +54,7 @@ public class EngineerSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new EngineerSprite(new Engineer());
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Engineer());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;

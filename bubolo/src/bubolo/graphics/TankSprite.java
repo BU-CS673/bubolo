@@ -16,9 +16,6 @@ import bubolo.world.entity.concrete.Tank;
  */
 class TankSprite extends Sprite<Tank>
 {
-	// true if the camera controller has been added.
-	private boolean addedCameraController;
-
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
 
@@ -64,29 +61,21 @@ class TankSprite extends Sprite<Tank>
 	TankSprite(Tank tank)
 	{
 		super(DrawLayer.ACTORS, tank);
-
-		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
-		frames = TextureUtil.splitFrames(texture, 32, 32);
-
-		if (tank.isLocalPlayer())
-		{
-			colorId = 0;
-		}
-		else
-		{
-			colorId = 1;
-		}
-
-		forwardFrames = new TextureRegion[][] { frames[0], frames[1], frames[2] };
-		backwardFrames = new TextureRegion[][] { frames[0], frames[2], frames[1] };
-		standingFrames = frames[0];
-		frameIndex = 0;
-		frameTimeRemaining = millisPerFrame;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+			return;
+		}
+		else if (frames == null)
+		{
+			initialize(camera);
+		}
+
 		if (this.getEntity().isLocalPlayer())
 		{
 			colorId = ColorSets.BLUE;
@@ -97,7 +86,7 @@ class TankSprite extends Sprite<Tank>
 		}
 
 		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
-		if (this.getEntity().isDrivingForward())
+		if (this.getEntity().getSpeed() > 0.0f)
 		{
 			animationState = 1;
 		}
@@ -159,14 +148,31 @@ class TankSprite extends Sprite<Tank>
 			throw new GameLogicException(
 					"Programming error in EngineerSprite: default case reached.");
 		}
+	}
 
-		// TODO: This should only be added for the local tank.
-		// TODO: This may be moved into the constructor.
-		if (!addedCameraController)
+	/**
+	 * Initializes the tank. This is needed because the Tank entity may not know whether
+	 * it is local or not at construction time.
+	 * 
+	 * @param camera
+	 *            reference to the camera.
+	 */
+	private void initialize(Camera camera)
+	{
+		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		frames = TextureUtil.splitFrames(texture, 32, 32);
+
+		forwardFrames = new TextureRegion[][] { frames[0], frames[1], frames[2] };
+		backwardFrames = new TextureRegion[][] { frames[0], frames[2], frames[1] };
+		standingFrames = frames[0];
+		frameIndex = 0;
+		frameTimeRemaining = millisPerFrame;
+
+		if (getEntity().isLocal())
 		{
 			CameraController controller = new TankCameraController(getEntity());
 			Graphics.getInstance().addCameraController(controller);
-			addedCameraController = true;
+			controller.setCamera(camera);
 		}
 	}
 }

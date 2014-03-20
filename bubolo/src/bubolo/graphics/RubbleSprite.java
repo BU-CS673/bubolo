@@ -3,8 +3,8 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import bubolo.world.entity.concrete.Rubble;
+
 /**
  * The graphical representation of a Mine.
  * 
@@ -32,5 +32,16 @@ class RubbleSprite extends Sprite<Rubble>
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		drawTexture(batch, camera, layer, image);
+
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, image);
+
+		}
+
 	}
 }

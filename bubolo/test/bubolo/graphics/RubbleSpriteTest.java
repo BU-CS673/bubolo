@@ -37,7 +37,6 @@ public class RubbleSpriteTest
 			}
 		});
 	}
-	
 
 	@Test
 	public void drawSprite()
@@ -49,7 +48,7 @@ public class RubbleSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new RubbleSprite(new Rubble());
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Rubble());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;

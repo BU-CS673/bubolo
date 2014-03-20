@@ -30,15 +30,4 @@ public class EffectTest
 		assertEquals("Effect UUID set correctly.", EntityTestCase.TARGET_UUID, bull2.getId());
 	}
 
-	@Test
-	public void destroy()
-	{
-		Bullet bull2 = new Bullet();
-		bull2.destroy();
-		// Should check to make sure the Effect was removed properly.
-		// Useless until we have some conditions to test whether a Effect has been
-		// destroyed.
-		fail();
-	}
-
 }

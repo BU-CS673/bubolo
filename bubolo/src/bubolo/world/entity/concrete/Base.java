@@ -27,10 +27,10 @@ public class Base extends StationaryElement implements Ownable
 	 * Boolean representing whether this Base is owned by a player.
 	 */
 	private boolean isOwned = true;
-	
+
 	/**
 	 * Boolean representing whether this Base is currently charging a Tank.
-	 *
+	 * 
 	 */
 	private boolean isCharging = false;
 
@@ -77,21 +77,26 @@ public class Base extends StationaryElement implements Ownable
 	{
 		this.isOwned = owned;
 	}
-	
+
 	/**
 	 * Checks whether or not this base is currently charging a state.
+	 * 
 	 * @return the current charging status of this base.
 	 */
-	public boolean isCharging(){
+	public boolean isCharging()
+	{
 		return isCharging;
 	}
-	
+
 	/**
 	 * Sets the charging state of this tank.
-	 * @param charge represents whether or not this base should be in a charging state. False = not charging!
-	 * @return
+	 * 
+	 * @param charge
+	 *            represents whether or not this base should be in a charging state. False
+	 *            = not charging!
 	 */
-	public void setCharging(boolean charge){
+	public void setCharging(boolean charge)
+	{
 		isCharging = charge;
 	}
 

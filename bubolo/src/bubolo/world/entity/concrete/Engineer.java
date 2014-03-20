@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
 /**
@@ -90,6 +91,13 @@ public class Engineer extends Actor
 	public void setBuilding(boolean building)
 	{
 		isBuilding = building;
+	}
+
+	@Override
+	public void update(World world)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	// TODO: Add Engineer functionality!

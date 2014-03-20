@@ -14,7 +14,7 @@ import bubolo.world.entity.Entity;
 class BulletSprite extends Sprite<Entity>
 {
 	private Texture image;
-
+	
 	/**
 	 * Constructor for the BulletSprite. This is Package-private because sprites should
 	 * not be directly created outside of the graphics system.
@@ -32,6 +32,13 @@ class BulletSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (!isEntityDisposed())
+		{
+			drawTexture(batch, camera, layer, image);
+		}
+		else
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
 	}
 }

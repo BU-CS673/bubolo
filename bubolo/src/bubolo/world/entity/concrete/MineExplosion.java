@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.World;
 import bubolo.world.entity.Effect;
 
 /**
@@ -34,6 +35,13 @@ public class MineExplosion extends Effect
 	{
 		super(id);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void update(World world)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	// TODO: Add Bullet functionality!

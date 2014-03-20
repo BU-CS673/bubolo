@@ -85,12 +85,6 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	}
 
 	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public boolean isLocalPlayer()
 	{
 		return isLocalPlayer;
@@ -113,7 +107,6 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	{
 		this.isOwned = owned;
 	}
-
 	// TODO: Add Actor functionality!
 
 }

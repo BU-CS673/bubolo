@@ -37,12 +37,6 @@ public abstract class Effect extends Entity
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
 	// TODO: Add Actor functionality!
 
 }

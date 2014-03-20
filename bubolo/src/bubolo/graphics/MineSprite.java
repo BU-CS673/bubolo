@@ -54,9 +54,9 @@ class MineSprite extends Sprite<Mine>
 	 * @param tree
 	 *            Reference to the Mine that this MineSprite represents.
 	 */
-	MineSprite(Mine Mine)
+	MineSprite(Mine mine)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, Mine);
+		super(DrawLayer.STATIONARY_ELEMENTS, mine);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + "Mine.png"), 21, 21);
@@ -68,66 +68,75 @@ class MineSprite extends Sprite<Mine>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!this.getEntity().isOwned())
+		if (isEntityDisposed())
 		{
-			animationState = 0;
-			colorId = ColorSets.NEUTRAL;
-		}
-		else if (this.getEntity().isLocalPlayer())
-		{
-			colorId = ColorSets.BLUE;
+			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
-			colorId = ColorSets.RED;
-		}
 
-		if (this.getEntity().isExploding())
-			animationState = 1;
-		else
-			animationState = 0;
-
-		switch (animationState)
-		{
-		case 0:
-			if (lastAnimationState != 0)
+			if (!this.getEntity().isOwned())
 			{
-				lastAnimationState = 0;
-				frameIndex = 0;
+				animationState = 0;
+				colorId = ColorSets.NEUTRAL;
 			}
-			
-			drawTexture(batch, camera, layer, idleFrames[frameIndex][colorId]);
-
-			// Progress the Mine idle animation.
-						frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-						lastFrameTime = System.currentTimeMillis();
-						if (frameTimeRemaining < 0)
-						{
-							frameTimeRemaining = millisPerFrame;
-							frameIndex = (frameIndex == idleFrames.length - 1) ? 0 : frameIndex + 1;
-						}
-			break;
-
-		case 1:
-			if (lastAnimationState != 1)
+			else if (this.getEntity().isLocalPlayer())
 			{
-				frameIndex = 0;
-				lastAnimationState = 1;
+				colorId = ColorSets.BLUE;
 			}
-			drawTexture(batch, camera, layer, explodingFrames[frameIndex][colorId]);
-
-			// Progress the mine exploding animation.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
+			else
 			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == explodingFrames.length - 1) ? 0 : frameIndex + 1;
+				colorId = ColorSets.RED;
 			}
-			break;
 
-		default:
-			throw new GameLogicException("Programming error in MineSprite: default case reached.");
+			if (this.getEntity().isExploding())
+				animationState = 1;
+			else
+				animationState = 0;
+
+			switch (animationState)
+			{
+			case 0:
+				if (lastAnimationState != 0)
+				{
+					lastAnimationState = 0;
+					frameIndex = 0;
+				}
+
+				drawTexture(batch, camera, layer, idleFrames[frameIndex][colorId]);
+
+				// Progress the Mine idle animation.
+				frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+				lastFrameTime = System.currentTimeMillis();
+				if (frameTimeRemaining < 0)
+				{
+					frameTimeRemaining = millisPerFrame;
+					frameIndex = (frameIndex == idleFrames.length - 1) ? 0 : frameIndex + 1;
+				}
+				break;
+
+			case 1:
+				if (lastAnimationState != 1)
+				{
+					frameIndex = 0;
+					lastAnimationState = 1;
+				}
+				drawTexture(batch, camera, layer, explodingFrames[frameIndex][colorId]);
+
+				// Progress the mine exploding animation.
+				frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+				lastFrameTime = System.currentTimeMillis();
+				if (frameTimeRemaining < 0)
+				{
+					frameTimeRemaining = millisPerFrame;
+					frameIndex = (frameIndex == explodingFrames.length - 1) ? 0 : frameIndex + 1;
+				}
+				break;
+
+			default:
+				throw new GameLogicException(
+						"Programming error in MineSprite: default case reached.");
+			}
 		}
 	}
 }

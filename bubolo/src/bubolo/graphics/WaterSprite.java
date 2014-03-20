@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.TextureUtil;
+
 import bubolo.world.entity.concrete.Water;
 
 /**
@@ -34,9 +35,14 @@ class WaterSprite extends Sprite<Water>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		
-		// TODO: Should pull adaptive tiling state from Entity, currently uses 'center'
-		// texture exclusively
-		drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+		}
 	}
 }

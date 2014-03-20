@@ -34,7 +34,7 @@ public interface Ownable
 	/**
 	 * Sets whether this Entity belongs to the local player or not.
 	 * 
-	 * @param local
+	 * @param owned
 	 *            represents whether this tank should belong to the local player. Pass
 	 *            false if not.
 	 */
