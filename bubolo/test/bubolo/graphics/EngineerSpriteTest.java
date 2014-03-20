@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Grass;
@@ -16,6 +17,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+/**
+ * Test for Engineer Sprite
+ */
 
 public class EngineerSpriteTest
 {
@@ -51,7 +56,7 @@ public class EngineerSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Engineer());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

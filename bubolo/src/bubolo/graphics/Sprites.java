@@ -7,12 +7,14 @@ import java.util.Map;
 
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Base;
-import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Crater;
 import bubolo.world.entity.concrete.DeepWater;
 import bubolo.world.entity.concrete.Engineer;
+import bubolo.world.entity.concrete.GenericExplosion;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
+import bubolo.world.entity.concrete.MineExplosion;
+import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
@@ -80,8 +82,8 @@ public class Sprites
 		if (!spriteFactories.containsKey(entity.getClass()))
 		{
 			throw new IllegalStateException(
-					"createSprite is unable to create a sprite from entity type " +
-							entity.getClass().getName());
+					"createSprite is unable to create a sprite from entity type "
+							+ entity.getClass().getName());
 		}
 
 		Sprite<? extends Entity> sprite = spriteFactories.get(entity.getClass()).create(entity);
@@ -137,7 +139,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new BaseSprite((Base)e);
+				return new BaseSprite((Base) e);
 			}
 		});
 
@@ -153,7 +155,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new CraterSprite((Crater)e);
+				return new CraterSprite((Crater) e);
 			}
 		});
 
@@ -161,7 +163,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new DeepWaterSprite((DeepWater)e);
+				return new DeepWaterSprite((DeepWater) e);
 			}
 		});
 
@@ -169,7 +171,15 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new EngineerSprite(e);
+				return new EngineerSprite((Engineer) e);
+			}
+		});
+
+		factories.put(GenericExplosion.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new GenericExplosionSprite((GenericExplosion) e);
 			}
 		});
 
@@ -177,7 +187,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new GrassSprite(e);
+				return new GrassSprite((Grass) e);
 			}
 		});
 
@@ -185,7 +195,15 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new MineSprite((Mine)e);
+				return new MineSprite((Mine) e);
+			}
+		});
+
+		factories.put(MineExplosion.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new MineExplosionSprite((MineExplosion) e);
 			}
 		});
 
@@ -193,7 +211,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new PillboxSprite((Pillbox)e);
+				return new PillboxSprite((Pillbox) e);
 			}
 		});
 
@@ -201,7 +219,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new RoadSprite((Road)e);
+				return new RoadSprite((Road) e);
 			}
 		});
 
@@ -209,7 +227,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new RubbleSprite(e);
+				return new RubbleSprite((Rubble) e);
 			}
 		});
 
@@ -217,7 +235,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new SwampSprite((Swamp)e);
+				return new SwampSprite((Swamp) e);
 			}
 		});
 
@@ -225,7 +243,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new TankSprite((Tank)e);
+				return new TankSprite((Tank) e);
 			}
 		});
 
@@ -233,7 +251,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new TreeSprite((Tree)e);
+				return new TreeSprite((Tree) e);
 			}
 		});
 
@@ -241,7 +259,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new WallSprite((Wall)e);
+				return new WallSprite((Wall) e);
 			}
 		});
 
@@ -249,7 +267,7 @@ public class Sprites
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new WaterSprite((Water)e);
+				return new WaterSprite((Water) e);
 			}
 		});
 
