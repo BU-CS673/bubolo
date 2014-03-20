@@ -63,6 +63,18 @@ class TankSprite extends Sprite<Tank>
 		super(DrawLayer.ACTORS, tank);
 	}
 
+	private void updateColorSet()
+	{
+		if (this.getEntity().isLocalPlayer())
+		{
+			colorId = ColorSets.BLUE;
+		}
+		else
+		{
+			colorId = ColorSets.RED;
+		}
+	}
+
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -76,14 +88,7 @@ class TankSprite extends Sprite<Tank>
 			initialize(camera);
 		}
 
-		if (this.getEntity().isLocalPlayer())
-		{
-			colorId = ColorSets.BLUE;
-		}
-		else
-		{
-			colorId = ColorSets.RED;
-		}
+		updateColorSet();
 
 		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 		if (this.getEntity().getSpeed() > 0.0f)
@@ -145,8 +150,7 @@ class TankSprite extends Sprite<Tank>
 			break;
 
 		default:
-			throw new GameLogicException(
-					"Programming error in tankSprite: default case reached.");
+			throw new GameLogicException("Programming error in tankSprite: default case reached.");
 		}
 	}
 
