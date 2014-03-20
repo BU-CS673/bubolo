@@ -11,8 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.awt.event.WindowEvent;
 
+
+
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import bubolo.ui.Preferences.PreferencesController;
+import bubolo.ui.Preferences.PreferencesModel;
+import bubolo.ui.Preferences.PreferencesView;
 
 public class ButtonPanel extends JPanel implements ActionListener
 {
@@ -20,7 +27,7 @@ public class ButtonPanel extends JPanel implements ActionListener
 	 * 
 	 */
 	private static final long serialVersionUID = -1624357058854582729L;
-	
+	PreferencesModel prefs;
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
@@ -40,7 +47,7 @@ public class ButtonPanel extends JPanel implements ActionListener
 	 * 
 	 */
 	BUBOLOTarget = targetApp;
-		
+	this.prefs = new PreferencesModel();	
 	JButton singleBtn = new JButton("NEW SINGLE PLAYER GAME");
 	JButton newMPBtn = new JButton("NEW MULTI-PLAYER GAME");
 	JButton joinMPBtn = new JButton("JOIN MULTI-PLAYER GAME");
@@ -91,7 +98,7 @@ public class ButtonPanel extends JPanel implements ActionListener
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
-			PreferenceScreen ps = new PreferenceScreen();
+			PreferencesView ps = new PreferencesView(prefs);
 			ps.setVisible(true);
 		}
 	});
