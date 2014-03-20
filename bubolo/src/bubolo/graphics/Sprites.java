@@ -93,7 +93,9 @@ public class Sprites
 
 	/**
 	 * Removes the specified sprite.
-	 * @param sprite the sprite to remove.
+	 * 
+	 * @param sprite
+	 *            the sprite to remove.
 	 */
 	public void removeSprite(Sprite<?> sprite)
 	{
@@ -106,7 +108,7 @@ public class Sprites
 			}
 		}
 	}
-	
+
 	/**
 	 * Wrapper for sprite creation functions.
 	 * 
@@ -132,140 +134,36 @@ public class Sprites
 	private static Map<Class<? extends Entity>, SpriteFactory> setSpriteFactories()
 	{
 		Map<Class<? extends Entity>, SpriteFactory> factories = new HashMap<>();
-		
+
 		factories.put(Base.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new BaseSprite((Base)e);
+				return new BaseSprite((Base) e);
 			}
 		});
-		
+
 		factories.put(Bullet.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
 			{
 				return new BulletSprite(e);
 			}
 		});
-		
+
 		factories.put(Crater.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new CraterSprite((Crater)e);
+				return new CraterSprite((Crater) e);
 			}
 		});
-		
+
 		factories.put(DeepWater.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new DeepWaterSprite((DeepWater)e);
-			}
-		});
-		
-		factories.put(Engineer.class, new SpriteFactory() {
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
-				return new EngineerSprite((Engineer)e);
-			}
-		});
-		
-		factories.put(Grass.class, new SpriteFactory() {
-			@Override
-			public Sprite<? extends Entity> create(Entity e)
-			{
-				return new GrassSprite((Grass)e);
-			}
-		});
-		
-		factories.put(Mine.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new MineSprite((Mine)e);
-			}
-		});
-		
-		factories.put(Pillbox.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new PillboxSprite((Pillbox)e);
-			}
-		});
-		
-		factories.put(Road.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new RoadSprite((Road)e);
-			}
-		});
-		
-		factories.put(Rubble.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new RubbleSprite((Rubble)e);
-			}
-		});
-		
-		factories.put(Swamp.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new SwampSprite((Swamp)e);
-			}
-		});
-		
-		factories.put(Tank.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new TankSprite((Tank)e);
-			}
-		});
-		
-		factories.put(Tree.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new TreeSprite((Tree)e);
-			}
-		});
-		
-		factories.put(Wall.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new WallSprite((Wall)e);
-			}
-		});
-		
-		factories.put(Water.class, new SpriteFactory() {
-			@Override 
-			public Sprite<? extends Entity> create(Entity e) 
-			{
-				return new WaterSprite((Water)e);
-			}
-		});
-
-		factories.put(Wall.class, new SpriteFactory() {
-			@Override
-			public Sprite<? extends Entity> create(Entity e)
-			{
-				return new WallSprite((Wall) e);
-			}
-		});
-
-		factories.put(Rubble.class, new SpriteFactory() {
-			@Override
-			public Sprite<? extends Entity> create(Entity e)
-			{
-				return new RubbleSprite((Rubble) e);
+				return new DeepWaterSprite((DeepWater) e);
 			}
 		});
 
@@ -277,19 +175,27 @@ public class Sprites
 			}
 		});
 
-		factories.put(Base.class, new SpriteFactory() {
-			@Override
-			public Sprite<? extends Entity> create(Entity e)
-			{
-				return new BaseSprite((Base) e);
-			}
-		});
-
 		factories.put(GenericExplosion.class, new SpriteFactory() {
 			@Override
 			public Sprite<? extends Entity> create(Entity e)
 			{
 				return new GenericExplosionSprite((GenericExplosion) e);
+			}
+		});
+
+		factories.put(Grass.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new GrassSprite((Grass) e);
+			}
+		});
+
+		factories.put(Mine.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new MineSprite((Mine) e);
 			}
 		});
 
@@ -306,6 +212,62 @@ public class Sprites
 			public Sprite<? extends Entity> create(Entity e)
 			{
 				return new PillboxSprite((Pillbox) e);
+			}
+		});
+
+		factories.put(Road.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new RoadSprite((Road) e);
+			}
+		});
+
+		factories.put(Rubble.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new RubbleSprite((Rubble) e);
+			}
+		});
+
+		factories.put(Swamp.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new SwampSprite((Swamp) e);
+			}
+		});
+
+		factories.put(Tank.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new TankSprite((Tank) e);
+			}
+		});
+
+		factories.put(Tree.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new TreeSprite((Tree) e);
+			}
+		});
+
+		factories.put(Wall.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new WallSprite((Wall) e);
+			}
+		});
+
+		factories.put(Water.class, new SpriteFactory() {
+			@Override
+			public Sprite<? extends Entity> create(Entity e)
+			{
+				return new WaterSprite((Water) e);
 			}
 		});
 

@@ -32,11 +32,13 @@ class WallSprite extends Sprite<Wall>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed()){
+		if (isEntityDisposed())
+		{
 			Sprites.getInstance().removeSprite(this);
 		}
-		else {
-		drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+		else
+		{
+			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
 		}
 
 		/**
