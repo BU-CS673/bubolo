@@ -141,7 +141,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 origin = getOrigin(getEntity());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
+					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * getEntity().getRotation() - Math.PI / 2.f),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
@@ -171,7 +171,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 origin = getOrigin(getEntity());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					getEntity().getWidth(), getEntity().getHeight(), SCALE_X, SCALE_Y, 
+					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}

@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Test for Rubble Sprite
+ */
+
 public class RubbleSpriteTest
 {
 	private SpriteBatch batch;
@@ -46,7 +50,7 @@ public class RubbleSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Rubble());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

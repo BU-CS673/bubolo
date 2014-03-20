@@ -24,7 +24,7 @@ class SwampSprite extends Sprite<Swamp>
 	 */
 	SwampSprite(Swamp swamp)
 	{
-		super(DrawLayer.TERRAIN, swamp);
+		super(DrawLayer.BASE_TERRAIN, swamp);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "swamp.png");
 	}
@@ -32,13 +32,14 @@ class SwampSprite extends Sprite<Swamp>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!isEntityDisposed())
+		if (isEntityDisposed())
 		{
-			drawTexture(batch, camera, layer, image);
+			Sprites.getInstance().removeSprite(this);
+
 		}
 		else
 		{
-			Sprites.getInstance().removeSprite(this);
+			drawTexture(batch, camera, layer, image);
 		}
 	}
 }

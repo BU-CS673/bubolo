@@ -7,7 +7,7 @@ import bubolo.world.entity.EntityTestCase;
 
 public class RubbleTest
 {
-	static DeepWater rubble;
+	static Rubble rubble;
 
 	/**
 	 * Constructs a Rubble object and sets the default parameters.
@@ -15,7 +15,7 @@ public class RubbleTest
 	@BeforeClass
 	public static void setup()
 	{
-		rubble = new DeepWater();
+		rubble = new Rubble();
 		EntityTestCase.setTestParams(rubble);
 	}
 

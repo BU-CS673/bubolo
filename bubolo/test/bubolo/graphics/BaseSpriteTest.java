@@ -8,6 +8,7 @@ import org.junit.Test;
 import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Rubble;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
@@ -16,6 +17,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Test for Base Sprite
+ */
 public class BaseSpriteTest
 {
 	private SpriteBatch batch;
@@ -50,7 +54,7 @@ public class BaseSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Base());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

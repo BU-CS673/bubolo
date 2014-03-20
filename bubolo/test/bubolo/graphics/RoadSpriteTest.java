@@ -50,7 +50,7 @@ public class RoadSpriteTest
 				{
 					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
 					batch.begin();
-					sprite.draw(batch, camera, DrawLayer.OBJECTS);
+					sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 					passed = true;
 					isComplete = true;
 				}

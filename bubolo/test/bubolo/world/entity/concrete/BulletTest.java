@@ -1,8 +1,11 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bubolo.world.entity.Actor;
 import bubolo.world.entity.EntityTestCase;
 
 public class BulletTest
@@ -24,4 +27,5 @@ public class BulletTest
 	{
 		assert (true);
 	}
+	
 }

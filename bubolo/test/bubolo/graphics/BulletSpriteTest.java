@@ -52,7 +52,7 @@ public class BulletSpriteTest
 			{
 				Sprite<?> sprite = new BulletSprite(mock(Entity.class));
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}
