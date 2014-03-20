@@ -23,6 +23,10 @@ public class Tree extends StationaryElement
 	public Tree()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -34,7 +38,10 @@ public class Tree extends StationaryElement
 	public Tree(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	// TODO: Add Tree functionality!

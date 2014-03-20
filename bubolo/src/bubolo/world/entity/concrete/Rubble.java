@@ -23,6 +23,10 @@ public class Rubble extends Terrain
 	public Rubble()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -34,6 +38,10 @@ public class Rubble extends Terrain
 	public Rubble(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	// TODO: Add Rubble functionality!

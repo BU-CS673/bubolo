@@ -34,6 +34,10 @@ public class Pillbox extends StationaryElement implements Ownable
 	public Pillbox()
 	{
 		super();
+		setWidth(27);
+		setHeight(27);
+		setXOffset(3);
+		setYOffset(3);
 	}
 
 	/**
@@ -45,7 +49,10 @@ public class Pillbox extends StationaryElement implements Ownable
 	public Pillbox(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(27);
+		setHeight(27);
+		setXOffset(3);
+		setYOffset(3);
 	}
 
 	@Override

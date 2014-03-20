@@ -22,6 +22,10 @@ public class Grass extends Terrain
 	public Grass()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(8);
+		setYOffset(8);
 	}
 
 	/**
@@ -33,6 +37,10 @@ public class Grass extends Terrain
 	public Grass(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		setXOffset(8);
+		setYOffset(8);
 	}
 
 	// TODO: Add Grass functionality!

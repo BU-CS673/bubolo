@@ -27,7 +27,10 @@ public class EntityTestCase
 
 	public static Entity setTestParams(Entity e)
 	{
-		return e.setParams(TARGET_X, TARGET_Y, TARGET_WIDTH, TARGET_HEIGHT, TARGET_ROT);
+		e.setParams(TARGET_X, TARGET_Y, TARGET_ROT);
+		e.setWidth(TARGET_WIDTH);
+		e.setHeight(TARGET_HEIGHT);
+		return e;
 	}
 
 	/**

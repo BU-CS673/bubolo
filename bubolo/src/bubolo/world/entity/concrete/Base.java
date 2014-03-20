@@ -40,6 +40,10 @@ public class Base extends StationaryElement implements Ownable
 	public Base()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -51,7 +55,10 @@ public class Base extends StationaryElement implements Ownable
 	public Base(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

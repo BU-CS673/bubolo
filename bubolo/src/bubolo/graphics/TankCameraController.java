@@ -55,7 +55,7 @@ class TankCameraController implements CameraController
 	
 	private static float calculateCameraX(Camera camera, Tank tank, World world)
 	{
-		float tankX = tank.getX() + tank.getWidth() / 2.f;
+		float tankX = tank.getCenterX();
 		
 		float cameraX = tankX - camera.viewportWidth / 2.f;
 		if (cameraX < 0)
@@ -72,7 +72,7 @@ class TankCameraController implements CameraController
 	
 	private static float calculateCameraY(Camera camera, Tank tank, World world)
 	{
-		float tankY = tank.getY() + tank.getHeight() / 2.f;
+		float tankY = tank.getCenterY();
 		
 		float cameraY = tankY - camera.viewportHeight / 2.f;
 		if (cameraY < 0)

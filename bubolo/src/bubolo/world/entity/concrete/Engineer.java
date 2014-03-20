@@ -35,6 +35,10 @@ public class Engineer extends Actor
 	public Engineer()
 	{
 		super();
+		setWidth(14);
+		setHeight(9);
+		setXOffset(4);
+		setYOffset(5);
 	}
 
 	/**
@@ -46,6 +50,10 @@ public class Engineer extends Actor
 	public Engineer(UUID id)
 	{
 		super(id);
+		setWidth(14);
+		setHeight(9);
+		setXOffset(4);
+		setYOffset(5);
 		// TODO Auto-generated constructor stub
 	}
 

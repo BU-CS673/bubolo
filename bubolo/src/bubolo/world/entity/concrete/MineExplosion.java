@@ -23,6 +23,10 @@ public class MineExplosion extends Effect
 	public MineExplosion()
 	{
 		super();
+		setWidth(60);
+		setHeight(60);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -34,7 +38,10 @@ public class MineExplosion extends Effect
 	public MineExplosion(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(60);
+		setHeight(60);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	// TODO: Add MineExplosion functionality!

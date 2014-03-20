@@ -24,6 +24,10 @@ public class Road extends Terrain implements Adaptable
 	public Road()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -35,6 +39,10 @@ public class Road extends Terrain implements Adaptable
 	public Road(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

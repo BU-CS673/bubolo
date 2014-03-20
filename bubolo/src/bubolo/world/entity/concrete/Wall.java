@@ -25,6 +25,10 @@ public class Wall extends StationaryElement implements Adaptable
 	public Wall()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -36,7 +40,10 @@ public class Wall extends StationaryElement implements Adaptable
 	public Wall(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

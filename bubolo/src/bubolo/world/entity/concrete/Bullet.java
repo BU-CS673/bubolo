@@ -25,15 +25,20 @@ public class Bullet extends Effect
 	public Bullet()
 	{
 		this(false);
+		setWidth(4);
+		setHeight(8);
+		setXOffset(0);
+		setYOffset(0);
+
 	}
-	
+
 	/**
 	 * Package-private constructor for testing.
 	 */
 	Bullet(boolean noSound)
 	{
 		super();
-		
+
 		// Play cannon fired sound effect.
 		if (!noSound)
 		{
@@ -50,7 +55,10 @@ public class Bullet extends Effect
 	public Bullet(UUID id)
 	{
 		super(id);
-
+		setWidth(4);
+		setHeight(8);
+		setXOffset(0);
+		setYOffset(0);
 		// Play cannon fired sound effect.
 		Audio.play(Sfx.CANNON_FIRED);
 	}

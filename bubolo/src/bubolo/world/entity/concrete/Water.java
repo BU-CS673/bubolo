@@ -25,6 +25,10 @@ public class Water extends Terrain implements Adaptable
 	public Water()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -36,6 +40,10 @@ public class Water extends Terrain implements Adaptable
 	public Water(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

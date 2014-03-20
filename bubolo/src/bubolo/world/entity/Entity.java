@@ -20,15 +20,21 @@ public abstract class Entity implements Serializable, Drawable
 	// Used when serializing and deserializing.
 	private static final long serialVersionUID = -7558368147503376322L;
 	private UUID myID;
-	private int height; // height of this Entity in pixels
-	private int width; // width of this Entity in pixels
+	private float xOffset; // The x offset of this Entity's bounding box, from the bottom
+							// left corner
+	private float yOffset; // The y offset of this Entity's bounding box, from the bottom
+							// left corner
+	private int height; // height of this Entity in pixels, used to define the bounding
+						// box for collisions
+	private int width; // width of this Entity in pixels, used to define the bounding box
+						// for collisions
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
-	
+
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
-	
+
 	// true if this entity should be removed from the game, or false otherwise. This is
 	// used by sprites.
 	private boolean disposed;
@@ -59,36 +65,33 @@ public abstract class Entity implements Serializable, Drawable
 	 *            is the initial x position in world coordinates.
 	 * @param y
 	 *            is the initial y position in world coordinates.
-	 * @param w
-	 *            is the initial width in world coordinates.
-	 * @param h
-	 *            is the initial height in world coordinates.
 	 * @param rot
 	 *            is the initial rotation in radians.
 	 * @return a reference to this Entity.
 	 */
-	public Entity setParams(float x, float y, int w, int h, float rot)
+	public Entity setParams(float x, float y, float rot)
 	{
 		setX(x);
 		setY(y);
-		setWidth(w);
-		setHeight(h);
 		setRotation(rot);
 		return this;
 	}
 
 	/**
 	 * The Entity's unique id.
+	 * 
 	 * @return the Entity's unique id.
 	 */
 	public UUID getId()
 	{
 		return myID;
 	}
-	
+
 	/**
 	 * Sets the Entity's unique id.
-	 * @param id the Entity's unique id.
+	 * 
+	 * @param id
+	 *            the Entity's unique id.
 	 */
 	public void setId(UUID id)
 	{
@@ -108,9 +111,11 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Updates the state of this Entity. Must be called once per game tick to maintain
-	 * the Entity's state.
-	 * @param world reference to the World
+	 * Updates the state of this Entity. Must be called once per game tick to maintain the
+	 * Entity's state.
+	 * 
+	 * @param world
+	 *            reference to the World
 	 */
 	public abstract void update(World world);
 
@@ -131,23 +136,25 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return yPos;
 	}
-	
+
 	/**
 	 * Returns the center x position.
+	 * 
 	 * @return the center x position.
 	 */
 	public float getCenterX()
 	{
-		return (xPos + (width / 2.f));
+		return (xPos + xOffset + (width / 2.f));
 	}
-	
+
 	/**
 	 * Returns the center y position.
+	 * 
 	 * @return the center y position.
 	 */
 	public float getCenterY()
 	{
-		return (yPos + (height / 2.f));
+		return (yPos + yOffset + (height / 2.f));
 	}
 
 	/**
@@ -191,6 +198,56 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
+	 * Set this Entity's x offset.
+	 * 
+	 * @param x
+	 *            is the desired x offset in world coordinates.
+	 * @return a reference to this Entity.
+	 */
+	public Entity setXOffset(float x)
+	{
+		xOffset = x;
+		return this;
+
+	}
+	
+	/**
+	 * Set this Entity's y offset.
+	 * 
+	 * @param y
+	 *            is the desired y offset in world coordinates.
+	 * @return a reference to this Entity.
+	 */
+	public Entity setYOffset(float y)
+	{
+		yOffset = y;
+		return this;
+
+	}
+	
+	/**
+	 * Get this Entity's x offset.
+	 * @return the x offset of this Entity in world coordiantes.
+	 */
+	public float getXOffset()
+	{
+		return xOffset;
+
+	}
+	
+	/**
+	 * Set this Entity's y offset.
+	 * 
+	 * @param y
+	 *            is the desired y offset in world coordinates.
+	 * @return a reference to this Entity.
+	 */
+	public float getYOffset()
+	{
+		return yOffset;
+	}
+
+	/**
 	 * Set this Entity's width.
 	 * 
 	 * @param size
@@ -215,10 +272,12 @@ public abstract class Entity implements Serializable, Drawable
 		height = size;
 		return this;
 	}
-	
+
 	/**
 	 * Adds a controller to this Entity.
-	 * @param c the controller to add.
+	 * 
+	 * @param c
+	 *            the controller to add.
 	 */
 	public void addController(Controller c)
 	{
@@ -228,10 +287,12 @@ public abstract class Entity implements Serializable, Drawable
 		}
 		controllers.add(c);
 	}
-	
+
 	/**
 	 * Updates all attached controllers.
-	 * @param world reference to the World.
+	 * 
+	 * @param world
+	 *            reference to the World.
 	 */
 	protected void updateControllers(World world)
 	{
@@ -243,19 +304,20 @@ public abstract class Entity implements Serializable, Drawable
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the number of controllers attached to this Entity.
+	 * 
 	 * @return the number of controllers attached to this Entity.
 	 */
 	public int getControllerCount()
 	{
 		return (controllers == null) ? 0 : controllers.size();
 	}
-	
+
 	/**
-	 * Returns true if the entity should be removed from the game. This is needed
-	 * by the graphics system.
+	 * Returns true if the entity should be removed from the game. This is needed by the
+	 * graphics system.
 	 * 
 	 * @return true if the entity should be removed from the game.
 	 */
@@ -263,7 +325,7 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return disposed;
 	}
-	
+
 	/**
 	 * This method must be called when the entity should be removed from the game.
 	 */

@@ -56,6 +56,10 @@ public class Tank extends Actor
 	public Tank()
 	{
 		super();
+		setWidth(21);
+		setHeight(26);
+		setXOffset(6);
+		setYOffset(4);
 	}
 
 	/**
@@ -67,6 +71,10 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
+		setWidth(21);
+		setHeight(26);
+		setXOffset(6);
+		setYOffset(4);
 	}
 
 	/**

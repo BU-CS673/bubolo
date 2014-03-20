@@ -70,11 +70,11 @@ public class Sprint1Application implements GameApplication
 		{
 			for (int j = 0; j < 30; j++)
 			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
 			}
 		}
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
+		tank.setParams(15 * 32, 15 * 32, 0);
 		
 		
 		// TODO: add other systems here.

@@ -25,6 +25,10 @@ public class DeepWater extends Terrain implements Adaptable
 	public DeepWater()
 	{
 		super();
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -36,6 +40,10 @@ public class DeepWater extends Terrain implements Adaptable
 	public DeepWater(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

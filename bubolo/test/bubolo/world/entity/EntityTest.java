@@ -120,4 +120,22 @@ public class EntityTest
 		ent.dispose();
 		assertTrue(ent.isDisposed());
 	}
+	
+	@Test
+	public void getXOffset(){
+		Entity ent2 = new MockEntity(EntityTestCase.TARGET_UUID);
+		EntityTestCase.setTestParams(ent2);
+		ent2.setXOffset(5);
+		assertEquals("Entity xOffset not set correctly!", 5f, ent2.getXOffset(), .01);
+	}
+	
+	@Test
+	public void getYOffset(){
+		Entity ent2 = new MockEntity(EntityTestCase.TARGET_UUID);
+		EntityTestCase.setTestParams(ent2);
+		ent2.setYOffset(5);
+		assertEquals("Entity yOffset not set correctly!", 5f, ent2.getYOffset(), .01);
+	}
+	
+	
 }

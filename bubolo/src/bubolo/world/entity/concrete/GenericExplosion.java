@@ -25,6 +25,10 @@ public class GenericExplosion extends Effect
 	public GenericExplosion()
 	{
 		super();
+		setWidth(26);
+		setHeight(26);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -36,7 +40,10 @@ public class GenericExplosion extends Effect
 	public GenericExplosion(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(26);
+		setHeight(26);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	// TODO: Add Bullet functionality!

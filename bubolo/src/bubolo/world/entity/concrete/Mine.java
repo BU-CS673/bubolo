@@ -39,6 +39,10 @@ public class Mine extends StationaryElement implements Ownable
 	public Mine()
 	{
 		super();
+		setWidth(25);
+		setHeight(25);
+		setXOffset(4);
+		setYOffset(4);
 	}
 
 	/**
@@ -50,7 +54,10 @@ public class Mine extends StationaryElement implements Ownable
 	public Mine(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(25);
+		setHeight(25);
+		setXOffset(4);
+		setYOffset(4);
 	}
 
 	@Override
