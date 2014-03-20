@@ -76,6 +76,18 @@ class EngineerSprite extends Sprite<Engineer>
 		frameTimeRemaining = millisPerFrame;
 	}
 
+	private void updateColorSet()
+	{
+		if (this.getEntity().isLocalPlayer())
+		{
+			colorId = ColorSets.BLUE;
+		}
+		else
+		{
+			colorId = ColorSets.RED;
+		}
+	}
+
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -85,15 +97,7 @@ class EngineerSprite extends Sprite<Engineer>
 		}
 		else
 		{
-
-			if (this.getEntity().isLocalPlayer())
-			{
-				colorId = ColorSets.BLUE;
-			}
-			else
-			{
-				colorId = ColorSets.RED;
-			}
+			updateColorSet();
 
 			if (this.getEntity().isRunning())
 			{

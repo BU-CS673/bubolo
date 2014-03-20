@@ -18,6 +18,19 @@ class WallSprite extends Sprite<Wall>
 	private TextureRegion[] frames;
 
 	/**
+	 * Represents the total number of different damaged states that exist in this sprite's
+	 * texture.
+	 */
+	private final int DAMAGED_STATES = 4;
+
+	/**
+	 * Represents the discrete damaged state that the sprite should be in, calculated from
+	 * the Entity's relative health. 
+	 * NOTE: Currently throws a "field not used" warning, as expected, since the damaged states aren't implemented yet.
+	 */
+	private int damagedState;
+
+	/**
 	 * Constructor for the WallSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
 	 */
@@ -29,32 +42,32 @@ class WallSprite extends Sprite<Wall>
 		frames = TextureUtil.adaptiveSplit_16(tex);
 	}
 
+	/**
+	 * Returns an integer between 0 and DAMAGED_STATES -1 representing the damaged state
+	 * of this Sprite's Entity. 0 means 0 HP/fully dead!
+	 */
+	private void updateDamagedState()
+	{
+		// Compute the amount of health remaining for this Sprite's Entity as a fraction
+		// of its max HP.
+		float healthFraction = (float) this.getEntity().getHP() / this.getEntity().getMaxHP();
+		// Convert that fraction to an integer between 0 and DAMAGED_STATES -1.
+		damagedState = Math.round(healthFraction * DAMAGED_STATES);
+	}
+
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		updateDamagedState();
 		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
+			// TODO: Point to different texture regions based on the damagedState field,
+			// which changes with Entity HP percentage.
 			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
 		}
-
-		/**
-		 * Get the current HP of this object and determine currentState for Wall there are
-		 * 4 appearances 100-75 = 3 74-50 = 2 49-25 = 1 24-0 = 0
-		 */
-
-		/*
-		 * int currentState = 0; switch(currentState){ case 3:
-		 * specificImage.setRegion(0,32,32,32); drawTexture(batch, camera, layer,
-		 * specificImage); break; case 2: specificImage.setRegion(64,32,32,32);
-		 * drawTexture(batch, camera, layer, specificImage); break; case 1:
-		 * specificImage.setRegion(128,32,32,32); drawTexture(batch, camera, layer,
-		 * specificImage); break; case 0: specificImage.setRegion(160,32,32,32);
-		 * drawTexture(batch, camera, layer, specificImage); break; default: throw new
-		 * GameLogicException("Programming error in WallSprite: default case reached."); }
-		 */
 	}
 }

@@ -65,19 +65,11 @@ class MineSprite extends Sprite<Mine>
 		idleFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2], allFrames[1] };
 	}
 
-	@Override
-	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
+	private void updateColorSet()
 	{
-		if (isEntityDisposed())
 		{
-			Sprites.getInstance().removeSprite(this);
-		}
-		else
-		{
-
 			if (!this.getEntity().isOwned())
 			{
-				animationState = 0;
 				colorId = ColorSets.NEUTRAL;
 			}
 			else if (this.getEntity().isLocalPlayer())
@@ -88,6 +80,18 @@ class MineSprite extends Sprite<Mine>
 			{
 				colorId = ColorSets.RED;
 			}
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
+	{
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
 
 			if (this.getEntity().isExploding())
 				animationState = 1;
