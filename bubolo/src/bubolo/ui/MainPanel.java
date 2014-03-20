@@ -6,11 +6,13 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+/**
+ * The Main Panel for the Main Menu JFrame, should contain Title/Company and maybe a nifty graphic?
+ * @author BU673 - Clone Industries
+ */
 public class MainPanel extends JPanel
 {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3979824711855571791L;
 	
 
@@ -20,11 +22,17 @@ public class MainPanel extends JPanel
 	int cx, cy = 50;
 	
 	
+	/**
+	 * Constructor for the Main Panel
+	 */
 	public MainPanel()
 	{
 
 	}
 	
+	/**
+	 * Paints the Main Panel which has just Title/Company for now
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 	    Dimension si = this.getSize();

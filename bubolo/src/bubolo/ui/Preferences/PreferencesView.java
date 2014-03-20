@@ -1,10 +1,8 @@
 package bubolo.ui.Preferences;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -15,14 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import bubolo.graphics.Graphics;
+
+/**
+ * View (display) class for the Preferences package
+ * 
+ * @author BU CS673 - Clone Productions
+ */
 
 public class PreferencesView extends JFrame
 {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 5978853859761330342L;
 
 	private int SFXVOL_MAX = 100;
@@ -36,8 +37,12 @@ public class PreferencesView extends JFrame
 	
 	
 	PreferencesModel prefs;
-	//PreferencesController pc;
-	
+
+	/**
+	 * Constructor will create a new PreferencesView (a JFrame window)
+	 * 
+	 * @param prefs the PreferencesModel to use
+	 */	
 	public PreferencesView(final PreferencesModel prefs)
 	{
 		this.prefs = prefs;

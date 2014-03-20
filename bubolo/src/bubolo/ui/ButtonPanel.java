@@ -1,27 +1,17 @@
 package bubolo.ui;
 
-//import java.awt.Dimension;
-//import java.awt.Font;
-//import java.awt.FontMetrics;
-//import java.awt.Graphics;
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-//import java.awt.event.WindowEvent;
-
-
-
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import bubolo.ui.Preferences.PreferencesController;
 import bubolo.ui.Preferences.PreferencesModel;
 import bubolo.ui.Preferences.PreferencesView;
 
-public class ButtonPanel extends JPanel implements ActionListener
+/**
+ * A panel with Main Menu Buttons
+ * @author BU673 - Clone Industries
+ */
+public class ButtonPanel extends JPanel
 {
 	/**
 	 * 
@@ -31,17 +21,13 @@ public class ButtonPanel extends JPanel implements ActionListener
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
-	Runnable BUBOLOTarget; 
+	Runnable BUBOLOTarget; 	
 	
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		// TODO: Stuff
-		
-	}
-	
-	
-	public ButtonPanel(Runnable targetApp) throws InterruptedException
+	/**
+	 * Constructor for the Main Menu Button Panel
+	 * @param targetApp the BUBOLO application
+	 */
+	public ButtonPanel(Runnable targetApp)
 	{
 	/**
 	 * 
@@ -63,7 +49,9 @@ public class ButtonPanel extends JPanel implements ActionListener
 	prefBtn.setPreferredSize(new Dimension(125,20));		
 	exitBtn.setPreferredSize(new Dimension(125,20));
 
-	
+	newMPBtn.setEnabled(false);
+	joinMPBtn.setEnabled(false);
+		
 	// Add Buttons to panel
 	add(singleBtn);
 	add(newMPBtn);
@@ -77,7 +65,7 @@ public class ButtonPanel extends JPanel implements ActionListener
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
-			singleBtnPerformed(evt);
+			singleBtnPerformed();
 		}
 	});
 
@@ -108,11 +96,8 @@ public class ButtonPanel extends JPanel implements ActionListener
 	/**
 	 * Starts the game by creating a new Thread and running the Runnable passed into the
 	 * Constructor. For most implementations, this will launch the primary game thread.
-	 * 
-	 * @param evt
-	 *            is the event created by this button being pressed. Currently unused.
 	 */
-	private void singleBtnPerformed(java.awt.event.ActionEvent evt)
+	private void singleBtnPerformed()
 	{
 		(new Thread(BUBOLOTarget)).start();
 	}

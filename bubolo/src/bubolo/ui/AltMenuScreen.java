@@ -8,6 +8,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
+/**
+ * This is the Main Menu JFrame which will have Buttons for:
+ * START SINGLE PLAYER
+ * JOIN MULTI-PLAYER (not functional)
+ * START MULTI-PLAYER (not functional)
+ * PREFERENCES
+ * EXIT
+ * 
+ * @author BU673 - Clone Industries
+ */
 public class AltMenuScreen extends JFrame
 {
 	private static final long serialVersionUID = -5355152035949516532L;
@@ -17,7 +27,11 @@ public class AltMenuScreen extends JFrame
 	 */ 
 	Runnable BUBOLOTarget; 
 	
-	public AltMenuScreen(Runnable targetApp) throws InterruptedException
+	/**
+	 * Constructor for the Main Menu JFrame
+	 * @param targetApp the BUBOLO application
+	 */
+	public AltMenuScreen(Runnable targetApp)
 	{
 	
 		BUBOLOTarget = targetApp;
