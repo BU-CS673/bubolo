@@ -65,6 +65,23 @@ class BaseSprite extends Sprite<Base>
 		idleFrames = allFrames[0];
 	}
 
+	private void updateColorSet()
+	{
+		if (!this.getEntity().isOwned())
+		{
+			animationState = 0;
+			colorId = ColorSets.NEUTRAL;
+		}
+		else if (this.getEntity().isLocalPlayer())
+		{
+			colorId = ColorSets.BLUE;
+		}
+		else
+		{
+			colorId = ColorSets.RED;
+		}
+	}
+
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -74,23 +91,8 @@ class BaseSprite extends Sprite<Base>
 		}
 		else
 		{
-
-			if (!this.getEntity().isOwned())
-			{
-				animationState = 0;
-				colorId = ColorSets.NEUTRAL;
-				frameIndex = 0;
-				drawTexture(batch, camera, layer, idleFrames[colorId]);
-			}
-			else if (this.getEntity().isLocalPlayer())
-			{
-				colorId = ColorSets.BLUE;
-			}
-			else
-			{
-				colorId = ColorSets.RED;
-			}
-
+			updateColorSet();
+			
 			if (this.getEntity().isCharging())
 				animationState = 1;
 			else
