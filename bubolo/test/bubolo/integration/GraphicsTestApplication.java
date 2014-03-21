@@ -15,6 +15,7 @@ import bubolo.world.entity.concrete.DeepWater;
 import bubolo.world.entity.concrete.Engineer;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
+import bubolo.world.entity.concrete.MineExplosion;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
@@ -107,6 +108,7 @@ public class GraphicsTestApplication implements GameApplication
 		world.addEntity(Engineer.class).setParams(32*8, 32*6, 32, 32, 0);
 		world.addEntity(Mine.class).setParams(32*8, 32*7, 32, 32, 0);
 		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
+		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 60,60,0);
 		
 		// 2 roads
 		world.addEntity(Road.class).setParams(32*10, 32*10, 32, 32, 0);

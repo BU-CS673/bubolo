@@ -3,25 +3,27 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Rubble;
 
 /**
- * The graphical representation of a rubble entity.
+ * The graphical representation of a Mine.
+ * 
  * @author BU673 - Clone Industries
  */
-class RubbleSprite extends Sprite<Entity>
+class RubbleSprite extends Sprite<Rubble>
 {
 	private Texture image;
-	
+
 	/**
-	 * Constructor for the RubbleSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system.
-	 * @param base reference to the base that this RubbleSprite represents.
+	 * Constructor for the MineSprite. This is Package-private because sprites should not
+	 * be directly created outside of the graphics system.
+	 * 
+	 * @param mine
+	 *            Reference to the Mine that this MineSprite represents.
 	 */
-	RubbleSprite(Entity rubble)
+	RubbleSprite(Rubble rubble)
 	{
-		super(DrawLayer.OBJECTS, rubble);
+		super(DrawLayer.STATIONARY_ELEMENTS, rubble);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "rubble.png");
 	}
@@ -29,13 +31,15 @@ class RubbleSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!isEntityDisposed())
-		{
-			drawTexture(batch, camera, layer, image);
-		}
-		else
+		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
+		else
+		{
+			drawTexture(batch, camera, layer, image);
+
+		}
+
 	}
 }

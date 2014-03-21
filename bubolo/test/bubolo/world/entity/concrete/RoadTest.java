@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,5 +25,11 @@ public class RoadTest
 	public void Road()
 	{
 		assert (true);
+	}
+	
+	@Test 
+	public void setState(){
+		road.setState(7);
+		assertEquals("Road's state does not match what it was set to!", 7, road.getState());
 	}
 }
