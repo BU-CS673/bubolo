@@ -39,7 +39,7 @@ public class Parser
 		return currentParser;
 	}
 	
-	public Tile[][] parseMap(World world, Path mapPath) throws ParseException
+	public GameWorld parseMap(Path mapPath) throws ParseException
 	{ 
 		int mapHeight = 0;
 		int mapWidth = 0;
@@ -47,6 +47,7 @@ public class Parser
 		JSONObject layerObject = null;
 		JSONArray tileData = null;
 		JSONArray layerArray = null;
+		GameWorld world = null; 
 		
 		Charset charset = Charset.forName("US-ASCII");
 				
@@ -78,7 +79,7 @@ public class Parser
 							mapTiles[i][j] = new Tile(i, j, newTerrain);
 				}
 			}
-			return mapTiles;
+
 		}
 		catch (IOException e1)
 		{
@@ -89,7 +90,7 @@ public class Parser
 			e.printStackTrace();
 		}	
 		
-		return null;
+		return world;
 	}
 	
 	private static Class<? extends Terrain> LayerOneSwitch(String input)
@@ -140,9 +141,11 @@ public class Parser
 			
 		case "7":
 			return Rubble.class;
-			
+		
+		/*	
 		case "8":
 			return PlayerSpawn.class;
+		*/
 			
 		default:
 			return Pillbox.class;

@@ -1,19 +1,18 @@
 package bubolo.integration;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.text.ParseException;
+
 import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
-
 import bubolo.world.entity.concrete.Tank;
 
-/**
- * For testing only.
- * 
- * @author BU CS673 - Clone Productions
- */
-public class Sprint1Application implements GameApplication
+public class ParserTestApplication implements GameApplication
 {
 	private int windowWidth;
 	private int windowHeight;
@@ -41,7 +40,7 @@ public class Sprint1Application implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public Sprint1Application(int windowWidth, int windowHeight)
+	public ParserTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -64,14 +63,17 @@ public class Sprint1Application implements GameApplication
 		
 		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
 		// and then the map loader or creator could set the size.
-		world = new GameWorld(32*30, 32*30);
-
-		for (int i = 0; i < 30; i++)
+		Path path = FileSystems.getDefault().getPath("res", "maps/Field of Dreams.json");
+		Parser mapParser;
+		mapParser = Parser.getInstance();
+		try
 		{
-			for (int j = 0; j < 30; j++)
-			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
-			}
+			world = mapParser.parseMap(path);
+		}
+		catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		Tank tank = world.addEntity(Tank.class);
