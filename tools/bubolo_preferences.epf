@@ -1,10 +1,10 @@
-#Thu Mar 20 22:30:46 EDT 2014
+#Fri Mar 21 00:44:52 EDT 2014
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorMultithreadedInstanceAccess=MultithreadedInstanceAccess|true
 /instance/org.eclipse.jdt.ui/cleanup.add_missing_methods=false
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorFindNakedNotify=FindNakedNotify|true
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorInfiniteLoop=InfiniteLoop|true
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorCrossSiteScripting=CrossSiteScripting|true
-/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="false" context\="typecomment_context" deleted\="false" description\="Comment for created types" enabled\="true" id\="org.eclipse.jdt.ui.text.codetemplates.typecomment" name\="typecomment">/**\r\n * @author BU CS673 - Clone Productions\r\n */</template></templates>
+/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="false" context\="filecomment_context" deleted\="false" description\="Comment for created Java files" enabled\="true" id\="org.eclipse.jdt.ui.text.codetemplates.filecomment" name\="filecomment">/**\r\n *\r\n */</template><template autoinsert\="false" context\="typecomment_context" deleted\="false" description\="Comment for created types" enabled\="true" id\="org.eclipse.jdt.ui.text.codetemplates.typecomment" name\="typecomment">/**\r\n * @author BU CS673 - Clone Productions\r\n */</template></templates>
 /instance/org.eclipse.jdt.ui/formatter_profile=_bubolo
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorDumbMethods=DumbMethods|true
 /instance/edu.umd.cs.findbugs.plugin.eclipse/detectorCheckExpectedWarnings=CheckExpectedWarnings|false
