@@ -22,12 +22,6 @@ public class BaseTest
 	}
 
 	@Test
-	public void Base()
-	{
-		assert (true);
-	}
-
-	@Test
 	public void isLocalPlayer()
 	{
 		base.setLocalPlayer(true);

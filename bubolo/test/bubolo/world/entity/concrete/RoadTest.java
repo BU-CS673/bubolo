@@ -20,12 +20,6 @@ public class RoadTest
 		road = new Road();
 		EntityTestCase.setTestParams(road);
 	}
-
-	@Test
-	public void Road()
-	{
-		assert (true);
-	}
 	
 	@Test 
 	public void setState(){

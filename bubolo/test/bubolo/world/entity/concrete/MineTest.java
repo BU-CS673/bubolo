@@ -22,12 +22,6 @@ public class MineTest
 	}
 
 	@Test
-	public void Mine()
-	{
-		assert (true);
-	}
-
-	@Test
 	public void isLocalPlayer()
 	{
 		mine.setLocalPlayer(true);

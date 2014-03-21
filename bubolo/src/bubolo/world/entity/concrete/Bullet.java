@@ -34,7 +34,7 @@ public class Bullet extends Effect
 
 	// The bullet's movement speed.
 	private static final float SPEED = 6.f;
-	
+
 	// Specifies whether the bullet is initialized.
 	private boolean initialized;
 
@@ -84,7 +84,7 @@ public class Bullet extends Effect
 		{
 			initialize();
 		}
-		
+
 		// TODO: add collision detection, once the required interfaces into the
 		// world have been added.
 		// TODO (cdc - 2014-03-21): This could be made into a controller. However, it's so
@@ -106,18 +106,19 @@ public class Bullet extends Effect
 
 		setX(getX() + movementX);
 		setY(getY() + movementY);
-		
+
 		distanceTravelled += (movementX + movementY);
 	}
 
 	/**
-	 * Sets the x and y movement values. Should be called once, in the constructor.
+	 * Sets the x and y movement values. Should be called once (but not in the constructor, since
+	 * the rotation is not yet set).
 	 */
 	private void initialize()
 	{
 		movementX = (float)(Math.cos(getRotation()) * SPEED);
 		movementY = (float)(Math.sin(getRotation()) * SPEED);
-		
+
 		initialized = true;
 	}
 }
