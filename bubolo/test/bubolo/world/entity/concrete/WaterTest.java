@@ -21,12 +21,6 @@ public class WaterTest
 		EntityTestCase.setTestParams(water);
 	}
 
-	@Test
-	public void Water()
-	{
-		assert (true);
-	}
-	
 	@Test 
 	public void setState(){
 		water.setState(7);

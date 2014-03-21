@@ -21,12 +21,6 @@ public class DeepWaterTest
 		EntityTestCase.setTestParams(deepWater);
 	}
 
-	@Test
-	public void DeepWater()
-	{
-		assert (true);
-	}
-	
 	@Test 
 	public void setState(){
 		deepWater.setState(7);

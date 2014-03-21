@@ -23,12 +23,6 @@ public class EngineerTest
 		engi = new Engineer();
 		EntityTestCase.setTestParams(engi);
 	}
-
-	@Test
-	public void Man()
-	{
-		assert (true);
-	}
 	
 	@Test
 	public void isBuilding(){
