@@ -41,4 +41,34 @@ public class PillboxTest
 		assertEquals("Pillbox ownership state set correctly.", true, pillbox.isOwned());
 	}
 
+	@Test
+	public void capturePillboxTest()
+	{
+		// pillbox is dead, owned
+		pillbox.setHP(0);
+		pillbox.setOwned(true);
+		pillbox.capturePillbox();
+		assertEquals("re-setOwned", true, pillbox.isOwned());
+		assertEquals("set owership to localplayer.", true, pillbox.isLocalPlayer());
+		assertEquals("re-build", pillbox.getMaxHP(), pillbox.getHP());
+		// pillbox is dead, not owned
+		pillbox.setHP(0);
+		pillbox.setOwned(false);
+		pillbox.capturePillbox();
+		assertEquals("re-setOwned", true, pillbox.isOwned());
+		assertEquals("set owership to localplayer.", true, pillbox.isLocalPlayer());
+		assertEquals("re-build", pillbox.getMaxHP(), pillbox.getHP());
+		// pillbox is alive, owned by local
+		pillbox.setHP(pillbox.getMaxHP());
+		pillbox.setOwned(true);
+		pillbox.setLocalPlayer(true);
+		pillbox.capturePillbox();
+		assertEquals("re-build", pillbox.getMaxHP(), pillbox.getHP());
+		// pillbox is alive, not owned by local
+		pillbox.setHP(pillbox.getMaxHP() / 2);
+		pillbox.setOwned(true);
+		pillbox.setLocalPlayer(false);
+		pillbox.capturePillbox();
+		assertEquals("re-build", pillbox.getMaxHP() / 2, pillbox.getHP());
+	}
 }
