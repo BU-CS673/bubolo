@@ -34,6 +34,9 @@ public class Tank extends Actor
 
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;
+	
+	// Specifies whether the tank decelerated this tick.
+	private boolean decelerated;
 
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.05f;
@@ -88,7 +91,7 @@ public class Tank extends Actor
 	public void setLocal(boolean isLocalPlayer)
 	{
 		Preconditions.checkState(!localWasSet,
-						"setLocal in entity Tank was already called. This cannot be called more than once.");
+				"setLocal in entity Tank was already called. This cannot be called more than once.");
 		this.local = isLocalPlayer;
 		localWasSet = true;
 	}
@@ -109,7 +112,7 @@ public class Tank extends Actor
 	 */
 	public void accelerate()
 	{
-		if (speed < maxSpeed)
+		if (speed < maxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
 			accelerated = true;
@@ -121,13 +124,14 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
-		if (speed > 0)
+		if (speed > 0 && !decelerated)
 		{
 			speed -= decelerationRate;
 			if (speed < 0)
 			{
 				speed = 0;
 			}
+			decelerated = true;
 		}
 	}
 
@@ -158,8 +162,7 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
-	 * reload.
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
 	 * 
 	 * @param world
 	 *            reference to the world.
@@ -183,7 +186,7 @@ public class Tank extends Actor
 		// TODO: test this; the angle portion may be wrong.
 		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY
 				+ directionY)
-				- (float) Math.PI / 2);
+				- (float)Math.PI / 2);
 
 		// TODO: Notify the network.
 		// Network net = NetworkSystem.getInstance();
@@ -193,8 +196,6 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
-		accelerated = false;
-
 		updateControllers(world);
 		moveTank();
 
@@ -205,12 +206,12 @@ public class Tank extends Actor
 	private void moveTank()
 	{
 		// TODO (cdc - 3/14/2014): turn this into another controller?
-
 		// TODO (cdc - 3/14/2014): check for movement collisions.
+		
 		if (speed > 0)
 		{
-			float newX = (float) (getX() + Math.cos(getRotation()) * speed);
-			float newY = (float) (getY() + Math.sin(getRotation()) * speed);
+			float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+			float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 
 			setX(newX);
 			setY(newY);
@@ -220,5 +221,8 @@ public class Tank extends Actor
 				decelerate();
 			}
 		}
+		
+		accelerated = false;
+		decelerated = false;
 	}
 }
