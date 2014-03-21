@@ -33,7 +33,10 @@ public class Bullet extends Effect
 	private float movementY;
 
 	// The bullet's movement speed.
-	private static final float SPEED = 4.f;
+	private static final float SPEED = 6.f;
+	
+	// Specifies whether the bullet is initialized.
+	private boolean initialized;
 
 	/**
 	 * Construct a new Bullet with a random UUID.
@@ -58,8 +61,6 @@ public class Bullet extends Effect
 		{
 			Audio.play(Sfx.CANNON_FIRED);
 		}
-
-		setMovementValues();
 	}
 
 	/**
@@ -74,13 +75,16 @@ public class Bullet extends Effect
 
 		// Play cannon fired sound effect.
 		Audio.play(Sfx.CANNON_FIRED);
-
-		setMovementValues();
 	}
 
 	@Override
 	public void update(World world)
 	{
+		if (!initialized)
+		{
+			initialize();
+		}
+		
 		// TODO: add collision detection, once the required interfaces into the
 		// world have been added.
 		// TODO (cdc - 2014-03-21): This could be made into a controller. However, it's so
@@ -109,9 +113,11 @@ public class Bullet extends Effect
 	/**
 	 * Sets the x and y movement values. Should be called once, in the constructor.
 	 */
-	private void setMovementValues()
+	private void initialize()
 	{
 		movementX = (float)(Math.cos(getRotation()) * SPEED);
 		movementY = (float)(Math.sin(getRotation()) * SPEED);
+		
+		initialized = true;
 	}
 }
