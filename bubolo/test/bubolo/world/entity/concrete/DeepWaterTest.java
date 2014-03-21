@@ -32,4 +32,11 @@ public class DeepWaterTest
 		deepWater.setState(7);
 		assertEquals("DeepWater's state does not match what it was set to!", 7, deepWater.getState());
 	}
+	
+	// Will fail until updateState is implemented.
+	@Test
+	public void updateState()
+	{
+		deepWater.updateState();
+	}
 }

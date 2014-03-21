@@ -32,4 +32,11 @@ public class RoadTest
 		road.setState(7);
 		assertEquals("Road's state does not match what it was set to!", 7, road.getState());
 	}
+	
+	// Will fail until updateState is implemented.
+	@Test
+	public void updateState()
+	{
+		road.updateState();
+	}
 }

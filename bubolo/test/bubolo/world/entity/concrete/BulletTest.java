@@ -5,8 +5,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bubolo.world.entity.Actor;
+import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
+
+import static org.mockito.Mockito.mock;
 
 public class BulletTest
 {
@@ -21,11 +23,10 @@ public class BulletTest
 		bullet = new Bullet();
 		EntityTestCase.setTestParams(bullet);
 	}
-
-	@Test
-	public void Bullet()
-	{
-		assert (true);
-	}
 	
+	@Test
+	public void update()
+	{
+		bullet.update(mock(World.class));
+	}
 }
