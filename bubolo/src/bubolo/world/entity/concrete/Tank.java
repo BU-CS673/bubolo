@@ -34,7 +34,7 @@ public class Tank extends Actor
 
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;
-	
+
 	// Specifies whether the tank decelerated this tick.
 	private boolean decelerated;
 
@@ -184,9 +184,9 @@ public class Tank extends Actor
 		// TODO: start the bullet at an offset to the cannon.
 		bullet.setX(startX).setY(startY);
 		// TODO: test this; the angle portion may be wrong.
-		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY
-				+ directionY)
-				- (float)Math.PI / 2);
+		float angle = GameMath.angleInRadians(startX, startY, startX + directionX,
+				startY + directionY);
+		bullet.setRotation(angle - (float)Math.PI / 2.f);
 
 		// TODO: Notify the network.
 		// Network net = NetworkSystem.getInstance();
@@ -207,7 +207,7 @@ public class Tank extends Actor
 	{
 		// TODO (cdc - 3/14/2014): turn this into another controller?
 		// TODO (cdc - 3/14/2014): check for movement collisions.
-		
+
 		if (speed > 0)
 		{
 			float newX = (float)(getX() + Math.cos(getRotation()) * speed);
@@ -221,7 +221,7 @@ public class Tank extends Actor
 				decelerate();
 			}
 		}
-		
+
 		accelerated = false;
 		decelerated = false;
 	}

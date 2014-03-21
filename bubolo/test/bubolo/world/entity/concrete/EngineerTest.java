@@ -5,7 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
+
+import static org.mockito.Mockito.mock;
 
 public class EngineerTest
 {
@@ -37,5 +40,10 @@ public class EngineerTest
 	public void isRunning(){
 		engi.setRunning(true);
 		assertEquals("Engineer running state set correctly.", true, engi.isRunning());
+	}
+	
+	@Test
+	public void update() {
+		engi.update(mock(World.class));
 	}
 }
