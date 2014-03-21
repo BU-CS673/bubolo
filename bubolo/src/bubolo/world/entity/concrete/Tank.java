@@ -115,6 +115,10 @@ public class Tank extends Actor
 		if (speed < maxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
+			if (speed > maxSpeed)
+			{
+				speed = maxSpeed;
+			}
 			accelerated = true;
 		}
 	}
@@ -181,12 +185,9 @@ public class Tank extends Actor
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-		// TODO: start the bullet at an offset to the cannon.
+		
 		bullet.setX(startX).setY(startY);
-		// TODO: test this; the angle portion may be wrong.
-		float angle = GameMath.angleInRadians(startX, startY, startX + directionX,
-				startY + directionY);
-		bullet.setRotation(angle - (float)Math.PI / 2.f);
+		bullet.setRotation(getRotation());
 
 		// TODO: Notify the network.
 		// Network net = NetworkSystem.getInstance();
