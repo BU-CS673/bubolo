@@ -42,9 +42,9 @@ public abstract class Effect extends Entity
 	@Override
 	public void update(World world)
 	{
-		// TODO Estblish updating logic for Effects.
+		// TODO Establish updating logic for Effects.
 	}
 
-	// TODO: Add Actor functionality!
+	// TODO: Add Effect functionality!
 
 }

@@ -8,21 +8,18 @@ package bubolo.controllers.ai;
 
 import bubolo.controllers.Controller;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Bullet;
 
 /**
  * @author BU CS673 - Clone Productions
  */
 public class BulletController implements Controller
 {
-
-	/* (non-Javadoc)
-	 * @see bubolo.controllers.Controller#update(bubolo.world.World)
-	 */
+	private Bullet bullet;
+	
 	@Override
 	public void update(World world)
 	{
-		// TODO Auto-generated method stub
 		
 	}
-
 }
