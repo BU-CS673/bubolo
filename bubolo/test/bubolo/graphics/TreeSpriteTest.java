@@ -78,7 +78,7 @@ public class TreeSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}

@@ -1,12 +1,11 @@
 package bubolo.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import bubolo.world.World;
+import bubolo.controllers.input.KeyboardTankController;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * Contains static methods for creating controllers.
@@ -14,8 +13,6 @@ import bubolo.world.entity.Entity;
  */
 public class Controllers
 {
-	private List<Controller> controllers = new ArrayList<Controller>();
-	
 	private Map<Class<? extends Entity>, ControllerFactory> defaultFactories;
 	
 	private static Controllers instance;
@@ -42,27 +39,6 @@ public class Controllers
 	}
 	
 	/**
-	 * Returns the number of controllers.
-	 * @return the number of controllers.
-	 */
-	long getCount()
-	{
-		return controllers.size();
-	}
-	
-	/**
-	 * Calls the <code>update</code> method on all controllers.
-	 * @param w the world object.
-	 */
-	public void update(World w)
-	{
-		for (Controller c : controllers)
-		{
-			c.update(w);
-		}
-	}
-	
-	/**
 	 * Instantiates controllers for the specified entity. The optional ControllerFactory
 	 * can be used to specify the exact controllers that will be created for the
 	 * entity. Alternatively, passing a null reference will result in the creation
@@ -81,17 +57,8 @@ public class Controllers
 		
 		if (controllerFactory != null)
 		{
-			controllerFactory.create(entity, this);
+			controllerFactory.create(entity);
 		}
-	}
-	
-	/**
-	 * Adds a controller to the list.
-	 * @param controller the controller to add.
-	 */
-	void addController(Controller controller)
-	{
-		controllers.add(controller);
 	}
 	
 	/**
@@ -102,7 +69,15 @@ public class Controllers
 	{
 		Map<Class<? extends Entity>, ControllerFactory> factories = new HashMap<>();
 		
-		// TODO: No default factories exist yet. Add default factories here.
+		// TODO: Add default factories here.
+		
+		factories.put(Tank.class, new ControllerFactory() {
+			@Override
+			public void create(Entity entity)
+			{
+				entity.addController(new KeyboardTankController((Tank)entity));
+			}
+		});
 		
 		return factories;
 	}

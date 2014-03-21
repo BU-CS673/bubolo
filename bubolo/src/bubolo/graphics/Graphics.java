@@ -12,8 +12,10 @@ import java.util.Map;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -136,6 +138,9 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
+		Gdx.gl20.glClearColor(0, 0, 0, 1);
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+		
 		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's view.
 		spritesInView.clear();
 		for (Sprite<?> sprite : spriteSystem.getSprites())
@@ -150,10 +155,12 @@ public class Graphics
 		Collections.sort(spritesInView, spriteComparator);
 		
 		// 4. Render sprites by layer.
+		drawEntities(spritesInView, DrawLayer.BACKGROUND);
+		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
 		drawEntities(spritesInView, DrawLayer.TERRAIN);
-		drawEntities(spritesInView, DrawLayer.TERRAIN_MODIFIERS);
-		drawEntities(spritesInView, DrawLayer.OBJECTS);
-		drawEntities(spritesInView, DrawLayer.TANKS);
+		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
+		drawEntities(spritesInView, DrawLayer.ACTORS);
+		drawEntities(spritesInView, DrawLayer.EFFECTS);
 		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
@@ -165,7 +172,7 @@ public class Graphics
 		List<Sprite<?>> sprites = spriteSystem.getSprites();
 		for (int i = 0; i < sprites.size(); ++i)
 		{
-			if (sprites.get(i).isEntityDestroyed())
+			if (sprites.get(i).isEntityDisposed())
 			{
 				sprites.remove(i);
 			}
@@ -212,7 +219,7 @@ public class Graphics
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
 		return (sprite.getX() + sprite.getWidth() + camera.position.x > 0 &&
-				sprite.getX() + camera.position.x < camera.viewportWidth * 2 &&
+				sprite.getX() - camera.position.x < camera.viewportWidth * 2 &&
 				sprite.getY() + sprite.getHeight() + camera.position.y > 0 &&
 				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
 	}

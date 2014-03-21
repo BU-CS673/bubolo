@@ -7,23 +7,35 @@ package bubolo.graphics;
  */
 public enum DrawLayer
 {
-	/**
-	 * The terrain layer. This is the first layer drawn.
-	 */
-	TERRAIN, 
 	
 	/**
-	 * The terrain modifier layer. This is the second layer drawn.
+	 * The background layer. Used to fill small holes in transparent textures where no terrain is visible underneath (edges of rivers).
 	 */
-	TERRAIN_MODIFIERS, 
+	BACKGROUND,
 	
 	/**
-	 * The game objects layer. This is the third layer drawn.
+	 * The lowest Terrain layer. This will usually be the lowest visible layer. Grass and Swamp.
 	 */
-	OBJECTS, 
+	BASE_TERRAIN, 
 	
 	/**
-	 * The tanks layer. This is the last layer drawn.
+	 * The highest Terrain layer, above base Terrain, below StationaryElements. Used for Terrains that use transparency, such as Roads and Water.
+	 * 
 	 */
-	TANKS;
+	TERRAIN,
+	
+	/**
+	 * The StationaryElements layer. This is the fourth layer drawn. Above Terrain, below Actors.
+	 */
+	STATIONARY_ELEMENTS, 
+	
+	/**
+	 * The Actors layer. This is the second-to-last layer drawn. Above StationaryElements, below Effects.
+	 */
+	ACTORS,
+	
+	/**
+	 * The Effects layer. This is the last layer drawn. Above all other game objects.
+	 */
+	EFFECTS;
 }

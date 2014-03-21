@@ -1,8 +1,11 @@
 package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import bubolo.util.TextureUtil;
+
 import bubolo.world.entity.concrete.Water;
 
 /**
@@ -12,12 +15,11 @@ import bubolo.world.entity.concrete.Water;
  */
 class WaterSprite extends Sprite<Water>
 {
-	private Texture image;
+	private TextureRegion[] frames;
 
 	/**
 	 * Constructor for the WaterSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param water
 	 *            Reference to the Water that this WaterSprite represents.
@@ -26,13 +28,21 @@ class WaterSprite extends Sprite<Water>
 	{
 		super(DrawLayer.TERRAIN, water);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "water.png");
+		frames = TextureUtil.adaptiveSplit_16_9_9(Graphics.getTexture(Graphics.TEXTURE_PATH
+				+ "water.png"));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+		}
 	}
 }
-

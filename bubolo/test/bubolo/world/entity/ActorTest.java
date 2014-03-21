@@ -21,10 +21,26 @@ public class ActorTest
 		act = new Tank();
 		EntityTestCase.setTestParams(act);
 	}
-	
+
 	@Test
-	public void constructId(){
-		Actor act2 = new Tank();
+	public void isLocalPlayer()
+	{
+		act.setLocalPlayer(true);
+		assertEquals("Actor local player ownership set correctly.", true, act.isLocalPlayer());
+	}
+
+	@Test
+	public void isOwned()
+	{
+		act.setOwned(true);
+		assertEquals("Actor ownership state set correctly.", true, act.isOwned());
+	}
+
+	@Test
+	public void constructId()
+	{
+		Actor act2 = new Tank(EntityTestCase.TARGET_UUID);
+		assertEquals("Actor UUID set correctly.", EntityTestCase.TARGET_UUID, act2.getId());
 	}
 
 	@Test
@@ -60,10 +76,10 @@ public class ActorTest
 	}
 
 	@Test
-	public void destroy()
+	public void dispose()
 	{
 		Actor act2 = new Tank();
-		act2.destroy();
+		act2.dispose();
 		// Should check to make sure the Actor was removed properly.
 		// Useless until we have some conditions to test whether a Actor has been
 		// destroyed.

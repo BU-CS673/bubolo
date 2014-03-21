@@ -28,6 +28,13 @@ public class GameWorld implements World
 	
 	private Tile[][] mapTiles;
 
+	// The list of entities to remove. The entities array can't be modified while it
+	// is being iterated over.
+	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
+	// The list of entities to add. The entities array can't be modified while it is
+	// being iterated over.
+	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
+	
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -113,7 +120,7 @@ public class GameWorld implements World
         Sprites.getInstance().createSprite(entity);
         Controllers.getInstance().createController(entity, controllerFactory);
         
-        entities.add(entity);
+        entitiesToAdd.add(entity);
 		entityMap.put(entity.getId(), entity);
         
         return entity;
@@ -122,7 +129,8 @@ public class GameWorld implements World
 	@Override
 	public void removeEntity(Entity e)
 	{
-		entities.remove(e);
+		e.dispose();
+		entitiesToRemove.add(e);
 		entityMap.remove(e.getId());
 	}
 
@@ -147,10 +155,16 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+		// Update all entities.
 		for (Entity e : entities)
 		{
-			// TODO: reference to World (this) must be passed to entities.
-			e.update();
+			e.update(this);
 		}
+		
+		entities.removeAll(entitiesToRemove);
+		entitiesToRemove.clear();
+		
+		entities.addAll(entitiesToAdd);
+		entitiesToAdd.clear();
 	}
 }

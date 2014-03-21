@@ -8,6 +8,7 @@ import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.MockEntity;
 
 /**
  * Mock class used for testing components that need a world implementation

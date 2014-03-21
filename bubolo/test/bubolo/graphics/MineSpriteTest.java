@@ -1,6 +1,7 @@
 package bubolo.graphics;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,37 +36,9 @@ public class MineSpriteTest
 		});
 	}
 	
-	@Test
-	public void constructMineSprite() throws InterruptedException
-	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			isComplete = false;
-			passed = false;
-			
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run()
-				{
-					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Mine());
-					
-					passed = true;
-					isComplete = true;
-				}
-			});
-	
-			while (!isComplete)
-			{
-				Thread.yield();
-			}
-			
-			assertTrue(passed);
-		}
-	}	
 
 	@Test
-	public void drawMineSprite()
+	public void drawSprite()
 	{
 		isComplete = false;
 		passed = false;
@@ -76,7 +49,7 @@ public class MineSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Mine());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}
