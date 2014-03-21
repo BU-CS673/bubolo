@@ -18,7 +18,7 @@ class RubbleSprite extends Sprite<Rubble>
 	 * Constructor for the MineSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
 	 * 
-	 * @param mine
+	 * @param rubble
 	 *            Reference to the Mine that this MineSprite represents.
 	 */
 	RubbleSprite(Rubble rubble)

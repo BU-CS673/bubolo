@@ -51,7 +51,7 @@ class MineSprite extends Sprite<Mine>
 	 * be directly created outside of the graphics system (instead, call the
 	 * Sprite.create(entity) static method).
 	 * 
-	 * @param tree
+	 * @param mine
 	 *            Reference to the Mine that this MineSprite represents.
 	 */
 	MineSprite(Mine mine)
@@ -65,23 +65,24 @@ class MineSprite extends Sprite<Mine>
 		idleFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2], allFrames[1] };
 	}
 
-	private void updateColorSet()
-	{
-		{
-			if (!this.getEntity().isOwned())
-			{
-				colorId = ColorSets.NEUTRAL;
-			}
-			else if (this.getEntity().isLocalPlayer())
-			{
-				colorId = ColorSets.BLUE;
-			}
-			else
-			{
-				colorId = ColorSets.RED;
-			}
-		}
-	}
+	// TODO (cdc - 2014-03-20): Uncomment this when it is needed, or delete it if it is no longer needed.
+//	private void updateColorSet()
+//	{
+//		{
+//			if (!this.getEntity().isOwned())
+//			{
+//				colorId = ColorSets.NEUTRAL;
+//			}
+//			else if (this.getEntity().isLocalPlayer())
+//			{
+//				colorId = ColorSets.BLUE;
+//			}
+//			else
+//			{
+//				colorId = ColorSets.RED;
+//			}
+//		}
+//	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)

@@ -15,11 +15,13 @@ public interface Adaptable
 
 	/**
 	 * Returns the current adaptive tiling state of this Entity.
+	 * @return the current adaptive tiling state of this Entity.
 	 */
 	public int getState();
 
 	/**
 	 * Manually sets the adaptive tiling state of this Entity.
+	 * @param newState the new adaptive tiling state.
 	 */
 	public void setState(int newState);
 }

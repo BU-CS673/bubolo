@@ -2,7 +2,6 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
-import bubolo.util.GameLogicException;
 import bubolo.world.World;
 
 /**
