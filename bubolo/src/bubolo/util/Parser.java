@@ -81,8 +81,8 @@ public class Parser
 				{
 							dataString = tileData.get(i * mapWidth + j).toString();
 							newTerrain = world.addEntity(LayerOneSwitch(dataString));
-							newTerrain.setParams(i * 32, (mapHeight - 32) - j * 32, 32, 32, 0);
-							mapTiles[i][j] = new Tile(i, j, newTerrain);
+							newTerrain.setParams(j * 32, mapHeight * 32 - i * 32, 32, 32, 0);
+							mapTiles[j][i] = new Tile(j, i, newTerrain);
 				}
 			}
 
@@ -99,8 +99,8 @@ public class Parser
 						if(LayerTwoSwitch(dataString) != null)
 						{
 							newSE = (StationaryElement) world.addEntity(LayerTwoSwitch(dataString));
-							newSE.setParams(i * 32, j * 32, 32, 32, 0);
-							mapTiles[i][j].setElement(newSE);
+							newSE.setParams(j * 32, mapHeight*32, 32, 32, 0);
+							mapTiles[j][i].setElement(newSE);
 						}
 					}
 				}
@@ -142,12 +142,6 @@ public class Parser
 		case "5":
 			return Road.class;
 			
-		case "6":
-			return Crater.class;
-			
-		case "7":
-			return Rubble.class;
-			
 		default:
 			return Grass.class;
 		}
@@ -171,8 +165,14 @@ public class Parser
 			
 		case "10":
 			return Base.class;	
-		/*
+		
 		case "11":
+			return Crater.class;
+			
+		case "12":
+			return Rubble.class;
+		/*
+		case "13":
 			return PlayerSpawn.class;
 		*/
 			
