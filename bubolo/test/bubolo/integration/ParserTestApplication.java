@@ -4,7 +4,11 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.ParseException;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import bubolo.GameApplication;
+import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.util.Parser;
 import bubolo.world.GameWorld;
@@ -14,6 +18,16 @@ import bubolo.world.entity.concrete.Tank;
 
 public class ParserTestApplication implements GameApplication
 {
+	public static void main(String[] args)
+	{
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.width = 1067;
+		cfg.height = 600;
+		cfg.useGL20 = true;
+		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
+	}
+	
 	private int windowWidth;
 	private int windowHeight;
 	
@@ -32,7 +46,7 @@ public class ParserTestApplication implements GameApplication
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -60,27 +74,20 @@ public class ParserTestApplication implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
-		// and then the map loader or creator could set the size.
-		Path path = FileSystems.getDefault().getPath("res", "maps/Field of Dreams.json");
-		Parser mapParser;
-		mapParser = Parser.getInstance();
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/Parser Test Map.json");
 		try
 		{
-			world = mapParser.parseMap(path);
+			world = fileParser.parseMap(path);
 		}
 		catch (ParseException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
-		
-		
-		// TODO: add other systems here.
+		tank.setParams(100, 100, 32, 32, 0);
 		
 		ready = true;
 	}
@@ -93,6 +100,7 @@ public class ParserTestApplication implements GameApplication
 	public void render()
 	{
 		graphics.draw(world);
+		world.update();
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();
@@ -110,6 +118,7 @@ public class ParserTestApplication implements GameApplication
 	@Override
 	public void dispose()
 	{
+		Audio.dispose();
 	}
 
 	@Override
@@ -126,4 +135,5 @@ public class ParserTestApplication implements GameApplication
 	public void resume()
 	{
 	}
+
 }

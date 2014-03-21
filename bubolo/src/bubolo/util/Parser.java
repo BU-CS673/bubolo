@@ -17,6 +17,7 @@ import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.*;
 
@@ -56,16 +57,21 @@ public class Parser
 		{
 			JSONParser parser = new JSONParser();
 			obj = parser.parse(reader);
+			
 			JSONObject jsonObject = (JSONObject) obj;		
+			
 			mapHeight = (int) ((long) jsonObject.get("height"));
 			mapWidth = (int) ((long) jsonObject.get("width"));
+			
 			Tile[][] mapTiles = new Tile[mapHeight][mapWidth];
+			
 			layerArray = (JSONArray) jsonObject.get("layers");
+			
 			layerObject = (JSONObject) layerArray.get(0);
 			tileData = (JSONArray) layerObject.get("data");
 			String dataString = null;
 			Terrain newTerrain = null;
-			Entity newEntity = null;
+			StationaryElement newSE = null;
 			
 			world = new GameWorld(mapHeight, mapWidth);
 			
@@ -80,6 +86,28 @@ public class Parser
 				}
 			}
 
+			if (layerArray.size() > 1)
+			{
+				layerObject = (JSONObject) layerArray.get(1);
+				tileData = (JSONArray) layerObject.get("data");
+				
+				for (int i = 0; i < mapHeight; i++)
+				{
+					for (int j = 0; j < mapWidth; j++)
+					{
+						dataString = tileData.get(i * mapWidth + j).toString();
+						if(LayerTwoSwitch(dataString) != null)
+						{
+							newSE = (StationaryElement) world.addEntity(LayerTwoSwitch(dataString));
+							newSE.setParams(i * 32, j * 32, 32, 32, 0);
+							mapTiles[i][j].setElement(newSE);
+						}
+					}
+				}
+				
+			}
+			
+			world.setMapTiles(mapTiles);
 		}
 		catch (IOException e1)
 		{
@@ -89,6 +117,8 @@ public class Parser
 		{
 			e.printStackTrace();
 		}	
+		
+
 		
 		return world;
 	}
@@ -112,6 +142,12 @@ public class Parser
 		case "5":
 			return Road.class;
 			
+		case "6":
+			return Crater.class;
+			
+		case "7":
+			return Rubble.class;
+			
 		default:
 			return Grass.class;
 		}
@@ -121,34 +157,27 @@ public class Parser
 	{
 		switch (input)
 		{
-		case "1":
+		case "6":
 			return Pillbox.class;
 			
-		case "2":
+		case "7":
 			return Tree.class;
 			
-		case "3":
+		case "8":
 			return Mine.class;
 		
-		case "4":
+		case "9":
 			return Wall.class;
 			
-		case "5":
-			return Base.class;
-			
-		case "6":
-			return Crater.class;
-			
-		case "7":
-			return Rubble.class;
-		
-		/*	
-		case "8":
+		case "10":
+			return Base.class;	
+		/*
+		case "11":
 			return PlayerSpawn.class;
 		*/
 			
 		default:
-			return Pillbox.class;
+			return null;
 		}
 	}
 }
