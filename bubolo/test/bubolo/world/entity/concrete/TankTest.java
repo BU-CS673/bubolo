@@ -42,7 +42,7 @@ public class TankTest
 	public void fireCannon()
 	{	
 		LibGdxAppTester.createApp();
-		tank.fireCannon(new MockBulletCreator(), 50, 40, 10, 10);
+		tank.fireCannon(new MockBulletCreator(), 50, 40);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class TankTest
 	{
 		LibGdxAppTester.createApp();
 		assertTrue(tank.isCannonReady());
-		tank.fireCannon(new MockBulletCreator(), 50, 40, 10, 10);
+		tank.fireCannon(new MockBulletCreator(), 50, 40);
 		assertFalse(tank.isCannonReady());
 	}
 	

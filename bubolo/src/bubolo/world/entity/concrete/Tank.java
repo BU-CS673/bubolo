@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import com.google.common.base.Preconditions;
 
-import bubolo.util.GameMath;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -174,13 +173,8 @@ public class Tank extends Actor
 	 *            the bullet's start x position.
 	 * @param startY
 	 *            the bullet's start y position.
-	 * @param directionX
-	 *            the bullet's x direction.
-	 * @param directionY
-	 *            the bullet's y direction.
 	 */
-	public void fireCannon(World world, float startX, float startY, float directionX,
-			float directionY)
+	public void fireCannon(World world, float startX, float startY)
 	{
 		cannonFireTime = System.currentTimeMillis();
 
