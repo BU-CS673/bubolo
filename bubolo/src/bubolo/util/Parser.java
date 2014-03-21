@@ -73,7 +73,7 @@ public class Parser
 			Terrain newTerrain = null;
 			StationaryElement newSE = null;
 			
-			world = new GameWorld(mapHeight, mapWidth);
+			world = new GameWorld(32 * mapHeight, 32 * mapWidth);
 			
 			for(int i = 0; i < mapHeight; i++)
 			{
@@ -81,7 +81,7 @@ public class Parser
 				{
 							dataString = tileData.get(i * mapWidth + j).toString();
 							newTerrain = world.addEntity(LayerOneSwitch(dataString));
-							newTerrain.setParams(i * 32, j * 32, 32, 32, 0);
+							newTerrain.setParams(i * 32, (mapHeight - 32) - j * 32, 32, 32, 0);
 							mapTiles[i][j] = new Tile(i, j, newTerrain);
 				}
 			}
