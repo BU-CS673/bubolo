@@ -3,6 +3,7 @@ package bubolo.ui.Preferences;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -13,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
 
 /**
@@ -35,6 +39,7 @@ public class PreferencesView extends JFrame
 	private int SCREENSIZE_MAX = 3;
 	private int SCREENSIZE_MIN = 1;
 	
+	public static final String ICONS_PATH = "res/icons/";
 	
 	PreferencesModel prefs;
 
@@ -45,7 +50,10 @@ public class PreferencesView extends JFrame
 	 */	
 	public PreferencesView(final PreferencesModel prefs)
 	{
+
 		this.prefs = prefs;
+		
+		ImageIcon testIcon = new ImageIcon(ICONS_PATH + "test_sound.png");
 		
 		//this.pc = new PreferencesController(prefs);
 		
@@ -53,7 +61,7 @@ public class PreferencesView extends JFrame
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setSize(300,300);
-		setIconImage(new ImageIcon(Graphics.TEXTURE_PATH + "tank_icon.png").getImage());
+		setIconImage(new ImageIcon(ICONS_PATH + "tank_icon.png").getImage());
 		JPanel mainPanel = new JPanel();
 		
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -81,7 +89,9 @@ public class PreferencesView extends JFrame
 			}
 		});
 		// Add sfxVol to the Panel
+		JButton testSfx = new JButton(testIcon);
 		sfxPanel.add(sfxVol);
+		sfxPanel.add(testSfx);
 		
 		JPanel mfxPanel = new JPanel();
 		mfxPanel.setBorder(BorderFactory.createTitledBorder("Music Effects Volume"));
@@ -106,7 +116,20 @@ public class PreferencesView extends JFrame
 			}
 		});
 		// Add mfxVol to the Panel
+		JButton testMfx = new JButton(testIcon);
+		
+		
+		testMfx.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				Audio.play(Sfx.CANNON_FIRED);
+			}
+		});
+		
 		mfxPanel.add(mfxVol);
+		mfxPanel.add(testMfx);
 		
 		
 		JPanel screenSizePanel = new JPanel();
