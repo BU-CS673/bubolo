@@ -1,11 +1,18 @@
 package bubolo.integration;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import bubolo.GameApplication;
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
+import bubolo.ui.LoadingScreen;
+import bubolo.ui.MenuScreen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
-
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -13,8 +20,18 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Sprint1Application implements GameApplication
+public class AudioTestApplication implements GameApplication
 {
+	public static void main(String[] args)
+	{
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "BUBOLO Audio Integration";
+		cfg.width = 600;
+		cfg.height = 600;
+		cfg.useGL20 = true;
+		new LwjglApplication(new AudioTestApplication(600, 600), cfg);
+	}
+	
 	private int windowWidth;
 	private int windowHeight;
 	
@@ -25,6 +42,9 @@ public class Sprint1Application implements GameApplication
 	
 	private boolean ready;
 	
+	private int frame = 0;
+	private int MAX_FRAMES = TICKS_PER_SECOND * 15;
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -33,7 +53,7 @@ public class Sprint1Application implements GameApplication
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -41,7 +61,7 @@ public class Sprint1Application implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public Sprint1Application(int windowWidth, int windowHeight)
+	public AudioTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -61,23 +81,10 @@ public class Sprint1Application implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
-		// and then the map loader or creator could set the size.
+
 		world = new GameWorld(32*30, 32*30);
 		
-		for (int i = 0; i < 30; i++)
-		{
-			for (int j = 0; j < 30; j++)
-			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
-			}
-		}
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(15 * 32, 15 * 32, 32, 32, 0);
-		
-		
-		// TODO: add other systems here.
+		Audio.startMusic();
 		
 		ready = true;
 	}
@@ -89,7 +96,27 @@ public class Sprint1Application implements GameApplication
 	@Override
 	public void render()
 	{
+		if (frame == 0) Audio.play(Sfx.CANNON_FIRED);
+		if (frame == 15) Audio.play(Sfx.ENGINEER_KILLED);
+		if (frame == 30) Audio.play(Sfx.EXPLOSION);
+		if (frame == 45) Audio.play(Sfx.PILLBOX_BUILT);
+		if (frame == 60) Audio.play(Sfx.PILLBOX_HIT);
+		if (frame == 75) Audio.play(Sfx.ROAD_BUILT);
+		if (frame == 90) Audio.play(Sfx.TANK_DROWNED);
+		if (frame == 105) Audio.play(Sfx.TANK_HIT);
+		if (frame == 120) Audio.play(Sfx.TANK_IN_SHALLOW_WATER);
+		if (frame == 135) Audio.play(Sfx.TREE_GATHERED);
+		if (frame == 150) Audio.play(Sfx.TREE_HIT);
+		if (frame == 165) Audio.play(Sfx.WALL_BUILT);
+		if (frame == 180) Audio.play(Sfx.WALL_HIT);
+		
 		graphics.draw(world);
+		
+		if (frame > MAX_FRAMES)
+		{
+			Gdx.app.exit();
+		}
+		++frame;
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();
@@ -107,6 +134,7 @@ public class Sprint1Application implements GameApplication
 	@Override
 	public void dispose()
 	{
+		Audio.dispose();
 	}
 
 	@Override

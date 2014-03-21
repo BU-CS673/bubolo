@@ -1,7 +1,6 @@
 package bubolo.integration;
 
 import bubolo.ui.LoadingScreen;
-import bubolo.ui.AltMenuScreen;
 import bubolo.ui.MenuScreen;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -19,37 +18,25 @@ public class Sprint1
 		Thread t = Thread.currentThread();
 		try
 		{
-			Thread.sleep(275);
+			Thread.sleep(2750);
 
 			s.dispose();
-			
-			AltMenuScreen gp = new AltMenuScreen(new Runnable()
-			{
+			MenuScreen fp = new MenuScreen(new Runnable() {
 				@Override
 				public void run()
 				{
 					setup();
 				}
 			});
-			
-			gp.setVisible(true);
-			
-//			MenuScreen fp = new MenuScreen(new Runnable() {
-//				@Override
-//				public void run()
-//				{
-//					setup();
-//				}
-//			});
-//
-//			fp.setVisible(true);
-			
+
+			fp.setVisible(true);
 		}
 		catch (InterruptedException ex)
 		{
 			ex.printStackTrace();
 		}
 	}
+	
 
 	public static void setup()
 	{
