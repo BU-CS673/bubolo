@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bubolo.world.World;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;
+
+import static org.mockito.Mockito.mock;
 
 public class EffectTest
 {
@@ -32,7 +35,7 @@ public class EffectTest
 	
 	@Test 
 	public void update(){
-		//Implicitly checks that exceptions are not thrown.
+		bull.update(mock(World.class));
 	}
 
 }
