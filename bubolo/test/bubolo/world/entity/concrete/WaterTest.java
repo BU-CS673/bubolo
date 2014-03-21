@@ -32,4 +32,11 @@ public class WaterTest
 		water.setState(7);
 		assertEquals("Water's state does not match what it was set to!", 7, water.getState());
 	}
+	
+	// Will fail until updateState is implemented.
+	@Test
+	public void updateState()
+	{
+		water.updateState();
+	}
 }
