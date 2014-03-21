@@ -20,16 +20,17 @@ public class RoadTest
 		road = new Road();
 		EntityTestCase.setTestParams(road);
 	}
-
-	@Test
-	public void Road()
-	{
-		assert (true);
-	}
 	
 	@Test 
 	public void setState(){
 		road.setState(7);
 		assertEquals("Road's state does not match what it was set to!", 7, road.getState());
+	}
+	
+	// Will fail until updateState is implemented.
+	@Test
+	public void updateState()
+	{
+		road.updateState();
 	}
 }
