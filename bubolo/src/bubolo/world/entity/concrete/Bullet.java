@@ -2,17 +2,16 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.entity.Effect;
 import bubolo.audio.Audio;
 import bubolo.audio.Sfx;
-import bubolo.world.World;
-import bubolo.world.entity.Actor;
 
 /**
  * Bullets are shot by Tanks, and can cause damage to StationaryElements and other Actors.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Bullet extends Actor
+public class Bullet extends Effect
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -28,7 +27,8 @@ public class Bullet extends Actor
 	}
 	
 	/**
-	 * Package-private constructor for testing.
+	 * Package-private constructor for testing. Allows the sound to be suppressed.
+	 * @param noSound true if there should be no bullet creation sound, or false otherwise.
 	 */
 	Bullet(boolean noSound)
 	{
@@ -53,12 +53,6 @@ public class Bullet extends Actor
 
 		// Play cannon fired sound effect.
 		Audio.play(Sfx.CANNON_FIRED);
-	}
-
-	@Override
-	public void update(World world)
-	{
-		// TODO Implement this.
 	}
 
 	// TODO: Add Bullet functionality!

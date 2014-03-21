@@ -1,5 +1,8 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.*;
+
+import org.junit.BeforeClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -56,7 +59,7 @@ public class TankTest
 		assertEquals(0.f, tank.getSpeed(), 0.001f);
 		
 		tank.accelerate();
-		float speed = tank.getSpeed();
+		float speed = (tank.getSpeed() - 0.02f < 0.f) ? 0.f : tank.getSpeed();
 		tank.decelerate();
 		assertEquals(speed, tank.getSpeed(), 0.001f);
 	}

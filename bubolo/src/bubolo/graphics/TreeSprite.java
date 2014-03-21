@@ -24,21 +24,21 @@ class TreeSprite extends Sprite<Tree>
 	 */
 	TreeSprite(Tree tree)
 	{
-		super(DrawLayer.OBJECTS, tree);
+		super(DrawLayer.STATIONARY_ELEMENTS, tree);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "tree.png");
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (!isEntityDisposed())
+		if (isEntityDisposed())
 		{
-			drawTexture(batch, camera, layer, image);
+			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
-			Sprites.getInstance().removeSprite(this);
+			drawTexture(batch, camera, layer, image);
 		}
 	}
 }

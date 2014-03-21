@@ -2,12 +2,8 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
-import bubolo.graphics.DrawLayer;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
-
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Dummy Entity class for unit testing methods without any Graphics involvement. This
@@ -36,9 +32,6 @@ public class MockEntity extends Entity
 
 	/**
 	 * Construct a new DummyEntity with the specified UUID.
-	 * 
-	 * @param id
-	 *            is the existing UUID to be applied to the new DummyEntity.
 	 */
 	public MockEntity()
 	{

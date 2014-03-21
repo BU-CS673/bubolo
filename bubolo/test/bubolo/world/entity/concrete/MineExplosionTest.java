@@ -5,22 +5,22 @@ import org.junit.Test;
 
 import bubolo.world.entity.EntityTestCase;
 
-public class ManTest
+public class MineExplosionTest
 {
-	static Engineer man;
+	static MineExplosion exp;
 
 	/**
-	 * Constructs a Man object and sets the default parameters.
+	 * Constructs a Bullet object and sets the default parameters.
 	 */
 	@BeforeClass
 	public static void setup()
 	{
-		man = new Engineer();
-		EntityTestCase.setTestParams(man);
+		exp = new MineExplosion();
+		EntityTestCase.setTestParams(exp);
 	}
 
 	@Test
-	public void Man()
+	public void MineExplosion()
 	{
 		assert (true);
 	}
