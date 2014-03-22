@@ -24,6 +24,13 @@ public class PreferencesController
 	 */
 	private PreferencesView pv;
 	
+	/**
+	 * Shows the PreferencesViewer Frame
+	 */
+	public void showView()
+	{
+		pv.setVisible(true);
+	}
 	
 	/**
 	 * Constructor will create a new PreferencesController
@@ -37,12 +44,18 @@ public class PreferencesController
 		this.pv = pv;
 		
 		// Setup the Listeners
-		pv.musicSliderListener(new MusicSliderListener());
-		pv.sfxSliderListener(new SfxSliderListener());
-		pv.screenSizeListener(new ScreenSizeListener());
-		pv.saveListener(new SaveListener());
-		pv.sfxTestListener(new SfxTestListener());
-		pv.mfxTestListener(new MfxTestListener());
+		this.pv.musicSliderListener(new MusicSliderListener());
+		this.pv.sfxSliderListener(new SfxSliderListener());
+		this.pv.screenSizeListener(new ScreenSizeListener());
+		this.pv.saveListener(new SaveListener());
+		this.pv.cancelListener(new CancelListener());
+		this.pv.sfxTestListener(new SfxTestListener());
+		this.pv.mfxTestListener(new MfxTestListener());
+	}
+	
+	public int getSfxVol()
+	{
+		return pm.getSfxVol();
 	}
 	
 	/**
@@ -56,6 +69,19 @@ public class PreferencesController
 		public void actionPerformed(ActionEvent e)
 		{
 			System.out.println("Save");
+		}
+	}
+	
+	/**
+	 * Hide the PreferencesView
+	 * @author BU CS673 - Clone Productions
+	 */
+	class CancelListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			pv.setVisible(false);
 		}
 	}
 	
