@@ -55,6 +55,7 @@ public class PreferencesController
 		this.pv.sfxTestListener(new SfxTestListener());
 		this.pv.mfxTestListener(new MfxTestListener());
 		
+		// This is temporary, or at least should be refactored...
 		PreferencesManager pmgr = new PreferencesManager();
 		PreferencesModel pmtemp = new PreferencesModel();
 		pmtemp = pmgr.LoadPreference();
