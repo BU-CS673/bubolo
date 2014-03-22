@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import bubolo.world.entity.concrete.Rubble;
 
 /**
- * The graphical representation of a Mine.
+ * The graphical representation of Rubble.
  * 
  * @author BU673 - Clone Industries
  */
@@ -15,11 +15,11 @@ class RubbleSprite extends Sprite<Rubble>
 	private Texture image;
 
 	/**
-	 * Constructor for the MineSprite. This is Package-private because sprites should not
+	 * Constructor for the RubbleSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
 	 * 
-	 * @param mine
-	 *            Reference to the Mine that this MineSprite represents.
+	 * @param rubble
+	 *            Reference to the Rubble that this RubbleSprite represents.
 	 */
 	RubbleSprite(Rubble rubble)
 	{

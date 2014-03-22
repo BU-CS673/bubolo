@@ -21,7 +21,7 @@ class GenericExplosionSprite extends Sprite<Entity>
 	 * Constructor for the GenericExplosionSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
 	 * 
-	 * @param GenericExplosion
+	 * @param exp
 	 *            Reference to the GenericExplosion that this GenericExplosionSprite
 	 *            represents.
 	 */

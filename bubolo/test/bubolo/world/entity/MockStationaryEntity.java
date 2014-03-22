@@ -2,17 +2,13 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
-import bubolo.world.World;
-import bubolo.world.entity.Entity;
-
 /**
- * Dummy Entity class for unit testing methods without any Graphics involvement. This
- * allows the tests to run outside of an OpenGL environment, because no textures are
- * fetched.
+ * Dummy Entity class for unit testing methods without any Graphics involvement. This allows the
+ * tests to run outside of an OpenGL environment, because no textures are fetched.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class MockEntity extends Entity
+public class MockStationaryEntity extends StationaryEntity
 {
 	/**
 	 * Used in serialization/de-serialization.
@@ -25,7 +21,7 @@ public class MockEntity extends Entity
 	 * @param id
 	 *            is the existing UUID to be applied to the new DummyEntity.
 	 */
-	public MockEntity(UUID id)
+	public MockStationaryEntity(UUID id)
 	{
 		super(id);
 	}
@@ -33,15 +29,8 @@ public class MockEntity extends Entity
 	/**
 	 * Construct a new DummyEntity with the specified UUID.
 	 */
-	public MockEntity()
+	public MockStationaryEntity()
 	{
 		super();
 	}
-
-	@Override
-	public void update(World world)
-	{
-		// Do nothing
-	}
-
 }

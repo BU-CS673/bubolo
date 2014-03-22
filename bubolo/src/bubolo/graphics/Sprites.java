@@ -63,7 +63,7 @@ public class Sprites
 	 * Returns a reference to the list of sprites. Package-private because this method
 	 * should not be accessed outside of the Graphics system.
 	 * 
-	 * @return
+	 * @return the list of all sprites.
 	 */
 	List<Sprite<? extends Entity>> getSprites()
 	{
