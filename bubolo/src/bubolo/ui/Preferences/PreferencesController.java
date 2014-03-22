@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import bubolo.util.PreferencesManager;
+
 /**
  * Controller class for Preferences, handles disk activity for Models
  * 
@@ -24,6 +26,14 @@ public class PreferencesController
 	 */
 	private PreferencesView pv;
 	
+	/**
+	 * Shows the PreferencesViewer Frame
+	 */
+	public void showView()
+	{
+		pv.updateView(pm);
+		pv.setVisible(true);
+	}
 	
 	/**
 	 * Constructor will create a new PreferencesController
@@ -37,12 +47,30 @@ public class PreferencesController
 		this.pv = pv;
 		
 		// Setup the Listeners
-		pv.musicSliderListener(new MusicSliderListener());
-		pv.sfxSliderListener(new SfxSliderListener());
-		pv.screenSizeListener(new ScreenSizeListener());
-		pv.saveListener(new SaveListener());
-		pv.sfxTestListener(new SfxTestListener());
-		pv.mfxTestListener(new MfxTestListener());
+		this.pv.musicSliderListener(new MusicSliderListener());
+		this.pv.sfxSliderListener(new SfxSliderListener());
+		this.pv.screenSizeListener(new ScreenSizeListener());
+		this.pv.saveListener(new SaveListener());
+		this.pv.cancelListener(new CancelListener());
+		this.pv.sfxTestListener(new SfxTestListener());
+		this.pv.mfxTestListener(new MfxTestListener());
+		
+		PreferencesManager pmgr = new PreferencesManager();
+		PreferencesModel pmtemp = new PreferencesModel();
+		pmtemp = pmgr.LoadPreference();
+		
+		this.pm.setMfxVol(pmtemp.getMfxVol());
+		this.pm.setScreenSize(pmtemp.getScreenSize());
+		this.pm.setSfxVol(pmtemp.getSfxVol());
+	}
+	
+	/**
+	 * Returns the current Sound Effects Volume
+	 * @return the current Sound Effects Volume
+	 */
+	public int getSfxVol()
+	{
+		return pm.getSfxVol();
 	}
 	
 	/**
@@ -56,6 +84,21 @@ public class PreferencesController
 		public void actionPerformed(ActionEvent e)
 		{
 			System.out.println("Save");
+			PreferencesManager pmgr = new PreferencesManager();
+			pmgr.SavePreference(pm);
+		}
+	}
+	
+	/**
+	 * Hide the PreferencesView
+	 * @author BU CS673 - Clone Productions
+	 */
+	class CancelListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			pv.setVisible(false);
 		}
 	}
 	

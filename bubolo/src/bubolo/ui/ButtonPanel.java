@@ -21,6 +21,21 @@ public class ButtonPanel extends JPanel
 	private static final long serialVersionUID = -1624357058854582729L;
 	
 	/**
+	 * Preferences Model used by the game 
+	 */
+	public PreferencesModel pm = new PreferencesModel();
+	
+	/**
+	 * Preference View used by the game
+	 */
+	public PreferencesView pv = new PreferencesView(pm);
+	
+	/**
+	 * Preferences Controller used by the game 
+	 */
+	public PreferencesController pc = new PreferencesController(pm, pv);
+	
+	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
 	Runnable BUBOLOTarget; 	
@@ -43,6 +58,7 @@ public class ButtonPanel extends JPanel
 	JButton joinMPBtn = new JButton("JOIN MULTI-PLAYER GAME");
 	JButton prefBtn = new JButton("PREFERENCES");
 	JButton exitBtn = new JButton("EXIT");
+	
 	
 	// TODO: Enable these buttons later when the features are implemented
 	newMPBtn.setEnabled(false);
@@ -82,11 +98,7 @@ public class ButtonPanel extends JPanel
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
-			PreferencesModel pm = new PreferencesModel();
-			PreferencesView pv = new PreferencesView(pm);
-			// warning appears for pc, but the pc must be created
-			PreferencesController pc = new PreferencesController(pm, pv);
-			pv.setVisible(true);
+			pc.showView();
 		}
 	});
 	

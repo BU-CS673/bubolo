@@ -34,8 +34,7 @@ public class PreferencesView extends JFrame
 	
 	private ImageIcon testIcon = new ImageIcon(UserInterface.ICONS_PATH + "test_sound.png");
 	
-	//private PreferencesController pc;
-	
+	private JButton cancelBtn;
 	private JButton saveBtn;
 	private JButton sfxTest;
 	private JButton mfxTest;
@@ -125,22 +124,14 @@ public class PreferencesView extends JFrame
 		saveBtn = new JButton("SAVE");
 		
 		// Create & Handle the Cancel button 
-		JButton cancelBtn = new JButton("CANCEL");
-		cancelBtn.addActionListener(new java.awt.event.ActionListener()
-		{
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt)
-			{
-				System.exit(0);
-			}
-		});
-		
+		cancelBtn = new JButton("CANCEL");
+
 		SaveCancelPanel.add(saveBtn);
 		SaveCancelPanel.add(cancelBtn);
 		
 		return SaveCancelPanel;
 	}
-	
+
 	/**
 	 * Provides the current Preference Slider's Position
 	 * @return sfXSlider int the current slider value
@@ -207,6 +198,17 @@ public class PreferencesView extends JFrame
 	}
 
 	/**
+	 * Updates the panel
+	 * @param updatedpm preferences to use for the update
+	 */
+	public void updateView(PreferencesModel updatedpm)
+	{
+		mfxSlider.setValue(updatedpm.getMfxVol());
+		sfxSlider.setValue(updatedpm.getSfxVol());
+		screenSize.setValue(updatedpm.getScreenSize());
+	}
+	
+	/**
 	 * Internal Only -- Creates a JPanel with a volume slider and test button
 	 * @return JPanel with titled border, slider and test button
 	 */
@@ -251,6 +253,15 @@ public class PreferencesView extends JFrame
 	void saveListener(ActionListener event)
 	{
 		saveBtn.addActionListener(event);
+	}
+	
+	/**
+	 * Cancel Button event listener
+	 * @param event returns the event
+	 */
+	void cancelListener(ActionListener event)
+	{
+		cancelBtn.addActionListener(event);
 	}
 	
 	/**

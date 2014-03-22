@@ -1,5 +1,7 @@
 package bubolo.ui.Preferences;
 
+import java.io.Serializable;
+
 import bubolo.ui.UserInterface;
 
 import com.google.common.base.Preconditions;
@@ -9,8 +11,12 @@ import com.google.common.base.Preconditions;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class PreferencesModel
+public class PreferencesModel implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3303278947278907653L;
 	// Private variables that make up the valuable data
 	private int sfxVol;
 	private int mfxVol;
