@@ -50,11 +50,6 @@ public class Tank extends Actor
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
 
-	// Specifies whether the tank is local. The default is true.
-	private boolean local = true;
-	// Sanity check to ensure that local isn't modified after it has initially been set.
-	private boolean localWasSet;
-
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
@@ -72,30 +67,6 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
-	}
-
-	/**
-	 * Specifies whether the tank is local.
-	 * 
-	 * @return true if the tank is local.
-	 */
-	public boolean isLocal()
-	{
-		return local;
-	}
-
-	/**
-	 * Sets whether the tank is local.
-	 * 
-	 * @param isLocalPlayer
-	 *            true if the tank is local, false otherwise.
-	 */
-	public void setLocal(boolean isLocalPlayer)
-	{
-		Preconditions.checkState(!localWasSet,
-						"setLocal in entity Tank was already called. This cannot be called more than once.");
-		this.local = isLocalPlayer;
-		localWasSet = true;
 	}
 
 	/**

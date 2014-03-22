@@ -23,6 +23,8 @@ import bubolo.world.entity.concrete.*;
 
 public class Parser
 {
+	
+	private static final int WORLD_UNIT_CONVERSION = 32;
 	private static Parser currentParser = null;
 	
 	protected Parser()
@@ -63,7 +65,7 @@ public class Parser
 			mapHeight = (int) ((long) jsonObject.get("height"));
 			mapWidth = (int) ((long) jsonObject.get("width"));
 			
-			Tile[][] mapTiles = new Tile[mapHeight][mapWidth];
+			Tile[][] mapTiles = new Tile[mapWidth][mapHeight];
 			
 			layerArray = (JSONArray) jsonObject.get("layers");
 			
@@ -73,16 +75,17 @@ public class Parser
 			Terrain newTerrain = null;
 			StationaryElement newSE = null;
 			
-			world = new GameWorld(32 * mapHeight, 32 * mapWidth);
+			world = new GameWorld(WORLD_UNIT_CONVERSION * mapHeight, WORLD_UNIT_CONVERSION * mapWidth);
 			
 			for(int i = 0; i < mapHeight; i++)
 			{
 				for(int j = 0; j < mapWidth; j++)
 				{
 							dataString = tileData.get(i * mapWidth + j).toString();
-							newTerrain = world.addEntity(LayerOneSwitch(dataString));
-							newTerrain.setParams(j * 32, mapHeight * 32 - i * 32, 32, 32, 0);
-							mapTiles[j][i] = new Tile(j, i, newTerrain);
+							int tileYIndex = mapHeight - i - 1;
+							mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, world.addEntity(LayerOneSwitch(dataString)));
+							Tile t = mapTiles[j][tileYIndex];
+							//t.getTerrain().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
 				}
 			}
 
@@ -98,9 +101,10 @@ public class Parser
 						dataString = tileData.get(i * mapWidth + j).toString();
 						if(LayerTwoSwitch(dataString) != null)
 						{
-							newSE = (StationaryElement) world.addEntity(LayerTwoSwitch(dataString));
-							newSE.setParams(j * 32, mapHeight*32, 32, 32, 0);
-							mapTiles[j][i].setElement(newSE);
+							int tileYIndex = mapHeight - i - 1;
+							mapTiles[j][tileYIndex].setElement((StationaryElement) world.addEntity(LayerTwoSwitch(dataString)));
+							Tile t = mapTiles[j][tileYIndex];
+							//t.getElement().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
 						}
 					}
 				}
