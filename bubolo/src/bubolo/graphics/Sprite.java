@@ -138,11 +138,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, 
 					new Vector2(getEntity().getX(), getEntity().getY()));
 			
-			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
+			Vector2 origin = getOrigin(getEntity());
 			
-			batch.draw(texture, cameraCoordinates.x + texture.getWidth() / 2.f, 
-					cameraCoordinates.y + texture.getHeight() / 2.f, 
-					origin.x, origin.y, 
+			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * getEntity().getRotation() - Math.PI / 2.f),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
@@ -170,33 +168,21 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, 
 					new Vector2(getEntity().getX(), getEntity().getY()));
 			
-			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
+			Vector2 origin = getOrigin(getEntity());
 			
-			batch.draw(texture, cameraCoordinates.x + texture.getRegionWidth() / 2.f, 
-					cameraCoordinates.y + texture.getRegionHeight() / 2.f, 
-					origin.x, origin.y, 
+			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
-	
-//	/**
-//	 * Returns the center of an entity.
-//	 * @param ent reference to an entity.
-//	 * @return the center of an entity.
-//	 */
-//	private static <T extends Entity> Vector2 getOrigin(T ent)
-//	{
-//		return new Vector2(ent.getWidth() / 2.f, ent.getHeight() / 2.f);
-//	}
 	
 	/**
 	 * Returns the center of an entity.
 	 * @param ent reference to an entity.
 	 * @return the center of an entity.
 	 */
-	private static Vector2 getOrigin(float width, float height)
+	private static <T extends Entity> Vector2 getOrigin(T ent)
 	{
-		return new Vector2(width / 2.f, height / 2.f);
+		return new Vector2(ent.getWidth() / 2.f, ent.getHeight() / 2.f);
 	}
 }
