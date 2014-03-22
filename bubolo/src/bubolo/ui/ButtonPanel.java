@@ -1,8 +1,12 @@
 package bubolo.ui;
 
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import bubolo.ui.Preferences.PreferencesController;
+import bubolo.ui.Preferences.PreferencesModel;
 import bubolo.ui.Preferences.PreferencesView;
 
 /**
@@ -78,8 +82,11 @@ public class ButtonPanel extends JPanel
 		@Override
 		public void actionPerformed(java.awt.event.ActionEvent evt)
 		{
-			PreferencesView ps = new PreferencesView();
-			ps.setVisible(true);
+			PreferencesModel pm = new PreferencesModel();
+			PreferencesView pv = new PreferencesView(pm);
+			// warning appears for pc, but the pc must be created
+			PreferencesController pc = new PreferencesController(pm, pv);
+			pv.setVisible(true);
 		}
 	});
 	

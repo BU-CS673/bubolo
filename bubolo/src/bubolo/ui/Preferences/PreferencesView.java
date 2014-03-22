@@ -1,6 +1,8 @@
 package bubolo.ui.Preferences;
 
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -10,9 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
-import java.awt.event.ActionListener;
-import bubolo.ui.UserInterface;
 
+import bubolo.ui.UserInterface;
 
 /**
  * View (display) class for the Preferences package
@@ -32,23 +33,27 @@ public class PreferencesView extends JFrame
 	private int SCREENSIZE_MIN = 1;
 	
 	private ImageIcon testIcon = new ImageIcon(UserInterface.ICONS_PATH + "test_sound.png");
+	
+	//private PreferencesController pc;
+	
+	private JButton saveBtn;
+	private JButton sfxTest;
+	private JButton mfxTest;
+	
+	private JSlider sfxSlider;
+	private JSlider mfxSlider;
+	private JSlider screenSize;
+	
+	private PreferencesModel pm;
 
-	private ChangeListener sfxVolChange;
-	private ChangeListener mfxVolChange;
-	
-	private ActionListener sndTest;
-	
-	private ActionListener saveButton;
-		
-	private ChangeListener screenSizeChange;
-	
-	
 	/**
 	 * Constructor will create a new PreferencesView (a JFrame window)
-	 * 
+	 * @param pm Preferences Model
 	 */	
-	public PreferencesView()
+	public PreferencesView(PreferencesModel pm)
 	{
+		this.pm = pm;
+		
 		// Set the Frame(Window) details & icons
 		setTitle("Preferences");
 		setLocationRelativeTo(null);
@@ -61,130 +66,235 @@ public class PreferencesView extends JFrame
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 				
 		// Add SFX and MFX Volume Sliders to the Main Panel
-		mainPanel.add(createVolSliderPanel("Sound", UserInterface.SFXVOL_DEFAULT, sfxVolChange, sndTest));
-		mainPanel.add(createVolSliderPanel("Music", UserInterface.MFXVOL_DEFAULT, mfxVolChange, sndTest));
+		mainPanel.add(createSfxVolSliderPanel());
+		mainPanel.add(createMfxVolSliderPanel());
 		
 		// Add Screen Size to the Main Panel
-		mainPanel.add(createScreenSizePanel(UserInterface.SCREENSIZE_DEFAULT));
+		mainPanel.add(createScreenSizePanel());
 		
 		// Add Save/Cancel to the Main Panel
 		mainPanel.add(createSaveCancelPanel());
-		
 		// Add Main Panel to the Frame (Window)
 		add(mainPanel);
 	}
 
-/**
- * Internal Only -- Creates a JPanel with the ScreenSize slider
- * @param currentSize The current Screen Size Setting
- * @return
- */
-private JPanel createScreenSizePanel(int currentSize)
-{
-	// Create the screen size panel
-	JPanel screenSizePanel = new JPanel();
-	screenSizePanel.setBorder(BorderFactory.createTitledBorder("Screen Size"));
-
-	// Create the Screen Size with MIN, MAX and DEFAULT
-	JSlider screenSize = new JSlider(SCREENSIZE_MIN, SCREENSIZE_MAX, currentSize);
-	
-	// Set the Ticking & Snapping
-	screenSize.setMajorTickSpacing(1);
-	screenSize.setPaintTicks(true);
-	screenSize.setSnapToTicks(true);
-	
-	// Set Small, Medium, Large labels
-	Hashtable<Integer, JLabel> screenSizeLabelTable = new Hashtable<Integer, JLabel>();
-	screenSizeLabelTable.put(new Integer(SCREENSIZE_MIN), new JLabel("Small"));
-	screenSizeLabelTable.put(new Integer(2), new JLabel("Normal"));
-	screenSizeLabelTable.put(new Integer(SCREENSIZE_MAX), new JLabel("Large"));
-	screenSize.setLabelTable(screenSizeLabelTable);
-	screenSize.setPaintLabels(true);
-	screenSize.setEnabled(false);
-	
-	// Set Event
-	screenSize.addChangeListener(screenSizeChange);
-	
-	// Add Screen Size to the Panel
-	screenSizePanel.add(screenSize);
-	
-	return screenSizePanel;
-}
-
-/**
- * Internal Only -- Creates a panel with Save/Cancel buttons
- * @return JPanel that represents the Save/Cancel buttons
- */
-private JPanel createSaveCancelPanel()
-{
-	// Create B
-	JPanel SaveCancelPanel = new JPanel();
-	SaveCancelPanel.setLayout(new BoxLayout(SaveCancelPanel, BoxLayout.LINE_AXIS));
-	
-	// Create the Save button
-	JButton saveBtn = new JButton("SAVE");
-	saveBtn.addActionListener(saveButton);
-	
-	// Create & Handle the Cancel button 
-	JButton cancelBtn = new JButton("CANCEL");
-	cancelBtn.addActionListener(new java.awt.event.ActionListener()
+	/**
+	 * Internal Only -- Creates a JPanel with the ScreenSize slider
+	 * @param currentSize The current Screen Size Setting
+	 * @return
+	 */
+	private JPanel createScreenSizePanel()
 	{
-		@Override
-		public void actionPerformed(java.awt.event.ActionEvent evt)
+		// Create the screen size panel
+		JPanel screenSizePanel = new JPanel();
+		screenSizePanel.setBorder(BorderFactory.createTitledBorder("Screen Size"));
+	
+		// Create the Screen Size with MIN, MAX and DEFAULT
+		screenSize = new JSlider(SCREENSIZE_MIN, SCREENSIZE_MAX, pm.getScreenSize());
+		
+		// Set the Ticking & Snapping
+		screenSize.setMajorTickSpacing(1);
+		screenSize.setPaintTicks(true);
+		screenSize.setSnapToTicks(true);
+		
+		// Set Small, Medium, Large labels
+		Hashtable<Integer, JLabel> screenSizeLabelTable = new Hashtable<Integer, JLabel>();
+		screenSizeLabelTable.put(new Integer(SCREENSIZE_MIN), new JLabel("Small"));
+		screenSizeLabelTable.put(new Integer(2), new JLabel("Normal"));
+		screenSizeLabelTable.put(new Integer(SCREENSIZE_MAX), new JLabel("Large"));
+		screenSize.setLabelTable(screenSizeLabelTable);
+		screenSize.setPaintLabels(true);
+		
+		// Add Screen Size to the Panel
+		screenSizePanel.add(screenSize);
+		
+		return screenSizePanel;
+	}
+	
+	/**
+	 * Internal Only -- Creates a panel with Save/Cancel buttons
+	 * @return JPanel that represents the Save/Cancel buttons
+	 */
+	private JPanel createSaveCancelPanel()
+	{
+		// Create B
+		JPanel SaveCancelPanel = new JPanel();
+		SaveCancelPanel.setLayout(new BoxLayout(SaveCancelPanel, BoxLayout.LINE_AXIS));
+		
+		// Create the Save button
+		saveBtn = new JButton("SAVE");
+		
+		// Create & Handle the Cancel button 
+		JButton cancelBtn = new JButton("CANCEL");
+		cancelBtn.addActionListener(new java.awt.event.ActionListener()
 		{
-			System.exit(0);
-		}
-	});
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				System.exit(0);
+			}
+		});
+		
+		SaveCancelPanel.add(saveBtn);
+		SaveCancelPanel.add(cancelBtn);
+		
+		return SaveCancelPanel;
+	}
 	
-	SaveCancelPanel.add(saveBtn);
-	SaveCancelPanel.add(cancelBtn);
+	/**
+	 * Provides the current Preference Slider's Position
+	 * @return sfXSlider int the current slider value
+	 */
+	public int getSFXVol()
+	{
+		return sfxSlider.getValue();
+	}
 	
-	return SaveCancelPanel;
-}
-
-/**
- * Internal Only -- Creates a JPanel with a volume slider and test button
- * @param name The name of the volume slider (e.g. Sound Effects, Music)
- * @param currentVol The current volume the slider should be positioned at
- * @param changeListener The slider change event
- * @param actionListener The test button pushed event
- * @return JPanel with titled border, slider and test button
- */
-private JPanel createVolSliderPanel(String name, int currentVol, ChangeListener changeListener, ActionListener actionListener)
+	/**
+	 * Provides the current Preference Slider's Position
+	 * @return mfXSlider int the current slider value
+	 */
+	public int getMFXVol()
+	{
+		return mfxSlider.getValue();
+	}
+	
+	/**
+	 * Provides the current Preference Slider's Position
+	 * @return screenSize int the current slider value
+	 */
+	public int getScreenSize()
+	{
+		return screenSize.getValue();
+	}
+	
+	/**
+	 * Internal Only -- Creates a JPanel with a volume slider and test button
+	 * @return JPanel with titled border, slider and test button
+	 */
+	private JPanel createSfxVolSliderPanel()
 	{	
-	// Create the panel
-	JPanel volPanel = new JPanel();
+		// Create the panel
+		JPanel sfxVolPanel = new JPanel();
+		
+		// Set Border Title which appears on the GUI
+		sfxVolPanel.setBorder(BorderFactory.createTitledBorder("Sound Effects Volume"));
+		
+		// Create the slider
+		sfxSlider = new JSlider(VOL_MIN, VOL_MAX, pm.getSfxVol());
+		
+		// Set tick marks
+		sfxSlider.setMajorTickSpacing(10);
+		sfxSlider.setPaintTicks(true);
+		
+		// Create labels at the extreme ends of the slider
+		Hashtable<Integer, JLabel> sfxVolLabelTable = new Hashtable<Integer, JLabel>();
+		sfxVolLabelTable.put(new Integer(VOL_MIN), new JLabel("Mute"));
+		sfxVolLabelTable.put(new Integer(VOL_MAX), new JLabel("11"));
+		sfxSlider.setLabelTable(sfxVolLabelTable);
+		sfxSlider.setPaintLabels(true);
+		
+		// Add the volume slider to the panel
+		sfxVolPanel.add(sfxSlider);
+		
+		// Create a sound test button
+		sfxTest = new JButton(testIcon);
+		
+		// Add the volume test button to the panel
+		sfxVolPanel.add(sfxTest);
 	
-	// Set Border Title which appears on the GUI
-	volPanel.setBorder(BorderFactory.createTitledBorder(name + "Volume"));
-	
-	// Create the slider
-	JSlider volSlider = new JSlider(VOL_MIN, VOL_MAX, currentVol);
-	
-	// Set tick marks
-	volSlider.setMajorTickSpacing(10);
-	volSlider.setPaintTicks(true);
-	
-	// Create labels at the extreme ends of the slider
-	Hashtable<Integer, JLabel> volLabelTable = new Hashtable<Integer, JLabel>();
-	volLabelTable.put(new Integer(VOL_MIN), new JLabel("Mute"));
-	volLabelTable.put(new Integer(VOL_MAX), new JLabel("11"));
-	volSlider.setLabelTable(volLabelTable);
-	volSlider.setPaintLabels(true);
-	
-	// Take action when the slider is updated
-	volSlider.addChangeListener(changeListener);
-	
-	// Add the volume slider to the panel
-	volPanel.add(volSlider);
-	
-	// Create a sound test button
-	JButton volTest = new JButton(testIcon);
-	volTest.addActionListener(actionListener);
-	
-	// Add the volume test button to the panel
-	volPanel.add(volTest);
+		return sfxVolPanel;	
+	}
 
-	return volPanel;	
-	}	
+	/**
+	 * Internal Only -- Creates a JPanel with a volume slider and test button
+	 * @return JPanel with titled border, slider and test button
+	 */
+	private JPanel createMfxVolSliderPanel()
+	{	
+		// Create the panel
+		JPanel mfxVolPanel = new JPanel();
+		
+		// Set Border Title which appears on the GUI
+		mfxVolPanel.setBorder(BorderFactory.createTitledBorder("Music Volume"));
+		
+		// Create the slider
+		mfxSlider = new JSlider(VOL_MIN, VOL_MAX, pm.getMfxVol());
+		
+		// Set tick marks
+		mfxSlider.setMajorTickSpacing(10);
+		mfxSlider.setPaintTicks(true);
+		
+		// Create labels at the extreme ends of the slider
+		Hashtable<Integer, JLabel> mfxVolLabelTable = new Hashtable<Integer, JLabel>();
+		mfxVolLabelTable.put(new Integer(VOL_MIN), new JLabel("Mute"));
+		mfxVolLabelTable.put(new Integer(VOL_MAX), new JLabel("11"));
+		mfxSlider.setLabelTable(mfxVolLabelTable);
+		mfxSlider.setPaintLabels(true);
+		
+		// Add the volume slider to the panel
+		mfxVolPanel.add(mfxSlider);
+		
+		// Create a sound test button
+		mfxTest = new JButton(testIcon);
+		
+		// Add the volume test button to the panel
+		mfxVolPanel.add(mfxTest);
+	
+		return mfxVolPanel;	
+	}
+
+	/**
+	 * Save Button event listener
+	 * @param event returns the event
+	 */
+	void saveListener(ActionListener event)
+	{
+		saveBtn.addActionListener(event);
+	}
+	
+	/**
+	 * SFX Slider event listener
+	 * @param event returns the event
+	 */
+	void sfxSliderListener(ChangeListener event)
+	{
+		sfxSlider.addChangeListener(event);
+	}
+	
+	/**
+	 * Music Slider event listener
+	 * @param event returns the event
+	 */
+	void musicSliderListener(ChangeListener event)
+	{
+		mfxSlider.addChangeListener(event);
+	}
+	
+	/**
+	 * Screen Size Slider event listener
+	 * @param event
+	 */
+	void screenSizeListener(ChangeListener event)
+	{
+		screenSize.addChangeListener(event);
+	}
+	
+	/**
+	 * SFX Test button listener
+	 * @param event returns the event
+	 */
+	void sfxTestListener(ActionListener event)
+	{
+		sfxTest.addActionListener(event);
+	}
+	
+	/**
+	 * Music Test button listener
+	 * @param event returns the event
+	 */
+	void mfxTestListener(ActionListener event)
+	{
+		mfxTest.addActionListener(event);
+	}
 }

@@ -1,7 +1,10 @@
 package bubolo.ui.Preferences;
 
-import javax.swing.JSlider;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Controller class for Preferences, handles disk activity for Models
@@ -11,48 +14,116 @@ import javax.swing.event.ChangeEvent;
 
 public class PreferencesController
 {
+	/**
+	 * PreferencesModel used by the PreferencesController
+	 */
+	private PreferencesModel pm;
 	
-	private PreferencesModel prefs;
+	/**
+	 * PreferencesView used by the PreferenceController
+	 */
+	private PreferencesView pv;
+	
 	
 	/**
 	 * Constructor will create a new PreferencesController
-	 * @param prefs the PreferencesModel to use
+	 * @param pm the PreferencesModel to use
+	 * @param pv the PreferencesView to use
 	 */
-	public PreferencesController(PreferencesModel prefs)
+	public PreferencesController(PreferencesModel pm, PreferencesView pv)
 	{
-		this.prefs = prefs;
+		// Setup the local variables
+		this.pm = pm;
+		this.pv = pv;
+		
+		// Setup the Listeners
+		pv.musicSliderListener(new MusicSliderListener());
+		pv.sfxSliderListener(new SfxSliderListener());
+		pv.screenSizeListener(new ScreenSizeListener());
+		pv.saveListener(new SaveListener());
+		pv.sfxTestListener(new SfxTestListener());
+		pv.mfxTestListener(new MfxTestListener());
 	}
 	
 	/**
-	 * Does nothing at the moment, will eventually save to disk
-	 * @return true if the operation is completed successfully
+	 * Saves the current PreferenceModel to disk
+	 * TODO: Write this
+	 * @author BU CS673 - Clone Productions
 	 */
-	public boolean saveToDisk()
+	class SaveListener implements ActionListener
 	{
-		//TODO: Eventually add some code here instead of just printing to console
-		System.out.println("SFXVol:" + prefs.getSfxVol() + " MFXVol:" + prefs.getMfxVol() + " ScreenSize:" + prefs.getScreenSize() + " saved!");
-		return true;
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("Save");
+		}
 	}
 	
 	/**
-	 * Does nothing at the moment, will eventually load from disk
-	 * @return PreferenceModel loaded from disk
+	 * Plays a Sound Effect test
+	 * @author BU CS673 - Clone Productions
 	 */
-	public PreferencesModel loadFromDisk()
+	class SfxTestListener implements ActionListener
 	{
-		//TODO: Load stuff, and things
-		return prefs;
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("SFX Test");
+		}
 	}
 	
-
-/**
- * Handles changes 
- * @param ce
- */
-	public void stateChanged(ChangeEvent ce)
+	/**
+	 * Plays a Music Test
+	 * @author BU CS673 - Clone Productions
+	 */
+	class MfxTestListener implements ActionListener
 	{
-		int newVol = ((JSlider)ce.getSource()).getValue();
-		System.out.print(newVol + "; "); 
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			System.out.println("MFX Test");
+		}
 	}
 	
+	/**
+	 * Updates PreferencesModel when the Music Slider is moved
+	 * @author BU CS673 - Clone Productions
+	 */
+	class MusicSliderListener implements ChangeListener
+	{
+		@Override
+		public void stateChanged(ChangeEvent ce)
+		{
+			pm.setMfxVol(pv.getMFXVol());
+			System.out.println("New MVol: " + pv.getMFXVol());
+		}
+	}
+	
+	/**
+	 * Updates PreferencesModel when the SFX Slider is moved
+	 * @author BU CS673 - Clone Productions
+	 */
+	class SfxSliderListener implements ChangeListener
+	{
+		@Override
+		public void stateChanged(ChangeEvent ce)
+		{
+			pm.setSfxVol(pv.getSFXVol());
+			System.out.println("New SVol: " + pv.getSFXVol());
+		}
+	}
+	
+	/**
+	 * Updates PreferencesModel when the Screen Slider is moved
+	 * @author BU CS673 - Clone Productions
+	 */
+	class ScreenSizeListener implements ChangeListener
+	{
+		@Override
+		public void stateChanged(ChangeEvent ce)
+		{
+			pm.setScreenSize(pv.getScreenSize());
+			System.out.println("New SS: " + pv.getScreenSize());
+		}
+	}
 }
