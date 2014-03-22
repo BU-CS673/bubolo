@@ -2,8 +2,6 @@ package bubolo.ui;
 
 import javax.swing.*;
 
-import bubolo.graphics.Graphics;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
@@ -50,7 +48,7 @@ public class AltMenuScreen extends JFrame
 		setSize(500,500);
 		setLayout(new GridLayout(2,1));
 		setLocationRelativeTo(null);
-		setIconImage(new ImageIcon(Graphics.TEXTURE_PATH + "tank_icon.png").getImage());
+		setIconImage(UserInterface.gameIcon.getImage());
 		setResizable(false);
 		
 		// Add the MainPanel which contains our logo/title

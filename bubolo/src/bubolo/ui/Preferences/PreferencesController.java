@@ -1,4 +1,8 @@
 package bubolo.ui.Preferences;
+
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+
 /**
  * Controller class for Preferences, handles disk activity for Models
  * 
@@ -8,7 +12,7 @@ package bubolo.ui.Preferences;
 public class PreferencesController
 {
 	
-	PreferencesModel prefs;
+	private PreferencesModel prefs;
 	
 	/**
 	 * Constructor will create a new PreferencesController
@@ -38,6 +42,17 @@ public class PreferencesController
 	{
 		//TODO: Load stuff, and things
 		return prefs;
+	}
+	
+
+/**
+ * Handles changes 
+ * @param ce
+ */
+	public void stateChanged(ChangeEvent ce)
+	{
+		int newVol = ((JSlider)ce.getSource()).getValue();
+		System.out.print(newVol + "; "); 
 	}
 	
 }

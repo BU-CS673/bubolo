@@ -1,5 +1,7 @@
 package bubolo.ui.Preferences;
 
+import bubolo.ui.UserInterface;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -9,12 +11,6 @@ import com.google.common.base.Preconditions;
  */
 public class PreferencesModel
 {
-
-	// Defaults
-	private int SFXVOL_DEFAULT = 35;
-	private int MFXVOL_DEFAULT = 35;
-	private int SCREENSIZE_DEFAULT = 2;
-	
 	// Private variables that make up the valuable data
 	private int sfxVol;
 	private int mfxVol;
@@ -27,9 +23,9 @@ public class PreferencesModel
 	 */
 	public PreferencesModel()
 	{
-		setSfxVol(SFXVOL_DEFAULT);
-		setMfxVol(MFXVOL_DEFAULT);
-		setScreenSize(SCREENSIZE_DEFAULT);
+		setSfxVol(UserInterface.SFXVOL_DEFAULT);
+		setMfxVol(UserInterface.MFXVOL_DEFAULT);
+		setScreenSize(UserInterface.SCREENSIZE_DEFAULT);
 	}
 	
 	/**
@@ -39,7 +35,7 @@ public class PreferencesModel
 	 */
 	public void setSfxVol(int sfxVol)
 	{
-		Preconditions.checkArgument(sfxVol >= 0, "Sound effect volume was less than zero: %s", sfxVol);
+		Preconditions.checkArgument(sfxVol >= 0, "Sound effect volume was less than 0: %s", sfxVol);
 		Preconditions.checkArgument(sfxVol <= 100, "Sound effect volume was greater than 100: %s", sfxVol);
 		this.sfxVol = sfxVol;
 	}
@@ -60,8 +56,8 @@ public class PreferencesModel
 	 */
 	public void setMfxVol(int mfxVol)
 	{
-		Preconditions.checkArgument(mfxVol >= 0, "Sound effect volume was less than zero: %s", mfxVol);
-		Preconditions.checkArgument(mfxVol <= 100, "Sound effect volume was greater than 100: %s", mfxVol);
+		Preconditions.checkArgument(mfxVol >= 0, "Music volume was less than 0: %s", mfxVol);
+		Preconditions.checkArgument(mfxVol <= 100, "Music volume was greater than 100: %s", mfxVol);
 		this.mfxVol = mfxVol;
 	}
 	
@@ -79,15 +75,11 @@ public class PreferencesModel
 	 * @param screenSize the new screen size, ranging from 1 to 3.
 	 * @throws IllegalArgumentException if screenSize is less than 1 or greater than 3.
 	 */
-	public boolean setScreenSize(int screenSize)
+	public void setScreenSize(int screenSize)
 	{
-		if ((screenSize >= 0) && (screenSize <= 100))
-		{
-			this.screenSize = screenSize;
-			return true;
-		}
-		else
-			return false;
+		Preconditions.checkArgument(screenSize >= 1, "Screen was less than 1: %s", screenSize);
+		Preconditions.checkArgument(screenSize <= 3, "Music volume was greater than 3: %s", screenSize);
+		this.screenSize = screenSize;
 	}
 	
 	/**
