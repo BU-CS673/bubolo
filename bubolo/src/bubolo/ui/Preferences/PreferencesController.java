@@ -31,6 +31,7 @@ public class PreferencesController
 	 */
 	public void showView()
 	{
+		pv.updateView(pm);
 		pv.setVisible(true);
 	}
 	
@@ -53,6 +54,14 @@ public class PreferencesController
 		this.pv.cancelListener(new CancelListener());
 		this.pv.sfxTestListener(new SfxTestListener());
 		this.pv.mfxTestListener(new MfxTestListener());
+		
+		PreferencesManager pmgr = new PreferencesManager();
+		PreferencesModel pmtemp = new PreferencesModel();
+		pmtemp = pmgr.LoadPreference();
+		
+		this.pm.setMfxVol(pmtemp.getMfxVol());
+		this.pm.setScreenSize(pmtemp.getScreenSize());
+		this.pm.setSfxVol(pmtemp.getSfxVol());
 	}
 	
 	/**

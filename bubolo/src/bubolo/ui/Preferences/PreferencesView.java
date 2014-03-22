@@ -198,6 +198,17 @@ public class PreferencesView extends JFrame
 	}
 
 	/**
+	 * Updates the panel
+	 * @param updatedpm preferences to use for the update
+	 */
+	public void updateView(PreferencesModel updatedpm)
+	{
+		mfxSlider.setValue(updatedpm.getMfxVol());
+		sfxSlider.setValue(updatedpm.getSfxVol());
+		screenSize.setValue(updatedpm.getScreenSize());
+	}
+	
+	/**
 	 * Internal Only -- Creates a JPanel with a volume slider and test button
 	 * @return JPanel with titled border, slider and test button
 	 */

@@ -20,8 +20,19 @@ public class ButtonPanel extends JPanel
 	 */
 	private static final long serialVersionUID = -1624357058854582729L;
 	
+	/**
+	 * Preferences Model used by the game 
+	 */
 	public PreferencesModel pm = new PreferencesModel();
+	
+	/**
+	 * Preference View used by the game
+	 */
 	public PreferencesView pv = new PreferencesView(pm);
+	
+	/**
+	 * Preferences Controller used by the game 
+	 */
 	public PreferencesController pc = new PreferencesController(pm, pv);
 	
 	/**
