@@ -51,7 +51,7 @@ class BaseSprite extends Sprite<Base>
 	 * be directly created outside of the graphics system (instead, call the
 	 * Sprite.create(entity) static method).
 	 * 
-	 * @param tree
+	 * @param base
 	 *            Reference to the Base that this BaseSprite represents.
 	 */
 	BaseSprite(Base base)

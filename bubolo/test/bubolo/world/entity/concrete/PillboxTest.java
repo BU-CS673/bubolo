@@ -22,12 +22,6 @@ public class PillboxTest
 	}
 
 	@Test
-	public void Pillbox()
-	{
-		assert (true);
-	}
-
-	@Test
 	public void isLocalPlayer()
 	{
 		pillbox.setLocalPlayer(true);

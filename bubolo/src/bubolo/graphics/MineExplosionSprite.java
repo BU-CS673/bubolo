@@ -38,7 +38,7 @@ class MineExplosionSprite extends Sprite<Entity>
 	 * Constructor for the MineExplosionSprite. This is Package-private because sprites
 	 * should not be directly created outside of the graphics system.
 	 * 
-	 * @param bullet
+	 * @param exp
 	 *            Reference to the MineExplosion that this MineExplosionSprite represents.
 	 */
 	MineExplosionSprite(MineExplosion exp)
