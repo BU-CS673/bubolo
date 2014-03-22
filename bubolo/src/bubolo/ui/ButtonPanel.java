@@ -23,17 +23,17 @@ public class ButtonPanel extends JPanel
 	/**
 	 * Preferences Model used by the game 
 	 */
-	public PreferencesModel pm = new PreferencesModel();
+	public final PreferencesModel pm = new PreferencesModel();
 	
 	/**
 	 * Preference View used by the game
 	 */
-	public PreferencesView pv = new PreferencesView(pm);
+	public final PreferencesView pv = new PreferencesView(pm);
 	
 	/**
 	 * Preferences Controller used by the game 
 	 */
-	public PreferencesController pc = new PreferencesController(pm, pv);
+	public final PreferencesController pc = new PreferencesController(pm, pv);
 	
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
