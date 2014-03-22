@@ -55,6 +55,10 @@ public class PreferencesController
 		this.pv.mfxTestListener(new MfxTestListener());
 	}
 	
+	/**
+	 * Returns the current Sound Effects Volume
+	 * @return the current Sound Effects Volume
+	 */
 	public int getSfxVol()
 	{
 		return pm.getSfxVol();
