@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import bubolo.util.PreferencesManager;
+
 /**
  * Controller class for Preferences, handles disk activity for Models
  * 
@@ -69,6 +71,8 @@ public class PreferencesController
 		public void actionPerformed(ActionEvent e)
 		{
 			System.out.println("Save");
+			PreferencesManager pmgr = new PreferencesManager();
+			pmgr.SavePreference(pm);
 		}
 	}
 	
