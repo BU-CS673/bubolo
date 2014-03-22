@@ -43,8 +43,9 @@ class GrassSprite extends Sprite<Grass>
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, frames[0][0]);
-
+//			drawTexture(batch, camera, layer, frames[0][0]);
+//			drawTexture(batch, camera, layer, new TextureRegion(image, 48, 48));
+			drawTexture(batch, camera, layer, image);
 		}
 	}
 }

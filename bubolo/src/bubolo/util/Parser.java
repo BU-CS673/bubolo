@@ -85,7 +85,7 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, world.addEntity(LayerOneSwitch(dataString)));
 							Tile t = mapTiles[j][tileYIndex];
-							//t.getTerrain().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
+//							t.getTerrain().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
 				}
 			}
 
@@ -104,7 +104,7 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							mapTiles[j][tileYIndex].setElement((StationaryElement) world.addEntity(LayerTwoSwitch(dataString)));
 							Tile t = mapTiles[j][tileYIndex];
-							//t.getElement().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
+//							t.getElement().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
 						}
 					}
 				}
