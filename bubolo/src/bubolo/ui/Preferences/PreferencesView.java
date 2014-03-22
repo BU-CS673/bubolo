@@ -29,11 +29,14 @@ public class PreferencesView extends JFrame
 	private int VOL_MAX = 100;
 	private int VOL_MIN = 0;
 	
+	// Screen Size Max/Min
 	private int SCREENSIZE_MAX = 3;
 	private int SCREENSIZE_MIN = 1;
 	
+	// The Sound Test icon
 	private ImageIcon testIcon = new ImageIcon(UserInterface.ICONS_PATH + "test_sound.png");
 	
+	// Declaration of the controls that will appear on the window
 	private JButton cancelBtn;
 	private JButton saveBtn;
 	private JButton sfxTest;
@@ -43,6 +46,7 @@ public class PreferencesView extends JFrame
 	private JSlider mfxSlider;
 	private JSlider screenSize;
 	
+	// Declation of the PreferencesModel that will be used
 	private PreferencesModel pm;
 
 	/**
@@ -73,6 +77,7 @@ public class PreferencesView extends JFrame
 		
 		// Add Save/Cancel to the Main Panel
 		mainPanel.add(createSaveCancelPanel());
+		
 		// Add Main Panel to the Frame (Window)
 		add(mainPanel);
 	}
@@ -116,19 +121,21 @@ public class PreferencesView extends JFrame
 	 */
 	private JPanel createSaveCancelPanel()
 	{
-		// Create B
+		// Create Panel
 		JPanel SaveCancelPanel = new JPanel();
 		SaveCancelPanel.setLayout(new BoxLayout(SaveCancelPanel, BoxLayout.LINE_AXIS));
 		
 		// Create the Save button
 		saveBtn = new JButton("SAVE");
 		
-		// Create & Handle the Cancel button 
+		// Create the Cancel button 
 		cancelBtn = new JButton("CANCEL");
 
+		// Add the buttons to the panel
 		SaveCancelPanel.add(saveBtn);
 		SaveCancelPanel.add(cancelBtn);
 		
+		// Return the panel
 		return SaveCancelPanel;
 	}
 
@@ -157,6 +164,17 @@ public class PreferencesView extends JFrame
 	public int getScreenSize()
 	{
 		return screenSize.getValue();
+	}
+	
+	/**
+	 * Updates the panel
+	 * @param updatedPreferencesModel preferences to use for the update
+	 */
+	public void updateView(PreferencesModel updatedPreferencesModel)
+	{
+		mfxSlider.setValue(updatedPreferencesModel.getMfxVol());
+		sfxSlider.setValue(updatedPreferencesModel.getSfxVol());
+		screenSize.setValue(updatedPreferencesModel.getScreenSize());
 	}
 	
 	/**
@@ -195,17 +213,6 @@ public class PreferencesView extends JFrame
 		sfxVolPanel.add(sfxTest);
 	
 		return sfxVolPanel;	
-	}
-
-	/**
-	 * Updates the panel
-	 * @param updatedpm preferences to use for the update
-	 */
-	public void updateView(PreferencesModel updatedpm)
-	{
-		mfxSlider.setValue(updatedpm.getMfxVol());
-		sfxSlider.setValue(updatedpm.getSfxVol());
-		screenSize.setValue(updatedpm.getScreenSize());
 	}
 	
 	/**

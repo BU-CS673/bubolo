@@ -35,6 +35,26 @@ public class PreferencesModel implements Serializable
 	}
 	
 	/**
+	 * This get will return the current Preferences Model
+	 * @return returns this object
+	 */
+	public PreferencesModel get()
+	{
+		return this;
+	}
+	
+	/**
+	 * Will set all values within this PreferencesModel object to be equal to the PreferencesModel passed to it
+	 * @param newPrefModel the PreferencesModel you want to make this PreferencesModel equal to
+	 */
+	public void set(PreferencesModel newPrefModel)
+	{
+		this.setSfxVol(newPrefModel.getSfxVol());
+		this.setMfxVol(newPrefModel.getMfxVol());
+		this.setScreenSize(newPrefModel.getScreenSize());
+	}
+	
+	/**
 	 * Sets the sound effect volume, from 0 (mute) to 100 (max volume).
 	 * @param sfxVol the new sound effect volume, ranging from 0 to 100.
 	 * @throws IllegalArgumentException if sfxVol is less than 0 or greater than 100.
