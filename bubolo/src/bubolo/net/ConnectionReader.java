@@ -37,6 +37,8 @@ class ConnectionReader implements Runnable
 			throw new NetworkException(e);
 		}
 		this.isActive = new AtomicBoolean(true);
+		
+		System.out.println("Connection received from: " + socket.getInetAddress().toString());
 	}
 	
 	/**

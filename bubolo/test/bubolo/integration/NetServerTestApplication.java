@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -73,6 +75,9 @@ public class NetServerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Network net = NetworkSystem.getInstance();
+		net.startServer();
+		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
 		world = new GameWorld(32*94, 32*94);

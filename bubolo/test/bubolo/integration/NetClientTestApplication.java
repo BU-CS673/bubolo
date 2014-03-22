@@ -13,6 +13,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -31,6 +33,9 @@ public class NetClientTestApplication implements GameApplication
         System.out.print("Server IP Address: ");
         String addressString = br.readLine();
         InetAddress address = Inet4Address.getByName(addressString);
+        
+        Network net = NetworkSystem.getInstance();
+        net.connect(address);
 		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Client Integration";
