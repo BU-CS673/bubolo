@@ -74,8 +74,8 @@ public class Parser
 			Terrain newTerrain = null;
 			StationaryElement newSE = null;
 
-			world = new GameWorld(WORLD_UNIT_CONVERSION * mapHeight, WORLD_UNIT_CONVERSION
-					* mapWidth);
+			world = new GameWorld(WORLD_UNIT_CONVERSION * mapWidth, WORLD_UNIT_CONVERSION
+					* mapHeight);
 
 			for (int i = 0; i < mapHeight; i++)
 			{

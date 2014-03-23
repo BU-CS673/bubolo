@@ -80,7 +80,7 @@ public class ParserTestApplication implements GameApplication
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
 		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
 		{
 			world = fileParser.parseMap(path);
