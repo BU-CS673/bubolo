@@ -1,6 +1,7 @@
 package bubolo.util;
 
 import java.io.BufferedReader;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,17 +22,31 @@ import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.*;
 
+/**
+ * The Parser object. The game utility to translate a give map file into a game world to be executed.
+ * 
+ * @author BU673 - Clone Productions
+ */
+
 public class Parser
 {
 
 	private static final int WORLD_UNIT_CONVERSION = 32;
 	private static Parser currentParser = null;
 
+	
+	/**
+	 * Parser is a singleton object. No need for multiple parsers within one instance of the application.
+	 */
 	protected Parser()
 	{
 
 	}
 
+	/**
+	 * Generates new parser or returns existing object. Lazy instantiation is used.  
+	 * @return
+	 */
 	public static Parser getInstance()
 	{
 		if (currentParser == null)
@@ -42,6 +57,12 @@ public class Parser
 		return currentParser;
 	}
 
+	/**
+	 * Define a Path to a valid map to parse and receive a GameWorld based on the given map.
+	 * @param mapPath
+	 * @return
+	 * @throws ParseException
+	 */
 	public GameWorld parseMap(Path mapPath) throws ParseException
 	{
 		int mapHeight = 0;
@@ -129,7 +150,12 @@ public class Parser
 		return world;
 	}
 
-	private static Class<? extends Terrain> LayerOneSwitch(String input)
+	/**
+	 * The following switches are used to more clearly show the logic for deciding what object the mapParser will create.
+	 * @param input
+	 * @return
+	 */
+	private static Class<? extends Terrain> LayerOneSwitch(String input) throws InvalidMapException
 	{
 		switch (input)
 		{
@@ -149,7 +175,7 @@ public class Parser
 			return Road.class;
 
 		default:
-			return Grass.class;
+			throw new InvalidMapException("Invalid terrain type within map file");
 		}
 	}
 
@@ -180,9 +206,11 @@ public class Parser
 			/*
 			 * case "13": return PlayerSpawn.class;
 			 */
-
-		default:
+		case "0":
 			return null;
+			
+		default:
+			throw new InvalidMapException("Invalid terrain type within map file");
 		}
 	}
 }
