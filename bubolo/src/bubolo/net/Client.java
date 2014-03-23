@@ -57,6 +57,9 @@ class Client implements NetworkSubsystem, Runnable
 		try
 		{
 			server = new Socket(serverIpAddress, NetworkInformation.GAME_PORT);
+			
+			// Start the network reader thread.
+			new Thread(this).start();
 		}
 		catch (IOException e)
 		{

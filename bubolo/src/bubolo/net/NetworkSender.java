@@ -37,8 +37,9 @@ class NetworkSender implements Runnable
 	@Override
 	public void run()
 	{
-		try (ObjectOutputStream stream = new ObjectOutputStream(client.getOutputStream()))
+		try
 		{
+			ObjectOutputStream stream = new ObjectOutputStream(client.getOutputStream());
 			stream.writeObject(command);
 		}
 		catch (IOException e)

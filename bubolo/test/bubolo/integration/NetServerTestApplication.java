@@ -36,6 +36,7 @@ public class NetServerTestApplication implements GameApplication
 	
 	private Graphics graphics;
 	private World world;
+	private Network network;
 	
 	private long lastUpdate;
 	
@@ -76,10 +77,10 @@ public class NetServerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
-		Network net = NetworkSystem.getInstance();
-		net.startServer();
+		network = NetworkSystem.getInstance();
+		network.startServer();
 		
-		net.send(new HelloNetworkCommand("Hello from the server"));
+		network.send(new HelloNetworkCommand("Hello from the server."));
 		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
@@ -108,6 +109,7 @@ public class NetServerTestApplication implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
+		network.update(world);
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();

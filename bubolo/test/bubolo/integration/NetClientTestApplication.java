@@ -15,6 +15,7 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.net.command.HelloNetworkCommand;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -50,6 +51,7 @@ public class NetClientTestApplication implements GameApplication
 	
 	private Graphics graphics;
 	private World world;
+	private Network network;
 	
 	private long lastUpdate;
 	
@@ -95,6 +97,9 @@ public class NetClientTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		network = NetworkSystem.getInstance();
+		network.send(new HelloNetworkCommand("Hello from the client."));
+		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
 		world = new GameWorld(32*94, 32*94);
@@ -122,6 +127,7 @@ public class NetClientTestApplication implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
+		network.update(world);
 		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
 		long currentMillis = System.currentTimeMillis();
