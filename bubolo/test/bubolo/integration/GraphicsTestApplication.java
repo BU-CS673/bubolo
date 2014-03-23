@@ -89,7 +89,7 @@ public class GraphicsTestApplication implements GameApplication
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(50*30, 50*30);
+		world = new GameWorld(50*32, 50*32);
 		
 		for (int i = 0; i < 50; i++)
 		{
