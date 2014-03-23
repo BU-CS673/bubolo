@@ -72,6 +72,10 @@ public class KeyboardTankController implements Controller
 	{
 		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady())
 		{
+<<<<<<< HEAD
+			// TODO: pull the tank's width & height directly instead of hard-coding them.
+=======
+>>>>>>> production
 			float tankCenterX = tank.getX() + 16;
 			float tankCenterY = tank.getY() + 16;
 
