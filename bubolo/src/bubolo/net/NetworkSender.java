@@ -38,7 +38,10 @@ class NetworkSender implements Runnable
 	{
 		try
 		{
-			stream.writeObject(command);
+			synchronized(stream)
+			{
+				stream.writeObject(command);
+			}
 		}
 		catch (IOException e)
 		{

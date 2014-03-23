@@ -98,4 +98,13 @@ public class CreateEntity implements NetworkCommand
 
 		entity.setX(x).setY(y).setRotation(rotation);
 	}
+	
+	/**
+	 * Returns the entity's unique id.
+	 * @return the entity's unique id.
+	 */
+	protected UUID getId()
+	{
+		return id;
+	}
 }
