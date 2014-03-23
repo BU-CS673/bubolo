@@ -189,7 +189,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 *            reference to an entity.
 	 * @return the center of an entity.
 	 */
-	private static <T extends Entity> Vector2 getOrigin(float width, float height)
+	private static Vector2 getOrigin(float width, float height)
 	{
 		return new Vector2(width / 2.f, height / 2.f);
 	}
