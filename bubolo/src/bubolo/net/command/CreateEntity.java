@@ -24,8 +24,8 @@ public class CreateEntity implements NetworkCommand
 	private final Class<? extends Entity> type;
 	private final UUID id;
 
-	private final float x;
-	private final float y;
+	private final int x;
+	private final int y;
 
 	private final float rotation;
 
@@ -41,8 +41,8 @@ public class CreateEntity implements NetworkCommand
 	{
 		this.type = type;
 		this.id = id;
-		this.x = x;
-		this.y = y;
+		this.x = (int)x;
+		this.y = (int)y;
 		this.rotation = rotation;
 	}
 
