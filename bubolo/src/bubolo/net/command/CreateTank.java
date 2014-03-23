@@ -24,14 +24,16 @@ public class CreateTank extends CreateEntity
 	 * @param tank
 	 *            reference to the tank that should be created on network players' computers.
 	 */
-	public CreateTank(final Tank tank)
+	public CreateTank(Tank tank)
 	{
 		super(Tank.class, tank.getId(), tank.getX(), tank.getY(), tank.getRotation(),
 				new ControllerFactory() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void create(Entity entity)
 					{
-						tank.addController(new NetworkTankController());
+						entity.addController(new NetworkTankController());
 					}
 				});
 	}

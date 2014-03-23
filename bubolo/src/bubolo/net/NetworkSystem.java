@@ -25,7 +25,7 @@ public class NetworkSystem implements Network
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 
-	private static Network instance;
+	private static volatile Network instance;
 	
 	/**
 	 * Returns the network system instance.

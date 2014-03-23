@@ -16,6 +16,7 @@ import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateEntity;
+import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
@@ -116,7 +117,7 @@ public class NetClientTestApplication implements GameApplication
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(400, 100, 32, 32, 0);
 		
-		network.send(new CreateEntity(Tank.class, tank.getId(), tank.getX(), tank.getY(), tank.getRotation()));
+		network.send(new CreateTank(tank));
 		
 		ready = true;
 	}
