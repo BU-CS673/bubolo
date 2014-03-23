@@ -89,4 +89,10 @@ public class MockWorld implements World
 		return null;
 	}
 
+	@Override
+	public List<Entity> getTanks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

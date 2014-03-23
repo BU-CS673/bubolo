@@ -14,6 +14,7 @@ import bubolo.controllers.Controllers;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * The concrete implementation of the World interface. GameWorld is the sole owner of
@@ -32,6 +33,9 @@ public class GameWorld implements World
 	// The list of entities to add. The entities array can't be modified while it is
 	// being iterated over.
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
+	
+	//the list of Tanks that exist in the world
+	private List<Entity> tanks = new ArrayList<Entity>();
 	
 	private int worldMapWidth;
 	private int worldMapHeight;
@@ -115,7 +119,9 @@ public class GameWorld implements World
         
         Sprites.getInstance().createSprite(entity);
         Controllers.getInstance().createController(entity, controllerFactory);
-        
+        if(entity.getClass() == Tank.class){
+        	tanks.add(entity);
+        }
         entitiesToAdd.add(entity);
 		entityMap.put(entity.getId(), entity);
         
@@ -162,5 +168,12 @@ public class GameWorld implements World
 		
 		entities.addAll(entitiesToAdd);
 		entitiesToAdd.clear();
+	}
+
+	@Override
+	public List<Entity> getTanks() 
+	{
+		List<Entity> copyOfTanks = Collections.unmodifiableList(tanks);
+		return copyOfTanks;
 	}
 }

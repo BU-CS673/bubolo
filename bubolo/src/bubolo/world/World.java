@@ -29,7 +29,12 @@ public interface World
 	 * @return the list of entities.
 	 */
 	public List<Entity> getEntities();
-	
+	/**
+	 * Returns the list of all tanks in the world. Ordering should not be 
+	 * assumed, and may change between calls.
+	 * @return the list of tanks.
+	 */
+	public List<Entity> getTanks();
 	/**
 	 * Performs the following actions:
 	 * <ol>

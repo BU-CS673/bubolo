@@ -35,30 +35,26 @@ public class AIPillboxController implements Controller
 		double ydistance = 0;
 		double targetdistance = -1;
 		double distance = 0;
-
-		for(Entity entity : world.getEntities())
+		
+		for(Entity entity : world.getTanks())
 		{
-			if (entity.isTank())
+			xdistance = Math.abs(pillbox.getCenterX() - entity.getCenterX());
+			ydistance = Math.abs(pillbox.getCenterY() - entity.getCenterY());
+			distance = Math.sqrt((xdistance*xdistance)+ (ydistance*ydistance));
+			
+			if (targetdistance > -1)
 			{
-				xdistance = Math.abs(pillbox.getCenterX() - entity.getCenterX());
-				ydistance = Math.abs(pillbox.getCenterY() - entity.getCenterY());
-				distance = Math.sqrt((xdistance*xdistance)+ (ydistance*ydistance));
-				
-				if (targetdistance > -1)
-				{
-					if(distance < targetdistance)
-					{
-						targetdistance = distance;
-						target = entity;
-					}
-				}else
+				if(distance < targetdistance)
 				{
 					targetdistance = distance;
 					target = entity;
 				}
+			}else
+			{
+				targetdistance = distance;
+				target = entity;
 			}
 		}
-		
 		return target;
 	}
 	private boolean targetInRange(Entity target)
