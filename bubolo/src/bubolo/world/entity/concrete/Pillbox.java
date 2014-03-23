@@ -3,6 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.world.Ownable;
+import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -13,6 +14,9 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Pillbox extends StationaryElement implements Ownable
 {
+	private long cannonFireTime = 0;
+	private static final long cannonReloadSpeed=500;
+	private float cannonRotation = 0;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -71,6 +75,53 @@ public class Pillbox extends StationaryElement implements Ownable
 	{
 		this.isOwned = owned;
 	}
+	/**
+	 * fire pillbox
+	 */
+	/**
+	 * Returns cannon status
+	 * 
+	 * @param isCannonReady
+	 *            is the pillbox ready to fire.
+	 */
+	public boolean isCannonReady()
+	{
+		return (System.currentTimeMillis()-this.cannonFireTime>this.cannonReloadSpeed);
+	}
+	/**
+	 * Aim the Cannon
+	 * 
+	 */
+	public void aimCannon(float rotation)
+	{
+		cannonRotation = rotation;
+	}
+	/**
+	 * get cannon rotation
+	 * 
+	 */
+	public float getCannonRotation()
+	{
+		return cannonRotation;
+	}
+	/**
+	 * Fire the Cannon
+	 * 
+	 * @param world
+	 *            reference to world.
+	 * @param startX
+	 *            starting position of bullet
+	 * @param startY
+	 *            starting position of bullet
+	 */
+	public void fireCannon(World world)
+	{
+		cannonFireTime = System.currentTimeMillis();
 
+		Bullet bullet = world.addEntity(Bullet.class);
+
+		bullet.setX(this.getCenterX()).setY(this.getCenterY());
+		bullet.setRotation(getCannonRotation());
+	}
 	// TODO: Add Pillbox functionality!
 }
