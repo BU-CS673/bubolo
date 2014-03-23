@@ -24,6 +24,9 @@ public class NetworkSystem implements Network
 
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
+	
+	// Specifies whether the network system is running in debug mode.
+	private boolean debug = false;
 
 	private static volatile Network instance;
 	
@@ -65,10 +68,22 @@ public class NetworkSystem implements Network
 		client.connect(serverIpAddress);
 		subsystem = client;
 	}
+	
+	@Override
+	public void startDebug()
+	{
+		debug = true;
+	}
 
 	@Override
 	public void send(NetworkCommand command)
 	{
+		// Returns without sending the command if the system is running in debug mode. 
+		if (debug)
+		{
+			return;
+		}
+		
 		// Explicit check rather than a call to checkState, because FindBugs
 		// was unable to identify checkState as a valid defense against null pointer dereferencing. 
 		if (subsystem == null)

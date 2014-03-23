@@ -7,6 +7,7 @@
 package bubolo.net;
 
 import java.net.InetAddress;
+
 import bubolo.world.World;
 
 /**
@@ -15,48 +16,59 @@ import bubolo.world.World;
  * @author BU CS673 - Clone Productions
  */
 public interface Network
-{	
+{
 	/**
-	 * Identifies this player as the game server, and begins accepting connections 
-	 * from other players. <code>startServer</code> must be called before
-	 * calling <code>connect</code>. There should only be one game server per game.
+	 * Identifies this player as the game server, and begins accepting connections from other
+	 * players. There should only be one game server per game.
 	 * 
-	 * @throws NetworkException if a network error occurs.
-	 * @throws IllegalStateException if the server was already started.
+	 * @throws NetworkException
+	 *             if a network error occurs.
+	 * @throws IllegalStateException
+	 *             if startServer or connect was already called.
 	 */
 	void startServer() throws NetworkException, IllegalStateException;
-	
+
 	/**
 	 * Attempts to connect to the specified IP address.
 	 * 
-	 * @param serverIpAddress the IP address of a server. Note that this isn't necessarily
-	 * the <i>game</i> server, since clients also connect directly to each other.
-	 * @throws NetworkException if a network error occurs.
+	 * @param serverIpAddress
+	 *            the IP address of a server.
+	 * @throws NetworkException
+	 *             if a network error occurs.
+	 * @throws IllegalStateException
+	 *             if startServer or connect was already called.
 	 */
-	void connect(InetAddress serverIpAddress) throws NetworkException;
-	
+	void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException;
+
+	/**
+	 * Starts the network system in debug mode. Use this to run unit tests and integration tests
+	 * that don't rely on the network.
+	 */
+	void startDebug();
+
 	/**
 	 * Queues a network command to be sent to the other players.
 	 * 
-	 * @param command the network command to send.
+	 * @param command
+	 *            the network command to send.
 	 */
 	void send(NetworkCommand command);
-	
+
 	/**
-	 * Performs all network system updates. This should be called once 
-	 * per game tick.
+	 * Performs all network system updates. This should be called once per game tick.
 	 * 
-	 * @param world reference to the game world. 
+	 * @param world
+	 *            reference to the game world.
 	 */
 	void update(World world);
-	
+
 	/**
 	 * Runs a NetworkCommand in the game logic thread.
 	 * 
 	 * @param command
 	 */
 	void postToGameThread(NetworkCommand command);
-	
+
 	/**
 	 * Shuts down the network system.
 	 */
