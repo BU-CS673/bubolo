@@ -1,21 +1,18 @@
 /**
+ * Copyright (c) 2014 BU MET CS673 Game Engineering Team
  *
+ * See the file license.txt for copying permission.
  */
 
 package bubolo.net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import bubolo.world.World;
 
 /**
  * The game server.

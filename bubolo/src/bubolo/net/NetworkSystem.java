@@ -7,9 +7,10 @@
 package bubolo.net;
 
 import java.net.InetAddress;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import bubolo.world.World;
-
 import static com.google.common.base.Preconditions.*;
 
 /**
@@ -20,6 +21,9 @@ import static com.google.common.base.Preconditions.*;
 public class NetworkSystem implements Network
 {
 	private NetworkSubsystem subsystem;
+
+	// Queue of commands that should be run in the game logic thread.
+	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 
 	@Override
 	public void startServer() throws NetworkException, IllegalStateException
@@ -38,7 +42,7 @@ public class NetworkSystem implements Network
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
 
-		Client client = new Client();
+		Client client = new Client(this);
 		client.connect(serverIpAddress);
 		subsystem = client;
 	}
@@ -46,8 +50,12 @@ public class NetworkSystem implements Network
 	@Override
 	public void send(NetworkCommand command)
 	{
-		checkState(subsystem != null,
-				"The network system has not been started. Call startServer or connect.");
+		// Explicit check rather than a call to checkState, because FindBugs
+		// was unable to identify checkState as a valid defense against null pointer dereferencing. 
+		if (subsystem == null)
+		{
+			throw new NetworkException("Unable to send command: the network is not initialized.");
+		}
 
 		subsystem.send(command);
 	}
@@ -55,14 +63,18 @@ public class NetworkSystem implements Network
 	@Override
 	public void update(World world)
 	{
-		
+		// Execute all posted commands in the game logic thread.
+		NetworkCommand c = null;
+		while ((c = postedCommands.poll()) != null)
+		{
+			c.execute(world);
+		}
 	}
 
 	@Override
 	public void postToGameThread(NetworkCommand command)
 	{
-		// TODO Auto-generated method stub
-
+		postedCommands.add(command);
 	}
 
 	@Override
