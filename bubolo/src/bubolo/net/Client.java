@@ -79,9 +79,8 @@ class Client implements NetworkSubsystem, Runnable
 	@Override
 	public void run()
 	{
-		try
+		try (ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream()))
 		{
-			ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream());
 			while (!shutdown.get())
 			{
 				NetworkCommand command = (NetworkCommand)inputStream.readObject();
@@ -93,6 +92,16 @@ class Client implements NetworkSubsystem, Runnable
 			// TODO: Pass this exception to the primary thread, and eliminate the stack track.
 			e.printStackTrace();
 			throw new NetworkException(e);
+		}
+		finally
+		{
+			try
+			{
+				server.close();
+			}
+			catch (IOException e)
+			{
+			}
 		}
 	}
 }

@@ -25,6 +25,25 @@ public class NetworkSystem implements Network
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 
+	private static Network instance;
+	
+	/**
+	 * Returns the network system instance.
+	 * @return the network system instance.
+	 */
+	public static Network getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new NetworkSystem();
+		}
+		return instance;
+	}
+	
+	private NetworkSystem()
+	{
+	}
+	
 	@Override
 	public void startServer() throws NetworkException, IllegalStateException
 	{
