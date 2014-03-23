@@ -10,16 +10,14 @@ import com.badlogic.gdx.math.Vector2;
 import bubolo.world.entity.Entity;
 
 /**
- * Abstract base class for sprites, which draw textures to a quad at a specific x,y
- * location.
+ * Abstract base class for sprites, which draw textures to a quad at a specific x,y location.
  * 
  * @param <T>
- *            the least derived <code>Entity</code> type that this <code>Sprite</code>
- *            needs to draw itself. For example, a very simple <code>Sprite</code>, such
- *            as <code>GrassSprite</code>, can derive from
- *            <code>Sprite{@literal <Entity>}</code>, while a more complex
- *            <code>Sprite</code>, such as <code>PillboxSprite</code>, will likely need to
- *            derive from <code>Sprite{@literal <Pillbox>}</code>.
+ *            the least derived <code>Entity</code> type that this <code>Sprite</code> needs to draw
+ *            itself. For example, a very simple <code>Sprite</code>, such as
+ *            <code>GrassSprite</code>, can derive from <code>Sprite{@literal <Entity>}</code>,
+ *            while a more complex <code>Sprite</code>, such as <code>PillboxSprite</code>, will
+ *            likely need to derive from <code>Sprite{@literal <Pillbox>}</code>.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -113,13 +111,13 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * Draws the sprite to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been called
-	 *            before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called before the
+	 *            SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
-	 *            The layer that is currently being drawn. Note that this is not
-	 *            necessarily the DrawLayer that this entity belongs to.
+	 *            The layer that is currently being drawn. Note that this is not necessarily the
+	 *            DrawLayer that this entity belongs to.
 	 */
 	abstract void draw(SpriteBatch batch, Camera camera, DrawLayer layer);
 
@@ -127,13 +125,13 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * Draws the texture to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been called
-	 *            before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called before the
+	 *            SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
-	 *            The layer that is currently being drawn. Note that this is not
-	 *            necessarily the DrawLayer that this entity belongs to.
+	 *            The layer that is currently being drawn. Note that this is not necessarily the
+	 *            DrawLayer that this entity belongs to.
 	 * @param texture
 	 *            The texture to draw.
 	 */
@@ -145,9 +143,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
-			
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
+
+			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y,
+					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y,
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
@@ -157,13 +155,13 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * Draws the texture to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been called
-	 *            before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called before the
+	 *            SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
-	 *            The layer that is currently being drawn. Note that this is not
-	 *            necessarily the DrawLayer that this entity belongs to.
+	 *            The layer that is currently being drawn. Note that this is not necessarily the
+	 *            DrawLayer that this entity belongs to.
 	 * @param texture
 	 *            The texture region to draw.
 	 */
@@ -175,19 +173,21 @@ abstract class Sprite<T extends Entity> implements Drawable
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
 			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
-			
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
+
+			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y,
+					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y,
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
 
 	/**
-	 * Returns the center of an entity.
+	 * Returns the center of a given width and height.
 	 * 
-	 * @param ent
-	 *            reference to an entity.
-	 * @return the center of an entity.
+	 * @param width
+	 *            the width of a texture or texture region.
+	 * @param height
+	 *            the height of a texture or texture region.
+	 * @return the center of the given width and height.
 	 */
 	private static Vector2 getOrigin(float width, float height)
 	{
