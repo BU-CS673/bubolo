@@ -22,15 +22,17 @@ public class MoveEntity implements NetworkCommand
 	private static final long serialVersionUID = 1L;
 
 	private final UUID id;
-	
+
 	private final int x;
 	private final int y;
-	
+
 	private final float rotation;
-	
+
 	/**
 	 * Constructs a MoveEntity object.
-	 * @param entity the entity to move.
+	 * 
+	 * @param entity
+	 *            the entity to move.
 	 */
 	public MoveEntity(Entity entity)
 	{

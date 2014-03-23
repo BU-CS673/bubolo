@@ -8,6 +8,7 @@ package bubolo.net.command;
 
 import java.util.UUID;
 
+import bubolo.controllers.ControllerFactory;
 import bubolo.net.NetworkCommand;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -29,13 +30,21 @@ public class CreateEntity implements NetworkCommand
 
 	private final float rotation;
 
+	private final ControllerFactory factory;
+
 	/**
 	 * Constructs a CreateEntity object.
-	 * @param type the entity's class.
-	 * @param id the entity's unique id.
-	 * @param x the entity's x position.
-	 * @param y the entity's y position.
-	 * @param rotation the entity's rotation.
+	 * 
+	 * @param type
+	 *            the entity's class.
+	 * @param id
+	 *            the entity's unique id.
+	 * @param x
+	 *            the entity's x position.
+	 * @param y
+	 *            the entity's y position.
+	 * @param rotation
+	 *            the entity's rotation.
 	 */
 	public CreateEntity(Class<? extends Entity> type, UUID id, float x, float y, float rotation)
 	{
@@ -44,12 +53,49 @@ public class CreateEntity implements NetworkCommand
 		this.x = (int)x;
 		this.y = (int)y;
 		this.rotation = rotation;
+		this.factory = null;
+	}
+
+	/**
+	 * Constructs a CreateEntity object.
+	 * 
+	 * @param type
+	 *            the entity's class.
+	 * @param id
+	 *            the entity's unique id.
+	 * @param x
+	 *            the entity's x position.
+	 * @param y
+	 *            the entity's y position.
+	 * @param rotation
+	 *            the entity's rotation.
+	 * @param factory
+	 *            factory for adding custom controllers to this entity.
+	 */
+	public CreateEntity(Class<? extends Entity> type, UUID id, float x, float y, float rotation,
+			ControllerFactory factory)
+	{
+		this.type = type;
+		this.id = id;
+		this.x = (int)x;
+		this.y = (int)y;
+		this.rotation = rotation;
+		this.factory = factory;
 	}
 
 	@Override
 	public void execute(World world)
 	{
-		Entity entity = world.addEntity(type, id);
+		Entity entity = null;
+		if (factory == null)
+		{
+			entity = world.addEntity(type, id);
+		}
+		else
+		{
+			entity = world.addEntity(type, id, factory);
+		}
+
 		entity.setX(x).setY(y).setRotation(rotation);
 	}
 }
