@@ -75,7 +75,7 @@ public class ParserTestApplication implements GameApplication
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
 		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/Parser Test Map.json");
+		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
 		try
 		{
 			world = fileParser.parseMap(path);
@@ -88,6 +88,7 @@ public class ParserTestApplication implements GameApplication
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0);
+		tank.setLocalPlayer(true);
 		
 		ready = true;
 	}

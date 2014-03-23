@@ -2,8 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import com.google.common.base.Preconditions;
-
+import bubolo.world.Ownable;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -18,11 +17,6 @@ public class Tank extends Actor
 	 * Used when serializing and de-serializing.
 	 */
 	private static final long serialVersionUID = 457933513574468829L;
-	
-	/**
-	 * Used to flag as the local tank object.
-	 */
-	private boolean isLocal;
 
 	// Max speed in pixels per tick.
 	private static final float maxSpeed = 4.f;
@@ -51,6 +45,11 @@ public class Tank extends Actor
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
+	
+	/**
+	 * Boolean representing whether this Tank belongs to the local player.
+	 */
+	private boolean isLocalPlayer = true;
 
 	/**
 	 * Construct a new Tank with a random UUID.
@@ -80,16 +79,6 @@ public class Tank extends Actor
 	{
 		return speed;
 	}
-	
-	/**
-	 * Getter for the isLocal member. Returns if the object is flagged as the local tank.
-	 * @return
-	 */
-	public boolean isLocal()
-	{
-		return isLocal;
-	}
-	
 
 	// TODO: Add Tank functionality!
 	/**
