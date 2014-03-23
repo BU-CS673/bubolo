@@ -55,9 +55,4 @@ public interface Network
 	 * Shuts down the network system.
 	 */
 	void dispose();
-	
-	/**
-	 * Resets the network system.
-	 */
-	void reset();
 }

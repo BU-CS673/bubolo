@@ -4,27 +4,107 @@
 
 package bubolo.net;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import bubolo.world.World;
+
 /**
  * The game server.
  * 
  * @author BU CS673 - Clone Productions
  */
-public interface Server
+class Server implements NetworkSubsystem, Runnable
 {
+	private ServerSocket socket;
+
+	// TODO (cdc - 3/23/2014): Expand this to allow multiple connections.
+	private Socket client;
+
+	// Specifies whether the server has shut down.
+	private AtomicBoolean shutdown = new AtomicBoolean(false);
+
+	private final Executor sender;
+
+	// Reference to the network system.
+	private final Network network;
+
 	/**
-	 * Identifies this player as the game server, and begins accepting connections 
-	 * from other players. <code>startServer</code> must be called before
-	 * calling <code>connect</code>. There should only be one game server per game.
+	 * Constructs a Server object.
 	 * 
-	 * @throws NetworkException if a network error occurs.
-	 * @throws IllegalStateException if the server was already started.
+	 * @param network
+	 *            reference to the network system.
 	 */
-	void startServer() throws NetworkException, IllegalStateException;
-	
+	Server(Network network)
+	{
+		this.network = network;
+		this.sender = Executors.newCachedThreadPool();
+	}
+
 	/**
-	 * Queues a network command to be sent to the other players.
+	 * Identifies this player as the game server, and begins accepting connections from other
+	 * players. <code>startServer</code> must be called before calling <code>connect</code>. There
+	 * should only be one game server per game.
 	 * 
-	 * @param command the network command to send.
+	 * @throws NetworkException
+	 *             if a network error occurs.
 	 */
-	void send(NetworkCommand command);
+	void startServer() throws NetworkException
+	{
+		try
+		{
+			socket = new ServerSocket(NetworkInformation.GAME_PORT);
+
+			// TODO (cdc - 3/23/2013): Move accept() into a different thread.
+			client = socket.accept();
+			client.setTcpNoDelay(true);
+
+			// Start the network reader thread.
+			new Thread(this).start();
+		}
+		catch (IOException e)
+		{
+			throw new NetworkException(e);
+		}
+	}
+
+	@Override
+	public void send(NetworkCommand command)
+	{
+		sender.execute(new NetworkSender(client, command));
+	}
+
+	@Override
+	public void dispose()
+	{
+		shutdown.set(true);
+	}
+
+	@Override
+	public void run()
+	{
+		try
+		{
+			ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
+			while (!shutdown.get())
+			{
+				NetworkCommand command = (NetworkCommand)inputStream.readObject();
+				network.postToGameThread(command);
+			}
+		}
+		catch (IOException | ClassNotFoundException e)
+		{
+			// TODO: Pass this exception to the primary thread, and eliminate the stack track.
+			e.printStackTrace();
+			throw new NetworkException(e);
+		}
+	}
 }
