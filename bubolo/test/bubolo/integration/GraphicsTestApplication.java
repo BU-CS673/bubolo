@@ -114,7 +114,6 @@ public class GraphicsTestApplication implements GameApplication
 		world.addEntity(Road.class).setParams(32*10, 32*10, 32, 32, 0);
 		world.addEntity(Road.class).setParams(32*10, 32*11, 32, 32, 0);
 		
-		world.addEntity(Grass.class).setParams(32*11, 32*6, 32, 32, 0);
 		world.addEntity(Rubble.class).setParams(32*11, 32*6, 32, 32, 0);
 		world.addEntity(Swamp.class).setParams(32*12, 32*11, 32, 32, 0);
 		world.addEntity(Tree.class).setParams(32*12, 32*12, 32, 32, 0);
