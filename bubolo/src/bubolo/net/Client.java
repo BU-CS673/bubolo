@@ -8,6 +8,7 @@ package bubolo.net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.Executor;
@@ -30,6 +31,8 @@ class Client implements NetworkSubsystem, Runnable
 
 	// Reference to the network system.
 	private final Network network;
+	
+	private ObjectOutputStream serverStream;
 
 	/**
 	 * Constructs a Client object.
@@ -58,6 +61,8 @@ class Client implements NetworkSubsystem, Runnable
 		{
 			server = new Socket(serverIpAddress, NetworkInformation.GAME_PORT);
 			
+			serverStream = new ObjectOutputStream(server.getOutputStream());
+			
 			// Start the network reader thread.
 			new Thread(this).start();
 		}
@@ -70,7 +75,7 @@ class Client implements NetworkSubsystem, Runnable
 	@Override
 	public void send(NetworkCommand command)
 	{
-		sender.execute(new NetworkSender(server, command));
+		sender.execute(new NetworkSender(serverStream, command));
 	}
 
 	@Override

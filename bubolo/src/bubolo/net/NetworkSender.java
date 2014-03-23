@@ -8,7 +8,6 @@ package bubolo.net;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 /**
  * Sends NetworkCommands across the network.
@@ -17,20 +16,20 @@ import java.net.Socket;
  */
 class NetworkSender implements Runnable
 {
-	private final Socket client;
+	private final ObjectOutputStream stream;
 	private final NetworkCommand command;
 
 	/**
 	 * Constructs a NetworkSender.
 	 * 
-	 * @param client
-	 *            reference to the client socket connection.
+	 * @param stream
+	 *            the object output stream to the client.
 	 * @param command
 	 *            the command to send.
 	 */
-	NetworkSender(Socket client, NetworkCommand command)
+	NetworkSender(ObjectOutputStream stream, NetworkCommand command)
 	{
-		this.client = client;
+		this.stream = stream;
 		this.command = command;
 	}
 
@@ -39,7 +38,6 @@ class NetworkSender implements Runnable
 	{
 		try
 		{
-			ObjectOutputStream stream = new ObjectOutputStream(client.getOutputStream());
 			stream.writeObject(command);
 		}
 		catch (IOException e)
