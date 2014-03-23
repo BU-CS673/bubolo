@@ -60,6 +60,7 @@ class Client implements NetworkSubsystem, Runnable
 		try
 		{
 			server = new Socket(serverIpAddress, NetworkInformation.GAME_PORT);
+			server.setTcpNoDelay(true);
 			
 			serverStream = new ObjectOutputStream(server.getOutputStream());
 			
