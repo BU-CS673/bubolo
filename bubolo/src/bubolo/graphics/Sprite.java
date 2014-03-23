@@ -144,7 +144,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
-			Vector2 origin = getOrigin(getEntity());
+			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
@@ -174,7 +174,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
-			Vector2 origin = getOrigin(getEntity());
+			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
 			
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
@@ -189,8 +189,8 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 *            reference to an entity.
 	 * @return the center of an entity.
 	 */
-	private static <T extends Entity> Vector2 getOrigin(T ent)
+	private static <T extends Entity> Vector2 getOrigin(float width, float height)
 	{
-		return new Vector2(ent.getWidth() / 2.f, ent.getHeight() / 2.f);
+		return new Vector2(width / 2.f, height / 2.f);
 	}
 }

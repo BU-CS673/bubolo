@@ -6,8 +6,10 @@ import com.badlogic.gdx.Input.Keys;
 import bubolo.controllers.Controller;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateEntity;
 import bubolo.net.command.MoveEntity;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -18,7 +20,7 @@ import bubolo.world.entity.concrete.Tank;
 public class KeyboardTankController implements Controller
 {
 	private Tank tank;
-	
+
 	/**
 	 * Constructs a keyboard tank controller.
 	 * 
@@ -70,16 +72,22 @@ public class KeyboardTankController implements Controller
 	{
 		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady())
 		{
+			// TODO: pull the tank's width & height directly instead of hard-coding them.
 			float tankCenterX = tank.getX() + 16;
 			float tankCenterY = tank.getY() + 16;
 
 			// TODO (cdc - 3/14/2014): calculate and update this with correct starting
 			// offset.
-			tank.fireCannon(world, tankCenterX + 18 * (float) Math.cos(tank.getRotation()),
-					tankCenterY + 18 * (float) Math.sin(tank.getRotation()));
+			Bullet bullet = tank.fireCannon(world,
+					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
+					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
+
+			Network net = NetworkSystem.getInstance();
+			net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
+					bullet.getRotation()));
 		}
 	}
-	
+
 	private static void sendMove(Tank tank)
 	{
 		Network net = NetworkSystem.getInstance();

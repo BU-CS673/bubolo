@@ -173,19 +173,19 @@ public class Tank extends Actor
 	 *            the bullet's start x position.
 	 * @param startY
 	 *            the bullet's start y position.
+	 * 
+	 * @return bullet reference to the new bullet.
 	 */
-	public void fireCannon(World world, float startX, float startY)
+	public Bullet fireCannon(World world, float startX, float startY)
 	{
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-		
+
 		bullet.setX(startX).setY(startY);
 		bullet.setRotation(getRotation());
 
-		// TODO: Notify the network.
-		// Network net = NetworkSystem.getInstance();
-
+		return bullet;
 	}
 
 	@Override
