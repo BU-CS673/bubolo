@@ -27,39 +27,42 @@ public class ParserTestApplication implements GameApplication
 		cfg.useGL20 = true;
 		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
 	}
-	
+
 	private int windowWidth;
 	private int windowHeight;
-	
+
 	private Graphics graphics;
 	private World world;
-	
+
 	private long lastUpdate;
-	
+
 	private boolean ready;
-	
+
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
 	public static final int TICKS_PER_SECOND = 30;
-	
+
 	/**
 	 * The number of milliseconds per game tick.
 	 */
 	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
-	
+
 	/**
-	 * Constructs an instance of the game application. Only one instance should 
-	 * ever exist.
-	 * @param windowWidth the width of the window.
-	 * @param windowHeight the height of the window.
+	 * Constructs an instance of the game application. Only one instance should ever
+	 * exist.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window.
+	 * @param windowHeight
+	 *            the height of the window.
 	 */
 	public ParserTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
+
 	@Override
 	public boolean isReady()
 	{
@@ -68,7 +71,9 @@ public class ParserTestApplication implements GameApplication
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a> 
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void create()
@@ -85,25 +90,27 @@ public class ParserTestApplication implements GameApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0);
 		tank.setLocalPlayer(true);
-		
+
 		ready = true;
 	}
-	
+
 	/**
 	 * Called automatically by the rendering library.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void render()
 	{
 		graphics.draw(world);
 		world.update();
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
+
+		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
 		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
 		{
@@ -111,10 +118,12 @@ public class ParserTestApplication implements GameApplication
 			lastUpdate = currentMillis;
 		}
 	}
-	
+
 	/**
 	 * Called when the application is destroyed.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void dispose()

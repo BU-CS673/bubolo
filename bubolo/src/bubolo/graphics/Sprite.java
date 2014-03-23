@@ -10,21 +10,21 @@ import com.badlogic.gdx.math.Vector2;
 import bubolo.world.entity.Entity;
 
 /**
- * Abstract base class for sprites, which draw textures to a quad at a specific
- * x,y location.
+ * Abstract base class for sprites, which draw textures to a quad at a specific x,y
+ * location.
  * 
  * @param <T>
- *            the least derived <code>Entity</code> type that this
- *            <code>Sprite</code> needs to draw itself. For example, a very
- *            simple <code>Sprite</code>, such as <code>GrassSprite</code>, can
- *            derive from <code>Sprite{@literal <Entity>}</code>, while a more
- *            complex <code>Sprite</code>, such as <code>PillboxSprite</code>,
- *            will likely need to derive from
- *            <code>Sprite{@literal <Pillbox>}</code>.
+ *            the least derived <code>Entity</code> type that this <code>Sprite</code>
+ *            needs to draw itself. For example, a very simple <code>Sprite</code>, such
+ *            as <code>GrassSprite</code>, can derive from
+ *            <code>Sprite{@literal <Entity>}</code>, while a more complex
+ *            <code>Sprite</code>, such as <code>PillboxSprite</code>, will likely need to
+ *            derive from <code>Sprite{@literal <Pillbox>}</code>.
  * 
  * @author BU CS673 - Clone Productions
  */
-abstract class Sprite<T extends Entity> implements Drawable {
+abstract class Sprite<T extends Entity> implements Drawable
+{
 	// The layer that this sprite is drawn to.
 	private DrawLayer drawLayer;
 
@@ -43,7 +43,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * @param entity
 	 *            reference to the Entity that this sprite represents.
 	 */
-	Sprite(DrawLayer layer, T entity) {
+	Sprite(DrawLayer layer, T entity)
+	{
 		this.drawLayer = layer;
 		this.entity = entity;
 	}
@@ -53,7 +54,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * 
 	 * @return the sprite's draw layer.
 	 */
-	protected DrawLayer getDrawLayer() {
+	protected DrawLayer getDrawLayer()
+	{
 		return drawLayer;
 	}
 
@@ -62,7 +64,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * 
 	 * @return the entity that this sprite represents.
 	 */
-	protected T getEntity() {
+	protected T getEntity()
+	{
 		return entity;
 	}
 
@@ -71,32 +74,38 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * 
 	 * @return true if the underlying entity is destroyed, or false otherwise.
 	 */
-	protected boolean isEntityDisposed() {
+	protected boolean isEntityDisposed()
+	{
 		return entity.isDisposed();
 	}
 
 	@Override
-	public float getX() {
+	public float getX()
+	{
 		return entity.getX();
 	}
 
 	@Override
-	public float getY() {
+	public float getY()
+	{
 		return entity.getY();
 	}
 
 	@Override
-	public int getWidth() {
+	public int getWidth()
+	{
 		return entity.getWidth();
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeight()
+	{
 		return entity.getHeight();
 	}
 
 	@Override
-	public float getRotation() {
+	public float getRotation()
+	{
 		return entity.getRotation();
 	}
 
@@ -104,8 +113,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * Draws the sprite to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been
-	 *            called before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called
+	 *            before the SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
@@ -118,8 +127,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * Draws the texture to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been
-	 *            called before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called
+	 *            before the SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
@@ -128,22 +137,28 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * @param texture
 	 *            The texture to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera,
-			DrawLayer layer, Texture texture) {
-		if (layer == getDrawLayer()) {
-			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX()
-							- (texture.getWidth() / 2), getEntity()
-							.getY() - (texture.getHeight() / 2)));
+	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
+	{
+		if (layer == getDrawLayer())
+		{
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, new Vector2(getEntity()
+					.getX() - (texture.getWidth() / 2), getEntity().getY()
+					- (texture.getHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y,
-					origin.x, origin.y, texture.getWidth(),
-					texture.getHeight(), SCALE_X, SCALE_Y,
-					(float) (MathUtils.radiansToDegrees * (getEntity()
-							.getRotation() - Math.PI / 2.f)), 0, 0, texture
-							.getWidth(), texture.getHeight(), false, false);
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getWidth(),
+					texture.getHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
 
@@ -151,8 +166,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * Draws the texture to the screen.
 	 * 
 	 * @param batch
-	 *            The game's SpriteBatch object. batch.begin() must have been
-	 *            called before the SpriteBatch is passed to this Sprite.
+	 *            The game's SpriteBatch object. batch.begin() must have been called
+	 *            before the SpriteBatch is passed to this Sprite.
 	 * @param camera
 	 *            The game's libgdx camera.
 	 * @param layer
@@ -161,22 +176,28 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 * @param texture
 	 *            The texture region to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera,
-			DrawLayer layer, TextureRegion texture) {
-		if (layer == getDrawLayer()) {
+	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
+			TextureRegion texture)
+	{
+		if (layer == getDrawLayer())
+		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX()
-							- (texture.getRegionWidth() / 2), getEntity()
+					new Vector2(getEntity().getX() - (texture.getRegionWidth() / 2), getEntity()
 							.getY() - (texture.getRegionHeight() / 2)));
 
-			Vector2 origin = getOrigin(texture.getRegionWidth(),
-					texture.getRegionHeight());
+			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
 
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y,
-					origin.x, origin.y, texture.getRegionWidth(), texture
-							.getRegionHeight(), SCALE_X, SCALE_Y,
-					(float) (MathUtils.radiansToDegrees * (getEntity()
-							.getRotation() - Math.PI / 2.f)));
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getRegionWidth(),
+					texture.getRegionHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
 
@@ -187,7 +208,8 @@ abstract class Sprite<T extends Entity> implements Drawable {
 	 *            reference to an entity.
 	 * @return the center of an entity.
 	 */
-	private static Vector2 getOrigin(float width, float height) {
+	private static Vector2 getOrigin(float width, float height)
+	{
 		return new Vector2(width / 2.f, height / 2.f);
 	}
 }
