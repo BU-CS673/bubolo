@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bubolo.util.Coordinates;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
