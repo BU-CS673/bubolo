@@ -61,13 +61,13 @@ class TankCameraController implements CameraController
 		float tankX = tank.getX();
 
 		float cameraX = tankX - camera.viewportWidth / 2.f;
-		if (cameraX < -16)
+		if (cameraX < 0)
 		{
-			cameraX = -16 ;
+			cameraX = 0;
 		}
-		else if (cameraX > world.getMapWidth() - camera.viewportWidth - 16)
+		else if (cameraX > world.getMapWidth() - camera.viewportWidth)
 		{
-			cameraX = world.getMapWidth() - camera.viewportWidth - 16;
+			cameraX = world.getMapWidth() - camera.viewportWidth;
 		}
 
 		return cameraX;
@@ -78,13 +78,13 @@ class TankCameraController implements CameraController
 		float tankY = tank.getY();
 
 		float cameraY = tankY - camera.viewportHeight / 2.f;
-		if (cameraY < -16)
+		if (cameraY < 0)
 		{
-			cameraY = -16;
+			cameraY = 0;
 		}
-		else if (cameraY > world.getMapHeight() - camera.viewportHeight - 16)
+		else if (cameraY > world.getMapHeight() - camera.viewportHeight)
 		{
-			cameraY = world.getMapHeight() - camera.viewportHeight - 16;
+			cameraY = world.getMapHeight() - camera.viewportHeight;
 		}
 
 		return cameraY;

@@ -10,6 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 final class Coordinates
 {
 	/**
+	 * Used to determine the relationship between world units, map units, and tile units
+	 */
+	private static int WORLD_SCALE = 32;
+	/**
 	 * Private constructor to prevent instantiation.
 	 */
 	private Coordinates()
@@ -24,8 +28,8 @@ final class Coordinates
 	 */
 	static Vector2 worldToCamera(Camera camera, Vector2 worldCoordinates)
 	{
-		return new Vector2(worldCoordinates.x - camera.position.x,
-				worldCoordinates.y - camera.position.y);
+		return new Vector2(worldCoordinates.x - camera.position.x + WORLD_SCALE/2,
+				worldCoordinates.y - camera.position.y + WORLD_SCALE/2);
 	}
 	
 	/**
@@ -36,7 +40,7 @@ final class Coordinates
 	 */
 	static Vector2 cameraToWorld(Camera camera, Vector2 cameraCoordinates)
 	{
-		return new Vector2(cameraCoordinates.x + camera.position.x,
-				cameraCoordinates.y + camera.position.y);
+		return new Vector2(cameraCoordinates.x + camera.position.x - WORLD_SCALE/2,
+				cameraCoordinates.y + camera.position.y - WORLD_SCALE/2);
 	}
 }
