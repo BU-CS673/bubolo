@@ -24,8 +24,8 @@ public class Grass extends Terrain
 		super();
 		setWidth(32);
 		setHeight(32);
-		setXOffset(8);
-		setYOffset(8);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -39,8 +39,8 @@ public class Grass extends Terrain
 		super(id);
 		setWidth(32);
 		setHeight(32);
-		setXOffset(8);
-		setYOffset(8);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	// TODO: Add Grass functionality!

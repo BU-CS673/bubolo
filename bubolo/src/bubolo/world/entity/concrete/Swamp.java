@@ -24,8 +24,8 @@ public class Swamp extends Terrain
 		super();
 		setWidth(32);
 		setHeight(32);
-		setXOffset(8);
-		setYOffset(8);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**

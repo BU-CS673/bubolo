@@ -58,8 +58,8 @@ public class Tank extends Actor
 		super();
 		setWidth(21);
 		setHeight(26);
-		setXOffset(6);
-		setYOffset(4);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -73,8 +73,8 @@ public class Tank extends Actor
 		super(id);
 		setWidth(21);
 		setHeight(26);
-		setXOffset(6);
-		setYOffset(4);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**

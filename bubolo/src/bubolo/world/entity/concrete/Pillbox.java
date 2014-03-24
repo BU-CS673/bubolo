@@ -36,8 +36,8 @@ public class Pillbox extends StationaryElement implements Ownable
 		super();
 		setWidth(27);
 		setHeight(27);
-		setXOffset(3);
-		setYOffset(3);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -51,8 +51,8 @@ public class Pillbox extends StationaryElement implements Ownable
 		super(id);
 		setWidth(27);
 		setHeight(27);
-		setXOffset(3);
-		setYOffset(3);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override

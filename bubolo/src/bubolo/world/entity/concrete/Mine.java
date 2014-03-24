@@ -41,8 +41,8 @@ public class Mine extends StationaryElement implements Ownable
 		super();
 		setWidth(25);
 		setHeight(25);
-		setXOffset(4);
-		setYOffset(4);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class Mine extends StationaryElement implements Ownable
 		super(id);
 		setWidth(25);
 		setHeight(25);
-		setXOffset(4);
-		setYOffset(4);
+		setXOffset(0);
+		setYOffset(0);
 	}
 
 	@Override
