@@ -22,22 +22,22 @@ import bubolo.test.MockWorld;
 public class NetworkTest
 {
 	private Network net;
-	
+
 	@Before
 	public void setup()
 	{
-		net = NetworkSystem.getInstance(); 
+		net = NetworkSystem.getInstance();
 		// Non-debug tests are performed in the integration tests, since these can only
 		// be fully tested by connecting to the network.
 		net.startDebug();
 	}
-	
+
 	@After
 	public void teardown()
 	{
 		net.dispose();
 	}
-	
+
 	/**
 	 * Test method for {@link bubolo.net.NetworkSystem#getInstance()}.
 	 */
@@ -48,9 +48,9 @@ public class NetworkTest
 	}
 
 	/**
-	 * Test method for {@link bubolo.net.NetworkSystem#startServer()}.
-	 * Note that this does not perform a full server test, since a connection to the internet
-	 * and other external resources would be needed. Instead, it tests that the method's invariant
+	 * Test method for {@link bubolo.net.NetworkSystem#startServer()}. Note that this does
+	 * not perform a full server test, since a connection to the internet and other
+	 * external resources would be needed. Instead, it tests that the method's invariant
 	 * is true, and then returns. The full test should be performed in integration.
 	 */
 	@Test
@@ -61,9 +61,10 @@ public class NetworkTest
 
 	/**
 	 * Test method for {@link bubolo.net.NetworkSystem#connect(java.net.InetAddress)}.
-	 * Note that this does not perform a full server test, since a connection to the internet
-	 * and other external resources would be needed. Instead, it tests that the method's invariant
-	 * is true, and then returns. The full test should be performed in integration.
+	 * Note that this does not perform a full server test, since a connection to the
+	 * internet and other external resources would be needed. Instead, it tests that the
+	 * method's invariant is true, and then returns. The full test should be performed in
+	 * integration.
 	 */
 	@Test
 	public void testConnect()
@@ -97,7 +98,8 @@ public class NetworkTest
 	}
 
 	/**
-	 * Test method for {@link bubolo.net.NetworkSystem#postToGameThread(bubolo.net.NetworkCommand)}.
+	 * Test method for
+	 * {@link bubolo.net.NetworkSystem#postToGameThread(bubolo.net.NetworkCommand)}.
 	 */
 	@Test
 	public void testPostToGameThread()
