@@ -53,6 +53,13 @@ public class NetworkSystem implements Network
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
 
+		// Don't allow the server to run in debug mode, since it requires external resources.
+		// Instead, test this properly in an integration test.
+		if (debug)
+		{
+			return;
+		}
+		
 		Server server = new Server(this);
 		server.startServer();
 		subsystem = server;
@@ -64,6 +71,13 @@ public class NetworkSystem implements Network
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
 
+		// Don't allow the client to run in debug mode, since it requires external resources.
+		// Instead, test this properly in an integration test.
+		if (debug)
+		{
+			return;
+		}
+		
 		Client client = new Client(this);
 		client.connect(serverIpAddress);
 		subsystem = client;
@@ -114,7 +128,12 @@ public class NetworkSystem implements Network
 	@Override
 	public void dispose()
 	{
-		subsystem.dispose();
+		if (subsystem != null)
+		{
+			subsystem.dispose();
+		}
 		subsystem = null;
+		debug = false;
+		postedCommands.clear();
 	}
 }
