@@ -65,7 +65,7 @@ public class Sprint1Application implements GameApplication
 		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
 		// and then the map loader or creator could set the size.
 		world = new GameWorld(32*30, 32*30);
-		
+
 		for (int i = 0; i < 30; i++)
 		{
 			for (int j = 0; j < 30; j++)
@@ -73,6 +73,7 @@ public class Sprint1Application implements GameApplication
 				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
 			}
 		}
+
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(15 * 32, 15 * 32, 0);
 		

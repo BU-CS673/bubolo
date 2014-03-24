@@ -42,7 +42,7 @@ public class TankTest
 	public void fireCannon()
 	{	
 		LibGdxAppTester.createApp();
-		tank.fireCannon(new MockBulletCreator(), 50, 40, 10, 10);
+		tank.fireCannon(new MockBulletCreator(), 50, 40);
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class TankTest
 		assertEquals(0.f, tank.getSpeed(), 0.001f);
 		
 		tank.accelerate();
-		float speed = tank.getSpeed();
+		float speed = (tank.getSpeed() - 0.02f < 0.f) ? 0.f : tank.getSpeed();
 		tank.decelerate();
 		assertEquals(speed, tank.getSpeed(), 0.001f);
 	}
@@ -69,7 +69,7 @@ public class TankTest
 	{
 		LibGdxAppTester.createApp();
 		assertTrue(tank.isCannonReady());
-		tank.fireCannon(new MockBulletCreator(), 50, 40, 10, 10);
+		tank.fireCannon(new MockBulletCreator(), 50, 40);
 		assertFalse(tank.isCannonReady());
 	}
 	
@@ -88,25 +88,6 @@ public class TankTest
 		tank.rotateRight();
 		assertEquals(rotation + 0.05f, tank.getRotation(), 0.0001f);
 	}
-	
-	@Test
-	public void setLocal()
-	{
-		assertTrue(tank.isLocal());
-		
-		tank.setLocal(false);
-		assertFalse(tank.isLocal());
-	}
-	
-	@Test
-	public void setLocalBreakInvariant()
-	{
-		tank.setLocal(false);
-		try
-		{
-			tank.setLocal(false);
-			fail("tank.setLocal called twice. This is not allowed.");
-		}
-		catch (Exception e) {}
-	}
 }
+	
+

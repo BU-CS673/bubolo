@@ -2,7 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.World;
 import bubolo.world.entity.Effect;
 
 /**

@@ -1,7 +1,6 @@
 package bubolo.graphics;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -86,12 +85,9 @@ public class Graphics
 	 * store multiple times. Will load the file if it has not yet been loaded.
 	 * @param path the path to the texture file.
 	 * @return the requested texture.
-	 * @throws FileNotFoundException if the file is not found on the file system
-	 * (can only occur if the file has not yet been loaded).
 	 */
 	static Texture getTexture(String path)
 	{
-		//TODO: Throw FileNotFoundException for this method or remove the @throws from the javadoc.
 		Texture texture = textures.get(path);
 		if (texture == null)
 		{
@@ -218,9 +214,9 @@ public class Graphics
 	 */
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
-		return (sprite.getX() + sprite.getWidth() + camera.position.x > 0 &&
+		return (sprite.getX() + sprite.getWidth() + camera.position.x > -32 &&
 				sprite.getX() - camera.position.x < camera.viewportWidth * 2 &&
-				sprite.getY() + sprite.getHeight() + camera.position.y > 0 &&
+				sprite.getY() + sprite.getHeight() + camera.position.y > -32 &&
 				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
 	}
 	

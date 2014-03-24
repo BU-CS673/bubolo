@@ -89,7 +89,7 @@ public class GraphicsTestApplication implements GameApplication
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(50*30, 50*30);
+		world = new GameWorld(50*32, 50*32);
 		
 		for (int i = 0; i < 50; i++)
 		{
@@ -100,8 +100,9 @@ public class GraphicsTestApplication implements GameApplication
 		}
 		
 		// TODO: Adjust as needed.
-		world.addEntity(Tank.class).setParams(100, 100, 0);
-		world.addEntity(Base.class).setParams(32*6, 32*4, 0);
+		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);
+		t.setLocalPlayer(true);
+		world.addEntity(Base.class).setParams(32*6, 32*4, 32);
 		world.addEntity(Bullet.class).setParams(32*7, 32*4, 90);
 		world.addEntity(Crater.class).setParams(32*8, 32*5, 0);
 		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 0);
@@ -114,6 +115,7 @@ public class GraphicsTestApplication implements GameApplication
 		world.addEntity(Road.class).setParams(32*10, 32*10, 0);
 		world.addEntity(Road.class).setParams(32*10, 32*11, 0);
 		
+		world.addEntity(Grass.class).setParams(32*11, 32*6, 0);
 		world.addEntity(Rubble.class).setParams(32*11, 32*6, 0);
 		world.addEntity(Swamp.class).setParams(32*12, 32*11, 0);
 		world.addEntity(Tree.class).setParams(32*12, 32*12, 0);

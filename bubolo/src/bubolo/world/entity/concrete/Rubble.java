@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.entity.Terrain;
+import bubolo.world.entity.StationaryElement;
 
 /**
  * Rubble is created when structures (like Walls) are destroyed. It replaces whatever
@@ -10,7 +10,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Rubble extends Terrain
+public class Rubble extends StationaryElement
 {
 	/**
 	 * Used in serialization/de-serialization.

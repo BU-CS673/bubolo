@@ -21,12 +21,12 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should
 	 * not be directly created outside of the graphics system.
 	 * 
-	 * @param DeepWater
+	 * @param deepWater
 	 *            Reference to the DeepWater that this DeepWaterSprite represents.
 	 */
-	DeepWaterSprite(DeepWater deepwater)
+	DeepWaterSprite(DeepWater deepWater)
 	{
-		super(DrawLayer.TERRAIN, deepwater);
+		super(DrawLayer.TERRAIN, deepWater);
 		frames = TextureUtil.adaptiveSplit_9((Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ "deepWater.png")));
 	}

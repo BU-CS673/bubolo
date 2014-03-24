@@ -2,9 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import com.google.common.base.Preconditions;
-
-import bubolo.util.GameMath;
+import bubolo.world.Ownable;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -35,6 +33,9 @@ public class Tank extends Actor
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;
 
+	// Specifies whether the tank decelerated this tick.
+	private boolean decelerated;
+
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.05f;
 
@@ -43,12 +44,7 @@ public class Tank extends Actor
 
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
-	private long cannonFireTime = 0;
-
-	// Specifies whether the tank is local. The default is true.
-	private boolean local = true;
-	// Sanity check to ensure that local isn't modified after it has initially been set.
-	private boolean localWasSet;
+	private long cannonFireTime = 0; 
 
 	/**
 	 * Construct a new Tank with a random UUID.
@@ -78,30 +74,6 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Specifies whether the tank is local.
-	 * 
-	 * @return true if the tank is local.
-	 */
-	public boolean isLocal()
-	{
-		return local;
-	}
-
-	/**
-	 * Sets whether the tank is local.
-	 * 
-	 * @param isLocalPlayer
-	 *            true if the tank is local, false otherwise.
-	 */
-	public void setLocal(boolean isLocalPlayer)
-	{
-		Preconditions.checkState(!localWasSet,
-						"setLocal in entity Tank was already called. This cannot be called more than once.");
-		this.local = isLocalPlayer;
-		localWasSet = true;
-	}
-
-	/**
 	 * Returns the tank's speed.
 	 * 
 	 * @return the tank's speed.
@@ -117,9 +89,13 @@ public class Tank extends Actor
 	 */
 	public void accelerate()
 	{
-		if (speed < maxSpeed)
+		if (speed < maxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
+			if (speed > maxSpeed)
+			{
+				speed = maxSpeed;
+			}
 			accelerated = true;
 		}
 	}
@@ -129,13 +105,14 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
-		if (speed > 0)
+		if (speed > 0 && !decelerated)
 		{
 			speed -= decelerationRate;
 			if (speed < 0)
 			{
 				speed = 0;
 			}
+			decelerated = true;
 		}
 	}
 
@@ -166,8 +143,7 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
-	 * reload.
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
 	 * 
 	 * @param world
 	 *            reference to the world.
@@ -175,23 +151,15 @@ public class Tank extends Actor
 	 *            the bullet's start x position.
 	 * @param startY
 	 *            the bullet's start y position.
-	 * @param directionX
-	 *            the bullet's x direction.
-	 * @param directionY
-	 *            the bullet's y direction.
 	 */
-	public void fireCannon(World world, float startX, float startY, float directionX,
-			float directionY)
+	public void fireCannon(World world, float startX, float startY)
 	{
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-		// TODO: start the bullet at an offset to the cannon.
+		
 		bullet.setX(startX).setY(startY);
-		// TODO: test this; the angle portion may be wrong.
-		bullet.setRotation(GameMath.angleInRadians(startX, startY, startX + directionX, startY
-				+ directionY)
-				- (float) Math.PI / 2);
+		bullet.setRotation(getRotation());
 
 		// TODO: Notify the network.
 		// Network net = NetworkSystem.getInstance();
@@ -201,8 +169,6 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
-		accelerated = false;
-
 		updateControllers(world);
 		moveTank();
 
@@ -213,12 +179,12 @@ public class Tank extends Actor
 	private void moveTank()
 	{
 		// TODO (cdc - 3/14/2014): turn this into another controller?
-
 		// TODO (cdc - 3/14/2014): check for movement collisions.
+
 		if (speed > 0)
 		{
-			float newX = (float) (getX() + Math.cos(getRotation()) * speed);
-			float newY = (float) (getY() + Math.sin(getRotation()) * speed);
+			float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+			float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 
 			setX(newX);
 			setY(newY);
@@ -228,5 +194,8 @@ public class Tank extends Actor
 				decelerate();
 			}
 		}
+
+		accelerated = false;
+		decelerated = false;
 	}
 }

@@ -3,7 +3,7 @@ package bubolo.world.entity.concrete;
 import java.util.UUID;
 
 import bubolo.world.Adaptable;
-import bubolo.world.entity.Terrain;
+import bubolo.world.entity.StationaryElement;
 
 /**
  * Craters are created when another Terrain type is blown up using a Mine. They reduce
@@ -11,7 +11,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Crater extends Terrain implements Adaptable
+public class Crater extends StationaryElement implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
