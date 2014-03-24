@@ -1,10 +1,16 @@
 package bubolo.world.entity.concrete;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
 
+import bubolo.graphics.LibGdxAppTester;
+import bubolo.test.MockBulletCreator;
+import bubolo.world.GameWorld;
 import bubolo.world.entity.EntityTestCase;
 
 public class PillboxTest
@@ -33,6 +39,37 @@ public class PillboxTest
 	{
 		pillbox.setOwned(true);
 		assertEquals("Pillbox ownership state set correctly.", true, pillbox.isOwned());
+	}
+	@Test
+	public void aimCannon()
+	{
+		float direction = 60;
+		pillbox.aimCannon(direction);
+		assertEquals("Pillbox aimed correctly", true, pillbox.getCannonRotation() == direction);
+	}
+	@Test
+	public void fireCannon()
+	{
+		LibGdxAppTester.createApp();
+		pillbox.fireCannon(new MockBulletCreator());
+		
+	}
+	@Test
+	public void getCannonRotation()
+	{
+		float direction = 60;
+		pillbox.aimCannon(direction);
+		assertEquals("Pillbox aimed correctly", true, pillbox.getCannonRotation() == direction);
+		
+	}
+	@Test
+	public void isCannonReady()
+	{
+		LibGdxAppTester.createApp();
+		assertTrue(pillbox.isCannonReady());
+		pillbox.fireCannon(new MockBulletCreator());
+		assertFalse(pillbox.isCannonReady());
+		
 	}
 
 }
