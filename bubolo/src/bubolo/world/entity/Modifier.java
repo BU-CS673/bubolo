@@ -12,6 +12,9 @@ import bubolo.world.Damageable;
  */
 public abstract class Modifier extends StationaryEntity implements Damageable
 {
+	
+	private int hp, maxhp;
+	private boolean alive = true;
 
 	/**
 	 * Used when serializing and de-serializing.
@@ -41,35 +44,40 @@ public abstract class Modifier extends StationaryEntity implements Damageable
 	@Override
 	public Modifier setHP(int i)
 	{
+		hp = i;
+		return this;
+	}
+	
+	protected Modifier setMaxHP(int i)
+	{
+		maxhp = i;
 		return this;
 	}
 
 	@Override
 	public int getHP()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return hp;
 	}
 
 	@Override
 	public int getMaxHP()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		//TODO setMaxHP
+		return maxhp;
 	}
 
 	@Override
 	public Modifier modifyHP(int i)
 	{
-		// TODO Auto-generated method stub
+		hp += i;
 		return this;
 	}
 
 	@Override
 	public boolean isAlive()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return alive;
 	}
 
 	@Override

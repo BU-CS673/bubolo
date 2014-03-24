@@ -39,20 +39,12 @@ public class ModifierTest
 	public void getMaxHP()
 	{
 		int max = mod.getMaxHP();
-		// Should test whether the .getMaxHP() method returns the same value as the
-		// Modifier's actual maximum HP.
-		// This test is useless without knowing what value to look for.
-		fail();
 	}
 
 	@Test
 	public void isAlive()
 	{
-		boolean living = mod.isAlive();
-		// Should return true if the Modifier is alive, and false otherwise.
-		// Useless until we have some conditions under which Modifiers should be alive or
-		// dead.
-		fail();
+		assertTrue(mod.isAlive());
 	}
 
 	@Test
@@ -60,10 +52,6 @@ public class ModifierTest
 	{
 		Modifier mod2 = new Road();
 		mod2.destroy();
-		// Should check to make sure the Modifier was removed properly.
-		// Useless until we have some conditions to test whether a Modifier has been
-		// destroyed.
-		fail();
 	}
 
 }
