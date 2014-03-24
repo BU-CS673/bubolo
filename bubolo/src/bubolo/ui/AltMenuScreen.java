@@ -1,7 +1,6 @@
 package bubolo.ui;
 
 import javax.swing.*;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
@@ -55,8 +54,7 @@ public class AltMenuScreen extends JFrame
 		add(new MainPanel(), BorderLayout.NORTH);
 		
 		// Add the ButtonPanel which contains the main buttons
-		add(new ButtonPanel(BUBOLOTarget), BorderLayout.CENTER);
-			
+		add(new ButtonPanel(BUBOLOTarget), BorderLayout.CENTER);				
 	}
 	
 }
