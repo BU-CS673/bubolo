@@ -1,7 +1,6 @@
 package bubolo.util;
 
 import java.io.BufferedReader;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -31,7 +30,6 @@ import bubolo.world.entity.concrete.*;
 public class Parser
 {
 
-	private static final int WORLD_UNIT_CONVERSION = 32;
 	private static Parser currentParser = null;
 
 	
@@ -95,7 +93,7 @@ public class Parser
 			Terrain newTerrain = null;
 			StationaryElement newSE = null;
 
-			world = new GameWorld(WORLD_UNIT_CONVERSION * mapWidth, WORLD_UNIT_CONVERSION
+			world = new GameWorld(Coordinates.WORLD_SCALE * mapWidth, Coordinates.WORLD_SCALE
 					* mapHeight);
 
 			for (int i = 0; i < mapHeight; i++)
@@ -107,8 +105,8 @@ public class Parser
 					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex,
 							world.addEntity(LayerOneSwitch(dataString)));
 					Tile t = mapTiles[j][tileYIndex];
-					// t.getTerrain().setParams(t.getX(), t.getY(), WORLD_UNIT_CONVERSION,
-					// WORLD_UNIT_CONVERSION, 0);
+					// t.getTerrain().setParams(t.getX(), t.getY(), Coordinates.WORLD_SCALE,
+					// Coordinates.WORLD_SCALE, 0);
 				}
 			}
 
@@ -129,7 +127,7 @@ public class Parser
 									.addEntity(LayerTwoSwitch(dataString)));
 							Tile t = mapTiles[j][tileYIndex];
 							// t.getElement().setParams(t.getX(), t.getY(),
-							// WORLD_UNIT_CONVERSION, WORLD_UNIT_CONVERSION, 0);
+							// Coordinates.WORLD_SCALE, Coordinates.WORLD_SCALE, 0);
 						}
 					}
 				}

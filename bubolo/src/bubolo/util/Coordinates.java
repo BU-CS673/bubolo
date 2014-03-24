@@ -1,0 +1,57 @@
+package bubolo.util;
+
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
+
+/**
+ * Utility methods for working with coordinates.
+ * 
+ * @author BU CS673 - Clone Productions
+ */
+public final class Coordinates
+{
+	/**
+	 * Defines the scale used to determine the relationship between world units, map
+	 * units, and tile units
+	 */
+	public static final int WORLD_SCALE = 32;
+
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
+	private Coordinates()
+	{
+	}
+
+	/**
+	 * Converts world coordinates to camera coordinates.
+	 * 
+	 * @param camera
+	 *            the game's camera.
+	 * @param worldCoordinates
+	 *            the coordinates to convert.
+	 * @return the converted coordinates.
+	 */
+	public static Vector2 worldToCamera(Camera camera, Vector2 worldCoordinates)
+	{
+		int scalingFactor = WORLD_SCALE / 2;
+		return new Vector2(worldCoordinates.x - camera.position.x + scalingFactor,
+				worldCoordinates.y - camera.position.y + scalingFactor);
+	}
+
+	/**
+	 * Converts camera coordinates to world coordinates.
+	 * 
+	 * @param camera
+	 *            the game's camera.
+	 * @param cameraCoordinates
+	 *            the coordinates to convert.
+	 * @return the converted coordinates.
+	 */
+	public static Vector2 cameraToWorld(Camera camera, Vector2 cameraCoordinates)
+	{
+		int scalingFactor = WORLD_SCALE / 2;
+		return new Vector2(cameraCoordinates.x + camera.position.x - scalingFactor,
+				cameraCoordinates.y + camera.position.y - scalingFactor);
+	}
+}
