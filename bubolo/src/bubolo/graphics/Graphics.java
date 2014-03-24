@@ -214,10 +214,11 @@ public class Graphics
 	 */
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
-		return (sprite.getX() + sprite.getWidth() + camera.position.x > -32 &&
-				sprite.getX() - camera.position.x < camera.viewportWidth * 2 &&
-				sprite.getY() + sprite.getHeight() + camera.position.y > -32 &&
-				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
+		int scalingFactor = Coordinates.WORLD_SCALE / 2;
+		return (sprite.getX() + scalingFactor + camera.position.x > 0 &&
+				sprite.getX() - scalingFactor - camera.position.x < camera.viewportWidth * 2 &&
+				sprite.getY() + scalingFactor + camera.position.y > 0 &&
+				sprite.getY() - scalingFactor - camera.position.y < camera.viewportHeight * 2);
 	}
 	
 	/**
