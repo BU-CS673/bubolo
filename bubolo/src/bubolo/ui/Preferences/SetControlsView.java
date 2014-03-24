@@ -12,25 +12,37 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeListener;
 
 import bubolo.ui.UserInterface;
 
+
+/** Creates a SetControlsView, this is the GUI for setting Controls
+ * 
+ * @author BU CS673 - Clone Productions
+ */
 public class SetControlsView extends JFrame 
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5344872007185901704L;
+
 	// Define buttons for Tank controls
-	private JButton btnTankFire, btnTankForward, btnTankStop, btnTankRight, btnTankLeft, btnTankMine;
+	private ControlButton btnTankFire, btnTankForward, btnTankStop, btnTankRight, btnTankLeft, btnTankMine;
 	
 	// Define labels for Tank controls
-	private JLabel lblTankFire, lblTankForward, lblTankStop, lblTankRight, lblTankLeft, lblTankMine;
+	private ControlLabel lblTankFire, lblTankForward, lblTankStop, lblTankRight, lblTankLeft, lblTankMine;
 	
 	// Define buttons for Engineer controls
-	private JButton btnEngMine, btnEngWall, btnEngFire, btnEngTree, btnEngRoad, btnEngPillbox;
+	private ControlButton btnEngMine, btnEngWall, btnEngTree, btnEngRoad, btnEngPillbox;
 	
 	// Define labels for Engineer controls
-	private JLabel lblEngMine, lblEngWall, lblEngFire, lblEngTree, lblEngRoad, lblEngPillbox;
+	private ControlLabel lblEngMine, lblEngWall, lblEngTree, lblEngRoad, lblEngPillbox;
 	
+	/** Constructor for SetControlsView
+	 * 
+	 */
 	public SetControlsView()
 	{
 		setIconImage(UserInterface.gameIcon.getImage());
@@ -47,14 +59,14 @@ public class SetControlsView extends JFrame
 		this.add(ApplySaveCancelPanel());	
 	}
 
-	private JPanel ControlSelectPanel()
+	private static JPanel ControlSelectPanel()
 	{
 		JPanel controlSelectPanel = new JPanel();
 		controlSelectPanel.setPreferredSize(new Dimension(100,50));
 		controlSelectPanel.setBorder(BorderFactory.createTitledBorder("Select A Control Set"));
 		
 		String[] controlOptions = {"Default", "User Defined #1", "User Defined #2"};
-		JComboBox controlList = new JComboBox(controlOptions);
+		JComboBox<?> controlList = new JComboBox<Object>(controlOptions);
 		controlList.setPreferredSize(new Dimension(450,25));
 		
 		controlSelectPanel.add(controlList);
@@ -62,7 +74,7 @@ public class SetControlsView extends JFrame
 		return controlSelectPanel;
 	}
 		
-	private JPanel ApplySaveCancelPanel()
+	private static JPanel ApplySaveCancelPanel()
 	{
 		JPanel ascPanel = new JPanel();
 	
@@ -88,22 +100,22 @@ public class SetControlsView extends JFrame
 		tankPanel.setBorder(BorderFactory.createTitledBorder("Tank"));
 		tankPanel.setLayout(new GridLayout(6,1));
 		
-		ControlPanel pnlTankFire = new ControlPanel("Fire", "Space");
+		ControlPanel pnlTankFire = new ControlPanel("Fire", "Space", btnTankFire, lblTankFire);
 		tankPanel.add(pnlTankFire);
 		
-		ControlPanel pnlTankForward = new ControlPanel("Forward", "W");
+		ControlPanel pnlTankForward = new ControlPanel("Forward", "W", btnTankForward, lblTankForward);
 		tankPanel.add(pnlTankForward);
 	
-		ControlPanel pnlTankLeft = new ControlPanel("Left", "A");
+		ControlPanel pnlTankLeft = new ControlPanel("Left", "A", btnTankLeft, lblTankLeft);
 		tankPanel.add(pnlTankLeft);
 	
-		ControlPanel pnlTankRight = new ControlPanel("Right", "D");
+		ControlPanel pnlTankRight = new ControlPanel("Right", "D", btnTankRight, lblTankRight);
 		tankPanel.add(pnlTankRight);
 	
-		ControlPanel pnlTankStop = new ControlPanel("Stop", "S");
+		ControlPanel pnlTankStop = new ControlPanel("Stop", "S", btnTankStop, lblTankStop);
 		tankPanel.add(pnlTankStop);		
 	
-		ControlPanel pnlTankMine = new ControlPanel("Mine", "Q");
+		ControlPanel pnlTankMine = new ControlPanel("Mine", "Q", btnTankMine, lblTankMine);
 		tankPanel.add(pnlTankMine);
 		
 		
@@ -111,19 +123,19 @@ public class SetControlsView extends JFrame
 		engineerPanel.setBorder(BorderFactory.createTitledBorder("Engineer"));
 		engineerPanel.setLayout(new GridLayout(6,1));
 		
-		ControlPanel pnlEngMine = new ControlPanel("Mine", "`");
+		ControlPanel pnlEngMine = new ControlPanel("Mine", "`", btnEngMine, lblEngMine);
 		engineerPanel.add(pnlEngMine);
 		
-		ControlPanel pnlEngTree = new ControlPanel("Tree", "2");
+		ControlPanel pnlEngTree = new ControlPanel("Tree", "2", btnEngTree, lblEngTree);
 		engineerPanel.add(pnlEngTree);
 	
-		ControlPanel pnlEngWall = new ControlPanel("Wall", "1");
+		ControlPanel pnlEngWall = new ControlPanel("Wall", "1", btnEngWall, lblEngWall);
 		engineerPanel.add(pnlEngWall);
 		
-		ControlPanel pnlEngRoad = new ControlPanel("Road", "3");
+		ControlPanel pnlEngRoad = new ControlPanel("Road", "3", btnEngRoad, lblEngRoad);
 		engineerPanel.add(pnlEngRoad);
 		
-		ControlPanel pnlEngPillbox = new ControlPanel("Pillbox", "4");
+		ControlPanel pnlEngPillbox = new ControlPanel("Pillbox", "4", btnEngPillbox, lblEngPillbox);
 		engineerPanel.add(pnlEngPillbox);
 		
 		controlGridPanel.add(tankPanel);
@@ -132,22 +144,30 @@ public class SetControlsView extends JFrame
 		return controlGridPanel;
 	}
 	
-	class ControlPanel extends JPanel
+	private class ControlPanel extends JPanel
 	{
-		public ControlPanel(String name, String key)
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2397092295307201421L;
+
+		public ControlPanel(String name, String key, ControlButton button, ControlLabel label)
 		{
-			
 			this.setPreferredSize(new Dimension(215,30));
-			//this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-			ControlButton button = new ControlButton(name);
-			ControlLabel label = new ControlLabel(key);
+			button = new ControlButton(name);
+			label = new ControlLabel(key);
 			this.add(button);
 			this.add(label);
 		}
 	}
 	
-	class ControlButton extends JButton
+	private class ControlButton extends JButton
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8499963169791414178L;
+
 		public ControlButton(String name)
 		{
 			this.setPreferredSize(new Dimension(100,25));
@@ -157,8 +177,13 @@ public class SetControlsView extends JFrame
 		}
 	}
 	
-	class ControlLabel extends JLabel
+	private class ControlLabel extends JLabel
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3481691236855305325L;
+
 		public ControlLabel(String key)
 		{
 			this.setPreferredSize(new Dimension(100, 25)); 
@@ -169,12 +194,12 @@ public class SetControlsView extends JFrame
 		}
 	}
 	
-	/**
-	 * SFX Slider event listener
-	 * @param event returns the event
-	 */
-	void tListener(ChangeListener event)
-	{
-		sfxSlider.addChangeListener(event);
-	}
+//	/**
+//	 * SFX Slider event listener
+//	 * @param event returns the event
+//	 */
+//	void tListener(ChangeListener event)
+//	{
+//		sfxSlider.addChangeListener(event);
+//	}
 }

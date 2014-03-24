@@ -1,6 +1,9 @@
 package bubolo.ui;
 
 import javax.swing.*;
+
+import bubolo.ui.Preferences.SetControlsView;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
@@ -50,6 +53,9 @@ public class AltMenuScreen extends JFrame
 		setIconImage(UserInterface.gameIcon.getImage());
 		setResizable(false);
 		
+//		SetControlsView scv = new SetControlsView();
+//		scv.setVisible(true);
+				
 		// Add the MainPanel which contains our logo/title
 		add(new MainPanel(), BorderLayout.NORTH);
 		
