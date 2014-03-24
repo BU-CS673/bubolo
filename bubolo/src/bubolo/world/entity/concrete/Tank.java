@@ -44,12 +44,7 @@ public class Tank extends Actor
 
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
-	private long cannonFireTime = 0;
-	
-	/**
-	 * Boolean representing whether this Tank belongs to the local player.
-	 */
-	private boolean isLocalPlayer = true;
+	private long cannonFireTime = 0; 
 
 	/**
 	 * Construct a new Tank with a random UUID.
