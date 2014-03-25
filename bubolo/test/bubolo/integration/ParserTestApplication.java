@@ -11,9 +11,7 @@ import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.util.Parser;
-import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 public class ParserTestApplication implements GameApplication
