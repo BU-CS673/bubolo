@@ -1,10 +1,8 @@
 package bubolo.util;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -43,7 +41,7 @@ public class Parser
 
 	/**
 	 * Generates new parser or returns existing object. Lazy instantiation is used.  
-	 * @return
+	 * @returns either a new parser if one has not been created previously or a the previously created instance
 	 */
 	public static Parser getInstance()
 	{
@@ -56,12 +54,12 @@ public class Parser
 	}
 
 	/**
-	 * Define a Path to a valid map to parse and receive a GameWorld based on the given map.
-	 * @param mapPath
-	 * @return
-	 * @throws ParseException
+	 * Define a Path to a valid map to parse and receive a World based on the given map.
+	 * @param mapPath the Path of a map to be parsed into a world
+	 * @return a World representation of the map file that was parsed
+	 * @throws ParseException for invalid JSON files
 	 */
-	public GameWorld parseMap(Path mapPath) throws ParseException
+	public World parseMap(Path mapPath) throws ParseException
 	{
 		int mapHeight = 0;
 		int mapWidth = 0;
@@ -69,7 +67,7 @@ public class Parser
 		JSONObject layerObject = null;
 		JSONArray tileData = null;
 		JSONArray layerArray = null;
-		GameWorld world = null;
+		World world = null;
 
 		Charset charset = Charset.forName("US-ASCII");
 
@@ -90,9 +88,6 @@ public class Parser
 			layerObject = (JSONObject) layerArray.get(0);
 			tileData = (JSONArray) layerObject.get("data");
 			String dataString = null;
-			Terrain newTerrain = null;
-			StationaryElement newSE = null;
-
 			world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidth, Coordinates.TILE_TO_WORLD_SCALE
 					* mapHeight);
 
@@ -103,10 +98,7 @@ public class Parser
 					dataString = tileData.get(i * mapWidth + j).toString();
 					int tileYIndex = mapHeight - i - 1;
 					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex,
-							world.addEntity(LayerOneSwitch(dataString)));
-					Tile t = mapTiles[j][tileYIndex];
-					// t.getTerrain().setParams(t.getX(), t.getY(), Coordinates.WORLD_SCALE,
-					// Coordinates.WORLD_SCALE, 0);
+							world.addEntity(layerOneSwitch(dataString)));
 				}
 			}
 
@@ -120,14 +112,11 @@ public class Parser
 					for (int j = 0; j < mapWidth; j++)
 					{
 						dataString = tileData.get(i * mapWidth + j).toString();
-						if (LayerTwoSwitch(dataString) != null)
+						if (layerTwoSwitch(dataString) != null)
 						{
 							int tileYIndex = mapHeight - i - 1;
 							mapTiles[j][tileYIndex].setElement((StationaryElement) world
-									.addEntity(LayerTwoSwitch(dataString)));
-							Tile t = mapTiles[j][tileYIndex];
-							// t.getElement().setParams(t.getX(), t.getY(),
-							// Coordinates.WORLD_SCALE, Coordinates.WORLD_SCALE, 0);
+									.addEntity(layerTwoSwitch(dataString)));
 						}
 					}
 				}
@@ -150,10 +139,11 @@ public class Parser
 
 	/**
 	 * The following switches are used to more clearly show the logic for deciding what object the mapParser will create.
-	 * @param input
-	 * @return
+	 * @param input string to convert to a class object
+	 * @return a class based upon the input string
+	 * @throws an InvalidMapException if a string doesn't match a valid class for the first layer in the map
 	 */
-	private static Class<? extends Terrain> LayerOneSwitch(String input) throws InvalidMapException
+	private static Class<? extends Terrain> layerOneSwitch(String input) throws InvalidMapException
 	{
 		switch (input)
 		{
@@ -177,7 +167,13 @@ public class Parser
 		}
 	}
 
-	private static Class<? extends Entity> LayerTwoSwitch(String input)
+	/**
+	 * The following switches are used to more clearly show the logic for deciding what object the mapParser will create.
+	 * @param input string to convert to a class object
+	 * @return a class based upon the input string
+	 * @throws an InvalidMapException if a string doesn't match a valid class for the first layer in the map
+	 */
+	private static Class<? extends Entity> layerTwoSwitch(String input) throws InvalidMapException
 	{
 		switch (input)
 		{

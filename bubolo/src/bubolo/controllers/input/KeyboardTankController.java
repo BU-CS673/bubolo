@@ -63,8 +63,8 @@ public class KeyboardTankController implements Controller
 	{
 		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady())
 		{
-			float tankCenterX = tank.getX();
-			float tankCenterY = tank.getY();
+			float tankCenterX = tank.getX() + 16;
+			float tankCenterY = tank.getY() + 16;
 
 			// TODO (cdc - 3/14/2014): calculate and update this with correct starting
 			// offset.

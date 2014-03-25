@@ -1,11 +1,12 @@
 package bubolo.util;
 
+/**
+ * Thrown to indicate an error in a provided map file that would generate an incomplete or illogical map 
+ * @author BU673 - Clone Productions
+ */
 public class InvalidMapException extends GameException
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2041925775039679247L;
 
 	/**

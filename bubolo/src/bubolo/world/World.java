@@ -119,4 +119,16 @@ public interface World
 	 * Updates the game world. Must be called once per game tick.
 	 */
 	public void update();
+	
+	/**
+	 * Returns a 2d Tile Array representation of stationary objects in the world
+	 * @return the 2d Tile Array representing the stationary objects in the world 
+	 */
+	public Tile[][] getMapTiles();
+	
+	/**
+	 * Allows the setting of a 2d Tile Array representation of stationary objects in the world
+	 * @param mapTiles is the representation to set the MapTiles field to
+	 */
+	public void setMapTiles(Tile[][] mapTiles);
 }
