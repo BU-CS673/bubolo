@@ -14,7 +14,7 @@ public final class Coordinates
 	 * Defines the scale used to determine the relationship between world units, map
 	 * units, and tile units
 	 */
-	public static final int WORLD_SCALE = 32;
+	public static final int TILE_TO_WORLD_SCALE = 32;
 
 	/**
 	 * Private constructor to prevent instantiation.

@@ -60,7 +60,7 @@ public class TextureUtil
 	public static TextureRegion[] adaptiveSplit_16(Texture tex)
 	{
 
-		if (tex.getHeight() != Coordinates.WORLD_SCALE*4 && tex.getWidth() != Coordinates.WORLD_SCALE*4)
+		if (tex.getHeight() != Coordinates.TILE_TO_WORLD_SCALE*4 && tex.getWidth() != Coordinates.TILE_TO_WORLD_SCALE*4)
 		{
 			throw new TextureFormatException("Cannot split texture into 16 tiles, wrong size!");
 		}
@@ -69,7 +69,7 @@ public class TextureUtil
 
 		// Grab the 16 texture frames for a standard 4x4 layout
 
-		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.WORLD_SCALE, Coordinates.WORLD_SCALE);
+		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.TILE_TO_WORLD_SCALE, Coordinates.TILE_TO_WORLD_SCALE);
 
 		// Assign each texture frame to the correct index
 		adapt[0] = allFrames[0][0];
@@ -104,13 +104,13 @@ public class TextureUtil
 	 */
 	public static TextureRegion[] adaptiveSplit_9(Texture tex)
 	{
-		if (tex.getHeight() != Coordinates.WORLD_SCALE*3 && tex.getWidth() != Coordinates.WORLD_SCALE*3)
+		if (tex.getHeight() != Coordinates.TILE_TO_WORLD_SCALE*3 && tex.getWidth() != Coordinates.TILE_TO_WORLD_SCALE*3)
 		{
 			throw new TextureFormatException("Cannot split texture into 9 tiles, wrong size!");
 		}
 
 		// Grab the 9 texture states for a standard 3x3 layout
-		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.WORLD_SCALE, Coordinates.WORLD_SCALE);
+		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.TILE_TO_WORLD_SCALE, Coordinates.TILE_TO_WORLD_SCALE);
 
 		TextureRegion[] adapt = new TextureRegion[9];
 		adapt[0] = allFrames[0][0];
@@ -139,7 +139,7 @@ public class TextureUtil
 	 */
 	public static TextureRegion[] adaptiveSplit_16_9_9(Texture tex)
 	{
-		if (tex.getHeight() != Coordinates.WORLD_SCALE*7 && tex.getWidth() != Coordinates.WORLD_SCALE*6)
+		if (tex.getHeight() != Coordinates.TILE_TO_WORLD_SCALE*7 && tex.getWidth() != Coordinates.TILE_TO_WORLD_SCALE*6)
 		{
 			throw new TextureFormatException("Cannot split texture into 16x9x9 tiles, wrong size!");
 		}
@@ -148,7 +148,7 @@ public class TextureUtil
 
 		// Grab the 34 texture frames for a standard 4x4 + 3x3 + 3x3 layout
 
-		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.WORLD_SCALE, Coordinates.WORLD_SCALE);
+		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.TILE_TO_WORLD_SCALE, Coordinates.TILE_TO_WORLD_SCALE);
 
 		// Assign each texture frame to the correct index...
 

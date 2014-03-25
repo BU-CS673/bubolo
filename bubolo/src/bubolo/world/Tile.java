@@ -20,7 +20,7 @@ public class Tile
 	 * 
 	 * TODO: Move this constant out to a global Bubolo Preferences class.
 	 */
-	private static final float TILE_SIZE = Coordinates.WORLD_SCALE;
+	private static final float TILE_SIZE = Coordinates.TILE_TO_WORLD_SCALE;
 	private int gridX;
 	private int gridY;
 	private Terrain myTerrain;
