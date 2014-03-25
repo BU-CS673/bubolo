@@ -1,5 +1,6 @@
 package bubolo.world;
 
+import bubolo.util.Coordinates;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
@@ -19,7 +20,7 @@ public class Tile
 	 * 
 	 * TODO: Move this constant out to a global Bubolo Preferences class.
 	 */
-	public static final float WORLD_SCALE = 32;
+	private static final float TILE_SIZE = Coordinates.WORLD_SCALE;
 	private int gridX;
 	private int gridY;
 	private Terrain myTerrain;
@@ -54,7 +55,7 @@ public class Tile
 	 */
 	public float getX()
 	{
-		return gridX * WORLD_SCALE + 16;
+		return gridX * TILE_SIZE + TILE_SIZE/2;
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class Tile
 	 */
 	public float getY()
 	{
-		return gridY * WORLD_SCALE + 16;
+		return gridY * TILE_SIZE + TILE_SIZE/2;
 	}
 
 	/**
