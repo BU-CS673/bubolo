@@ -54,7 +54,7 @@ public class Tile
 	 */
 	public float getX()
 	{
-		return gridX * WORLD_SCALE;
+		return gridX * WORLD_SCALE + 16;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class Tile
 	 */
 	public float getY()
 	{
-		return gridY * WORLD_SCALE;
+		return gridY * WORLD_SCALE + 16;
 	}
 
 	/**

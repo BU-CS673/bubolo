@@ -34,9 +34,8 @@ public final class Coordinates
 	 */
 	public static Vector2 worldToCamera(Camera camera, Vector2 worldCoordinates)
 	{
-		int scalingFactor = WORLD_SCALE / 2;
-		return new Vector2(worldCoordinates.x - camera.position.x + scalingFactor,
-				worldCoordinates.y - camera.position.y + scalingFactor);
+		return new Vector2(worldCoordinates.x - camera.position.x ,
+				worldCoordinates.y - camera.position.y);
 	}
 
 	/**
@@ -50,8 +49,7 @@ public final class Coordinates
 	 */
 	public static Vector2 cameraToWorld(Camera camera, Vector2 cameraCoordinates)
 	{
-		int scalingFactor = WORLD_SCALE / 2;
-		return new Vector2(cameraCoordinates.x + camera.position.x - scalingFactor,
-				cameraCoordinates.y + camera.position.y - scalingFactor);
+		return new Vector2(cameraCoordinates.x + camera.position.x,
+				cameraCoordinates.y + camera.position.y);
 	}
 }
