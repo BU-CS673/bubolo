@@ -86,7 +86,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	 */
 	public boolean isCannonReady()
 	{
-		return (System.currentTimeMillis()-this.cannonFireTime>this.cannonReloadSpeed);
+		return (System.currentTimeMillis()-this.cannonFireTime>Pillbox.cannonReloadSpeed);
 	}
 	/**
 	 * Aim the Cannon
