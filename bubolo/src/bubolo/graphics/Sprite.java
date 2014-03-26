@@ -142,7 +142,25 @@ abstract class Sprite<T extends Entity> implements Drawable
 	{
 		if (layer == getDrawLayer())
 		{
+<<<<<<< HEAD
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, new Vector2(getEntity()
+					.getX() - (texture.getWidth() / 2), getEntity().getY()
+					- (texture.getHeight() / 2)));
 
+			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
+
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getWidth(),
+					texture.getHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+=======
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
@@ -151,6 +169,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+>>>>>>> origin/production
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -169,13 +188,34 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * @param texture
 	 *            The texture region to draw.
 	 */
-
+<<<<<<< HEAD
+	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
+			TextureRegion texture)
+=======
 	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, TextureRegion texture)
-
+>>>>>>> origin/production
 	{
 		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
+<<<<<<< HEAD
+					new Vector2(getEntity().getX() - (texture.getRegionWidth() / 2), getEntity()
+							.getY() - (texture.getRegionHeight() / 2)));
+
+			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
+
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getRegionWidth(),
+					texture.getRegionHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+=======
 					new Vector2(getEntity().getX(), getEntity().getY()));
 
 			Vector2 origin = getOrigin(getEntity());
@@ -183,6 +223,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
 					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
 					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+>>>>>>> origin/production
 		}
 	}
 
@@ -193,8 +234,14 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 *            reference to an entity.
 	 * @return the center of an entity.
 	 */
+<<<<<<< HEAD
+	private static Vector2 getOrigin(float width, float height)
+	{
+		return new Vector2(width / 2.f, height / 2.f);
+=======
 	private static <T extends Entity> Vector2 getOrigin(T ent)
 	{
 		return new Vector2(ent.getWidth() / 2.f, ent.getHeight() / 2.f);
+>>>>>>> origin/production
 	}
 }
