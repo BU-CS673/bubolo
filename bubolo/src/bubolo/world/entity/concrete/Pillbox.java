@@ -14,9 +14,22 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Pillbox extends StationaryElement implements Ownable
 {
+	/*
+	 * time at witch cannon was last fired
+	 */
 	private long cannonFireTime = 0;
+	/*
+	 * time required to reload cannon
+	 */
 	private static final long cannonReloadSpeed=500;
+	/*
+	 * current direction cannon is pointed
+	 */
 	private float cannonRotation = 0;
+	/*
+	 * Max range to locate a target.  Pillbox will not fire unless there is a tank within this range
+	 */
+	private static final double range = 300;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -123,5 +136,8 @@ public class Pillbox extends StationaryElement implements Ownable
 		bullet.setX(this.getCenterX()).setY(this.getCenterY());
 		bullet.setRotation(getCannonRotation());
 	}
-	// TODO: Add Pillbox functionality!
+	public double getRange()
+	{
+		return Pillbox.range;
+	}
 }

@@ -8,7 +8,6 @@ import bubolo.world.entity.concrete.Pillbox;
 public class AIPillboxController implements Controller
 {
 	private Pillbox pillbox;
-	private final double range = 200;
 	public AIPillboxController(Pillbox pillbox)
 	{
 		this.pillbox = pillbox;
@@ -67,7 +66,7 @@ public class AIPillboxController implements Controller
 		ydistance = Math.abs(pillbox.getCenterY() - target.getCenterY());
 		distance = Math.sqrt((xdistance*xdistance)+ (ydistance*ydistance));
 				
-		return (distance < range); 
+		return (distance < pillbox.getRange()); 
 	}
 	/**
 	 * returns the angle to the closest target for the pillbox
