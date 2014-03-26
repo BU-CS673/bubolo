@@ -2,7 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileChecker;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -18,6 +20,12 @@ public class Wall extends StationaryElement implements Adaptable
 	private static final long serialVersionUID = -4591161497141031916L;
 
 	private int tilingState = 0;
+
+	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class[] matchingTypes = new Class[] { Wall.class };
 
 	/**
 	 * Construct a new Wall with a random UUID.
@@ -40,21 +48,26 @@ public class Wall extends StationaryElement implements Adaptable
 	}
 
 	@Override
-	public void updateState()
+	public void updateTilingState(World w)
 	{
-		// TODO: Add adaptive tiling state logic for 4x4 grid!
-		throw new UnsupportedOperationException(
-				"Adaptive tiling state updates are not implemented for Wall yet!");
+		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
 	}
 
 	@Override
-	public int getState()
+	public void update(World w)
+	{
+		super.update(w);
+		updateTilingState(w);
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}

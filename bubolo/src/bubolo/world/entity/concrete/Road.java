@@ -2,7 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileChecker;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -18,6 +20,13 @@ public class Road extends Terrain implements Adaptable
 	private static final long serialVersionUID = -5302600252810938564L;
 
 	private int tilingState = 0;
+
+	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class[] matchingTypes = new Class[] { Road.class };
+
 	/**
 	 * Construct a new Road with a random UUID.
 	 */
@@ -38,21 +47,26 @@ public class Road extends Terrain implements Adaptable
 	}
 
 	@Override
-	public void updateState()
+	public void update(World w)
 	{
-		//TODO: Add adaptive tiling logic for 4x4 grid.
-		throw new UnsupportedOperationException("Adaptive tiling state updates are not implemented for Road yet!");
-
+		super.update(w);
+		updateTilingState(w);
 	}
 
 	@Override
-	public int getState()
+	public void updateTilingState(World w)
+	{
+		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}

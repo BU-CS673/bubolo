@@ -67,7 +67,7 @@ class WallSprite extends Sprite<Wall>
 		{
 			// TODO: Point to different texture regions based on the damagedState field,
 			// which changes with Entity HP percentage.
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[this.getEntity().getTilingState()]);
 		}
 	}
 }

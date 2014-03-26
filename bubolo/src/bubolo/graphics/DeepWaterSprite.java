@@ -27,20 +27,78 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	DeepWaterSprite(DeepWater deepWater)
 	{
 		super(DrawLayer.TERRAIN, deepWater);
-		frames = TextureUtil.adaptiveSplit_9((Graphics.getTexture(Graphics.TEXTURE_PATH
+		frames = TextureUtil.adaptiveSplit_water((Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ "deepWater.png")));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		
+		int currentState = this.getEntity().getTilingState();
+		
 		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[currentState]);
 		}
+		
+		boolean[] corners = this.getEntity().getCornerStates();
+		
+		
+		if (currentState == 0 || currentState == 13 || currentState == 5 || currentState == 7)
+		{
+			if (!corners[0])
+			{
+				drawTexture(batch, camera, layer, frames[20]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[16]);
+			}
+		}
+
+		if (currentState == 0 || currentState == 11 || currentState == 9 || currentState == 13)
+		{
+			if (!corners[1])
+			{
+				drawTexture(batch, camera, layer, frames[21]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[17]);
+			}
+
+		}
+		
+		if (currentState == 0 || currentState == 14 || currentState == 6 || currentState == 7)
+		{
+			if (!corners[2])
+			{
+				drawTexture(batch, camera, layer, frames[22]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[18]);
+			}
+
+		}
+
+		if (currentState == 0|| currentState == 10 || currentState == 14 || currentState == 11)
+		{
+			if (!corners[3])
+			{
+				drawTexture(batch, camera, layer, frames[23]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[19]);
+			}
+
+		}
+		
 	}
 }

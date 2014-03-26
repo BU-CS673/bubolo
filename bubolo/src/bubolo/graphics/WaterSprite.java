@@ -18,8 +18,8 @@ class WaterSprite extends Sprite<Water>
 	private TextureRegion[] frames;
 
 	/**
-	 * Constructor for the WaterSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system.
+	 * Constructor for the WaterSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param water
 	 *            Reference to the Water that this WaterSprite represents.
@@ -28,13 +28,14 @@ class WaterSprite extends Sprite<Water>
 	{
 		super(DrawLayer.TERRAIN, water);
 
-		frames = TextureUtil.adaptiveSplit_16_9_9(Graphics.getTexture(Graphics.TEXTURE_PATH
+		frames = TextureUtil.adaptiveSplit_water(Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ "water.png"));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
+		int currentState = this.getEntity().getTilingState();
 		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
@@ -42,7 +43,59 @@ class WaterSprite extends Sprite<Water>
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[currentState]);
+		}
+
+		boolean[] corners = this.getEntity().getCornerStates();
+		if (currentState == 15 || currentState == 13 || currentState == 5 || currentState == 7)
+		{
+			if (!corners[0])
+			{
+				drawTexture(batch, camera, layer, frames[16]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[20]);
+			}
+		}
+
+		if (currentState == 15 || currentState == 11 || currentState == 9 || currentState == 13)
+		{
+			if (!corners[1])
+			{
+				drawTexture(batch, camera, layer, frames[17]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[21]);
+			}
+
+		}
+		
+		if (currentState == 15 || currentState == 14 || currentState == 6 || currentState == 7)
+		{
+			if (!corners[2])
+			{
+				drawTexture(batch, camera, layer, frames[18]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[22]);
+			}
+
+		}
+
+		if (currentState == 15 || currentState == 10 || currentState == 14 || currentState == 11)
+		{
+			if (!corners[3])
+			{
+				drawTexture(batch, camera, layer, frames[19]);
+			}
+			else
+			{
+				drawTexture(batch, camera, layer, frames[23]);
+			}
+
 		}
 	}
 }

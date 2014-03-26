@@ -2,7 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileChecker;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -18,6 +20,14 @@ public class DeepWater extends Terrain implements Adaptable
 	private static final long serialVersionUID = -4427335167013500776L;
 
 	private int tilingState = 0;
+
+	private boolean[] cornerStates = new boolean[4];
+
+	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class[] matchingTypes = new Class[] { Water.class };
 
 	/**
 	 * Construct a new DeepWater with a random UUID.
@@ -38,22 +48,33 @@ public class DeepWater extends Terrain implements Adaptable
 		super(id);
 	}
 
-	@Override
-	public void updateState()
+	public boolean[] getCornerStates()
 	{
-		//TODO: Add adaptive tiling logic for 3x3 grid.
-		throw new UnsupportedOperationException(
-				"Adaptive tiling state updates are not implemented for DeepWater yet!");
+		return cornerStates;
 	}
 
 	@Override
-	public int getState()
+	public void updateTilingState(World w)
+	{
+		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+		cornerStates = AdaptiveTileChecker.getCornerMatches(this.getTile(), w, matchingTypes);
+	}
+
+	@Override
+	public void update(World w)
+	{
+		super.update(w);
+		updateTilingState(w);
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}

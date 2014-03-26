@@ -40,7 +40,7 @@ class RoadSprite extends Sprite<Road>
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[this.getEntity().getTilingState()]);
 		}
 	}
 }
