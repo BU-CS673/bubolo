@@ -15,6 +15,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.google.common.base.Preconditions;
+
 /**
  * The game client.
  * 
@@ -88,6 +90,9 @@ class Client implements NetworkSubsystem, Runnable
 	@Override
 	public void run()
 	{
+		Preconditions.checkState(server != null, 
+				"Unable to run client; the network system has not been started.");
+		
 		try (ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream()))
 		{
 			while (!shutdown.get())

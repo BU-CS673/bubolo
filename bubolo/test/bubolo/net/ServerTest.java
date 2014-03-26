@@ -23,22 +23,13 @@ public class ServerTest
 	@Before
 	public void setup()
 	{
-		//server = new Server()
+		server = new Server(new MockNetwork());
 	}
 	
 	@After
 	public void teardown()
 	{
 		server.dispose();
-	}
-
-	/**
-	 * Test method for {@link bubolo.net.Server#startServer()}.
-	 */
-	@Test
-	public void testStartServer()
-	{
-		fail("Not yet implemented");
 	}
 
 	/**
@@ -56,7 +47,11 @@ public class ServerTest
 	@Test
 	public void testRun()
 	{
-		server.run();
+		try {
+			server.run();
+			fail("Expected IllegalStateException, but none encountered");
+		} catch (IllegalStateException e) {
+		}
 	}
 
 }

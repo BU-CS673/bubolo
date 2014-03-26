@@ -7,6 +7,7 @@
 package bubolo.net;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,27 +19,17 @@ import org.junit.Test;
 public class ClientTest
 {
 	private Client client;
-	
+
 	@Before
 	public void setup()
 	{
-		
+		this.client = new Client(new MockNetwork());
 	}
-	
+
 	@After
 	public void teardown()
 	{
 		client.dispose();
-	}
-	
-	
-	/**
-	 * Test method for {@link bubolo.net.Client#connect(java.net.InetAddress)}.
-	 */
-	@Test
-	public void testConnect()
-	{
-//		client.connect(serverIpAddress);
 	}
 
 	/**
@@ -47,16 +38,26 @@ public class ClientTest
 	@Test
 	public void testSend()
 	{
-		fail("Not yet implemented");
+		client.send(mock(NetworkCommand.class));
 	}
 
 	/**
-	 * Test method for {@link bubolo.net.Client#run()}.
+	 * Test method for {@link bubolo.net.Client#run()}. Ensures that an
+	 * IllegalStateException is thrown when run is called before starting the network
+	 * system.
 	 */
 	@Test
 	public void testRun()
 	{
-		client.run();
+		try
+		{
+			client.run();
+			fail("Expected exception, but none encountered");
+		}
+		catch (IllegalStateException e)
+		{
+
+		}
 	}
 
 }
