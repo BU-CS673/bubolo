@@ -28,5 +28,6 @@
 			<attribute name="javadoc_location" value="http://docs.mockito.googlecode.com/hg/latest/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

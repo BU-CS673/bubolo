@@ -172,7 +172,7 @@ class TankSprite extends Sprite<Tank>
 		frameIndex = 0;
 		frameTimeRemaining = millisPerFrame;
 
-		if (getEntity().isLocal())
+		if (getEntity().isLocalPlayer())
 		{
 			CameraController controller = new TankCameraController(getEntity());
 			Graphics.getInstance().addCameraController(controller);

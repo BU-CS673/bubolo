@@ -33,15 +33,14 @@ public class TileTest
 	@Test
 	public void getX()
 	{
-		assertEquals("Grid returns correct world X", testTile.getX(), TARGET_X_GRID
-				* Tile.WORLD_SCALE, .01);
+		assertEquals("Grid returns correct world X", testTile.getX(), TARGET_X_GRID * 32 + 16, .01);
 	}
 
 	@Test
 	public void getY()
 	{
 		assertEquals("Grid returns correct world Y", testTile.getY(), TARGET_Y_GRID
-				* Tile.WORLD_SCALE, .01);
+				* 32 + 16, .01);
 	}
 
 	@Test

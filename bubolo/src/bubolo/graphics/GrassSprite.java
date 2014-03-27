@@ -3,7 +3,9 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import bubolo.util.TextureUtil;
 import bubolo.world.entity.concrete.Grass;
 
 /**
@@ -14,6 +16,8 @@ import bubolo.world.entity.concrete.Grass;
 class GrassSprite extends Sprite<Grass>
 {
 	private Texture image;
+	
+	private TextureRegion[][] frames;
 
 	/**
 	 * Constructor for the GrassSprite. This is Package-private because sprites should not
@@ -27,6 +31,7 @@ class GrassSprite extends Sprite<Grass>
 		super(DrawLayer.BASE_TERRAIN, grass);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "grass.png");
+		frames = TextureUtil.splitFrames(image, 48, 48);
 	}
 
 	@Override
@@ -38,7 +43,7 @@ class GrassSprite extends Sprite<Grass>
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, image);
+			drawTexture(batch, camera, layer, frames[0][0]);
 
 		}
 	}

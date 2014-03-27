@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.MockEntity;
@@ -90,9 +91,21 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public List<Entity> getTanks() {
-		// TODO Auto-generated method stub
+
+	public List<Entity> getTanks() 
+	{
 		return null;
 	}
 
+	@Override
+	public void setMapTiles(Tile[][] mapTiles)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	public Tile[][] getMapTiles()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
