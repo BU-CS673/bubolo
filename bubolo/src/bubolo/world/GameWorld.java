@@ -179,6 +179,7 @@ public class GameWorld implements World
 		}
 		
 		entities.removeAll(entitiesToRemove);
+		tanks.removeAll(entitiesToRemove);
 		entitiesToRemove.clear();
 		
 		entities.addAll(entitiesToAdd);
