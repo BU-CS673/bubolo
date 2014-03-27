@@ -17,7 +17,7 @@ public class UserInterface
 	/**
 	 * 
 	 */
-	public static final String FILENAME = "Prefs.bolo";
+	public static final String FILENAME = ".settings/Prefs.bolo";
 	
 	/**
 	 * File path were UI icons are stored
