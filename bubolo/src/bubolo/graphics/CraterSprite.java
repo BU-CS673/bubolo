@@ -16,6 +16,9 @@ import bubolo.world.entity.concrete.Crater;
 class CraterSprite extends Sprite<Crater>
 {
 	private TextureRegion[] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "crater.png";
 
 	/**
 	 * Constructor for the CraterSprite. This is Package-private because sprites should
@@ -28,7 +31,7 @@ class CraterSprite extends Sprite<Crater>
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, crater);
 
-		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + "crater.png");
+		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);
 
 	}

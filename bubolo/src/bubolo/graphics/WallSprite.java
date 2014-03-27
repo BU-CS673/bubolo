@@ -16,6 +16,9 @@ import bubolo.world.entity.concrete.Wall;
 class WallSprite extends Sprite<Wall>
 {
 	private TextureRegion[] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "wall.png";
 
 	/**
 	 * Represents the total number of different damaged states that exist in this sprite's
@@ -42,7 +45,7 @@ class WallSprite extends Sprite<Wall>
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, wall);
 
-		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + "wall.png");
+		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);
 	}
 

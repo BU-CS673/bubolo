@@ -27,7 +27,7 @@ public class Tank extends Actor
 	private static final float accelerationRate = 0.01f;
 
 	// The rate of deceleration, in pixels per tick.
-	private static final float decelerationRate = 0.025f;
+	private static final float decelerationRate = 0.03f;
 
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;

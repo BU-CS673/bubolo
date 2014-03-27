@@ -83,8 +83,8 @@ public class Graphics
 	}
 
 	/**
-	 * Returns a texture from a path. Ensures that the same texture isn't store multiple times. Will
-	 * load the file if it has not yet been loaded.
+	 * Returns a texture from a path. Ensures that the same texture isn't stored multiple times.
+	 * Will load the file if it has not yet been loaded.
 	 * 
 	 * @param path
 	 *            the path to the texture file.
@@ -127,6 +127,7 @@ public class Graphics
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
 		spriteSystem = Sprites.getInstance();
+		loadAllTextures();
 
 		synchronized (Graphics.class)
 		{
@@ -237,6 +238,33 @@ public class Graphics
 				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth * 2
 				&& sprite.getY() + sprite.getHeight() / 2 + cameraY > 0
 				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight * 2);
+	}
+
+	/**
+	 * Loads all textures. This isn't strictly necessary, but we encountered slight hickups when a
+	 * sprite type was loaded for the first time. This was most noticeable when the first bullet is
+	 * fired. Unfortunately, this does mean that the Graphics class now has knowledge of all
+	 * concrete sprite.
+	 */
+	private static void loadAllTextures()
+	{
+		getTexture(TEXTURE_PATH + BaseSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + BulletSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + CraterSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + DeepWaterSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + EngineerSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + GenericExplosionSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + GrassSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + MineExplosionSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + MineSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + PillboxSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + RoadSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + RubbleSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + SwampSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + TankSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + TreeSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + WallSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + WaterSprite.TEXTURE_FILE);
 	}
 
 	/**

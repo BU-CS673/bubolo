@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.TextureUtil;
-
 import bubolo.world.entity.concrete.Water;
 
 /**
@@ -16,6 +15,9 @@ import bubolo.world.entity.concrete.Water;
 class WaterSprite extends Sprite<Water>
 {
 	private TextureRegion[] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "water.png";
 
 	/**
 	 * Constructor for the WaterSprite. This is Package-private because sprites should not
@@ -29,7 +31,7 @@ class WaterSprite extends Sprite<Water>
 		super(DrawLayer.TERRAIN, water);
 
 		frames = TextureUtil.adaptiveSplit_16_9_9(Graphics.getTexture(Graphics.TEXTURE_PATH
-				+ "water.png"));
+				+ TEXTURE_FILE));
 	}
 
 	@Override

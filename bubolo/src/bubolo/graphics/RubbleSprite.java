@@ -3,6 +3,7 @@ package bubolo.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import bubolo.world.entity.concrete.Rubble;
 
 /**
@@ -13,6 +14,9 @@ import bubolo.world.entity.concrete.Rubble;
 class RubbleSprite extends Sprite<Rubble>
 {
 	private Texture image;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "rubble.png";
 
 	/**
 	 * Constructor for the RubbleSprite. This is Package-private because sprites should not
@@ -25,7 +29,7 @@ class RubbleSprite extends Sprite<Rubble>
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, rubble);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "rubble.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
 
 	@Override

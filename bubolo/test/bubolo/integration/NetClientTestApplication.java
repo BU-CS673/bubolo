@@ -116,6 +116,7 @@ public class NetClientTestApplication implements GameApplication
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(400, 100, 32, 32, 0);
+		tank.setLocalPlayer(true);
 		
 		network.send(new CreateTank(tank));
 		
