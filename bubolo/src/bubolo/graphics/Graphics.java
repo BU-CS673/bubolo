@@ -241,7 +241,7 @@ public class Graphics
 	}
 
 	/**
-	 * Loads all textures. This isn't strictly necessary, but we encountered slight hickups when a
+	 * Loads all textures. This isn't strictly necessary, but we encountered slight hiccups when a
 	 * sprite type was loaded for the first time. This was most noticeable when the first bullet is
 	 * fired. Unfortunately, this does mean that the Graphics class now has knowledge of all
 	 * concrete sprite.
