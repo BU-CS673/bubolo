@@ -26,6 +26,8 @@ public class GameWorld implements World
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
 	
+	private Tile[][] mapTiles;
+
 	// The list of entities to remove. The entities array can't be modified while it
 	// is being iterated over.
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
@@ -53,6 +55,8 @@ public class GameWorld implements World
 
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+		
+		mapTiles = new Tile[worldMapWidth][worldMapHeight];
 	}
 
 	@Override
@@ -136,6 +140,19 @@ public class GameWorld implements World
 		removeEntity(entityMap.get(id));
 	}
 
+	@Override
+	public Tile[][] getMapTiles()
+	{
+		return mapTiles;
+	}
+
+	@Override
+	public void setMapTiles(Tile[][] mapTiles)
+	{
+		this.mapTiles = mapTiles;
+	}
+
+	
 	@Override
 	public int getMapWidth()
 	{

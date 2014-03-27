@@ -58,7 +58,7 @@ class TankCameraController implements CameraController
 
 	private static float calculateCameraX(Camera camera, Tank tank, World world)
 	{
-		float tankX = tank.getX() + tank.getWidth() / 2.f;
+		float tankX = tank.getX();
 
 		float cameraX = tankX - camera.viewportWidth / 2.f;
 		if (cameraX < 0)
@@ -67,7 +67,9 @@ class TankCameraController implements CameraController
 		}
 		else if (cameraX > world.getMapWidth() - camera.viewportWidth)
 		{
-			cameraX = world.getMapWidth() - camera.viewportWidth;
+			// Ensure that screen doesn't go negative if the world is smaller than the camera.
+			float newCameraX = world.getMapWidth() - camera.viewportWidth;
+			cameraX = (newCameraX >= 0) ? newCameraX : 0;			
 		}
 
 		return cameraX;
@@ -75,7 +77,7 @@ class TankCameraController implements CameraController
 
 	private static float calculateCameraY(Camera camera, Tank tank, World world)
 	{
-		float tankY = tank.getY() + tank.getHeight() / 2.f;
+		float tankY = tank.getY();
 
 		float cameraY = tankY - camera.viewportHeight / 2.f;
 		if (cameraY < 0)
@@ -84,7 +86,9 @@ class TankCameraController implements CameraController
 		}
 		else if (cameraY > world.getMapHeight() - camera.viewportHeight)
 		{
-			cameraY = world.getMapHeight() - camera.viewportHeight;
+			// Ensure that screen doesn't go negative if the world is smaller than the camera.
+			float newCameraY = world.getMapHeight() - camera.viewportHeight;
+			cameraY = (newCameraY >= 0) ? newCameraY : 0;
 		}
 
 		return cameraY;

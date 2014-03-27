@@ -16,6 +16,9 @@ import bubolo.world.entity.concrete.GenericExplosion;
 class GenericExplosionSprite extends Sprite<Entity>
 {
 	private TextureRegion[][] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "genericExplosion.png";
 
 	/**
 	 * Constructor for the GenericExplosionSprite. This is Package-private because sprites
@@ -30,7 +33,7 @@ class GenericExplosionSprite extends Sprite<Entity>
 		super(DrawLayer.EFFECTS, exp);
 
 		frames = TextureUtil.splitFrames(
-				Graphics.getTexture(Graphics.TEXTURE_PATH + "genericExplosion.png"), 26, 26);
+				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 26, 26);
 	}
 
 	@Override

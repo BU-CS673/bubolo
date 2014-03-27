@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * The top-level class for the Graphics system.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class Graphics
@@ -29,46 +30,47 @@ public class Graphics
 	 * File path where textures are stored.
 	 */
 	public static final String TEXTURE_PATH = "res/textures/";
-	
+
 	/**
 	 * The target number of draw ticks per second.
 	 */
 	public static final int TICKS_PER_SECOND = 60;
-	
+
 	/**
 	 * The number of milliseconds per draw tick.
 	 */
 	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
-	
+
 	// Stores the textures, ensuring that only one is needed for all instances
-	// of a given sprite. 
+	// of a given sprite.
 	private static Map<String, Texture> textures = new HashMap<String, Texture>();
-	
+
 	private SpriteBatch batch;
 	private Camera camera;
-	
+
 	private Sprites spriteSystem;
-	
+
 	// The list of camera controllers.
 	private List<CameraController> cameraControllers = new ArrayList<CameraController>();
-	
+
 	// Static reference to this object for the getInstance() method.
 	private static Graphics instance = null;
-	
+
 	// The comparator used to sort sprites.
 	private static Comparator<Sprite<?>> spriteComparator;
-	
+
 	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
-	
+
 	/**
-	 * Gets a reference to the Graphics system. The Graphics system must be 
-	 * explicitly constructed using the <code>Graphics(width, height)</code> constructor
-	 * before this is called, or an <code>IllegalStateException</code> will
-	 * be thrown. This method is package-private, because only objects within
-	 * the Graphics system should have access to it.
+	 * Gets a reference to the Graphics system. The Graphics system must be explicitly constructed
+	 * using the <code>Graphics(width, height)</code> constructor before this is called, or an
+	 * <code>IllegalStateException</code> will be thrown. This method is package-private, because
+	 * only objects within the Graphics system should have access to it.
+	 * 
 	 * @return a reference to the Graphics system.
-	 * @throws IllegalStateException when the Graphics system has not been 
-	 * explicitly constructed using the <code>Graphics(width, height)</code> constructor.
+	 * @throws IllegalStateException
+	 *             when the Graphics system has not been explicitly constructed using the
+	 *             <code>Graphics(width, height)</code> constructor.
 	 */
 	static Graphics getInstance()
 	{
@@ -79,11 +81,13 @@ public class Graphics
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * Returns a texture from a path. Ensures that the same texture isn't
-	 * store multiple times. Will load the file if it has not yet been loaded.
-	 * @param path the path to the texture file.
+	 * Returns a texture from a path. Ensures that the same texture isn't stored multiple times.
+	 * Will load the file if it has not yet been loaded.
+	 * 
+	 * @param path
+	 *            the path to the texture file.
 	 * @return the requested texture.
 	 */
 	static Texture getTexture(String path)
@@ -94,10 +98,10 @@ public class Graphics
 			texture = new Texture(new FileHandle(new File(path)));
 			textures.put(path, texture);
 		}
-		
+
 		return texture;
 	}
-	
+
 	/**
 	 * Destroys all textures, and destroys the Graphics instance.
 	 */
@@ -109,35 +113,42 @@ public class Graphics
 		}
 		instance = null;
 	}
-	
+
 	/**
 	 * Creates the graphics system.
-	 * @param windowWidth the width of the window, in pixels.
-	 * @param windowHeight the height of the window, in pixels.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window, in pixels.
+	 * @param windowHeight
+	 *            the height of the window, in pixels.
 	 */
 	public Graphics(int windowWidth, int windowHeight)
 	{
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
 		spriteSystem = Sprites.getInstance();
-		
-		synchronized(Graphics.class)
+		loadAllTextures();
+
+		synchronized (Graphics.class)
 		{
 			Graphics.instance = this;
 			spriteComparator = new SpriteComparator();
 		}
 	}
-	
+
 	/**
 	 * Draws the entities that are within the camera's clipping boundary.
-	 * @param world reference to the World Model object.
+	 * 
+	 * @param world
+	 *            reference to the World Model object.
 	 */
 	public void draw(World world)
 	{
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
-		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-		
-		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's view.
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's
+		// view.
 		spritesInView.clear();
 		for (Sprite<?> sprite : spriteSystem.getSprites())
 		{
@@ -146,10 +157,10 @@ public class Graphics
 				spritesInView.add(sprite);
 			}
 		}
-		
+
 		// 3. Sort list by sprite type, to facilitate batching.
 		Collections.sort(spritesInView, spriteComparator);
-		
+
 		// 4. Render sprites by layer.
 		drawEntities(spritesInView, DrawLayer.BACKGROUND);
 		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
@@ -157,13 +168,13 @@ public class Graphics
 		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
 		drawEntities(spritesInView, DrawLayer.ACTORS);
 		drawEntities(spritesInView, DrawLayer.EFFECTS);
-		
+
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
 		{
 			c.update(world);
 		}
-		
+
 		// Remove destroyed sprites from the list.
 		List<Sprite<?>> sprites = spriteSystem.getSprites();
 		for (int i = 0; i < sprites.size(); ++i)
@@ -174,21 +185,25 @@ public class Graphics
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the specified camera controller.
-	 * @param controller a camera controller. The update method will be called
-	 * once per draw call.
+	 * 
+	 * @param controller
+	 *            a camera controller. The update method will be called once per draw call.
 	 */
 	public void addCameraController(CameraController controller)
 	{
 		cameraControllers.add(controller);
 	}
-	
+
 	/**
 	 * Draw all entities in the specified layer.
-	 * @param entities the list of entities.
-	 * @param currentLayer the current layer to draw.
+	 * 
+	 * @param entities
+	 *            the list of entities.
+	 * @param currentLayer
+	 *            the current layer to draw.
 	 */
 	private void drawEntities(List<Sprite<? extends Entity>> sprites, DrawLayer currentLayer)
 	{
@@ -196,7 +211,7 @@ public class Graphics
 		{
 			return;
 		}
-		
+
 		batch.begin();
 		for (Sprite<? extends Entity> sprite : sprites)
 		{
@@ -204,24 +219,57 @@ public class Graphics
 		}
 		batch.end();
 	}
-	
+
 	/**
-	 * Returns true if the x, y, height and width of the sprite are within the 
-	 * camera's view.
-	 * @param camera the game camera.
-	 * @param sprite the sprite to check.
+	 * Returns true if the x, y, height and width of the sprite are within the camera's view.
+	 * 
+	 * @param camera
+	 *            the game camera.
+	 * @param sprite
+	 *            the sprite to check.
 	 * @return true if the sprite is within the camera's view, or false otherwise.
 	 */
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
-		return (sprite.getX() + sprite.getWidth() + camera.position.x > 0 &&
-				sprite.getX() - camera.position.x < camera.viewportWidth * 2 &&
-				sprite.getY() + sprite.getHeight() + camera.position.y > 0 &&
-				sprite.getY() - camera.position.y < camera.viewportHeight * 2);
+		final float cameraX = camera.position.x;
+		final float cameraY = camera.position.y;
+
+		return (sprite.getX() + sprite.getWidth() / 2 + cameraX > 0
+				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth * 2
+				&& sprite.getY() + sprite.getHeight() / 2 + cameraY > 0
+				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight * 2);
 	}
-	
+
+	/**
+	 * Loads all textures. This isn't strictly necessary, but we encountered slight hickups when a
+	 * sprite type was loaded for the first time. This was most noticeable when the first bullet is
+	 * fired. Unfortunately, this does mean that the Graphics class now has knowledge of all
+	 * concrete sprite.
+	 */
+	private static void loadAllTextures()
+	{
+		getTexture(TEXTURE_PATH + BaseSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + BulletSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + CraterSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + DeepWaterSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + EngineerSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + GenericExplosionSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + GrassSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + MineExplosionSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + MineSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + PillboxSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + RoadSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + RubbleSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + SwampSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + TankSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + TreeSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + WallSprite.TEXTURE_FILE);
+		getTexture(TEXTURE_PATH + WaterSprite.TEXTURE_FILE);
+	}
+
 	/**
 	 * Comparator that is used when sorting sprites.
+	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
 	private static class SpriteComparator implements Comparator<Sprite<?>>

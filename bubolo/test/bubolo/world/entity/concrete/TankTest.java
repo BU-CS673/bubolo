@@ -88,25 +88,6 @@ public class TankTest
 		tank.rotateRight();
 		assertEquals(rotation + 0.05f, tank.getRotation(), 0.0001f);
 	}
-	
-	@Test
-	public void setLocal()
-	{
-		assertTrue(tank.isLocal());
-		
-		tank.setLocal(false);
-		assertFalse(tank.isLocal());
-	}
-	
-	@Test
-	public void setLocalBreakInvariant()
-	{
-		tank.setLocal(false);
-		try
-		{
-			tank.setLocal(false);
-			fail("tank.setLocal called twice. This is not allowed.");
-		}
-		catch (Exception e) {}
-	}
 }
+	
+

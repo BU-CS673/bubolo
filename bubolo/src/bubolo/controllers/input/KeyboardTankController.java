@@ -4,7 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
 import bubolo.controllers.Controller;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateEntity;
+import bubolo.net.command.MoveEntity;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -43,19 +48,23 @@ public class KeyboardTankController implements Controller
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
 		{
 			tank.accelerate();
+			sendMove(tank);
 		}
 		else if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
 		{
 			tank.decelerate();
+			sendMove(tank);
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
 		{
 			tank.rotateRight();
+			sendMove(tank);
 		}
 		else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
 		{
 			tank.rotateLeft();
+			sendMove(tank);
 		}
 	}
 
@@ -68,9 +77,20 @@ public class KeyboardTankController implements Controller
 
 			// TODO (cdc - 3/14/2014): calculate and update this with correct starting
 			// offset.
-			tank.fireCannon(world, tankCenterX + 18 * (float) Math.cos(tank.getRotation()),
-					tankCenterY + 18 * (float) Math.sin(tank.getRotation()));
+			Bullet bullet = tank.fireCannon(world,
+					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
+					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
+
+			Network net = NetworkSystem.getInstance();
+			net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
+					bullet.getRotation()));
 		}
+	}
+
+	private static void sendMove(Tank tank)
+	{
+		Network net = NetworkSystem.getInstance();
+		net.send(new MoveEntity(tank));
 	}
 
 	// TODO (cdc - 3/15/2014): Uncomment this once it's ready to be implemented.

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.MockEntity;
@@ -21,7 +22,7 @@ public class MockWorld implements World
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
-		throw new GameLogicException("MockWorld objects do not have any entities.");
+		return null;
 	}
 
 	@Override
@@ -87,6 +88,20 @@ public class MockWorld implements World
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Tile[][] getMapTiles()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMapTiles(Tile[][] mapTiles)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

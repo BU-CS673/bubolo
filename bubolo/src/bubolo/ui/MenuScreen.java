@@ -20,8 +20,9 @@ public class MenuScreen extends javax.swing.JFrame
 
 	/**
 	 * Creates new form MenuScreen
+	 * @param targetApp the runnable to execute.
 	 */
-	public MenuScreen(Runnable targetApp) throws InterruptedException
+	public MenuScreen(Runnable targetApp)
 	{
 		myTarget = targetApp;
 		initComponents();
@@ -59,7 +60,7 @@ public class MenuScreen extends javax.swing.JFrame
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				jToggleButton1ActionPerformed(evt);
+				jToggleButton1ActionPerformed();
 			}
 		});
 
@@ -75,7 +76,7 @@ public class MenuScreen extends javax.swing.JFrame
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				jToggleButton3ActionPerformed(evt);
+				jToggleButton3ActionPerformed();
 			}
 		});
 
@@ -116,11 +117,8 @@ public class MenuScreen extends javax.swing.JFrame
 	/**
 	 * Starts the game by creating a new Thread and running the Runnable passed into the
 	 * Constructor. For most implementations, this will launch the primary game thread.
-	 * 
-	 * @param evt
-	 *            is the event created by this button being pressed. Currently unused.
 	 */
-	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt)
+	private void jToggleButton1ActionPerformed()
 	{
 		(new Thread(myTarget)).start();
 	}
@@ -128,13 +126,9 @@ public class MenuScreen extends javax.swing.JFrame
 	/**
 	 * Quits the game by ending this thread. Could probably be cleaned up to make sure that all
 	 * resources are disposed of correctly.
-	 * 
-	 * @param evt
-	 *            is the event created by this button being pressed. Currently unused.
 	 */
-	private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt)
+	private void jToggleButton3ActionPerformed()
 	{
-		// TODO add your handling code here:
 		this.dispose();
 	}
 

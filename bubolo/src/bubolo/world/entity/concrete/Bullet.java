@@ -24,7 +24,7 @@ public class Bullet extends Effect
 	private static final float MAX_DISTANCE = 600;
 
 	// The distance the bullet has traveled.
-	private int distanceTravelled;
+	private int distanceTraveled;
 
 	// The x movement per tick.
 	private float movementX;
@@ -98,7 +98,7 @@ public class Bullet extends Effect
 	 */
 	private void move()
 	{
-		if (distanceTravelled > MAX_DISTANCE)
+		if (distanceTraveled > MAX_DISTANCE)
 		{
 			dispose();
 			return;
@@ -107,7 +107,7 @@ public class Bullet extends Effect
 		setX(getX() + movementX);
 		setY(getY() + movementY);
 
-		distanceTravelled += (movementX + movementY);
+		distanceTraveled += (Math.abs(movementX) + Math.abs(movementY));
 	}
 
 	/**
