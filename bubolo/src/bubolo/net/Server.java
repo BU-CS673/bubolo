@@ -46,7 +46,7 @@ class Server implements NetworkSubsystem, Runnable
 	Server(Network network)
 	{
 		this.network = network;
-		this.sender = Executors.newCachedThreadPool();
+		this.sender = Executors.newSingleThreadExecutor();
 	}
 
 	/**
