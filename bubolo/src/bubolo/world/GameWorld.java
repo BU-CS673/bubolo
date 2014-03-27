@@ -140,11 +140,13 @@ public class GameWorld implements World
 		removeEntity(entityMap.get(id));
 	}
 
+	@Override
 	public Tile[][] getMapTiles()
 	{
 		return mapTiles;
 	}
 
+	@Override
 	public void setMapTiles(Tile[][] mapTiles)
 	{
 		this.mapTiles = mapTiles;

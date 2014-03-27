@@ -21,18 +21,22 @@ class WallSprite extends Sprite<Wall>
 	 * Represents the total number of different damaged states that exist in this sprite's
 	 * texture.
 	 */
-	private final int DAMAGED_STATES = 4;
+	// TODO (cdc - 3/27/2014): Uncomment the next line once the damaged state 
+	// functionality is implemented.
+//	private static final int DAMAGED_STATES = 4;
 
 	/**
 	 * Represents the discrete damaged state that the sprite should be in, calculated from
-	 * the Entity's relative health. 
-	 * NOTE: Currently throws a "field not used" warning, as expected, since the damaged states aren't implemented yet.
+	 * the Entity's relative health.
 	 */
-	private int damagedState;
+	// TODO (cdc - 3/27/2014): Uncomment the next line once the damaged state 
+	// functionality is implemented.
+//	private int damagedState;
 
 	/**
 	 * Constructor for the WallSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
+	 * @param wall the wall entity.
 	 */
 	WallSprite(Wall wall)
 	{
@@ -50,9 +54,13 @@ class WallSprite extends Sprite<Wall>
 	{
 		// Compute the amount of health remaining for this Sprite's Entity as a fraction
 		// of its max HP.
-		float healthFraction = (float) this.getEntity().getHP() / this.getEntity().getMaxHP();
+		
+		// TODO (cdc - 3/27/2014): Uncomment the next lines once this method is implemented.
+		
+		//float healthFraction = (float) this.getEntity().getHP() / this.getEntity().getMaxHP();
 		// Convert that fraction to an integer between 0 and DAMAGED_STATES -1.
-		damagedState = Math.round(healthFraction * DAMAGED_STATES);
+		 
+		//damagedState = Math.round(healthFraction * DAMAGED_STATES);
 	}
 
 	@Override
