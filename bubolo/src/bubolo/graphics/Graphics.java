@@ -62,11 +62,10 @@ public class Graphics
 	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
 
 	/**
-	 * Gets a reference to the Graphics system. The Graphics system must be explicitly
-	 * constructed using the <code>Graphics(width, height)</code> constructor before this
-	 * is called, or an <code>IllegalStateException</code> will be thrown. This method is
-	 * package-private, because only objects within the Graphics system should have access
-	 * to it.
+	 * Gets a reference to the Graphics system. The Graphics system must be explicitly constructed
+	 * using the <code>Graphics(width, height)</code> constructor before this is called, or an
+	 * <code>IllegalStateException</code> will be thrown. This method is package-private, because
+	 * only objects within the Graphics system should have access to it.
 	 * 
 	 * @return a reference to the Graphics system.
 	 * @throws IllegalStateException
@@ -84,8 +83,8 @@ public class Graphics
 	}
 
 	/**
-	 * Returns a texture from a path. Ensures that the same texture isn't store multiple
-	 * times. Will load the file if it has not yet been loaded.
+	 * Returns a texture from a path. Ensures that the same texture isn't store multiple times. Will
+	 * load the file if it has not yet been loaded.
 	 * 
 	 * @param path
 	 *            the path to the texture file.
@@ -190,8 +189,7 @@ public class Graphics
 	 * Adds the specified camera controller.
 	 * 
 	 * @param controller
-	 *            a camera controller. The update method will be called once per draw
-	 *            call.
+	 *            a camera controller. The update method will be called once per draw call.
 	 */
 	public void addCameraController(CameraController controller)
 	{
@@ -222,8 +220,7 @@ public class Graphics
 	}
 
 	/**
-	 * Returns true if the x, y, height and width of the sprite are within the camera's
-	 * view.
+	 * Returns true if the x, y, height and width of the sprite are within the camera's view.
 	 * 
 	 * @param camera
 	 *            the game camera.
@@ -233,11 +230,13 @@ public class Graphics
 	 */
 	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
 	{
+		final float cameraX = camera.position.x;
+		final float cameraY = camera.position.y;
 
-		return (sprite.getX() + sprite.getWidth() / 2 + camera.position.x > 0
-				&& sprite.getX() - sprite.getWidth() / 2 - camera.position.x < camera.viewportWidth * 2
-				&& sprite.getY() + sprite.getHeight() / 2 + camera.position.y > 0 && sprite.getY()
-				- sprite.getWidth() / 2 - camera.position.y < camera.viewportHeight * 2);
+		return (sprite.getX() + sprite.getWidth() / 2 + cameraX > 0
+				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth * 2
+				&& sprite.getY() + sprite.getHeight() / 2 + cameraY > 0
+				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight * 2);
 	}
 
 	/**

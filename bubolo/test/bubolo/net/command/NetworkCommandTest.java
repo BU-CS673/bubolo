@@ -18,6 +18,7 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.net.Network;
 import bubolo.net.NetworkCommand;
 import bubolo.net.NetworkSystem;
+import bubolo.test.MockTank;
 import bubolo.test.MockWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -53,7 +54,7 @@ public class NetworkCommandTest
 	@Test
 	public void testCreateTankCommand()
 	{
-		NetworkCommand c = new CreateTank(mock(Tank.class));
+		NetworkCommand c = new CreateTank(new MockTank());
 		c.execute(new MockWorld());
 	}
 	
