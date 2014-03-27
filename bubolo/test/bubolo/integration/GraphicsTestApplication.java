@@ -94,7 +94,7 @@ public class GraphicsTestApplication implements GameApplication
 		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(50*30, 50*30);
+		world = new GameWorld(50*32, 50*32);
 		
 		for (int i = 0; i < 50; i++)
 		{
@@ -105,7 +105,8 @@ public class GraphicsTestApplication implements GameApplication
 		}
 		
 		// TODO: Adjust as needed.
-		world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
+		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
+		t.setLocalPlayer(true);
 		world.addEntity(Base.class).setParams(32*6, 32*4, 32, 32, 0);
 		world.addEntity(Bullet.class).setParams(32*7, 32*4, 32, 32, 90);
 		world.addEntity(Crater.class).setParams(32*8, 32*5, 32, 32, 0);
