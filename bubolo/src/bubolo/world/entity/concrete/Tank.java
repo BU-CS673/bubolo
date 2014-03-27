@@ -52,7 +52,6 @@ public class Tank extends Actor
 	public Tank()
 	{
 		super();
-		this.SetIsTank(true);
 	}
 
 	/**
@@ -64,7 +63,6 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
-		this.SetIsTank(true);
 	}
 
 	/**

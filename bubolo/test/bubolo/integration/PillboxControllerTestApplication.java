@@ -88,7 +88,7 @@ public class PillboxControllerTestApplication implements GameApplication
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0);
-		
+		tank.setLocalPlayer(true);
 		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
 		world.addEntity(Pillbox.class).setParams(32*18, 32*6, 32, 32, 0);
 		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 32, 32, 0);

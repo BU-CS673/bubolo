@@ -25,8 +25,6 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
-	//used to determine if this entity is a tank
-	private boolean isTank = false;
 	
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
@@ -133,25 +131,6 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return yPos;
 	}
-	
-	/**
-	 * Returns the center x position.
-	 * @return the center x position.
-	 */
-	public float getCenterX()
-	{
-		return (xPos + (width / 2.f));
-	}
-	
-	/**
-	 * Returns the center y position.
-	 * @return the center y position.
-	 */
-	public float getCenterY()
-	{
-		return (yPos + (height / 2.f));
-	}
-
 	/**
 	 * Set the rotation of this Entity.
 	 * 
@@ -272,13 +251,5 @@ public abstract class Entity implements Serializable, Drawable
 	public final void dispose()
 	{
 		disposed = true;
-	}
-	public boolean isTank()
-	{
-		return this.isTank;
-	}
-	public void SetIsTank(boolean isTank)
-	{
-		this.isTank = isTank;
 	}
 }

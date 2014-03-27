@@ -23,13 +23,13 @@ public class Pillbox extends StationaryElement implements Ownable
 	 */
 	private static final long cannonReloadSpeed=500;
 	/*
-	 * current direction cannon is pointed
+	 * current direction pillbox is going to fire 
 	 */
 	private float cannonRotation = 0;
 	/*
 	 * Max range to locate a target.  Pillbox will not fire unless there is a tank within this range
 	 */
-	private static final double range = 300;
+	private double range = 300;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -89,12 +89,9 @@ public class Pillbox extends StationaryElement implements Ownable
 		this.isOwned = owned;
 	}
 	/**
-	 * fire pillbox
-	 */
-	/**
 	 * Returns cannon status
 	 * 
-	 * @param isCannonReady
+	 * @return isCannonReady
 	 *            is the pillbox ready to fire.
 	 */
 	public boolean isCannonReady()
@@ -104,6 +101,8 @@ public class Pillbox extends StationaryElement implements Ownable
 	/**
 	 * Aim the Cannon
 	 * 
+	 * @param rotation
+	 * 			direction to aim the cannon
 	 */
 	public void aimCannon(float rotation)
 	{
@@ -112,20 +111,18 @@ public class Pillbox extends StationaryElement implements Ownable
 	/**
 	 * get cannon rotation
 	 * 
+	 * @return cannonRotation
+	 * 			the direction the pillbox is set to fire
 	 */
 	public float getCannonRotation()
 	{
 		return cannonRotation;
 	}
 	/**
-	 * Fire the Cannon
+	 * Fire the pillbox
 	 * 
 	 * @param world
 	 *            reference to world.
-	 * @param startX
-	 *            starting position of bullet
-	 * @param startY
-	 *            starting position of bullet
 	 */
 	public void fireCannon(World world)
 	{
@@ -133,11 +130,27 @@ public class Pillbox extends StationaryElement implements Ownable
 
 		Bullet bullet = world.addEntity(Bullet.class);
 
-		bullet.setX(this.getCenterX()).setY(this.getCenterY());
+		bullet.setX(this.getX()).setY(this.getY());
 		bullet.setRotation(getCannonRotation());
 	}
+	/**
+	 * returns the range of this pillbox
+	 * 
+	 * @return range
+	 * 			distance at which the pillbox will attempt to fire at an enemy
+	 */
 	public double getRange()
 	{
-		return Pillbox.range;
+		return this.range;
+	}
+	/**
+	 * sets the static range of this pillbox
+	 * 
+	 * @param range
+	 * 			distance at which the pillbox will attempt to fire at an enemy
+	 */
+	public void setRange(double range)
+	{
+		this.range = range;
 	}
 }

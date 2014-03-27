@@ -53,19 +53,6 @@ public class EntityTest
 	}
 
 	@Test
-	public void getCenterX()
-	{
-		assertEquals("Entity x position matches target.", EntityTestCase.TARGET_X+(EntityTestCase.TARGET_WIDTH/2.0), ent.getCenterX(),
-				.0001);
-	}
-
-	@Test
-	public void getCenterY()
-	{
-		assertEquals("Entity y position matches target.", EntityTestCase.TARGET_Y+(EntityTestCase.TARGET_HEIGHT/2.0), ent.getCenterY(),
-				.0001);
-	}
-	@Test
 	public void getX()
 	{
 		assertEquals("Entity x position matches target center.", EntityTestCase.TARGET_X, ent.getX(),

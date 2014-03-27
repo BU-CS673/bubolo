@@ -47,13 +47,7 @@ public class PillboxTest
 		pillbox.aimCannon(direction);
 		assertEquals("Pillbox aimed correctly", true, pillbox.getCannonRotation() == direction);
 	}
-	@Test
-	public void fireCannon()
-	{
-		LibGdxAppTester.createApp();
-		pillbox.fireCannon(new MockBulletCreator());
-		
-	}
+
 	@Test
 	public void getCannonRotation()
 	{
@@ -70,6 +64,27 @@ public class PillboxTest
 		pillbox.fireCannon(new MockBulletCreator());
 		assertFalse(pillbox.isCannonReady());
 		
+	}
+	@Test
+	public void fireCannon()
+	{
+		LibGdxAppTester.createApp();
+		pillbox.fireCannon(new MockBulletCreator());
+		
+	}
+	@Test
+	public void getRange()
+	{
+		double Range = 30.0;
+		pillbox.setRange(Range);
+		assertEquals("Pillbox range set correctly", true, pillbox.getRange() == Range);
+	}
+	@Test
+	public void setRange()
+	{
+		double Range = 30.0;
+		pillbox.setRange(Range);
+		assertEquals("Pillbox range set correctly", true, pillbox.getRange() == Range);
 	}
 
 }
