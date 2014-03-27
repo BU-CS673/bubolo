@@ -36,11 +36,12 @@ public class Sprint1
 			ex.printStackTrace();
 		}
 	}
+	
 
 	public static void setup()
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "test";
+		cfg.title = "BUBOLO Sprint 1";
 		cfg.width = 600;
 		cfg.height = 600;
 		cfg.useGL20 = true;

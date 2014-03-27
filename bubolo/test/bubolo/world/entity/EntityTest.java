@@ -1,11 +1,17 @@
 package bubolo.world.entity;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 
+import bubolo.controllers.Controller;
+import bubolo.test.MockWorld;
+import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 public class EntityTest
 {
@@ -36,7 +42,7 @@ public class EntityTest
 	@Test
 	public void update()
 	{
-		ent.update();
+		ent.update(mock(World.class));
 	}
 
 	@Test
@@ -47,19 +53,31 @@ public class EntityTest
 	}
 
 	@Test
+	public void getCenterX()
+	{
+		assertEquals("Entity x position matches target.", EntityTestCase.TARGET_X+(EntityTestCase.TARGET_WIDTH/2.0), ent.getCenterX(),
+				.0001);
+	}
+
+	@Test
+	public void getCenterY()
+	{
+		assertEquals("Entity y position matches target.", EntityTestCase.TARGET_Y+(EntityTestCase.TARGET_HEIGHT/2.0), ent.getCenterY(),
+				.0001);
+	}
+	@Test
 	public void getX()
 	{
-		assertEquals("Entity x position matches target.", EntityTestCase.TARGET_X, ent.getX(),
+		assertEquals("Entity x position matches target center.", EntityTestCase.TARGET_X, ent.getX(),
 				.0001);
 	}
 
 	@Test
 	public void getY()
 	{
-		assertEquals("Entity y position matches target.", EntityTestCase.TARGET_Y, ent.getY(),
+		assertEquals("Entity y position matches target center.", EntityTestCase.TARGET_Y, ent.getY(),
 				.0001);
 	}
-
 	@Test
 	public void getRotation()
 	{
@@ -78,5 +96,40 @@ public class EntityTest
 	{
 		assertEquals("Entity height matches target.", EntityTestCase.TARGET_HEIGHT, ent.getHeight());
 	}
+	
+	@Test
+	public void addController()
+	{
+		Entity tank = new Tank();
+		tank.addController(mock(Controller.class));
+		assertEquals(1, tank.getControllerCount());
+	}
+	
+	@Test
+	public void updateTest()
+	{
+		Entity tank = new Tank();
+		tank.addController(new Controller() {
+			@Override
+			public void update(World world)
+			{
+				// Do nothing.
+			}
+		});
+		tank.update(new MockWorld());
+	}
+	
+	@Test
+	public void isDisposed()
+	{
+		Entity e = new MockEntity();
+		assertFalse(e.isDisposed());
+	}
 
+	@Test
+	public void disposeTest()
+	{
+		ent.dispose();
+		assertTrue(ent.isDisposed());
+	}
 }

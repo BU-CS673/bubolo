@@ -72,11 +72,5 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 		return false;
 	}
 
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
-	}
-
 	// TODO: Add StationaryElement functionality!
 }

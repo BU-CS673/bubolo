@@ -8,6 +8,7 @@ import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.MockEntity;
 
 /**
  * Mock class used for testing components that need a world implementation
@@ -84,6 +85,12 @@ public class MockWorld implements World
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Entity> getTanks() {
 		// TODO Auto-generated method stub
 		return null;
 	}

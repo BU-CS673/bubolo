@@ -2,8 +2,6 @@ package bubolo.ui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A Menu Screen that should follow the splash screen. Allows users to start the game or
@@ -13,6 +11,8 @@ import java.util.logging.Logger;
  */
 public class MenuScreen extends javax.swing.JFrame
 {
+	private static final long serialVersionUID = -5355152035949516532L;
+	
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
@@ -40,8 +40,7 @@ public class MenuScreen extends javax.swing.JFrame
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents()
 	{
-
-		UserPrcoessContainer = new javax.swing.JPanel();
+		userProcessContainer = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
 		startButton = new javax.swing.JToggleButton();
 		jLabel2 = new javax.swing.JLabel();
@@ -81,8 +80,8 @@ public class MenuScreen extends javax.swing.JFrame
 		});
 
 		javax.swing.GroupLayout UserPrcoessContainerLayout = new javax.swing.GroupLayout(
-				UserPrcoessContainer);
-		UserPrcoessContainer.setLayout(UserPrcoessContainerLayout);
+				userProcessContainer);
+		userProcessContainer.setLayout(UserPrcoessContainerLayout);
 		UserPrcoessContainerLayout.setHorizontalGroup(UserPrcoessContainerLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						UserPrcoessContainerLayout
@@ -109,7 +108,7 @@ public class MenuScreen extends javax.swing.JFrame
 						.addComponent(preferencesButton).addGap(18, 18, 18)
 						.addComponent(quitButton).addGap(48, 48, 48)));
 
-		getContentPane().add(UserPrcoessContainer, "card2");
+		getContentPane().add(userProcessContainer, "card2");
 
 		pack();
 	}// </editor-fold>
@@ -140,7 +139,7 @@ public class MenuScreen extends javax.swing.JFrame
 	}
 
 	// Variables declaration - do not modify
-	private javax.swing.JPanel UserPrcoessContainer;
+	private javax.swing.JPanel userProcessContainer;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JToggleButton startButton;
