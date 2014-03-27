@@ -10,7 +10,7 @@ import bubolo.controllers.Controller;
 import bubolo.world.World;
 
 /**
- * A tank controller for tank's controlled by network players.
+ * A tank controller for tanks controlled by network players.
  * @author BU CS673 - Clone Productions
  */
 public class NetworkTankController implements Controller
