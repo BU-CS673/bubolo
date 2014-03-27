@@ -15,8 +15,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.google.common.base.Preconditions;
-
 /**
  * The game server.
  * 
@@ -36,7 +34,7 @@ class Server implements NetworkSubsystem, Runnable
 
 	// Reference to the network system.
 	private final Network network;
-	
+
 	private ObjectOutputStream clientStream;
 
 	/**
@@ -68,7 +66,7 @@ class Server implements NetworkSubsystem, Runnable
 			// TODO (cdc - 3/23/2013): Move accept() into a different thread.
 			client = socket.accept();
 			client.setTcpNoDelay(true);
-			
+
 			clientStream = new ObjectOutputStream(client.getOutputStream());
 
 			// Start the network reader thread.
@@ -95,9 +93,12 @@ class Server implements NetworkSubsystem, Runnable
 	@Override
 	public void run()
 	{
-		Preconditions.checkState(client != null,
-				"Unable to run server; the network system has not been started.");
-		
+		if (client == null)
+		{
+			throw new IllegalStateException(
+					"Unable to run server; the network system has not been started.");
+		}
+
 		try (ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream()))
 		{
 			while (!shutdown.get())
