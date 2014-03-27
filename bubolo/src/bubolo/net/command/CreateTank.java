@@ -6,6 +6,8 @@
 
 package bubolo.net.command;
 
+import java.util.logging.Logger;
+
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.net.NetworkTankController;
 import bubolo.world.World;
@@ -20,7 +22,7 @@ import bubolo.world.entity.concrete.Tank;
 public class CreateTank extends CreateEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @param tank
 	 *            reference to the tank that should be created on network players' computers.
@@ -38,13 +40,20 @@ public class CreateTank extends CreateEntity
 					}
 				});
 	}
-	
+
 	@Override
 	public void execute(World world)
 	{
 		super.execute(world);
-		
+
 		Tank tank = (Tank)world.getEntity(getId());
-		tank.setLocalPlayer(false);
+		if (tank != null)
+		{
+			tank.setLocalPlayer(false);
+		}
+		else
+		{
+			Logger.getGlobal().severe("CreateTank: The tank was not created. ID: " + getId());
+		}
 	}
 }

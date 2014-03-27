@@ -10,13 +10,8 @@ package bubolo.net;
  * Information about the network.
  * @author BU CS673 - Clone Productions
  */
-public class NetworkInformation
-{
-	// Private, since NetworkInformation should never be instantiated.
-	private NetworkInformation()
-	{
-	}
-	
+public abstract class NetworkInformation
+{	
 	/**
 	 * The port that the game server listens to.
 	 */

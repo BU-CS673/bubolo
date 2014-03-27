@@ -7,6 +7,8 @@
 package bubolo.net.command;
 
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bubolo.net.NetworkCommand;
 import bubolo.world.World;
@@ -46,6 +48,13 @@ public class MoveEntity implements NetworkCommand
 	public void execute(World world)
 	{
 		Entity entity = world.getEntity(id);
-		entity.setX(x).setY(y).setRotation(rotation);
+		if (entity != null)
+		{
+			entity.setX(x).setY(y).setRotation(rotation);
+		}
+		else
+		{
+			Logger.getGlobal().log(Level.WARNING, "MoveEntity: Unable to find entity " + id);
+		}
 	}
 }

@@ -7,6 +7,7 @@
 package bubolo.net.command;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.net.NetworkCommand;
@@ -96,7 +97,14 @@ public class CreateEntity implements NetworkCommand
 			entity = world.addEntity(type, id, factory);
 		}
 
-		entity.setX(x).setY(y).setRotation(rotation);
+		if (entity != null)
+		{
+			entity.setX(x).setY(y).setRotation(rotation);
+		}
+		else
+		{
+			Logger.getGlobal().severe("CreateEntity: Entity was not created. ID: " + id);
+		}
 	}
 	
 	/**

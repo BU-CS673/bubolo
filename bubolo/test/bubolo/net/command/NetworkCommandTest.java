@@ -43,17 +43,25 @@ public class NetworkCommandTest
 	}
 	
 	@Test
+	public void createEntitygetId()
+	{
+		UUID id = UUID.randomUUID();
+		NetworkCommand c = new CreateEntity(Grass.class, id, 0, 0, 0);
+		assertEquals(id, ((CreateEntity)c).getId());
+	}
+	
+	@Test
 	public void testCreateTankCommand()
 	{
 		NetworkCommand c = new CreateTank(mock(Tank.class));
-		c.execute(mock(World.class));
+		c.execute(new MockWorld());
 	}
 	
 	@Test
 	public void testMoveEntity()
 	{
-		NetworkCommand c = new MoveEntity(mock(Entity.class));
-		c.execute(mock(World.class));
+		NetworkCommand c = new MoveEntity(mock(Grass.class));
+		c.execute(new MockWorld());
 	}
 
 }

@@ -22,7 +22,7 @@ public class MockWorld implements World
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
-		throw new GameLogicException("MockWorld objects do not have any entities.");
+		return new MockEntity();
 	}
 
 	@Override

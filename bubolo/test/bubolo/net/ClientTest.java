@@ -9,6 +9,9 @@ package bubolo.net;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +42,20 @@ public class ClientTest
 	public void testSend()
 	{
 		client.send(mock(NetworkCommand.class));
+	}
+	
+	@Test
+	public void connect()
+	{
+		try
+		{
+			client.connect(InetAddress.getByName("127.0.0.1"));
+		}
+		catch (NetworkException | UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
