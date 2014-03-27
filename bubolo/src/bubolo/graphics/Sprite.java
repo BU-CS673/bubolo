@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import bubolo.util.Coordinates;
 import bubolo.world.entity.Entity;
 
 /**
@@ -141,14 +142,23 @@ abstract class Sprite<T extends Entity> implements Drawable
 	{
 		if (layer == getDrawLayer())
 		{
-			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX(), getEntity().getY()));
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, new Vector2(getEntity()
+					.getX() - (texture.getWidth() / 2), getEntity().getY()
+					- (texture.getHeight() / 2)));
 
-			Vector2 origin = getOrigin(getEntity());
-			
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					texture.getWidth(), texture.getHeight(), SCALE_X, SCALE_Y, 
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
+
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getWidth(),
+					texture.getHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -167,18 +177,28 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * @param texture
 	 *            The texture region to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, TextureRegion texture)
+	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
+			TextureRegion texture)
 	{
 		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX(), getEntity().getY()));
+					new Vector2(getEntity().getX() - (texture.getRegionWidth() / 2), getEntity()
+							.getY() - (texture.getRegionHeight() / 2)));
 
-			Vector2 origin = getOrigin(getEntity());
-			
-			batch.draw(texture, cameraCoordinates.x, cameraCoordinates.y, origin.x, origin.y, 
-					texture.getRegionWidth(), texture.getRegionHeight(), SCALE_X, SCALE_Y, 
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
+
+			batch.draw(
+					texture,
+					cameraCoordinates.x,
+					cameraCoordinates.y,
+					origin.x,
+					origin.y,
+					texture.getRegionWidth(),
+					texture.getRegionHeight(),
+					SCALE_X,
+					SCALE_Y,
+					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
 	}
 
@@ -189,8 +209,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 *            reference to an entity.
 	 * @return the center of an entity.
 	 */
-	private static <T extends Entity> Vector2 getOrigin(T ent)
+	private static Vector2 getOrigin(float width, float height)
 	{
-		return new Vector2(ent.getWidth() / 2.f, ent.getHeight() / 2.f);
+		return new Vector2(width / 2.f, height / 2.f);
+
 	}
 }
