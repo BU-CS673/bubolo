@@ -32,50 +32,36 @@ public class MockNetwork implements Network
 	@Override
 	public void startServer() throws NetworkException, IllegalStateException
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void startDebug()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void send(NetworkCommand command)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void update(World world)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void postToGameThread(NetworkCommand command)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }
