@@ -29,6 +29,11 @@ public class Pillbox extends StationaryElement implements Ownable
 	private boolean isOwned = true;
 
 	/**
+	 * Boolean representing whether this Pillbox is alive.
+	 */
+	private boolean isAlive = super.isAlive();
+	
+	/**
 	 * Construct a new Pillbox with a random UUID.
 	 */
 	public Pillbox()
@@ -71,6 +76,37 @@ public class Pillbox extends StationaryElement implements Ownable
 	{
 		this.isOwned = owned;
 	}
-
+	
 	// TODO: Add Pillbox functionality!
+	/**
+	 * Call this method when a tank's trying to capture or re-build a pillbox 
+	 * (move to the same spot with pillbox?)
+	 * 
+	 * Capturable Pillboxes -- Destroyed Pillbox can be picked up, re-build and will be
+	 * allied with that player (will not fire at that player)
+	 */
+	public void capturePillbox()
+	{
+		if (isAlive == false)
+		{
+			// pillbox is dead, can be pick up by anyone and need to re-build
+			setOwned(true);
+			setLocalPlayer(true);
+			super.setHP(getMaxHP());
+		}
+		else if (isOwned)
+		{
+			// pillbox is alive, but it's owned by someone, can be re-build by owner
+			if (isLocalPlayer)
+			{
+				super.setHP(getMaxHP());
+			}
+		}
+		else
+		{
+			// pillbox is alive, and it's not owned by anyone, can be pick up
+			setOwned(true);
+			setLocalPlayer(true);
+		}
+	}
 }
