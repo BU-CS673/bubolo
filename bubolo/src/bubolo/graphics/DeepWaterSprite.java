@@ -18,8 +18,8 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	private TextureRegion[] frames;
 
 	/**
-	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should
-	 * not be directly created outside of the graphics system.
+	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param deepWater
 	 *            Reference to the DeepWater that this DeepWaterSprite represents.
@@ -34,9 +34,9 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		
+
 		int currentState = this.getEntity().getTilingState();
-		
+
 		if (isEntityDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
@@ -45,10 +45,9 @@ class DeepWaterSprite extends Sprite<DeepWater>
 		{
 			drawTexture(batch, camera, layer, frames[currentState]);
 		}
-		
+
 		boolean[] corners = this.getEntity().getCornerStates();
-		
-		
+
 		if (currentState == 0 || currentState == 13 || currentState == 5 || currentState == 7)
 		{
 			if (!corners[0])
@@ -73,7 +72,7 @@ class DeepWaterSprite extends Sprite<DeepWater>
 			}
 
 		}
-		
+
 		if (currentState == 0 || currentState == 14 || currentState == 6 || currentState == 7)
 		{
 			if (!corners[2])
@@ -87,7 +86,7 @@ class DeepWaterSprite extends Sprite<DeepWater>
 
 		}
 
-		if (currentState == 0|| currentState == 10 || currentState == 14 || currentState == 11)
+		if (currentState == 0 || currentState == 10 || currentState == 14 || currentState == 11)
 		{
 			if (!corners[3])
 			{
@@ -99,6 +98,6 @@ class DeepWaterSprite extends Sprite<DeepWater>
 			}
 
 		}
-		
+
 	}
 }
