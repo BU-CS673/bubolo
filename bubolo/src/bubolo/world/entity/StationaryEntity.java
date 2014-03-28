@@ -28,7 +28,7 @@ public abstract class StationaryEntity extends Entity
 	 */
 	public StationaryEntity()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -40,7 +40,6 @@ public abstract class StationaryEntity extends Entity
 	public StationaryEntity(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -58,6 +57,7 @@ public abstract class StationaryEntity extends Entity
 
 	/**
 	 * Returns the Tile object to which this StationaryEntity belongs.
+	 * 
 	 * @return a reference to this StationaryEntity's Tile object.
 	 */
 	public Tile getTile()

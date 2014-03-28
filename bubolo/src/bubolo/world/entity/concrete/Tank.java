@@ -44,14 +44,14 @@ public class Tank extends Actor
 
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
-	private long cannonFireTime = 0; 
+	private long cannonFireTime = 0;
 
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
 	public Tank()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -63,6 +63,9 @@ public class Tank extends Actor
 	public Tank(UUID id)
 	{
 		super(id);
+		setWidth(21);
+		setHeight(26);
+		updateBounds();
 	}
 
 	/**
@@ -149,7 +152,7 @@ public class Tank extends Actor
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-		
+
 		bullet.setX(startX).setY(startY);
 		bullet.setRotation(getRotation());
 

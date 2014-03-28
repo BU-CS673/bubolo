@@ -34,7 +34,7 @@ public class DeepWater extends Terrain implements Adaptable
 	 */
 	public DeepWater()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -46,6 +46,9 @@ public class DeepWater extends Terrain implements Adaptable
 	public DeepWater(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	public boolean[] getCornerStates()

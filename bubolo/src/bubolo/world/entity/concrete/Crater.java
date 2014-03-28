@@ -33,7 +33,7 @@ public class Crater extends StationaryElement implements Adaptable
 	 */
 	public Crater()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -45,6 +45,9 @@ public class Crater extends StationaryElement implements Adaptable
 	public Crater(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	@Override

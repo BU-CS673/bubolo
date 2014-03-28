@@ -6,8 +6,8 @@ import bubolo.world.Ownable;
 import bubolo.world.entity.StationaryElement;
 
 /**
- * Pillboxes are stationary defensive structures that can be placed by a Tank. They shoot
- * at an enemy Tank until destroyed, at which point they can be retrieved and used again.
+ * Pillboxes are stationary defensive structures that can be placed by a Tank. They shoot at an
+ * enemy Tank until destroyed, at which point they can be retrieved and used again.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -33,7 +33,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	 */
 	public Pillbox()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -45,7 +45,9 @@ public class Pillbox extends StationaryElement implements Ownable
 	public Pillbox(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(27);
+		setHeight(27);
+		updateBounds();
 	}
 
 	@Override

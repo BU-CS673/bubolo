@@ -32,7 +32,7 @@ public class Wall extends StationaryElement implements Adaptable
 	 */
 	public Wall()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -44,7 +44,9 @@ public class Wall extends StationaryElement implements Adaptable
 	public Wall(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	@Override
@@ -52,9 +54,10 @@ public class Wall extends StationaryElement implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+			setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
 		}
-		else {
+		else
+		{
 			setTilingState(0);
 		}
 	}

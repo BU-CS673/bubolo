@@ -32,7 +32,7 @@ public class Road extends Terrain implements Adaptable
 	 */
 	public Road()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -44,6 +44,9 @@ public class Road extends Terrain implements Adaptable
 	public Road(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	@Override

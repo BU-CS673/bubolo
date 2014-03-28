@@ -4,13 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-
-
-
-
 import com.badlogic.gdx.math.Intersector;
-
 
 import com.badlogic.gdx.math.Polygon;
 
@@ -19,8 +13,8 @@ import bubolo.graphics.Drawable;
 import bubolo.world.World;
 
 /**
- * Base class for game objects. Anything that is part of the game logic should inherit
- * from this class.
+ * Base class for game objects. Anything that is part of the game logic should inherit from this
+ * class.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -35,21 +29,13 @@ public abstract class Entity implements Serializable, Drawable
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
 	private Polygon bounds;
-	
+
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
-	
+
 	// true if this entity should be removed from the game, or false otherwise. This is
 	// used by sprites.
 	private boolean disposed;
-
-	/**
-	 * Construct a new Entity with a random UUID.
-	 */
-	public Entity()
-	{
-		this(UUID.randomUUID());
-	}
 
 	/**
 	 * Construct a new Entity with the specified UUID.
@@ -59,6 +45,7 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public Entity(UUID newID)
 	{
+		updateBounds();
 		myID = newID;
 	}
 
@@ -83,16 +70,19 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * The Entity's unique id.
+	 * 
 	 * @return the Entity's unique id.
 	 */
 	public UUID getId()
 	{
 		return myID;
 	}
-	
+
 	/**
 	 * Sets the Entity's unique id.
-	 * @param id the Entity's unique id.
+	 * 
+	 * @param id
+	 *            the Entity's unique id.
 	 */
 	public void setId(UUID id)
 	{
@@ -112,9 +102,11 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Updates the state of this Entity. Must be called once per game tick to maintain
-	 * the Entity's state.
-	 * @param world reference to the World
+	 * Updates the state of this Entity. Must be called once per game tick to maintain the Entity's
+	 * state.
+	 * 
+	 * @param world
+	 *            reference to the World
 	 */
 	public abstract void update(World world);
 
@@ -135,18 +127,54 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return yPos;
 	}
-	
+
+	/**
+	 * Updates the bounding polygon for this Entity with its current position and rotation.
+	 */
+	public void updateBounds()
+	{
+		float[] corners = new float[] {
+				-width / 2, -height / 2,
+				-width / 2, height / 2,
+				width / 2, height / 2,
+				width / 2, -height / 2 };
+
+		if (bounds == null)
+		{
+			bounds = new Polygon();
+		}
+		else
+		{
+			bounds.setOrigin(xPos, yPos);
+			bounds.setVertices(corners);
+			bounds.setRotation(rotation);
+		}
+	}
+
+	/**
+	 * Returns the bounding polygon for this Entity.
+	 * 
+	 * @return the Polygon representing the bounds for this Entity, for intersections/collisions.
+	 * 
+	 */
+	public Polygon getBounds()
+	{
+		return bounds;
+	}
+
 	/**
 	 * Returns the center x position.
+	 * 
 	 * @return the center x position.
 	 */
 	public float getCenterX()
 	{
 		return (xPos + (width / 2.f));
 	}
-	
+
 	/**
 	 * Returns the center y position.
+	 * 
 	 * @return the center y position.
 	 */
 	public float getCenterY()
@@ -219,10 +247,12 @@ public abstract class Entity implements Serializable, Drawable
 		height = size;
 		return this;
 	}
-	
+
 	/**
 	 * Adds a controller to this Entity.
-	 * @param c the controller to add.
+	 * 
+	 * @param c
+	 *            the controller to add.
 	 */
 	public void addController(Controller c)
 	{
@@ -232,10 +262,12 @@ public abstract class Entity implements Serializable, Drawable
 		}
 		controllers.add(c);
 	}
-	
+
 	/**
 	 * Updates all attached controllers.
-	 * @param world reference to the World.
+	 * 
+	 * @param world
+	 *            reference to the World.
 	 */
 	protected void updateControllers(World world)
 	{
@@ -247,19 +279,20 @@ public abstract class Entity implements Serializable, Drawable
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the number of controllers attached to this Entity.
+	 * 
 	 * @return the number of controllers attached to this Entity.
 	 */
 	public int getControllerCount()
 	{
 		return (controllers == null) ? 0 : controllers.size();
 	}
-	
+
 	/**
-	 * Returns true if the entity should be removed from the game. This is needed
-	 * by the graphics system.
+	 * Returns true if the entity should be removed from the game. This is needed by the graphics
+	 * system.
 	 * 
 	 * @return true if the entity should be removed from the game.
 	 */
@@ -267,7 +300,7 @@ public abstract class Entity implements Serializable, Drawable
 	{
 		return disposed;
 	}
-	
+
 	/**
 	 * This method must be called when the entity should be removed from the game.
 	 */

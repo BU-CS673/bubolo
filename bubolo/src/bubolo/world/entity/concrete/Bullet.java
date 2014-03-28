@@ -54,7 +54,21 @@ public class Bullet extends Effect
 	 */
 	Bullet(boolean noSound)
 	{
-		super();
+		this(UUID.randomUUID(), noSound);
+	}
+
+	/**
+	 * Construct a new Bullet with the specified UUID.
+	 * 
+	 * @param id
+	 *            is the existing UUID to be applied to the new Bullet.
+	 */
+	public Bullet(UUID id, boolean noSound)
+	{
+		super(id);
+		setWidth(4);
+		setHeight(8);
+		updateBounds();
 
 		// Play cannon fired sound effect.
 		if (!noSound)
@@ -64,17 +78,14 @@ public class Bullet extends Effect
 	}
 
 	/**
-	 * Construct a new Bullet with the specified UUID.
+	 * Construct a new Bullet with the specified UUID, and play the bullet created sound by default.
 	 * 
 	 * @param id
-	 *            is the existing UUID to be applied to the new Tank.
+	 *            is the existing UUID to be applied to the new Bullet.
 	 */
 	public Bullet(UUID id)
 	{
-		super(id);
-
-		// Play cannon fired sound effect.
-		Audio.play(Sfx.CANNON_FIRED);
+		this(id, false);
 	}
 
 	@Override
