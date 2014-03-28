@@ -16,6 +16,9 @@ class DeepWaterSprite extends Sprite<DeepWater>
 {
 	// list of texture regions, used for different tiling states
 	private TextureRegion[] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "deepwater.png";
 
 	/**
 	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should
@@ -28,7 +31,7 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	{
 		super(DrawLayer.TERRAIN, deepWater);
 		frames = TextureUtil.adaptiveSplit_9((Graphics.getTexture(Graphics.TEXTURE_PATH
-				+ "deepWater.png")));
+				+ TEXTURE_FILE)));
 	}
 
 	@Override

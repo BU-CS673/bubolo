@@ -74,6 +74,8 @@ public class Controllers
 		// TODO: Add default factories here.
 		
 		factories.put(Tank.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void create(Entity entity)
 			{
@@ -82,6 +84,8 @@ public class Controllers
 		});
 		
 		factories.put(Pillbox.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void create(Entity entity)
 			{

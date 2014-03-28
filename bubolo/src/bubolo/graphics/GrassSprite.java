@@ -18,6 +18,9 @@ class GrassSprite extends Sprite<Grass>
 	private Texture image;
 	
 	private TextureRegion[][] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "grass.png";
 
 	/**
 	 * Constructor for the GrassSprite. This is Package-private because sprites should not
@@ -30,7 +33,7 @@ class GrassSprite extends Sprite<Grass>
 	{
 		super(DrawLayer.BASE_TERRAIN, grass);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "grass.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, 48, 48);
 	}
 

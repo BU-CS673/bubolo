@@ -1,32 +1,54 @@
+/**
+ *
+ */
+
 package bubolo.net;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import bubolo.util.GameException;
 
+/**
+ * @author BU CS673 - Clone Productions
+ */
 public class NetworkExceptionTest
 {
 
+	/**
+	 * Test method for
+	 * {@link bubolo.net.NetworkException#NetworkException(java.lang.String)}.
+	 */
 	@Test
 	public void testNetworkExceptionString()
 	{
 		try
 		{
-			throw new NetworkException("");
+			throw new NetworkException("Network exception");
 		}
-		catch (Exception e) {}
+		catch (NetworkException e)
+		{
+			assertEquals("Network exception", e.getMessage());
+		}
 	}
 
+	/**
+	 * Test method for
+	 * {@link bubolo.net.NetworkException#NetworkException(java.lang.Throwable)}.
+	 */
 	@Test
 	public void testNetworkExceptionThrowable()
 	{
+		RuntimeException exception = new RuntimeException("Network exception");
 		try
 		{
-			throw new NetworkException(mock(RuntimeException.class));
+			throw new NetworkException(exception);
 		}
-		catch (Exception e) {}
+		catch (NetworkException e)
+		{
+			assertEquals(exception, e.getCause());
+		}
 	}
 
 }
