@@ -16,7 +16,7 @@ public class AIPillboxController implements Controller
 	/**
 	 * constructs an AI Pillbox controller
 	 * 
-	 * @param Pillbox
+	 * @param pillbox
 	 * 			the pillbox this controller will correspond to.
 	 */
 	public AIPillboxController(Pillbox pillbox)
