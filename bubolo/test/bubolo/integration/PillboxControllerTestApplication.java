@@ -11,6 +11,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -18,16 +19,16 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TankControllerTestApplication implements GameApplication
+public class PillboxControllerTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.title = "BUBOLO Pillbox Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new TankControllerTestApplication(1067, 600), cfg);
+		new LwjglApplication(new PillboxControllerTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -56,7 +57,7 @@ public class TankControllerTestApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public TankControllerTestApplication(int windowWidth, int windowHeight)
+	public PillboxControllerTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -93,6 +94,10 @@ public class TankControllerTestApplication implements GameApplication
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0);
 		tank.setLocalPlayer(true);
+		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
+		world.addEntity(Pillbox.class).setParams(32*18, 32*6, 32, 32, 0);
+		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 32, 32, 0);
+		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 32, 32, 0);
 
 		ready = true;
 	}
