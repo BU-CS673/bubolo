@@ -84,6 +84,8 @@ public class Controllers
 		});
 		
 		factories.put(Pillbox.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void create(Entity entity)
 			{
