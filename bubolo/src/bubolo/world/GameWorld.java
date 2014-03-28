@@ -123,7 +123,8 @@ public class GameWorld implements World
         
         Sprites.getInstance().createSprite(entity);
         Controllers.getInstance().createController(entity, controllerFactory);
-        if(entity.getClass() == Tank.class){
+        if(entity.getClass() == Tank.class)
+        {
         	tanks.add(entity);
         }
         entitiesToAdd.add(entity);
