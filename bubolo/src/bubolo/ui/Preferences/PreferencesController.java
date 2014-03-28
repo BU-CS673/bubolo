@@ -100,7 +100,9 @@ public class PreferencesController
 
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("Save Pushed");
+			}
 
 		}
 	}
@@ -119,7 +121,9 @@ public class PreferencesController
 			
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("Cancel Pushed");
+			}
 		}
 	}
 	
@@ -138,7 +142,9 @@ public class PreferencesController
 			
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("SFX Test Pushed");
+			}
 		}
 	}
 	
@@ -166,7 +172,9 @@ public class PreferencesController
 			
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("MFX Test Pushed");
+			}
 		}
 	}
 	
@@ -188,7 +196,9 @@ public class PreferencesController
 
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("New MVol: " + pv.getMFXVol());
+			}
 		}
 	}
 	
@@ -210,7 +220,9 @@ public class PreferencesController
 			
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("New SVol: " + pv.getSFXVol());
+			}
 		}
 	}
 	
@@ -228,7 +240,9 @@ public class PreferencesController
 			
 			// Debug Output to Console
 			if (DEBUG)
+			{
 				System.out.println("New SS: " + pv.getScreenSize());
+			}
 		}
 	}
 }

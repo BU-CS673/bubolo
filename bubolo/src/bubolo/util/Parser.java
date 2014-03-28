@@ -43,8 +43,8 @@ public class Parser
 	/**
 	 * Generates new parser or returns existing object. Lazy instantiation is used.
 	 * 
-	 * @returns either a new parser if one has not been created previously or a the previously
-	 *          created instance
+	 * @return either a new parser if one has not been created previously or a the previously
+	 *         created instance
 	 */
 	public static Parser getInstance()
 	{

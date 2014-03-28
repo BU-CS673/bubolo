@@ -2,7 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.Ownable;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -28,7 +27,7 @@ public class Tank extends Actor
 	private static final float accelerationRate = 0.01f;
 
 	// The rate of deceleration, in pixels per tick.
-	private static final float decelerationRate = 0.02f;
+	private static final float decelerationRate = 0.03f;
 
 	// Specifies whether the tank accelerated this tick.
 	private boolean accelerated;
@@ -146,8 +145,10 @@ public class Tank extends Actor
 	 *            the bullet's start x position.
 	 * @param startY
 	 *            the bullet's start y position.
+	 * 
+	 * @return bullet reference to the new bullet.
 	 */
-	public void fireCannon(World world, float startX, float startY)
+	public Bullet fireCannon(World world, float startX, float startY)
 	{
 		cannonFireTime = System.currentTimeMillis();
 
@@ -156,9 +157,7 @@ public class Tank extends Actor
 		bullet.setX(startX).setY(startY);
 		bullet.setRotation(getRotation());
 
-		// TODO: Notify the network.
-		// Network net = NetworkSystem.getInstance();
-
+		return bullet;
 	}
 
 	@Override

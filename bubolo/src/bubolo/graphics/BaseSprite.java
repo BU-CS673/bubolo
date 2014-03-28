@@ -45,6 +45,9 @@ class BaseSprite extends Sprite<Base>
 	// The last animation state that the Base was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "base.png";
 
 	/**
 	 * Constructor for the BaseSprite. This is Package-private because sprites should not
@@ -59,7 +62,7 @@ class BaseSprite extends Sprite<Base>
 		super(DrawLayer.STATIONARY_ELEMENTS, base);
 
 		allFrames = TextureUtil.splitFrames(
-				Graphics.getTexture(Graphics.TEXTURE_PATH + "base.png"), 32, 32);
+				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);
 		chargingFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2],
 				allFrames[3], allFrames[4], allFrames[5], allFrames[6], allFrames[7] };
 		idleFrames = allFrames[0];

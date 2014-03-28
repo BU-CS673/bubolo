@@ -15,6 +15,9 @@ import bubolo.world.entity.concrete.Road;
 class RoadSprite extends Sprite<Road>
 {
 	private TextureRegion[] frames;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "road.png";
 
 	/**
 	 * Constructor for the RoadSprite. This is Package-private because sprites should not
@@ -28,7 +31,7 @@ class RoadSprite extends Sprite<Road>
 		super(DrawLayer.TERRAIN, road);
 
 		frames = TextureUtil.adaptiveSplit_16(Graphics.getTexture(Graphics.TEXTURE_PATH
-				+ "road.png"));
+				+ TEXTURE_FILE));
 	}
 
 	@Override

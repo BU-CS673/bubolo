@@ -33,6 +33,9 @@ class MineExplosionSprite extends Sprite<Entity>
 
 	// The time of the last frame, in milliseconds.
 	private long lastFrameTime;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "mineExplosion.png";
 
 	/**
 	 * Constructor for the MineExplosionSprite. This is Package-private because sprites
@@ -46,7 +49,7 @@ class MineExplosionSprite extends Sprite<Entity>
 		super(DrawLayer.EFFECTS, exp);
 
 		frames = TextureUtil.splitFrames(
-				Graphics.getTexture(Graphics.TEXTURE_PATH + "mineExplosion.png"), 60, 60);
+				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 60, 60);
 	}
 
 	@Override

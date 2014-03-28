@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -73,6 +75,9 @@ public class TankControllerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Network net = NetworkSystem.getInstance();
+		net.startDebug();
+		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
 		world = new GameWorld(32*94, 32*94);
@@ -88,7 +93,7 @@ public class TankControllerTestApplication implements GameApplication
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
-		
+
 		ready = true;
 	}
 	
