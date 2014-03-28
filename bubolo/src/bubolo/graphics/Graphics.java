@@ -243,7 +243,8 @@ public class Graphics
 	/**
 	 * Loads all textures. This isn't strictly necessary, but we encountered slight hiccups when a
 	 * sprite type was loaded for the first time. This was most noticeable when the first bullet is
-	 * fired.
+	 * fired. Note that only pngs are currently loaded (if all files were loaded, file system
+	 * artificacts could be picked up, like the Windows thumbs.db file).
 	 */
 	private static void loadAllTextures()
 	{
