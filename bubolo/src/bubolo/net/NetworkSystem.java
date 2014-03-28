@@ -1,44 +1,40 @@
+/**
+ * Copyright (c) 2014 BU MET CS673 Game Engineering Team
+ *
+ * See the file license.txt for copying permission.
+ */
+
 package bubolo.net;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import bubolo.world.World;
+import static com.google.common.base.Preconditions.*;
 
 /**
- * Concrete implementation of the network system.
+ * The network system implementation.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class NetworkSystem implements Network
-{	
-	private boolean isServer;
-	
-	private ServerSocket serverSocket;
-	
-	private Connections connections;
-	
-	private AtomicBoolean isActive = new AtomicBoolean(true);
-	
+{
+	private NetworkSubsystem subsystem;
+
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 	
-	// The last time the network system was updated, in milliseconds.
-	private long lastUpdateMillis = 0;
-	
-	// Volatile to eliminate FindBugs warning: "This method contains an unsynchronized lazy initialization of a non-volatile static field. 
-	// Because the compiler or processor may reorder instructions, threads are not guaranteed to see a completely initialized object"
-	private static volatile NetworkSystem instance = null;
+	// Specifies whether the network system is running in debug mode.
+	private boolean debug = false;
+
+	private static volatile Network instance;
 	
 	/**
-	 * Returns the Network instance.
-	 * @return the Network instance.
+	 * Returns the network system instance.
+	 * @return the network system instance.
 	 */
-	public static NetworkSystem getInstance()
+	public static Network getInstance()
 	{
 		if (instance == null)
 		{
@@ -47,126 +43,69 @@ public class NetworkSystem implements Network
 		return instance;
 	}
 	
-	/**
-	 * Resets the instance variable.
-	 */
-	private static void resetInstance()
-	{
-		instance = null;
-	}
-	
-	/**
-	 * Private constructor since only one network instance can be created.
-	 */
 	private NetworkSystem()
 	{
 	}
 	
 	@Override
-	public boolean isActive()
+	public void startServer() throws NetworkException, IllegalStateException
 	{
-		return isActive.get();
-	}
-	
-	@Override
-	public boolean isGameServer()
-	{
-		return isServer;
+		checkState(subsystem == null, "The network system has already been started. " +
+				"Do not call startServer or connect more than once.");
+
+		// Don't allow the server to run in debug mode, since it requires external resources.
+		// Instead, test this properly in an integration test.
+		if (debug)
+		{
+			return;
+		}
+		
+		Server server = new Server(this);
+		server.startServer();
+		subsystem = server;
 	}
 
-	@Override
-	public void dispose()
-	{
-		isActive.set(false);
-		if (serverSocket != null)
-		{
-			try
-			{
-				serverSocket.close();
-			}
-			catch (IOException e)
-			{
-				// TODO: does this need to be handled?
-			}
-		}
-	}
-	
 	@Override
 	public void connect(InetAddress serverIpAddress) throws NetworkException
 	{
-		if (connections == null)
-		{
-			startServer(false);
-		}
-		
-		class Connector implements Runnable
-		{
-			private InetAddress ipAddress;
-			private Connections networkConnections;
-			
-			Connector(InetAddress ipAddress, Connections connections)
-			{
-				this.ipAddress = ipAddress;
-				this.networkConnections = connections;
-			}
+		checkState(subsystem == null, "The network system has already been started. " +
+				"Do not call startServer or connect more than once.");
 
-			@Override
-			public void run()
-			{
-				try
-				{
-					networkConnections.addConnection(new Socket(ipAddress, NetworkInformation.GAME_PORT));
-				}
-				catch (IOException e)
-				{
-					// TODO: Need a way to return this error.
-					throw new NetworkException(e);
-				}
-			}
+		// Don't allow the client to run in debug mode, since it requires external resources.
+		// Instead, test this properly in an integration test.
+		if (debug)
+		{
+			return;
 		}
 		
-		new Thread(new Connector(serverIpAddress, connections)).start();;
+		Client client = new Client(this);
+		client.connect(serverIpAddress);
+		subsystem = client;
 	}
 	
 	@Override
-	public void startServer() throws IllegalStateException, NetworkException
+	public void startDebug()
 	{
-		startServer(true);
-	}
-
-	/**
-	 * Begins accepting connections from other players. If this is the game server,
-	 * <code>startServer</code> must be called before calling <code>connect</code>.
-	 * 
-	 * @param isGameServer true if this player is the game server, or false otherwise. 
-	 * There should only be one game server per game.
-	 * @throws NetworkException if a network error occurs.
-	 * @throws IllegalStateException if isGameServer is true, and the server was already started.
-	 */
-	private void startServer(boolean isGameServer) throws IllegalStateException, NetworkException
-	{
-		if (connections != null)
-		{
-			throw new IllegalStateException("The server was already started.");
-		}
-		isServer = isGameServer;
-		
-		try
-		{
-			serverSocket = new ServerSocket(NetworkInformation.GAME_PORT);
-			connections = new Connections(this, serverSocket);
-			new Thread(connections).start();
-		}
-		catch (IOException e)
-		{
-			throw new NetworkException(e);
-		}
+		debug = true;
 	}
 
 	@Override
 	public void send(NetworkCommand command)
 	{
-		connections.addCommand(command);
+		// Returns without sending the command if the system is running in debug mode. 
+		if (debug)
+		{
+			return;
+		}
+		
+		// Explicit check rather than a call to checkState, because FindBugs
+		// was unable to identify checkState as a valid defense against null pointer dereferencing. 
+		if (subsystem == null)
+		{
+			throw new NetworkException("Unable to send command: the network is not initialized.");
+		}
+
+		subsystem.send(command);
 	}
 
 	@Override
@@ -178,17 +117,8 @@ public class NetworkSystem implements Network
 		{
 			c.execute(world);
 		}
-		
-		// The network system runs less frequently than the game logic.
-		long differenceMillis = System.currentTimeMillis() - lastUpdateMillis - NetworkInformation.MILLIS_PER_TICK;
-		if (differenceMillis >= 0)
-		{
-			// Send queued commands to servers.
-			connections.update();
-		}
-		lastUpdateMillis = System.currentTimeMillis();
 	}
-	
+
 	@Override
 	public void postToGameThread(NetworkCommand command)
 	{
@@ -196,9 +126,14 @@ public class NetworkSystem implements Network
 	}
 
 	@Override
-	public void reset()
+	public void dispose()
 	{
-		dispose();
-		resetInstance();
+		if (subsystem != null)
+		{
+			subsystem.dispose();
+		}
+		subsystem = null;
+		debug = false;
+		postedCommands.clear();
 	}
 }

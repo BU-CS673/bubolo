@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 class SwampSprite extends Sprite<Swamp>
 {
 	private Texture image;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "swamp.png";
 
 	/**
 	 * Constructor for the SwampSprite. This is Package-private because sprites should not
@@ -26,7 +29,7 @@ class SwampSprite extends Sprite<Swamp>
 	{
 		super(DrawLayer.BASE_TERRAIN, swamp);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "swamp.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
 
 	@Override

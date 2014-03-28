@@ -60,9 +60,10 @@ public class PillboxTest
 	public void isCannonReady()
 	{
 		LibGdxAppTester.createApp();
-		assertTrue(pillbox.isCannonReady());
-		pillbox.fireCannon(new MockBulletCreator());
-		assertFalse(pillbox.isCannonReady());
+		Pillbox p = new Pillbox();
+		assertTrue(p.isCannonReady());
+		p.fireCannon(new MockBulletCreator());
+		assertFalse(p.isCannonReady());
 		
 	}
 	@Test

@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -74,6 +76,9 @@ public class PillboxControllerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Network net = NetworkSystem.getInstance();
+		net.startDebug();
+		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
 		world = new GameWorld(32*94, 32*94);
@@ -94,7 +99,6 @@ public class PillboxControllerTestApplication implements GameApplication
 		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 32, 32, 0);
 		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 32, 32, 0);
 
-		
 		ready = true;
 	}
 	
