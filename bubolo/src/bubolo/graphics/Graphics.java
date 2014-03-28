@@ -127,13 +127,14 @@ public class Graphics
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
 		spriteSystem = Sprites.getInstance();
-		loadAllTextures();
 
 		synchronized (Graphics.class)
 		{
 			Graphics.instance = this;
 			spriteComparator = new SpriteComparator();
 		}
+		
+		loadAllTextures();
 	}
 
 	/**
