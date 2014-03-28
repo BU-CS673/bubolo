@@ -243,28 +243,18 @@ public class Graphics
 	/**
 	 * Loads all textures. This isn't strictly necessary, but we encountered slight hiccups when a
 	 * sprite type was loaded for the first time. This was most noticeable when the first bullet is
-	 * fired. Unfortunately, this does mean that the Graphics class now has knowledge of all
-	 * concrete sprite.
+	 * fired.
 	 */
 	private static void loadAllTextures()
 	{
-		getTexture(TEXTURE_PATH + BaseSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + BulletSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + CraterSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + DeepWaterSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + EngineerSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + GenericExplosionSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + GrassSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + MineExplosionSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + MineSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + PillboxSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + RoadSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + RubbleSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + SwampSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + TankSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + TreeSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + WallSprite.TEXTURE_FILE);
-		getTexture(TEXTURE_PATH + WaterSprite.TEXTURE_FILE);
+		File textureDirectory = new File(TEXTURE_PATH);
+		for (File file : textureDirectory.listFiles())
+		{
+			if (file.getName().endsWith("png"))
+			{
+				getTexture(TEXTURE_PATH + file.getName());
+			}
+		}
 	}
 
 	/**
