@@ -33,8 +33,6 @@ public class EntityTest
 	{
 		assertEquals("Entity parameters set correctly.", true,
 				ent.getX() == EntityTestCase.TARGET_X && ent.getY() == EntityTestCase.TARGET_Y
-						&& ent.getWidth() == EntityTestCase.TARGET_WIDTH
-						&& ent.getHeight() == EntityTestCase.TARGET_HEIGHT
 						&& ent.getRotation() == EntityTestCase.TARGET_ROT);
 
 	}
@@ -76,15 +74,17 @@ public class EntityTest
 	@Test
 	public void getWidth()
 	{
+		ent.setWidth(EntityTestCase.TARGET_WIDTH);
 		assertEquals("Entity width matches target.", EntityTestCase.TARGET_WIDTH, ent.getWidth());
 	}
 
 	@Test
 	public void getHeight()
 	{
+		ent.setHeight(EntityTestCase.TARGET_HEIGHT);
 		assertEquals("Entity height matches target.", EntityTestCase.TARGET_HEIGHT, ent.getHeight());
 	}
-	
+
 	@Test
 	public void addController()
 	{
@@ -92,7 +92,7 @@ public class EntityTest
 		tank.addController(mock(Controller.class));
 		assertEquals(1, tank.getControllerCount());
 	}
-	
+
 	@Test
 	public void updateTest()
 	{
@@ -106,7 +106,7 @@ public class EntityTest
 		});
 		tank.update(new MockWorld());
 	}
-	
+
 	@Test
 	public void isDisposed()
 	{

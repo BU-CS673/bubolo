@@ -58,8 +58,15 @@ public class Water extends Terrain implements Adaptable
 	@Override
 	public void updateTilingState(World w)
 	{
-		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
-		cornerStates = AdaptiveTileChecker.getCornerMatches(this.getTile(), w, matchingTypes);
+		if (this.getTile() != null)
+		{
+			setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+			cornerStates = AdaptiveTileChecker.getCornerMatches(this.getTile(), w, matchingTypes);
+		}
+		else
+		{
+			setTilingState(0);
+		}
 	}
 
 	public boolean[] getCornerStates()

@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+
+
+
+import com.badlogic.gdx.math.Intersector;
+
+
+import com.badlogic.gdx.math.Polygon;
+
 import bubolo.controllers.Controller;
 import bubolo.graphics.Drawable;
 import bubolo.world.World;
@@ -25,6 +34,7 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
+	private Polygon bounds;
 	
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
@@ -59,20 +69,14 @@ public abstract class Entity implements Serializable, Drawable
 	 *            is the initial x position in world coordinates.
 	 * @param y
 	 *            is the initial y position in world coordinates.
-	 * @param w
-	 *            is the initial width in world coordinates.
-	 * @param h
-	 *            is the initial height in world coordinates.
 	 * @param rot
 	 *            is the initial rotation in radians.
 	 * @return a reference to this Entity.
 	 */
-	public Entity setParams(float x, float y, int w, int h, float rot)
+	public Entity setParams(float x, float y, float rot)
 	{
 		setX(x);
 		setY(y);
-		setWidth(w);
-		setHeight(h);
 		setRotation(rot);
 		return this;
 	}

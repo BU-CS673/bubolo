@@ -50,7 +50,13 @@ public class Wall extends StationaryElement implements Adaptable
 	@Override
 	public void updateTilingState(World w)
 	{
+		if (this.getTile() != null)
+		{
 		setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+		}
+		else {
+			setTilingState(0);
+		}
 	}
 
 	@Override

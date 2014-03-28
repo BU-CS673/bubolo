@@ -81,12 +81,12 @@ public class TankControllerTestApplication implements GameApplication
 		{
 			for (int column = 0; column < 94; column++)
 			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 32, 32, 0);
+				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
 			}
 		}
 		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 32, 32, 0);
+		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
 		
 		ready = true;
