@@ -91,9 +91,9 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public Tile[][] getMapTiles()
+
+	public List<Entity> getTanks() 
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -103,5 +103,9 @@ public class MockWorld implements World
 		// TODO Auto-generated method stub
 		
 	}
-
+	public Tile[][] getMapTiles()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

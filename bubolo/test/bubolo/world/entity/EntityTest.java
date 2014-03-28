@@ -55,17 +55,16 @@ public class EntityTest
 	@Test
 	public void getX()
 	{
-		assertEquals("Entity x position matches target.", EntityTestCase.TARGET_X, ent.getX(),
+		assertEquals("Entity x position matches target center.", EntityTestCase.TARGET_X, ent.getX(),
 				.0001);
 	}
 
 	@Test
 	public void getY()
 	{
-		assertEquals("Entity y position matches target.", EntityTestCase.TARGET_Y, ent.getY(),
+		assertEquals("Entity y position matches target center.", EntityTestCase.TARGET_Y, ent.getY(),
 				.0001);
 	}
-
 	@Test
 	public void getRotation()
 	{
