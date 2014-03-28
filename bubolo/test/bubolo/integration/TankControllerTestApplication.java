@@ -92,8 +92,8 @@ public class TankControllerTestApplication implements GameApplication
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 32, 32, 0);
+		tank.setLocalPlayer(true);
 
-		
 		ready = true;
 	}
 	
