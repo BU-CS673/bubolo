@@ -3,8 +3,10 @@ package bubolo.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import bubolo.controllers.ai.AIPillboxController;
 import bubolo.controllers.input.KeyboardTankController;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -72,10 +74,22 @@ public class Controllers
 		// TODO: Add default factories here.
 		
 		factories.put(Tank.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void create(Entity entity)
 			{
 				entity.addController(new KeyboardTankController((Tank)entity));
+			}
+		});
+		
+		factories.put(Pillbox.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void create(Entity entity)
+			{
+				entity.addController(new AIPillboxController((Pillbox)entity));
 			}
 		});
 		

@@ -10,6 +10,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
@@ -77,6 +79,9 @@ public class ParserTestApplication implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
+		Network net = NetworkSystem.getInstance();
+		net.startDebug();
+		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
 		try

@@ -45,6 +45,9 @@ class MineSprite extends Sprite<Mine>
 	// The last animation state that the Engineer was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "mine.png";
 
 	/**
 	 * Constructor for the MineSprite. This is Package-private because sprites should not
@@ -59,7 +62,7 @@ class MineSprite extends Sprite<Mine>
 		super(DrawLayer.STATIONARY_ELEMENTS, mine);
 
 		allFrames = TextureUtil.splitFrames(
-				Graphics.getTexture(Graphics.TEXTURE_PATH + "Mine.png"), 21, 21);
+				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 21, 21);
 		explodingFrames = new TextureRegion[][] { allFrames[2], allFrames[3], allFrames[4],
 				allFrames[5] };
 		idleFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2], allFrames[1] };

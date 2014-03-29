@@ -22,7 +22,7 @@ public class MockWorld implements World
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
-		throw new GameLogicException("MockWorld objects do not have any entities.");
+		return null;
 	}
 
 	@Override
@@ -91,9 +91,9 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public Tile[][] getMapTiles()
+
+	public List<Entity> getTanks() 
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -103,5 +103,9 @@ public class MockWorld implements World
 		// TODO Auto-generated method stub
 		
 	}
-
+	public Tile[][] getMapTiles()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

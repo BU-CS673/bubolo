@@ -50,6 +50,9 @@ class TankSprite extends Sprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "tank.png";
 
 	/**
 	 * Constructor for the TankSprite. This is Package-private because sprites should not
@@ -163,7 +166,7 @@ class TankSprite extends Sprite<Tank>
 	 */
 	private void initialize(Camera camera)
 	{
-		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "tank.png");
+		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(texture, 32, 32);
 
 		forwardFrames = new TextureRegion[][] { frames[0], frames[1], frames[2] };
