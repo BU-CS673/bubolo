@@ -189,7 +189,9 @@ public class Tank extends Actor
 		for (int ii = 0; ii < allEntities.size(); ii++)
 		{
 
-			if (intersectsEntity(allEntities.get(ii)) || Intersector.overlapConvexPolygons(lookAheadBounds(), allEntities.get(ii).getBounds()))
+			if (intersectsEntity(allEntities.get(ii))
+					|| Intersector.overlapConvexPolygons(lookAheadBounds(), allEntities.get(ii)
+							.getBounds()))
 			{
 				intersects.add(allEntities.get(ii));
 			}
@@ -200,13 +202,12 @@ public class Tank extends Actor
 	/**
 	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
-	private void updateLeftBumper()
+	private void updateLeftBumper(float offset)
 	{
-		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
-		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed + offset));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed + offset));
 		float w = getWidth();
 		float h = getHeight();
-
 		float[] corners = new float[] {
 				-w / 2f, h / 2f,
 				-w / 2f + 4, h / 2f,
@@ -222,10 +223,10 @@ public class Tank extends Actor
 	/**
 	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
-	private void updateRightBumper()
+	private void updateRightBumper(float offset)
 	{
-		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
-		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed + offset));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed + offset));
 		float w = getWidth();
 		float h = getHeight();
 
@@ -300,8 +301,6 @@ public class Tank extends Actor
 	public void update(World world)
 	{
 		updateControllers(world);
-		updateLeftBumper();
-		updateRightBumper();
 		moveTank(world);
 
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
@@ -314,6 +313,8 @@ public class Tank extends Actor
 
 		boolean collidingLeft = false;
 		boolean collidingRight = false;
+		boolean warningLeft = false;
+		boolean warningRight = false;
 		float positionOffsetAmount = 0.1f;
 		float rotationOffsetAmount = (float)Math.toRadians(1);
 		float rotationOffset = 0f;
@@ -323,6 +324,9 @@ public class Tank extends Actor
 		float y = getY();
 		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
 		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
+
+		updateLeftBumper(0f);
+		updateRightBumper(0f);
 
 		List<Entity> intersects = getIntersectingEntities(w);
 		for (int i = 0; i < intersects.size(); i++)
@@ -337,6 +341,25 @@ public class Tank extends Actor
 				if (hitRightBumper(collider))
 				{
 					collidingRight = true;
+				}
+			}
+		}
+
+		updateRightBumper(2f);
+		updateLeftBumper(2f);
+
+		for (int i = 0; i < intersects.size(); i++)
+		{
+			Entity collider = intersects.get(i);
+			if (collider.getClass() == Wall.class)
+			{
+				if (hitLeftBumper(collider))
+				{
+					warningLeft = true;
+				}
+				if (hitRightBumper(collider))
+				{
+					warningRight = true;
 				}
 			}
 		}
@@ -416,16 +439,24 @@ public class Tank extends Actor
 			}
 		}
 
-		if (collidingLeft)
+		if (warningLeft)
 		{
 			rotationOffset -= rotationOffsetAmount;
-			speed = speed * .95f;
+			speed -= .03;
+			if (speed < 0)
+			{
+				speed = 0;
+			}
 		}
 
-		if (collidingRight)
+		if (warningRight)
 		{
 			rotationOffset += rotationOffsetAmount;
-			speed = speed * .95f;
+			speed -= .03;
+			if (speed < 0)
+			{
+				speed = 0;
+			}
 		}
 
 		if (speed > 0)
