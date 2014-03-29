@@ -44,8 +44,8 @@ public class Wall extends StationaryElement implements Adaptable
 	public Wall(UUID id)
 	{
 		super(id);
-		setWidth(32);
-		setHeight(32);
+		setWidth(30);
+		setHeight(30);
 		updateBounds();
 	}
 

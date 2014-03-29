@@ -10,6 +10,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
@@ -26,6 +28,7 @@ public class EverardIslandTestApplication implements GameApplication
 		new LwjglApplication(new EverardIslandTestApplication(1067, 600), cfg);
 	}
 
+	private Network network;
 	private int windowWidth;
 	private int windowHeight;
 
@@ -47,8 +50,7 @@ public class EverardIslandTestApplication implements GameApplication
 	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
 
 	/**
-	 * Constructs an instance of the game application. Only one instance should ever
-	 * exist.
+	 * Constructs an instance of the game application. Only one instance should ever exist.
 	 * 
 	 * @param windowWidth
 	 *            the width of the window.
@@ -76,6 +78,9 @@ public class EverardIslandTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		network = NetworkSystem.getInstance();
+		network.startDebug();
+
 		graphics = new Graphics(windowWidth, windowHeight);
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");

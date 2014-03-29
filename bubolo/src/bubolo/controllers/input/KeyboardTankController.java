@@ -1,5 +1,8 @@
 package bubolo.controllers.input;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
@@ -9,6 +12,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateEntity;
 import bubolo.net.command.MoveEntity;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;
 
@@ -37,7 +41,30 @@ public class KeyboardTankController implements Controller
 	{
 		processMovement(tank);
 		processCannon(tank, world);
+		processIntersects(tank, world);
+
 		// processMineLaying(tank, world);
+	}
+
+	private static void processIntersects(Tank tank, World world)
+	{
+		if (Gdx.input.isKeyPressed(Keys.I))
+		{
+
+			List<Entity> intersects = tank.getIntersectingEntities(world);
+			for (int i = 0; i < intersects.size(); i++)
+			{
+				System.out.println("Tank interescts: " + intersects.get(i));
+				
+			}
+
+			 System.out.println("Tank bounds: x: " + tank.getBounds().getX() + ", y: " +tank.getBounds().getY());
+
+			 for (int i = 0; i < tank.getBounds().getVertices().length; i++){
+				 System.out.println("Tank vertex: " + tank.getBounds().getTransformedVertices()[i]);
+			 }
+		}
+		
 	}
 
 	private static void processMovement(Tank tank)

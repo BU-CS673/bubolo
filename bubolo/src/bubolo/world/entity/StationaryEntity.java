@@ -2,6 +2,8 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
+import com.badlogic.gdx.math.Polygon;
+
 import bubolo.world.Tile;
 import bubolo.world.World;
 

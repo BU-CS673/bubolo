@@ -28,7 +28,8 @@ public abstract class Entity implements Serializable, Drawable
 	private float xPos;
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
-	private Polygon bounds;
+	private Polygon bounds = new Polygon();
+	public boolean intersecting = false;
 
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
@@ -65,7 +66,40 @@ public abstract class Entity implements Serializable, Drawable
 		setX(x);
 		setY(y);
 		setRotation(rot);
+		updateBounds();
 		return this;
+	}
+
+	protected boolean intersectsEntity(Entity e)
+	{
+		updateBounds();
+		e.updateBounds();
+		if (Intersector.overlapConvexPolygons(bounds, e.getBounds()))
+		{
+			e.intersecting = true;
+
+			return true;
+		}
+		else
+		{
+			e.intersecting = false;
+			return false;
+		}
+	}
+
+	public List<Entity> getIntersectingEntities(World w)
+	{
+		ArrayList<Entity> intersects = new ArrayList<Entity>();
+		List<Entity> allEntities = w.getEntities();
+		for (int ii = 0; ii < allEntities.size(); ii++)
+		{
+
+			if (intersectsEntity(allEntities.get(ii)))
+			{
+				intersects.add(allEntities.get(ii));
+			}
+		}
+		return intersects;
 	}
 
 	/**
@@ -133,22 +167,21 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public void updateBounds()
 	{
-		float[] corners = new float[] {
-				-width / 2, -height / 2,
-				-width / 2, height / 2,
-				width / 2, height / 2,
-				width / 2, -height / 2 };
+		float x = getX();
+		float y = getY();
+		float w = getWidth();
+		float h = getHeight();
 
-		if (bounds == null)
-		{
-			bounds = new Polygon();
-		}
-		else
-		{
-			bounds.setOrigin(xPos, yPos);
-			bounds.setVertices(corners);
-			bounds.setRotation(rotation);
-		}
+		float[] corners = new float[] {
+				w / 2f, h / 2f,
+				w / 2f, -h / 2f,
+				-w / 2f, h / 2f,
+				-w / 2f, -h / 2f };
+		bounds = new Polygon();
+		bounds.setPosition(x, y);
+		bounds.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
+		bounds.setVertices(corners);
+
 	}
 
 	/**
@@ -162,6 +195,12 @@ public abstract class Entity implements Serializable, Drawable
 		return bounds;
 	}
 
+	public Entity setBounds(Polygon p)
+	{
+		bounds = p;
+		return this;
+	}
+
 	/**
 	 * Set the rotation of this Entity.
 	 * 
@@ -171,7 +210,12 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public Entity setRotation(float newRotation)
 	{
-		rotation = newRotation;
+		if (newRotation < 0)
+		{
+			newRotation += 2 * Math.PI;
+		}
+		rotation = newRotation % (float)(2 * Math.PI);
+		updateBounds();
 		return this;
 	}
 
@@ -186,6 +230,7 @@ public abstract class Entity implements Serializable, Drawable
 	public Entity setX(float x)
 	{
 		xPos = x;
+		updateBounds();
 		return this;
 	}
 
@@ -199,6 +244,7 @@ public abstract class Entity implements Serializable, Drawable
 	public Entity setY(float y)
 	{
 		yPos = y;
+		updateBounds();
 		return this;
 	}
 
