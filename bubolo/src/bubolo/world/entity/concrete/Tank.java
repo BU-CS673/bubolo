@@ -146,7 +146,8 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
+	 * reload.
 	 * 
 	 * @param world
 	 *            reference to the world.
@@ -173,8 +174,8 @@ public class Tank extends Actor
 	{
 		Polygon lookAheadBounds = getBounds();
 
-		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
-		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
+		float newX = (float) (getX() + Math.cos(getRotation()) * speed);
+		float newY = (float) (getY() + Math.sin(getRotation()) * speed);
 
 		lookAheadBounds.setPosition(newX, newY);
 		return lookAheadBounds;
@@ -189,7 +190,9 @@ public class Tank extends Actor
 		for (int ii = 0; ii < allEntities.size(); ii++)
 		{
 
-			if (intersectsEntity(allEntities.get(ii)) || Intersector.overlapConvexPolygons(lookAheadBounds(), allEntities.get(ii).getBounds()))
+			if (intersectsEntity(allEntities.get(ii))
+					|| Intersector.overlapConvexPolygons(lookAheadBounds(), allEntities.get(ii)
+							.getBounds()))
 			{
 				intersects.add(allEntities.get(ii));
 			}
@@ -198,47 +201,43 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and rotation.
+	 * Updates the bounding polygon for this Entity with its current position and
+	 * rotation.
 	 */
-	private void updateLeftBumper()
+	private void updateLeftBumper(float offset)
 	{
-		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
-		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
+		float newX = (float) (getX() + Math.cos(getRotation()) * (speed + offset));
+		float newY = (float) (getY() + Math.sin(getRotation()) * (speed + offset));
 		float w = getWidth();
 		float h = getHeight();
 
-		float[] corners = new float[] {
-				-w / 2, h / 2f,
-				w / 4f, h / 2f,
-				-w / 2, h / 4f,
-				w / 4f, h / 4f };
+		float[] corners = new float[] { -w / 2, h / 2f, w / 4f, h / 2f, -w / 2, h / 4f, w / 4f,
+				h / 4f };
 		leftBumper = new Polygon();
 		leftBumper.setPosition(newX, newY);
 		leftBumper.setOrigin(0, 0);
 		leftBumper.setVertices(corners);
-		leftBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
+		leftBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and rotation.
+	 * Updates the bounding polygon for this Entity with its current position and
+	 * rotation.
 	 */
-	private void updateRightBumper()
+	private void updateRightBumper(float offset)
 	{
-		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
-		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
+		float newX = (float) (getX() + Math.cos(getRotation()) * (speed + offset));
+		float newY = (float) (getY() + Math.sin(getRotation()) * (speed + offset));
 		float w = getWidth();
 		float h = getHeight();
 
-		float[] corners = new float[] {
-				w / 2, h / 2f,
-				w / 4f, h / 2f,
-				w / 2, h / 4f,
-				w / 4f, h / 4f };
+		float[] corners = new float[] { w / 2, h / 2f, w / 4f, h / 2f, w / 2, h / 4f, w / 4f,
+				h / 4f };
 		rightBumper = new Polygon();
 		rightBumper.setPosition(newX, newY);
 		rightBumper.setOrigin(0, 0);
 		rightBumper.setVertices(corners);
-		rightBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
+		rightBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	public boolean hitLeftBumper(Entity e)
@@ -300,8 +299,6 @@ public class Tank extends Actor
 	public void update(World world)
 	{
 		updateControllers(world);
-		updateLeftBumper();
-		updateRightBumper();
 		moveTank(world);
 
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
@@ -314,15 +311,20 @@ public class Tank extends Actor
 
 		boolean collidingLeft = false;
 		boolean collidingRight = false;
+		boolean warningLeft = false;
+		boolean warningRight = false;
 		float positionOffsetAmount = 0.1f;
-		float rotationOffsetAmount = (float)Math.toRadians(1);
+		float rotationOffsetAmount = (float) Math.toRadians(1);
 		float rotationOffset = 0f;
 		float xOffset = 0;
 		float yOffset = 0;
 		float x = getX();
 		float y = getY();
-		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
-		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
+		float newX = (float) (getX() + Math.cos(getRotation()) * (speed));
+		float newY = (float) (getY() + Math.sin(getRotation()) * (speed));
+
+		updateLeftBumper(0f);
+		updateRightBumper(0f);
 
 		List<Entity> intersects = getIntersectingEntities(w);
 		for (int i = 0; i < intersects.size(); i++)
@@ -341,6 +343,25 @@ public class Tank extends Actor
 			}
 		}
 
+		updateRightBumper(2f);
+		updateLeftBumper(2f);
+
+		for (int i = 0; i < intersects.size(); i++)
+		{
+			Entity collider = intersects.get(i);
+			if (collider.getClass() == Wall.class)
+			{
+				if (hitLeftBumper(collider))
+				{
+					warningLeft = true;
+				}
+				if (hitRightBumper(collider))
+				{
+					warningRight = true;
+				}
+			}
+		}
+
 		if (collidingLeft)
 		{
 			if (facingNE())
@@ -414,16 +435,24 @@ public class Tank extends Actor
 			}
 		}
 
-		if (collidingLeft)
+		if (warningLeft)
 		{
 			rotationOffset -= rotationOffsetAmount;
-			speed = speed * .95f;
+			speed -= .03;
+			if (speed < 0)
+			{
+				speed = 0;
+			}
 		}
 
-		if (collidingRight)
+		if (warningRight)
 		{
 			rotationOffset += rotationOffsetAmount;
-			speed = speed * .95f;
+			speed -= .03;
+			if (speed < 0)
+			{
+				speed = 0;
+			}
 		}
 
 		if (speed > 0)
