@@ -208,10 +208,10 @@ public class Tank extends Actor
 		float h = getHeight();
 
 		float[] corners = new float[] {
-				-w / 2, h / 2f,
-				w / 4f, h / 2f,
-				-w / 2, h / 4f,
-				w / 4f, h / 4f };
+				-w / 2f, h / 2f,
+				-w / 2f + 4, h / 2f,
+				-w / 2f, h / 2f - 4,
+				-w / 2f + 4, h / 2f - 4 };
 		leftBumper = new Polygon();
 		leftBumper.setPosition(newX, newY);
 		leftBumper.setOrigin(0, 0);
@@ -230,10 +230,10 @@ public class Tank extends Actor
 		float h = getHeight();
 
 		float[] corners = new float[] {
-				w / 2, h / 2f,
-				w / 4f, h / 2f,
-				w / 2, h / 4f,
-				w / 4f, h / 4f };
+				w / 2f, h / 2f,
+				w / 2f - 4, h / 2f,
+				w / 2f, h / 2f - 4,
+				w / 2f - 4, h / 2f - 4 };
 		rightBumper = new Polygon();
 		rightBumper.setPosition(newX, newY);
 		rightBumper.setOrigin(0, 0);
@@ -343,6 +343,7 @@ public class Tank extends Actor
 
 		if (collidingLeft)
 		{
+			System.out.println("Collding left!");
 			if (facingNE())
 			{
 				if (newY > y)
@@ -380,6 +381,7 @@ public class Tank extends Actor
 
 		if (collidingRight)
 		{
+			System.out.println("Collding right!");
 			if (facingNE())
 			{
 				if (newX > x)
