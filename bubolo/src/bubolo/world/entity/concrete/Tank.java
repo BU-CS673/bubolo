@@ -202,18 +202,18 @@ public class Tank extends Actor
 	 */
 	private void updateLeftBumper()
 	{
-		float x = getX();
-		float y = getY();
+		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 		float w = getWidth();
 		float h = getHeight();
 
 		float[] corners = new float[] {
 				-w / 2, h / 2f,
-				0, h / 2f,
-				-w / 2, 0,
-				0, 0 };
+				w / 4f, h / 2f,
+				-w / 2, h / 4f,
+				w / 4f, h / 4f };
 		leftBumper = new Polygon();
-		leftBumper.setPosition(x, y);
+		leftBumper.setPosition(newX, newY);
 		leftBumper.setOrigin(0, 0);
 		leftBumper.setVertices(corners);
 		leftBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
@@ -231,9 +231,9 @@ public class Tank extends Actor
 
 		float[] corners = new float[] {
 				w / 2, h / 2f,
-				0, h / 2f,
-				w / 2, 0,
-				0, 0 };
+				w / 4f, h / 2f,
+				w / 2, h / 4f,
+				w / 4f, h / 4f };
 		rightBumper = new Polygon();
 		rightBumper.setPosition(newX, newY);
 		rightBumper.setOrigin(0, 0);
@@ -314,8 +314,8 @@ public class Tank extends Actor
 
 		boolean collidingLeft = false;
 		boolean collidingRight = false;
-		float positionOffsetAmount = 0.25f;
-		float rotationOffsetAmount = (float)Math.toRadians(0.5);
+		float positionOffsetAmount = 0.1f;
+		float rotationOffsetAmount = (float)Math.toRadians(1);
 		float rotationOffset = 0f;
 		float xOffset = 0;
 		float yOffset = 0;
@@ -417,18 +417,20 @@ public class Tank extends Actor
 		if (collidingLeft)
 		{
 			rotationOffset -= rotationOffsetAmount;
+			speed = speed * .95f;
 		}
+
 		if (collidingRight)
 		{
 			rotationOffset += rotationOffsetAmount;
+			speed = speed * .95f;
 		}
-
-		setRotation(getRotation() + rotationOffset);
 
 		if (speed > 0)
 		{
 			setX(newX + xOffset);
 			setY(newY + yOffset);
+			setRotation(getRotation() + rotationOffset);
 
 			if (!accelerated)
 			{
