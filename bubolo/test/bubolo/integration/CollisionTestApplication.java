@@ -16,7 +16,7 @@ import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
-public class EverardIslandTestApplication implements GameApplication
+public class CollisionTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
@@ -25,7 +25,7 @@ public class EverardIslandTestApplication implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new EverardIslandTestApplication(1067, 600), cfg);
+		new LwjglApplication(new CollisionTestApplication(1067, 600), cfg);
 	}
 
 	private Network network;
@@ -57,7 +57,7 @@ public class EverardIslandTestApplication implements GameApplication
 	 * @param windowHeight
 	 *            the height of the window.
 	 */
-	public EverardIslandTestApplication(int windowWidth, int windowHeight)
+	public CollisionTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;

@@ -29,7 +29,8 @@ public abstract class Entity implements Serializable, Drawable
 	private float yPos;
 	private float rotation; // rotation of this Entity in radians
 	private Polygon bounds = new Polygon();
-	public boolean intersecting = false;
+
+	private boolean solid = false;
 
 	// The list of controllers attached to this Entity.
 	private List<Controller> controllers;
@@ -70,31 +71,45 @@ public abstract class Entity implements Serializable, Drawable
 		return this;
 	}
 
-	protected boolean intersectsEntity(Entity e)
+	/**
+	 * Checks to see whether this Entity's bounding box overlaps that of another Entity,
+	 * 
+	 * @param e
+	 *            is the Entity that this Entity should be checked against.
+	 * @return true if this Entity overlaps with the Entity specified, false otherwise.
+	 */
+	public boolean overlapsEntity(Entity e)
 	{
 		updateBounds();
 		e.updateBounds();
 		if (Intersector.overlapConvexPolygons(bounds, e.getBounds()))
 		{
-			e.intersecting = true;
-
 			return true;
 		}
 		else
 		{
-			e.intersecting = false;
 			return false;
 		}
 	}
 
-	public List<Entity> getIntersectingEntities(World w)
+	/**
+	 * Returns a list of all of the Entities that this Entity overlaps with. Currently checks all
+	 * Entities found in the given world, and could be optimized to check only Entities within a
+	 * reasonable range -- StationaryEntities found in the tiles surrounding this Entity's position
+	 * and all Effects and Actors, which are mobile.
+	 * 
+	 * @param w
+	 *            is the World object where this Entity is contained.
+	 * @return a list of all of the Entities which this Entity overlaps with.
+	 */
+	protected List<Entity> getOverlappingEntities(World w)
 	{
 		ArrayList<Entity> intersects = new ArrayList<Entity>();
 		List<Entity> allEntities = w.getEntities();
 		for (int ii = 0; ii < allEntities.size(); ii++)
 		{
 
-			if (intersectsEntity(allEntities.get(ii)))
+			if (overlapsEntity(allEntities.get(ii)))
 			{
 				intersects.add(allEntities.get(ii));
 			}
@@ -163,6 +178,31 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
+	 * Checks whether this Entity should be considered "solid" for the purpose of movement
+	 * collisions.
+	 * 
+	 * @return true if this Entity is solid, false otherwise.
+	 */
+	public boolean isSolid()
+	{
+		return solid;
+	}
+
+	/**
+	 * Sets whether this Entity should be considered "solid" for the purpose of movement collision
+	 * checks.
+	 * 
+	 * @param solidity
+	 *            is true if the Entity should be considered "solid", false otherwise.
+	 * @return a reference to this Entity, for chaining.
+	 */
+	public Entity setSolid(boolean solidity)
+	{
+		solid = solidity;
+		return this;
+	}
+
+	/**
 	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
 	public void updateBounds()
@@ -195,12 +235,6 @@ public abstract class Entity implements Serializable, Drawable
 		return bounds;
 	}
 
-	public Entity setBounds(Polygon p)
-	{
-		bounds = p;
-		return this;
-	}
-
 	/**
 	 * Set the rotation of this Entity.
 	 * 
@@ -210,11 +244,12 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public Entity setRotation(float newRotation)
 	{
+		float procRotation = newRotation;
 		if (newRotation < 0)
 		{
-			newRotation += 2 * Math.PI;
+			procRotation += 2 * Math.PI;
 		}
-		rotation = newRotation % (float)(2 * Math.PI);
+		rotation = procRotation % (float)(2 * Math.PI);
 		updateBounds();
 		return this;
 	}

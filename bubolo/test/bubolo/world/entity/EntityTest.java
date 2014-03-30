@@ -9,6 +9,7 @@ import org.mockito.Mock;
 
 import bubolo.controllers.Controller;
 import bubolo.test.MockWorld;
+import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
@@ -16,6 +17,7 @@ import bubolo.world.entity.concrete.Tank;
 public class EntityTest
 {
 	static Entity ent;
+	static World world;
 
 	/**
 	 * Create an Entity and set its initial parameters.
@@ -27,6 +29,14 @@ public class EntityTest
 		ent = new MockEntity(EntityTestCase.TARGET_UUID);
 		EntityTestCase.setTestParams(ent);
 	}
+	
+	@Test
+	public void isSolid(){
+		ent.setSolid(true);
+		assertEquals(true, ent.isSolid());
+		ent.setSolid(false);
+		assertEquals(false, ent.isSolid());
+	}
 
 	@Test
 	public void setParams()
@@ -35,6 +45,26 @@ public class EntityTest
 				ent.getX() == EntityTestCase.TARGET_X && ent.getY() == EntityTestCase.TARGET_Y
 						&& ent.getRotation() == EntityTestCase.TARGET_ROT);
 
+	}
+	
+	@Test
+	public void overlapsEntity(){
+		Entity ent1 = new MockEntity();
+		Entity ent2 = new MockEntity();
+		Entity ent3 = new MockEntity();
+		ent1.setParams(16, 16, 0);
+		ent2.setParams(16, 32, 0);
+		ent3.setParams(60, 60, 0);
+		
+		ent1.setWidth(32);
+		ent1.setHeight(32);
+		ent2.setWidth(32);
+		ent2.setHeight(32);
+		ent3.setWidth(32);
+		ent3.setHeight(32);
+		
+		assertEquals(true, ent1.overlapsEntity(ent2));
+		assertEquals(false, ent1.overlapsEntity(ent3));
 	}
 
 	@Test
@@ -63,6 +93,7 @@ public class EntityTest
 		assertEquals("Entity y position matches target center.", EntityTestCase.TARGET_Y, ent.getY(),
 				.0001);
 	}
+
 	@Test
 	public void getRotation()
 	{

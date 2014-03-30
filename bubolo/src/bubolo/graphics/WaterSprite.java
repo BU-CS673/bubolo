@@ -47,7 +47,7 @@ class WaterSprite extends Sprite<Water>
 			drawTexture(batch, camera, layer, frames[currentState]);
 		}
 
-		boolean[] corners = this.getEntity().getCornerStates();
+		boolean[] corners = this.getEntity().getCornerMatches();
 		if (currentState == 15 || currentState == 13 || currentState == 5 || currentState == 7)
 		{
 			if (!corners[0])

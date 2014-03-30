@@ -62,6 +62,9 @@ public class Bullet extends Effect
 	 * 
 	 * @param id
 	 *            is the existing UUID to be applied to the new Bullet.
+	 * @param noSound
+	 *            should be true if a sound should not be played upon Bullet construction, false
+	 *            otherwise.
 	 */
 	public Bullet(UUID id, boolean noSound)
 	{

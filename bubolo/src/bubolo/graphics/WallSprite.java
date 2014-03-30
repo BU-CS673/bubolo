@@ -17,11 +17,8 @@ class WallSprite extends Sprite<Wall>
 {
 	private TextureRegion[] frames;
 
-	private TextureRegion outline;
 	/** The file name of the texture. */
 	static final String TEXTURE_FILE = "wall.png";
-
-	static final String OUTLINE_FILE = "spawn.png";
 
 	/**
 	 * Represents the total number of different damaged states that exist in this sprite's texture.
@@ -51,8 +48,6 @@ class WallSprite extends Sprite<Wall>
 
 		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);
-		Texture outlineTx = Graphics.getTexture(Graphics.TEXTURE_PATH + OUTLINE_FILE);
-		outline = new TextureRegion(outlineTx, 32, 32);
 	}
 
 	/**
@@ -85,11 +80,6 @@ class WallSprite extends Sprite<Wall>
 			// TODO: Point to different texture regions based on the damagedState field,
 			// which changes with Entity HP percentage.
 			drawTexture(batch, camera, layer, frames[this.getEntity().getTilingState()]);
-		}
-
-		if (getEntity().intersecting)
-		{
-			drawTexture(batch, camera, layer, outline);
 		}
 	}
 }

@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileChecker;
+import bubolo.util.AdaptiveTileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
@@ -25,7 +25,7 @@ public class Wall extends StationaryElement implements Adaptable
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
-	private Class[] matchingTypes = new Class[] { Wall.class };
+	private Class<?>[] matchingTypes = new Class[] { Wall.class };
 
 	/**
 	 * Construct a new Wall with a random UUID.
@@ -47,6 +47,7 @@ public class Wall extends StationaryElement implements Adaptable
 		setWidth(30);
 		setHeight(30);
 		updateBounds();
+		setSolid(true);
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class Wall extends StationaryElement implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
+			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
 		}
 		else
 		{

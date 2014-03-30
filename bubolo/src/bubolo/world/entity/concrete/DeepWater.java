@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileChecker;
+import bubolo.util.AdaptiveTileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
 import bubolo.world.entity.Terrain;
@@ -21,13 +21,13 @@ public class DeepWater extends Terrain implements Adaptable
 
 	private int tilingState = 0;
 
-	private boolean[] cornerStates = new boolean[4];
+	private boolean[] cornerMatches = new boolean[4];
 
 	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
-	private Class[] matchingTypes = new Class[] { Water.class };
+	private Class<?>[] matchingTypes = new Class[] { Water.class };
 
 	/**
 	 * Construct a new DeepWater with a random UUID.
@@ -51,9 +51,17 @@ public class DeepWater extends Terrain implements Adaptable
 		updateBounds();
 	}
 
-	public boolean[] getCornerStates()
+	/**
+	 * Return an array of booleans representing whether the tiles along the corners of this object's
+	 * tile contain a matching object for the adaptive tiling procedure.
+	 * 
+	 * @return an array of booleans, where the elements represent whether a matching object was
+	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         order.
+	 */
+	public boolean[] getCornerMatches()
 	{
-		return cornerStates;
+		return cornerMatches;
 	}
 
 	@Override
@@ -61,8 +69,8 @@ public class DeepWater extends Terrain implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileChecker.getTilingState(this.getTile(), w, matchingTypes));
-			cornerStates = AdaptiveTileChecker.getCornerMatches(this.getTile(), w, matchingTypes);
+			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			cornerMatches = AdaptiveTileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
 		}
 		else
 		{
