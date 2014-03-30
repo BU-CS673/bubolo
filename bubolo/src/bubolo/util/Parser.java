@@ -115,6 +115,8 @@ public class Parser
 						if (layerTwoSwitch(dataString) != null)
 						{
 							int tileYIndex = mapHeight - i - 1;
+							if(mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
+								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							mapTiles[j][tileYIndex].setElement((StationaryElement) world
 									.addEntity(layerTwoSwitch(dataString)));
 						}
