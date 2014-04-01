@@ -137,8 +137,8 @@ public class GameWorld implements World
 	public void removeEntity(Entity e)
 	{
 		e.dispose();
-		entitiesToRemove.add(e);
 		entityMap.remove(e.getId());
+		tanks.remove(e);
 	}
 
 	@Override
@@ -179,10 +179,13 @@ public class GameWorld implements World
 		for (Entity e : entities)
 		{
 			e.update(this);
+			if (e.isDisposed())
+			{
+				entitiesToRemove.add(e);
+			}
 		}
 		
 		entities.removeAll(entitiesToRemove);
-		tanks.removeAll(entitiesToRemove);
 		entitiesToRemove.clear();
 		
 		entities.addAll(entitiesToAdd);
