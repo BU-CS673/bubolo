@@ -2,7 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileUtil;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -19,12 +21,20 @@ public class Water extends Terrain implements Adaptable
 
 	private int tilingState = 0;
 
+	private boolean[] cornerMatches = new boolean[4];
+
+	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class<?>[] matchingTypes = new Class[] { Water.class, DeepWater.class, Crater.class };
+
 	/**
 	 * Construct a new Water with a random UUID.
 	 */
 	public Water()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -36,23 +46,53 @@ public class Water extends Terrain implements Adaptable
 	public Water(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	@Override
-	public void updateState()
+	public void update(World w)
 	{
-		//TODO: Add adaptive tiling state logic for 4x4 + 3x3 + 3x3 grid.
-		throw new UnsupportedOperationException("Adaptive tiling state updates are not implemented for Water yet!");
+		super.update(w);
+		updateTilingState(w);
 	}
 
 	@Override
-	public int getState()
+	public void updateTilingState(World w)
+	{
+		if (this.getTile() != null)
+		{
+			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			cornerMatches = AdaptiveTileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
+		}
+		else
+		{
+			setTilingState(0);
+		}
+	}
+
+	/**
+	 * Return an array of booleans representing whether the tiles along the corners of this
+	 * DeepWater's tile contain a matching object for the adaptive tiling procedure.
+	 * 
+	 * @return an array of booleans, where the elements represent whether a matching object was
+	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         order.
+	 */
+	public boolean[] getCornerMatches()
+	{
+		return cornerMatches;
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}

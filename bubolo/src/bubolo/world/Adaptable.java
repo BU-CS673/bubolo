@@ -10,18 +10,19 @@ public interface Adaptable
 {
 	/**
 	 * Updates the current adaptive tiling state of this Entity.
+	 * @param w TODO
 	 */
-	public void updateState();
+	public void updateTilingState(World w);
 
 	/**
 	 * Returns the current adaptive tiling state of this Entity.
 	 * @return the current adaptive tiling state of this Entity.
 	 */
-	public int getState();
+	public int getTilingState();
 
 	/**
 	 * Manually sets the adaptive tiling state of this Entity.
 	 * @param newState the new adaptive tiling state.
 	 */
-	public void setState(int newState);
+	public void setTilingState(int newState);
 }

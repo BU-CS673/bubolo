@@ -156,7 +156,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -196,8 +196,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getRegionHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float) (MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
 		}
+
 	}
 
 	/**

@@ -34,7 +34,7 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	 */
 	public Actor()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -46,7 +46,6 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	public Actor(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

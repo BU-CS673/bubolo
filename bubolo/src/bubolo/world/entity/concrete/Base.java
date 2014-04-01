@@ -39,7 +39,7 @@ public class Base extends StationaryElement implements Ownable
 	 */
 	public Base()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -51,6 +51,9 @@ public class Base extends StationaryElement implements Ownable
 	public Base(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 		// TODO Auto-generated constructor stub
 	}
 

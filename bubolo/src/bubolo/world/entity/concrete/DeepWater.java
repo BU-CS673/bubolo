@@ -2,7 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileUtil;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.Terrain;
 
 /**
@@ -19,12 +21,20 @@ public class DeepWater extends Terrain implements Adaptable
 
 	private int tilingState = 0;
 
+	private boolean[] cornerMatches = new boolean[4];
+
+	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class<?>[] matchingTypes = new Class[] { Water.class };
+
 	/**
 	 * Construct a new DeepWater with a random UUID.
 	 */
 	public DeepWater()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -36,24 +46,53 @@ public class DeepWater extends Terrain implements Adaptable
 	public DeepWater(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
-	@Override
-	public void updateState()
+	/**
+	 * Return an array of booleans representing whether the tiles along the corners of this object's
+	 * tile contain a matching object for the adaptive tiling procedure.
+	 * 
+	 * @return an array of booleans, where the elements represent whether a matching object was
+	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         order.
+	 */
+	public boolean[] getCornerMatches()
 	{
-		//TODO: Add adaptive tiling logic for 3x3 grid.
-		throw new UnsupportedOperationException(
-				"Adaptive tiling state updates are not implemented for DeepWater yet!");
+		return cornerMatches;
 	}
 
 	@Override
-	public int getState()
+	public void updateTilingState(World w)
+	{
+		if (this.getTile() != null)
+		{
+			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			cornerMatches = AdaptiveTileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
+		}
+		else
+		{
+			setTilingState(0);
+		}
+	}
+
+	@Override
+	public void update(World w)
+	{
+		super.update(w);
+		updateTilingState(w);
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}
