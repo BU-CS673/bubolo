@@ -5,8 +5,7 @@ import java.util.UUID;
 import bubolo.world.entity.StationaryElement;
 
 /**
- * Trees are StationaryElements that can spread over time, and hide Tanks that drive over
- * them.
+ * Trees are StationaryElements that can spread over time, and hide Tanks that drive over them.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -22,7 +21,7 @@ public class Tree extends StationaryElement
 	 */
 	public Tree()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -34,7 +33,9 @@ public class Tree extends StationaryElement
 	public Tree(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	// TODO: Add Tree functionality!

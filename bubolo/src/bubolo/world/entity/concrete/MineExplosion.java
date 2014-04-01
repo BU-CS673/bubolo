@@ -5,7 +5,8 @@ import java.util.UUID;
 import bubolo.world.entity.Effect;
 
 /**
- * MineExplosions are created when mines blow up! They're large, and create Craters on top of whatever Terrain is underneath them.
+ * MineExplosions are created when mines blow up! They're large, and create Craters on top of
+ * whatever Terrain is underneath them.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -21,7 +22,7 @@ public class MineExplosion extends Effect
 	 */
 	public MineExplosion()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -33,7 +34,9 @@ public class MineExplosion extends Effect
 	public MineExplosion(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(60);
+		setHeight(60);
+		updateBounds();
 	}
 
 	// TODO: Add MineExplosion functionality!

@@ -24,7 +24,7 @@ public abstract class Effect extends Entity
 	 */
 	public Effect()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -36,7 +36,6 @@ public abstract class Effect extends Entity
 	public Effect(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
