@@ -101,15 +101,6 @@ public class ButtonPanel extends JPanel
 			}
 		});
 
-		// Handle singleBtn push
-		singleBtn.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt)
-			{
-				singleBtnPerformed();
-			}
-		});
-
 		// Handle exitBtn push
 		exitBtn.addActionListener(new java.awt.event.ActionListener() {
 			@Override
