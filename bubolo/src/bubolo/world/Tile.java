@@ -190,7 +190,7 @@ public class Tile
 	{
 		if (t != null)
 		{
-			if (myTerrain == null)
+			if (myTerrain != null)
 			{
 				myTerrain.dispose();
 			}
