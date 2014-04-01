@@ -23,14 +23,14 @@ public class WallTest
 
 	@Test 
 	public void setState(){
-		wall.setState(7);
-		assertEquals("Wall's state does not match what it was set to!", 7, wall.getState());
+		wall.setTilingState(7);
+		assertEquals("Wall's state does not match what it was set to!", 7, wall.getTilingState());
 	}
 
 	// Will fail until updateState is implemented.
 	@Test
 	public void updateState()
 	{
-		wall.updateState();
+		wall.updateTilingState(null);
 	}
 }

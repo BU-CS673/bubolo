@@ -2,12 +2,14 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.AdaptiveTileUtil;
 import bubolo.world.Adaptable;
+import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
 
 /**
- * Craters are created when another Terrain type is blown up using a Mine. They reduce
- * Tank movement speed and may be flooded upon contact with Water.
+ * Craters are created when another Terrain type is blown up using a Mine. They reduce Tank movement
+ * speed and may be flooded upon contact with Water.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -21,11 +23,17 @@ public class Crater extends StationaryElement implements Adaptable
 	private int tilingState = 0;
 
 	/**
+	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
+	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
+	 */
+	private Class<?>[] matchingTypes = new Class[] { Road.class, Water.class };
+
+	/**
 	 * Construct a new Crater with a random UUID.
 	 */
 	public Crater()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -37,24 +45,38 @@ public class Crater extends StationaryElement implements Adaptable
 	public Crater(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	@Override
-	public void updateState()
+	public void updateTilingState(World w)
 	{
-		// TODO: Add adapative tiling state logic for 4x4 grid.
-		throw new UnsupportedOperationException(
-				"Adaptive tiling state updates are not implemented for Crater yet!");
+		if (this.getTile() != null)
+		{
+			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+		}
+		else
+		{
+			setTilingState(0);
+		}
 	}
 
 	@Override
-	public int getState()
+	public void update(World w)
+	{
+		updateTilingState(w);
+	}
+
+	@Override
+	public int getTilingState()
 	{
 		return tilingState;
 	}
 
 	@Override
-	public void setState(int newState)
+	public void setTilingState(int newState)
 	{
 		tilingState = newState;
 	}

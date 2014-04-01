@@ -6,8 +6,8 @@ import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 
 /**
- * Tiles represent one 'unit square' on a game map. They must contain one Terrain, and can
- * have either 1 or 0 StationaryElements which sit on top of that Terrain.
+ * Tiles represent one 'unit square' on a game map. They must contain one Terrain, and can have
+ * either 1 or 0 StationaryElements which sit on top of that Terrain.
  * 
  * 
  * @author BU CS673 - Clone Productions
@@ -15,8 +15,8 @@ import bubolo.world.entity.Terrain;
 public class Tile
 {
 	/**
-	 * The WORLD_SCALE represents the number of World units that each Tile represents. 32
-	 * is selected here because it is current size of a Sprite in pixels.
+	 * The WORLD_SCALE represents the number of World units that each Tile represents. 32 is
+	 * selected here because it is current size of a Sprite in pixels.
 	 * 
 	 * TODO: Move this constant out to a global Bubolo Preferences class.
 	 */
@@ -29,9 +29,9 @@ public class Tile
 	/**
 	 * Create a new Tile with the specified Terrain at the given map unit coordinates.
 	 * 
-	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it
-	 * is strongly advised that they be constructed using World.AddEntity(), which ensures
-	 * proper Sprite handling and Entity indexing.
+	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it is
+	 * strongly advised that they be constructed using World.AddEntity(), which ensures proper
+	 * Sprite handling and Entity indexing.
 	 * 
 	 * @param x
 	 *            is the x coordinate of this Tile in map/grid units.
@@ -55,7 +55,7 @@ public class Tile
 	 */
 	public float getX()
 	{
-		return gridX * TILE_SIZE + TILE_SIZE/2;
+		return gridX * TILE_SIZE + TILE_SIZE / 2;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Tile
 	 */
 	public float getY()
 	{
-		return gridY * TILE_SIZE + TILE_SIZE/2;
+		return gridY * TILE_SIZE + TILE_SIZE / 2;
 	}
 
 	/**
@@ -136,8 +136,8 @@ public class Tile
 	}
 
 	/**
-	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does ont
-	 * exist in this Tile.
+	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does ont exist in
+	 * this Tile.
 	 * 
 	 * @return a reference to this Tile.
 	 */
@@ -155,9 +155,9 @@ public class Tile
 	/**
 	 * Set the StationaryElement of this Tile.
 	 * 
-	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it
-	 * is strongly advised that they be constructed using World.AddEntity(), which ensures
-	 * proper Sprite handling and Entity indexing.
+	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it is
+	 * strongly advised that they be constructed using World.AddEntity(), which ensures proper
+	 * Sprite handling and Entity indexing.
 	 * 
 	 * @param e
 	 *            is the StationaryElement that should be added to this Tile.
@@ -172,15 +172,16 @@ public class Tile
 		
 		myElement = e;
 		e.setTile(this);
+		e.updateBounds();
 		return this;
 	}
 
 	/**
 	 * Set the Terrain of this Tile.
 	 * 
-	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it
-	 * is strongly advised that they be constructed using World.AddEntity(), which ensures
-	 * proper Sprite handling and Entity indexing.
+	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it is
+	 * strongly advised that they be constructed using World.AddEntity(), which ensures proper
+	 * Sprite handling and Entity indexing.
 	 * 
 	 * @param t
 	 *            is the Terrain that should be assigned to this Tile.
@@ -197,6 +198,7 @@ public class Tile
 			
 			myTerrain = t;
 			t.setTile(this);
+			t.updateBounds();
 			return this;
 		}
 		else

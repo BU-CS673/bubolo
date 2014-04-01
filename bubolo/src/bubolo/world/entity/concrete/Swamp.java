@@ -21,7 +21,7 @@ public class Swamp extends Terrain
 	 */
 	public Swamp()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -33,6 +33,9 @@ public class Swamp extends Terrain
 	public Swamp(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	// TODO: Add Swamp functionality!
