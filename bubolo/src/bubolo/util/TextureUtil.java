@@ -93,40 +93,6 @@ public class TextureUtil
 	}
 
 	/**
-	 * Convert a single .png representing multiple tiling states into an Array of 9 different
-	 * texture regions, according to the established 3x3 standard layout. Primarily used for the
-	 * DeepWater Terrain.
-	 * 
-	 * @param tex
-	 *            is a 3x3 input texture to be split. Must be at 96 x 96 resolution.
-	 * @return an array of TextureRegions representing textures for each of the 9 adaptive tiling
-	 *         states.
-	 */
-	public static TextureRegion[] adaptiveSplit_9(Texture tex)
-	{
-		if (tex.getHeight() != Coordinates.TILE_TO_WORLD_SCALE * 3 && tex.getWidth() != Coordinates.TILE_TO_WORLD_SCALE * 3)
-		{
-			throw new TextureFormatException("Cannot split texture into 9 tiles, wrong size!");
-		}
-
-		// Grab the 9 texture states for a standard 3x3 layout
-		TextureRegion[][] allFrames = splitFrames(tex, Coordinates.TILE_TO_WORLD_SCALE, Coordinates.TILE_TO_WORLD_SCALE);
-
-		TextureRegion[] adapt = new TextureRegion[9];
-		adapt[0] = allFrames[0][0];
-		adapt[1] = allFrames[1][0];
-		adapt[2] = allFrames[2][0];
-		adapt[3] = allFrames[0][1];
-		adapt[4] = allFrames[1][1];
-		adapt[5] = allFrames[2][1];
-		adapt[6] = allFrames[0][2];
-		adapt[7] = allFrames[1][2];
-		adapt[8] = allFrames[2][2];
-
-		return adapt;
-	}
-
-	/**
 	 * Convert a single .png representing multiple tiling states into an Array of 34 different
 	 * texture regions, according to the established 4x4 + 3x3 + 3x3 standard layout. Primarily used
 	 * for the Water Terrain.

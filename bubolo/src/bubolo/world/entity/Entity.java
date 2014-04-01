@@ -92,6 +92,7 @@ public abstract class Entity implements Serializable, Drawable
 		}
 	}
 
+	
 	/**
 	 * Returns a list of all of the Entities that this Entity overlaps with. Currently checks all
 	 * Entities found in the given world, and could be optimized to check only Entities within a
@@ -102,6 +103,9 @@ public abstract class Entity implements Serializable, Drawable
 	 *            is the World object where this Entity is contained.
 	 * @return a list of all of the Entities which this Entity overlaps with.
 	 */
+	//TODO: Unit test and implement this method for generally getting collisions for an Entity.
+	//Currently unimplemented, needs unit tests and use cases!
+	/*
 	protected List<Entity> getOverlappingEntities(World w)
 	{
 		ArrayList<Entity> intersects = new ArrayList<Entity>();
@@ -116,6 +120,8 @@ public abstract class Entity implements Serializable, Drawable
 		}
 		return intersects;
 	}
+	*/
+	
 
 	/**
 	 * The Entity's unique id.
@@ -196,7 +202,7 @@ public abstract class Entity implements Serializable, Drawable
 	 *            is true if the Entity should be considered "solid", false otherwise.
 	 * @return a reference to this Entity, for chaining.
 	 */
-	public Entity setSolid(boolean solidity)
+	protected Entity setSolid(boolean solidity)
 	{
 		solid = solidity;
 		return this;
