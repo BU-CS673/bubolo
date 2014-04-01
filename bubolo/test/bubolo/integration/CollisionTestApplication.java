@@ -1,5 +1,9 @@
 package bubolo.integration;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.text.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -8,61 +12,57 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.world.GameWorld;
+import bubolo.util.Parser;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
-import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
 
-/**
- * For testing only.
- * 
- * @author BU CS673 - Clone Productions
- */
-public class PillboxControllerTestApplication implements GameApplication
+public class CollisionTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Pillbox Controller Integration";
+		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new PillboxControllerTestApplication(1067, 600), cfg);
+		new LwjglApplication(new CollisionTestApplication(1067, 600), cfg);
 	}
-	
+
+	private Network network;
 	private int windowWidth;
 	private int windowHeight;
-	
+
 	private Graphics graphics;
 	private World world;
-	
+
 	private long lastUpdate;
-	
+
 	private boolean ready;
-	
+
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
 	public static final int TICKS_PER_SECOND = 30;
-	
+
 	/**
 	 * The number of milliseconds per game tick.
 	 */
 	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
-	
+
 	/**
-	 * Constructs an instance of the game application. Only one instance should 
-	 * ever exist.
-	 * @param windowWidth the width of the window.
-	 * @param windowHeight the height of the window.
+	 * Constructs an instance of the game application. Only one instance should ever exist.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window.
+	 * @param windowHeight
+	 *            the height of the window.
 	 */
-	public PillboxControllerTestApplication(int windowWidth, int windowHeight)
+	public CollisionTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
+
 	@Override
 	public boolean isReady()
 	{
@@ -71,48 +71,49 @@ public class PillboxControllerTestApplication implements GameApplication
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a> 
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void create()
 	{
-		Network net = NetworkSystem.getInstance();
-		net.startDebug();
-		
+		network = NetworkSystem.getInstance();
+		network.startDebug();
+
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+		try
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
+			world = fileParser.parseMap(path);
 		}
-		
+		catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
-		world.addEntity(Pillbox.class).setParams(32*18, 32*6, 0);
-		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 0);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 0);
 
 		ready = true;
 	}
-	
+
 	/**
 	 * Called automatically by the rendering library.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void render()
 	{
 		graphics.draw(world);
 		world.update();
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
+
+		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
 		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
 		{
@@ -120,10 +121,12 @@ public class PillboxControllerTestApplication implements GameApplication
 			lastUpdate = currentMillis;
 		}
 	}
-	
+
 	/**
 	 * Called when the application is destroyed.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void dispose()
@@ -145,4 +148,5 @@ public class PillboxControllerTestApplication implements GameApplication
 	public void resume()
 	{
 	}
+
 }

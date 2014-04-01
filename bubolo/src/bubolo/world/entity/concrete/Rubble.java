@@ -5,8 +5,8 @@ import java.util.UUID;
 import bubolo.world.entity.StationaryElement;
 
 /**
- * Rubble is created when structures (like Walls) are destroyed. It replaces whatever
- * Terrain type was previously present, and reduces tank movement speed.
+ * Rubble is created when structures (like Walls) are destroyed. It replaces whatever Terrain type
+ * was previously present, and reduces tank movement speed.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -22,7 +22,7 @@ public class Rubble extends StationaryElement
 	 */
 	public Rubble()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -34,6 +34,9 @@ public class Rubble extends StationaryElement
 	public Rubble(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	// TODO: Add Rubble functionality!

@@ -23,14 +23,14 @@ public class RoadTest
 	
 	@Test 
 	public void setState(){
-		road.setState(7);
-		assertEquals("Road's state does not match what it was set to!", 7, road.getState());
+		road.setTilingState(7);
+		assertEquals("Road's state does not match what it was set to!", 7, road.getTilingState());
 	}
 	
 	// Will fail until updateState is implemented.
 	@Test
 	public void updateState()
 	{
-		road.updateState();
+		road.updateTilingState(null);
 	}
 }
