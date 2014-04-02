@@ -91,9 +91,9 @@ public class Audio implements Music.OnCompletionListener
 		
 		try
 		{
+			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "Lessons-8bit.mp3"))));
 			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "bolo_menu.mp3"))));
-			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song1.ogg"))));
-			music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song2.ogg"))));
+			//music.add(Gdx.audio.newMusic(new FileHandle(new File(MUSIC_PATH + "song2.ogg"))));
 		}
 		catch (Exception e)
 		{
