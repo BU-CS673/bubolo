@@ -13,6 +13,8 @@ import bubolo.world.Ownable;
  */
 public abstract class Actor extends Entity implements Damageable, Ownable
 {
+	private int hp, maxhp;
+	private boolean alive = true;
 
 	/**
 	 * Used when serializing and de-serializing.
@@ -51,36 +53,40 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	@Override
 	public Actor setHP(int i)
 	{
+		hp = i;
 		return this;
-		// TODO Auto-generated method stub
+	}
+	
+	protected Actor setMaxHP(int i)
+	{
+		maxhp = i;
+		return this;
 	}
 
 	@Override
 	public int getHP()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return hp;
 	}
 
 	@Override
 	public int getMaxHP()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		//TODO setMaxHP
+		return maxhp;
 	}
 
 	@Override
 	public Actor modifyHP(int i)
 	{
-		// TODO Auto-generated method stub
+		hp += i;
 		return this;
 	}
 
 	@Override
 	public boolean isAlive()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return alive;
 	}
 
 	@Override

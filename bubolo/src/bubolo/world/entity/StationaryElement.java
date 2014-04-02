@@ -16,6 +16,8 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -1849311149500334067L;
+	private int hp, maxhp;
+	private boolean alive = true;
 
 	/**
 	 * Construct a new StationaryElement with a random UUID.
@@ -36,39 +38,44 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 		super(id);
 	}
 
-	@Override
-	public int getHP()
+	protected StationaryElement setMaxHP(int i)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		maxhp = i;
+		return this;
+		
 	}
 
 	@Override
 	public int getMaxHP()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		// TODO setMaxHP
+		return maxhp;
 	}
 
 	@Override
+	public int getHP()
+	{
+		return hp;
+	}
+	
+	@Override
 	public StationaryElement modifyHP(int i)
 	{
-		// TODO Auto-generated method stub
+		hp += i;
 		return this;
 	}
 
 	@Override
 	public StationaryElement setHP(int i)
 	{
-		// TODO Auto-generated method stub
+		hp = i;
 		return this;
 	}
 
 	@Override
 	public boolean isAlive()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return alive;
 	}
 
 	// TODO: Add StationaryElement functionality!

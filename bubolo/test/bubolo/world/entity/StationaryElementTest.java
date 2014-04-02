@@ -40,8 +40,7 @@ public class StationaryElementTest
 	@Test
 	public void modifyHP()
 	{
-		assertEquals("StationaryElement HP modified correctly.", 10, sta.setHP(5).modifyHP(5)
-				.getHP());
+		assertEquals("StationaryElement HP modified correctly.", 10, sta.setHP(5).modifyHP(5).getHP());
 	}
 
 	@Test
@@ -52,16 +51,13 @@ public class StationaryElementTest
 		// StationaryElement's actual maximum HP.
 		// This test is useless without knowing what value to look for.
 		fail();
+		int max = sta.getMaxHP();	
 	}
 
 	@Test
 	public void isAlive()
 	{
-		boolean living = sta.isAlive();
-		// Should return true if the StationaryElement is alive, and false otherwise.
-		// Useless until we have some conditions under which StationaryElements should be
-		// alive or dead.
-		fail();
+		assertTrue(sta.isAlive());
 	}
 
 	@Test

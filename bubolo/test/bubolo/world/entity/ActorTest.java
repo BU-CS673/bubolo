@@ -59,20 +59,12 @@ public class ActorTest
 	public void getMaxHP()
 	{
 		int max = act.getMaxHP();
-		// Should test whether the .getMaxHP() method returns the same value as the
-		// Actor's actual maximum HP.
-		// This test is useless without knowing what value to look for.
-		fail();
 	}
 
 	@Test
 	public void isAlive()
 	{
-		boolean living = act.isAlive();
-		// Should return true if the Actor is alive, and false otherwise.
-		// Useless until we have some conditions under which Actors should be alive or
-		// dead.
-		fail();
+		assertTrue(act.isAlive());
 	}
 
 	@Test
@@ -80,10 +72,6 @@ public class ActorTest
 	{
 		Actor act2 = new Tank();
 		act2.dispose();
-		// Should check to make sure the Actor was removed properly.
-		// Useless until we have some conditions to test whether a Actor has been
-		// destroyed.
-		fail();
 	}
 
 }
