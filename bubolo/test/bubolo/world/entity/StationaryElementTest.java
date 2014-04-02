@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
 
 public class StationaryElementTest
@@ -21,6 +22,13 @@ public class StationaryElementTest
 		sta = new Tree();
 		EntityTestCase.setTestParams(sta);
 
+	}
+	
+	@Test
+	public void constructId()
+	{
+		Tree tree2 = new Tree(EntityTestCase.TARGET_UUID);
+		assertEquals("StationaryElement UUID set correctly.", EntityTestCase.TARGET_UUID, tree2.getId());
 	}
 
 	@Test
@@ -57,10 +65,10 @@ public class StationaryElementTest
 	}
 
 	@Test
-	public void destroy()
+	public void dispose()
 	{
 		StationaryElement sta2 = new Tree();
-		sta2.destroy();
+		sta2.dispose();
 		// Should check to make sure the StationaryElement was removed properly.
 		// Useless until we have some conditions to test whether a StationaryElement has
 		// been destroyed.

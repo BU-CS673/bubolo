@@ -15,24 +15,33 @@ class TreeSprite extends Sprite<Tree>
 {
 	private Texture image;
 
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "tree.png";
+	
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * be directly created outside of the graphics system.
 	 * 
 	 * @param tree
 	 *            Reference to the Tree that this TreeSprite represents.
 	 */
 	TreeSprite(Tree tree)
 	{
-		super(DrawLayer.OBJECTS, tree);
+		super(DrawLayer.STATIONARY_ELEMENTS, tree);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "default.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, image);
+		}
 	}
 }

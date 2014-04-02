@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.*;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,6 +24,6 @@ public class GrassTest
 	@Test
 	public void Grass()
 	{
-		assert (true);
+		assertTrue(true);
 	}
 }

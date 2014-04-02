@@ -7,28 +7,42 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import bubolo.world.entity.Entity;
 
 /**
+ * The graphical representation of a bullet entity.
  * 
  * @author BU673 - Clone Industries
  */
 class BulletSprite extends Sprite<Entity>
 {
 	private Texture image;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "bullet.png";
+
 	/**
-	 * Constructor for the BulletSprite. This is Package-private because sprites
-	 * should not be directly created outside of the graphics system
-	 * (instead, call the Sprite.create(entity) static method).
-	 * @param bullet Reference to the Bullet that this BulletSprite represents.
+	 * Constructor for the BulletSprite. This is Package-private because sprites should
+	 * not be directly created outside of the graphics system.
+	 * 
+	 * @param bullet
+	 *            Reference to the Bullet that this BulletSprite represents.
 	 */
 	BulletSprite(Entity bullet)
 	{
-		super(DrawLayer.OBJECTS, bullet);
+		super(DrawLayer.EFFECTS, bullet);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "bullet.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		drawTexture(batch, camera, layer, image);
+		if (isEntityDisposed())
+		{
+			Sprites.getInstance().removeSprite(this);
+		}
+		else
+		{
+			drawTexture(batch, camera, layer, image);
+
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package bubolo.world.entity.concrete;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,10 +20,17 @@ public class RoadTest
 		road = new Road();
 		EntityTestCase.setTestParams(road);
 	}
-
+	
+	@Test 
+	public void setState(){
+		road.setTilingState(7);
+		assertEquals("Road's state does not match what it was set to!", 7, road.getTilingState());
+	}
+	
+	// Will fail until updateState is implemented.
 	@Test
-	public void Road()
+	public void updateState()
 	{
-		assert (true);
+		road.updateTilingState(null);
 	}
 }

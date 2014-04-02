@@ -37,6 +37,34 @@ public class TreeSpriteTest
 		});
 	}
 	
+	@Test
+	public void constructTreeSprite() throws InterruptedException
+	{
+		synchronized(LibGdxAppTester.getLock())
+		{
+			isComplete = false;
+			passed = false;
+			
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run()
+				{
+					// Fails if the constructor throws an exception.
+					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+					
+					passed = true;
+					isComplete = true;
+				}
+			});
+	
+			while (!isComplete)
+			{
+				Thread.yield();
+			}
+			
+			assertTrue(passed);
+		}
+	}	
 
 	@Test
 	public void drawTreeSprite()
@@ -50,7 +78,7 @@ public class TreeSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.OBJECTS);
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
 				isComplete = true;
 			}
