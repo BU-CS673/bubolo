@@ -1,5 +1,13 @@
 package bubolo.integration;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.ui.AltMenuScreen;
 import bubolo.ui.LoadingScreen;
 
@@ -8,6 +16,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
  * Test the UI
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class UITestApplication
@@ -15,7 +24,6 @@ public class UITestApplication
 	/**
 	 * New Application
 	 */
-	static Sprint1Application app = new Sprint1Application(300, 300);
 
 	/**
 	 * 
@@ -32,13 +40,31 @@ public class UITestApplication
 			Thread.sleep(0);
 
 			s.dispose();
-			AltMenuScreen fp = new AltMenuScreen(new Runnable() {
+			Runnable sp = new Runnable() {
 				@Override
 				public void run()
 				{
-					setup();
+					setupSinglePlayer();
 				}
-			});
+			};
+
+			Runnable hmp = new Runnable() {
+				@Override
+				public void run()
+				{
+					// do nothing
+				}
+			};
+
+			Runnable jmp = new Runnable() {
+				@Override
+				public void run()
+				{
+					// do nothing
+				}
+			};
+
+			AltMenuScreen fp = new AltMenuScreen(sp, hmp, jmp);
 
 			fp.setVisible(true);
 		}
@@ -47,15 +73,26 @@ public class UITestApplication
 			ex.printStackTrace();
 		}
 	}
-	
 
-	public static void setup()
+	public static void setupSinglePlayer()
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Sprint 1";
-		cfg.width = 600;
+		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(app, cfg);
+		new LwjglApplication(new CollisionTestApplication(1067, 600), cfg);
+	}
+
+	public static void setupHostMultiPlayer()
+	{
+		// Do nothing interesting, for now!
+		System.out.println("Hosting multiplayer games is not possible from within this test!");
+	}
+
+	public static void setupJoinMultiPlayer() throws IOException
+	{
+		// Do nothing interesting, for now!
+		System.out.println("Joining multiplayer games is not possible from within this test!");
 	}
 }
