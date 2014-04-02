@@ -39,21 +39,22 @@ public class ButtonPanel extends JPanel
 	/**
 	 * The Runnable that should be activated when the Start menu button is pressed.
 	 */
-	Runnable singlePlayerTarget;
-	Runnable hostMultiPlayerTarget;
-	Runnable joinMultiPlayerTarget;
+	private Runnable singlePlayerTarget;
+	private Runnable hostMultiPlayerTarget;
+	private Runnable joinMultiPlayerTarget;
 
 	/**
 	 * Constructor for the Main Menu Button Panel
 	 * 
-	 * @param targetApp
-	 *            the BUBOLO application
+	 * @param singlePlayer
+	 *            a runnable that launches the single player game.
+	 * @param hostMultiPlayer
+	 *            a runnable that launches the host multiplayer game.
+	 * @param joinMultiPlayer
+	 *            a runnable that launches the client multiplayer game.
 	 */
 	public ButtonPanel(Runnable singlePlayer, Runnable hostMultiPlayer, Runnable joinMultiPlayer)
 	{
-		/**
-	 * 
-	 */
 		singlePlayerTarget = singlePlayer;
 		hostMultiPlayerTarget = hostMultiPlayer;
 		joinMultiPlayerTarget = joinMultiPlayer;
@@ -142,5 +143,4 @@ public class ButtonPanel extends JPanel
 		hostMultiPlayerTarget.run();
 
 	}
-
 }

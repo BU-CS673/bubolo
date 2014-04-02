@@ -132,7 +132,7 @@ public class Sprint2
 			IP_popup.setVisible(false);
 		}
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO v0.2.0, Server Client";
+		cfg.title = "BUBOLO v0.2.0, Multiplayer Server";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;

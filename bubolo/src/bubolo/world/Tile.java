@@ -143,6 +143,11 @@ public class Tile
 	 */
 	public Tile clearElement()
 	{
+		if (myElement != null)
+		{
+			myElement.dispose();
+		}
+		
 		myElement = null;
 		return this;
 	}
@@ -160,6 +165,11 @@ public class Tile
 	 */
 	public Tile setElement(StationaryElement e)
 	{
+		if (myElement != null)
+		{
+			myElement.dispose();
+		}
+		
 		myElement = e;
 		e.setTile(this);
 		e.updateBounds();
@@ -181,6 +191,11 @@ public class Tile
 	{
 		if (t != null)
 		{
+			if (myTerrain != null)
+			{
+				myTerrain.dispose();
+			}
+			
 			myTerrain = t;
 			t.setTile(this);
 			t.updateBounds();

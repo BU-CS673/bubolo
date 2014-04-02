@@ -7,8 +7,8 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 
 /**
- * This is the Main Menu JFrame which will have Buttons for: START SINGLE PLAYER JOIN
- * MULTI-PLAYER (not functional) START MULTI-PLAYER (not functional) PREFERENCES EXIT
+ * This is the Main Menu JFrame which will have Buttons for: START SINGLE PLAYER JOIN MULTI-PLAYER
+ * (not functional) START MULTI-PLAYER (not functional) PREFERENCES EXIT
  * 
  * @author BU673 - Clone Industries
  */
@@ -19,8 +19,12 @@ public class AltMenuScreen extends JFrame
 	/**
 	 * Constructor for the Main Menu JFrame
 	 * 
-	 * @param targetApp
-	 *            the BUBOLO application
+	 * @param singlePlayer
+	 *            a runnable that launches the single player game.
+	 * @param hostMultiPlayer
+	 *            a runnable that launches the host multiplayer game.
+	 * @param joinMultiPlayer
+	 *            a runnable that launches the client multiplayer game.
 	 */
 	public AltMenuScreen(Runnable singlePlayer, Runnable hostMultiPlayer, Runnable joinMultiPlayer)
 	{
@@ -46,7 +50,5 @@ public class AltMenuScreen extends JFrame
 
 		// Add the ButtonPanel which contains the main buttons
 		add(new ButtonPanel(singlePlayer, hostMultiPlayer, joinMultiPlayer), BorderLayout.CENTER);
-
 	}
-
 }
