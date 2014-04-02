@@ -98,7 +98,7 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
-
+		Audio.startMusic();
 		ready = true;
 	}
 

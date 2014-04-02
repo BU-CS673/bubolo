@@ -10,6 +10,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import bubolo.audio.Audio;
 import bubolo.integration.CollisionTestApplication;
 import bubolo.integration.NetClientTestApplication;
 import bubolo.integration.NetServerTestApplication;

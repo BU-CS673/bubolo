@@ -113,7 +113,7 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		tank.setLocalPlayer(true);
 
 		network.send(new CreateTank(tank));
-
+		Audio.startMusic();
 		ready = true;
 	}
 
