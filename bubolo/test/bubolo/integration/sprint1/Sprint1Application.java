@@ -1,4 +1,4 @@
-package bubolo.integration;
+package bubolo.integration.sprint1;
 
 import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
