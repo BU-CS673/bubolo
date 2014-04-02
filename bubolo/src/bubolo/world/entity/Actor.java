@@ -3,6 +3,7 @@ package bubolo.world.entity;
 import java.util.UUID;
 
 import bubolo.world.Damageable;
+import bubolo.world.Ownable;
 
 /**
  * Basic class representing MobileEntities that exhibit some kind of behavior in the game
@@ -10,7 +11,7 @@ import bubolo.world.Damageable;
  * 
  * @author BU CS673 - Clone Productions
  */
-public abstract class Actor extends Entity implements Damageable
+public abstract class Actor extends Entity implements Damageable, Ownable
 {
 
 	/**
@@ -19,11 +20,21 @@ public abstract class Actor extends Entity implements Damageable
 	private static final long serialVersionUID = 6062132322107891442L;
 
 	/**
+	 * Boolean representing whether this Actor belongs to the local player.
+	 */
+	private boolean isLocalPlayer;
+
+	/**
+	 * Boolean representing whether this Actor is owned by a player.
+	 */
+	private boolean isOwned = true;
+
+	/**
 	 * Construct a new Actor with a random UUID.
 	 */
 	public Actor()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -35,7 +46,6 @@ public abstract class Actor extends Entity implements Damageable
 	public Actor(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -74,11 +84,28 @@ public abstract class Actor extends Entity implements Damageable
 	}
 
 	@Override
-	public void destroy()
+	public boolean isLocalPlayer()
 	{
-		// TODO Auto-generated method stub
+		return isLocalPlayer;
 	}
 
+	@Override
+	public void setLocalPlayer(boolean local)
+	{
+		this.isLocalPlayer = local;
+	}
+
+	@Override
+	public boolean isOwned()
+	{
+		return isOwned;
+	}
+
+	@Override
+	public void setOwned(boolean owned)
+	{
+		this.isOwned = owned;
+	}
 	// TODO: Add Actor functionality!
 
 }

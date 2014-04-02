@@ -14,6 +14,7 @@ import bubolo.controllers.Controllers;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * The concrete implementation of the World interface. GameWorld is the sole owner of
@@ -25,7 +26,19 @@ public class GameWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	
+	private Tile[][] mapTiles;
 
+	// The list of entities to remove. The entities array can't be modified while it
+	// is being iterated over.
+	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
+	// The list of entities to add. The entities array can't be modified while it is
+	// being iterated over.
+	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
+	
+	//the list of Tanks that exist in the world
+	private List<Entity> tanks = new ArrayList<Entity>();
+	
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -46,6 +59,8 @@ public class GameWorld implements World
 
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+		
+		mapTiles = new Tile[worldMapWidth][worldMapHeight];
 	}
 
 	@Override
@@ -108,8 +123,11 @@ public class GameWorld implements World
         
         Sprites.getInstance().createSprite(entity);
         Controllers.getInstance().createController(entity, controllerFactory);
-        
-        entities.add(entity);
+        if(entity.getClass() == Tank.class)
+        {
+        	tanks.add(entity);
+        }
+        entitiesToAdd.add(entity);
 		entityMap.put(entity.getId(), entity);
         
         return entity;
@@ -118,8 +136,9 @@ public class GameWorld implements World
 	@Override
 	public void removeEntity(Entity e)
 	{
-		entities.remove(e);
+		e.dispose();
 		entityMap.remove(e.getId());
+		tanks.remove(e);
 	}
 
 	@Override
@@ -128,6 +147,19 @@ public class GameWorld implements World
 		removeEntity(entityMap.get(id));
 	}
 
+	@Override
+	public Tile[][] getMapTiles()
+	{
+		return mapTiles;
+	}
+
+	@Override
+	public void setMapTiles(Tile[][] mapTiles)
+	{
+		this.mapTiles = mapTiles;
+	}
+
+	
 	@Override
 	public int getMapWidth()
 	{
@@ -143,10 +175,27 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+		// Update all entities.
 		for (Entity e : entities)
 		{
-			// TODO: reference to World (this) must be passed to entities.
-			e.update();
+			e.update(this);
+			if (e.isDisposed())
+			{
+				entitiesToRemove.add(e);
+			}
 		}
+		
+		entities.removeAll(entitiesToRemove);
+		entitiesToRemove.clear();
+		
+		entities.addAll(entitiesToAdd);
+		entitiesToAdd.clear();
+	}
+
+	@Override
+	public List<Entity> getTanks() 
+	{
+		List<Entity> copyOfTanks = Collections.unmodifiableList(tanks);
+		return copyOfTanks;
 	}
 }

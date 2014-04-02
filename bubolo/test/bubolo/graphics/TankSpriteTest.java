@@ -74,7 +74,7 @@ public class TankSpriteTest
 			{
 				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TANKS);
+				sprite.draw(batch, camera, DrawLayer.ACTORS);
 				passed = true;
 				isComplete = true;
 			}

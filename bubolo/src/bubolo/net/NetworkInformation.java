@@ -1,16 +1,17 @@
+/**
+ * Copyright (c) 2014 BU MET CS673 Game Engineering Team
+ *
+ * See the file license.txt for copying permission.
+ */
+
 package bubolo.net;
 
 /**
  * Information about the network.
  * @author BU CS673 - Clone Productions
  */
-public class NetworkInformation
-{
-	// Private, since NetworkInformation should never be instantiated.
-	private NetworkInformation()
-	{
-	}
-	
+public abstract class NetworkInformation
+{	
 	/**
 	 * The port that the game server listens to.
 	 */

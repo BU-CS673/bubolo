@@ -22,7 +22,7 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	 */
 	public StationaryElement()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -34,7 +34,6 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	public StationaryElement(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -70,12 +69,6 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 	{
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void destroy()
-	{
-		// TODO Auto-generated method stub
 	}
 
 	// TODO: Add StationaryElement functionality!
