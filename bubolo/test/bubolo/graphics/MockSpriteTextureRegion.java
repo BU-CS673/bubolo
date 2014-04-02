@@ -18,7 +18,7 @@ public class MockSpriteTextureRegion extends Sprite<MockTank>
 	 */
 	public MockSpriteTextureRegion()
 	{
-		super(DrawLayer.OBJECTS, new MockTank());
+		super(DrawLayer.STATIONARY_ELEMENTS, new MockTank());
 	}
 
 	@Override

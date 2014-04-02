@@ -66,7 +66,7 @@ public class SpriteTest
 				Camera camera = new OrthographicCamera();
 				SpriteBatch batch = new SpriteBatch();
 				Sprite<?> sprite = new MockSpriteTextureRegion();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN_MODIFIERS);
+				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 			}
 		});
 	}
