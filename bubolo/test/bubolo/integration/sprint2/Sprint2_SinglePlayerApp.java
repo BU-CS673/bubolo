@@ -35,19 +35,19 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 	private Graphics graphics;
 	private World world;
 
-	private long lastUpdate;
+	private long lastUpdate = 0;
 
 	private boolean ready;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final int TICKS_PER_SECOND = 1000;
 
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever
@@ -111,13 +111,13 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 	@Override
 	public void render()
 	{
-		graphics.draw(world);
-		world.update();
+		//graphics.draw(world);
 
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+		if (currentMillis > (lastUpdate + (long)MILLIS_PER_TICK))
 		{
+			graphics.draw(world);
 			world.update();
 			lastUpdate = currentMillis;
 		}
