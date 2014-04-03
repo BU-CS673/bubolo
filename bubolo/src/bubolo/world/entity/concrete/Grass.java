@@ -21,7 +21,7 @@ public class Grass extends Terrain
 	 */
 	public Grass()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -33,6 +33,9 @@ public class Grass extends Terrain
 	public Grass(UUID id)
 	{
 		super(id);
+		setWidth(32);
+		setHeight(32);
+		updateBounds();
 	}
 
 	// TODO: Add Grass functionality!

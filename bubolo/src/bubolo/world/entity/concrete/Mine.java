@@ -27,7 +27,7 @@ public class Mine extends StationaryElement implements Ownable
 	 * Boolean representing whether this Mine is owned by a player.
 	 */
 	private boolean isOwned = false;
-	
+
 	/**
 	 * Boolean representing whether this Mine is exploding! OH NO!
 	 */
@@ -38,7 +38,7 @@ public class Mine extends StationaryElement implements Ownable
 	 */
 	public Mine()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -50,7 +50,9 @@ public class Mine extends StationaryElement implements Ownable
 	public Mine(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(25);
+		setHeight(25);
+		updateBounds();
 	}
 
 	@Override
@@ -79,6 +81,7 @@ public class Mine extends StationaryElement implements Ownable
 
 	/**
 	 * Checks to see if this mine is currently exploding!
+	 * 
 	 * @return true if this mine is in the process of exploding, false otherwise.
 	 */
 	public boolean isExploding()
@@ -88,7 +91,9 @@ public class Mine extends StationaryElement implements Ownable
 
 	/**
 	 * Sets the explosion status of this Mine.
-	 * @param explode should be true if this mine should be exploding, false otherwise.
+	 * 
+	 * @param explode
+	 *            should be true if this mine should be exploding, false otherwise.
 	 */
 	public void setExploding(boolean explode)
 	{

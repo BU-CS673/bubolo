@@ -34,7 +34,7 @@ public class Engineer extends Actor
 	 */
 	public Engineer()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -46,7 +46,9 @@ public class Engineer extends Actor
 	public Engineer(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(14);
+		setHeight(9);
+		updateBounds();
 	}
 
 	/**

@@ -23,8 +23,8 @@ public class CraterTest
 	
 	@Test 
 	public void setState(){
-		crater.setState(7);
-		assertEquals("Crater's state does not match what it was set to!", 7, crater.getState());
+		crater.setTilingState(7);
+		assertEquals("Crater's state does not match what it was set to!", 7, crater.getTilingState());
 	}
 	
 	
@@ -32,6 +32,6 @@ public class CraterTest
 	@Test
 	public void updateState()
 	{
-		crater.updateState();
+		crater.updateTilingState(null);
 	}
 }

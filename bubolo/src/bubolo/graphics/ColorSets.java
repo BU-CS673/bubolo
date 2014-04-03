@@ -12,15 +12,15 @@ public class ColorSets
 	 * Index used for the main character color, blue, indicating that it appears in the
 	 * first row of multi-color textures.
 	 */
-	public static int BLUE = 0;
+	public static final int BLUE = 0;
 	/**
 	 * Index used for the enemy character color, red, indicating that it appears in the
 	 * second row of multi-color textures.
 	 */
-	public static int RED = 1;
+	public static final int RED = 1;
 	/**
 	 * Index used for the main character color, usually white/gray, indicating that it
 	 * appears in the third row of multi-color textures.
 	 */
-	public static int NEUTRAL = 2;
+	public static final int NEUTRAL = 2;
 }

@@ -100,31 +100,31 @@ public class GraphicsTestApplication implements GameApplication
 		{
 			for (int j = 0; j < 50; j++)
 			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
 			}
 		}
 		
 		// TODO: Adjust as needed.
-		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
+		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);
 		t.setLocalPlayer(true);
-		world.addEntity(Base.class).setParams(32*6, 32*4, 32, 32, 0);
-		world.addEntity(Bullet.class).setParams(32*7, 32*4, 32, 32, 90);
-		world.addEntity(Crater.class).setParams(32*8, 32*5, 32, 32, 0);
-		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 32, 32, 0);
-		world.addEntity(Engineer.class).setParams(32*8, 32*6, 32, 32, 0);
-		world.addEntity(Mine.class).setParams(32*8, 32*7, 32, 32, 0);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
-		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 60,60,0);
+		world.addEntity(Base.class).setParams(32*6, 32*4, 0);
+		world.addEntity(Bullet.class).setParams(32*7, 32*4, 90);
+		world.addEntity(Crater.class).setParams(32*8, 32*5, 0);
+		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 0);
+		world.addEntity(Engineer.class).setParams(32*8, 32*6, 0);
+		world.addEntity(Mine.class).setParams(32*8, 32*7, 0);
+		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
+		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 0);
 		
 		// 2 roads
-		world.addEntity(Road.class).setParams(32*10, 32*10, 32, 32, 0);
-		world.addEntity(Road.class).setParams(32*10, 32*11, 32, 32, 0);
+		world.addEntity(Road.class).setParams(32*10, 32*10, 0);
+		world.addEntity(Road.class).setParams(32*10, 32*11, 0);
 		
-		world.addEntity(Rubble.class).setParams(32*11, 32*6, 32, 32, 0);
-		world.addEntity(Swamp.class).setParams(32*12, 32*11, 32, 32, 0);
-		world.addEntity(Tree.class).setParams(32*12, 32*12, 32, 32, 0);
-		world.addEntity(Wall.class).setParams(32*13, 32*12, 32, 32, 0);
-		world.addEntity(Water.class).setParams(32*14, 32*12, 32, 32, 0);
+		world.addEntity(Rubble.class).setParams(32*11, 32*6, 0);
+		world.addEntity(Swamp.class).setParams(32*12, 32*11, 0);
+		world.addEntity(Tree.class).setParams(32*12, 32*12, 0);
+		world.addEntity(Wall.class).setParams(32*13, 32*12, 0);
+		world.addEntity(Water.class).setParams(32*14, 32*12, 0);
 		
 		ready = true;
 	}

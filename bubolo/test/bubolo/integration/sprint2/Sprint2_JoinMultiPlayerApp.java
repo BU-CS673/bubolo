@@ -1,5 +1,11 @@
-package bubolo.integration;
+package bubolo.integration.sprint2;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -12,20 +18,38 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateEntity;
+import bubolo.net.command.CreateTank;
+import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
+import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
-public class ParserTestApplication implements GameApplication
+/**
+ * For testing only.
+ * 
+ * @author BU CS673 - Clone Productions
+ */
+public class Sprint2_JoinMultiPlayerApp implements GameApplication
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Server IP Address: ");
+		String addressString = br.readLine();
+		InetAddress address = Inet4Address.getByName(addressString);
+
+		Network net = NetworkSystem.getInstance();
+		net.connect(address);
+
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.title = "BUBOLO Net Client Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
+		new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600, address), cfg);
 	}
 
 	private int windowWidth;
@@ -33,10 +57,13 @@ public class ParserTestApplication implements GameApplication
 
 	private Graphics graphics;
 	private World world;
+	private Network network;
 
 	private long lastUpdate;
 
 	private boolean ready;
+
+	private InetAddress serverAddress;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -56,11 +83,15 @@ public class ParserTestApplication implements GameApplication
 	 *            the width of the window.
 	 * @param windowHeight
 	 *            the height of the window.
+	 * @param serverAddress
+	 *            the server's ip address.
 	 */
-	public ParserTestApplication(int windowWidth, int windowHeight)
+	public Sprint2_JoinMultiPlayerApp(int windowWidth, int windowHeight, InetAddress serverAddress)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+
+		this.serverAddress = serverAddress;
 	}
 
 	@Override
@@ -78,25 +109,29 @@ public class ParserTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		network = NetworkSystem.getInstance();
+		network.send(new HelloNetworkCommand("Hello from the client."));
+
 		graphics = new Graphics(windowWidth, windowHeight);
-		Network net = NetworkSystem.getInstance();
-		net.startDebug();
-		
+
 		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
 		{
 			world = fileParser.parseMap(path);
 		}
 		catch (ParseException e)
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1250, 100, 0);
 		tank.setLocalPlayer(true);
 
+		network.send(new CreateTank(tank));
+		Audio.startMusic();
 		ready = true;
 	}
 
@@ -111,6 +146,7 @@ public class ParserTestApplication implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
+		network.update(world);
 
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
@@ -147,5 +183,4 @@ public class ParserTestApplication implements GameApplication
 	public void resume()
 	{
 	}
-
 }

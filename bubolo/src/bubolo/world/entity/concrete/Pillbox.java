@@ -7,8 +7,8 @@ import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
 
 /**
- * Pillboxes are stationary defensive structures that can be placed by a Tank. They shoot
- * at an enemy Tank until destroyed, at which point they can be retrieved and used again.
+ * Pillboxes are stationary defensive structures that can be placed by a Tank. They shoot at an
+ * enemy Tank until destroyed, at which point they can be retrieved and used again.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -21,13 +21,13 @@ public class Pillbox extends StationaryElement implements Ownable
 	/*
 	 * time required to reload cannon
 	 */
-	private static final long cannonReloadSpeed=500;
+	private static final long cannonReloadSpeed = 500;
 	/*
-	 * current direction pillbox is going to fire 
+	 * current direction pillbox is going to fire
 	 */
 	private float cannonRotation = 0;
 	/*
-	 * Max range to locate a target.  Pillbox will not fire unless there is a tank within this range
+	 * Max range to locate a target. Pillbox will not fire unless there is a tank within this range
 	 */
 	private double range = 300;
 	/**
@@ -50,7 +50,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	 */
 	public Pillbox()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -62,7 +62,10 @@ public class Pillbox extends StationaryElement implements Ownable
 	public Pillbox(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
+		setWidth(27);
+		setHeight(27);
+		updateBounds();
+		setSolid(true);
 	}
 
 	@Override
@@ -88,36 +91,38 @@ public class Pillbox extends StationaryElement implements Ownable
 	{
 		this.isOwned = owned;
 	}
+
 	/**
 	 * Returns cannon status
 	 * 
-	 * @return isCannonReady
-	 *            is the pillbox ready to fire.
+	 * @return isCannonReady is the pillbox ready to fire.
 	 */
 	public boolean isCannonReady()
 	{
-		return (System.currentTimeMillis()-this.cannonFireTime>Pillbox.cannonReloadSpeed);
+		return (System.currentTimeMillis() - this.cannonFireTime > Pillbox.cannonReloadSpeed);
 	}
+
 	/**
 	 * Aim the Cannon
 	 * 
 	 * @param rotation
-	 * 			direction to aim the cannon
+	 *            direction to aim the cannon
 	 */
 	public void aimCannon(float rotation)
 	{
 		cannonRotation = rotation;
 	}
+
 	/**
 	 * get cannon rotation
 	 * 
-	 * @return cannonRotation
-	 * 			the direction the pillbox is set to fire
+	 * @return cannonRotation the direction the pillbox is set to fire
 	 */
 	public float getCannonRotation()
 	{
 		return cannonRotation;
 	}
+
 	/**
 	 * Fire the pillbox
 	 * 
@@ -133,21 +138,22 @@ public class Pillbox extends StationaryElement implements Ownable
 		bullet.setX(this.getX()).setY(this.getY());
 		bullet.setRotation(getCannonRotation());
 	}
+
 	/**
 	 * returns the range of this pillbox
 	 * 
-	 * @return range
-	 * 			distance at which the pillbox will attempt to fire at an enemy
+	 * @return range distance at which the pillbox will attempt to fire at an enemy
 	 */
 	public double getRange()
 	{
 		return this.range;
 	}
+
 	/**
 	 * sets the static range of this pillbox
 	 * 
 	 * @param range
-	 * 			distance at which the pillbox will attempt to fire at an enemy
+	 *            distance at which the pillbox will attempt to fire at an enemy
 	 */
 	public void setRange(double range)
 	{

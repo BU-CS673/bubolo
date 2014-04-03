@@ -45,7 +45,7 @@ class CraterSprite extends Sprite<Crater>
 		}
 		else
 		{
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[this.getEntity().getTilingState()]);
 
 		}
 
