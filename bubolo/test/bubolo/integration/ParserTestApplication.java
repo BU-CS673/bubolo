@@ -48,7 +48,7 @@ public class ParserTestApplication implements GameApplication
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever
