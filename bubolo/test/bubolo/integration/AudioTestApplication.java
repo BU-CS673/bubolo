@@ -43,17 +43,17 @@ public class AudioTestApplication implements GameApplication
 	private boolean ready;
 	
 	private int frame = 0;
-	private int MAX_FRAMES = TICKS_PER_SECOND * 15;
+	private long MAX_FRAMES = TICKS_PER_SECOND * 15;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
