@@ -1,4 +1,4 @@
-package bubolo.integration;
+package bubolo.integration.sprint2;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -14,20 +14,27 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateTank;
+import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
-public class ParserTestApplication implements GameApplication
+/**
+ * For testing only.
+ * 
+ * @author BU CS673 - Clone Productions
+ */
+public class Sprint2_HostMultiPlayerApp implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
+		new LwjglApplication(new Sprint2_HostMultiPlayerApp(1067, 600), cfg);
 	}
 
 	private int windowWidth;
@@ -35,6 +42,7 @@ public class ParserTestApplication implements GameApplication
 
 	private Graphics graphics;
 	private World world;
+	private Network network;
 
 	private long lastUpdate;
 
@@ -59,7 +67,7 @@ public class ParserTestApplication implements GameApplication
 	 * @param windowHeight
 	 *            the height of the window.
 	 */
-	public ParserTestApplication(int windowWidth, int windowHeight)
+	public Sprint2_HostMultiPlayerApp(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -80,27 +88,31 @@ public class ParserTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		network = NetworkSystem.getInstance();
+		network.startServer();
+
+		network.send(new HelloNetworkCommand("Hello from the server."));
+
 		graphics = new Graphics(windowWidth, windowHeight);
-		Network net = NetworkSystem.getInstance();
-		net.startDebug();
-		
+
 		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
 		{
 			world = fileParser.parseMap(path);
 		}
 		catch (ParseException | IOException e)
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// The test is cancelled if the map failed to load.
-			return;
 		}
 
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1050, 100, 0);
 		tank.setLocalPlayer(true);
 
+		network.send(new CreateTank(tank));
+		Audio.startMusic();
 		ready = true;
 	}
 
@@ -115,6 +127,7 @@ public class ParserTestApplication implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
+		network.update(world);
 
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
@@ -151,5 +164,4 @@ public class ParserTestApplication implements GameApplication
 	public void resume()
 	{
 	}
-
 }

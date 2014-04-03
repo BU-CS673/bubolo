@@ -1,4 +1,4 @@
-package bubolo.integration;
+package bubolo.integration.sprint2;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -18,7 +18,7 @@ import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
-public class ParserTestApplication implements GameApplication
+public class Sprint2_SinglePlayerApp implements GameApplication
 {
 	public static void main(String[] args)
 	{
@@ -27,9 +27,10 @@ public class ParserTestApplication implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
+		new LwjglApplication(new Sprint2_SinglePlayerApp(1067, 600), cfg);
 	}
 
+	private Network network;
 	private int windowWidth;
 	private int windowHeight;
 
@@ -59,7 +60,7 @@ public class ParserTestApplication implements GameApplication
 	 * @param windowHeight
 	 *            the height of the window.
 	 */
-	public ParserTestApplication(int windowWidth, int windowHeight)
+	public Sprint2_SinglePlayerApp(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -80,27 +81,26 @@ public class ParserTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		network = NetworkSystem.getInstance();
+		network.startDebug();
+
 		graphics = new Graphics(windowWidth, windowHeight);
-		Network net = NetworkSystem.getInstance();
-		net.startDebug();
-		
 		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
 		{
 			world = fileParser.parseMap(path);
 		}
 		catch (ParseException | IOException e)
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// The test is cancelled if the map failed to load.
-			return;
 		}
 
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
-
+		Audio.startMusic();
 		ready = true;
 	}
 
