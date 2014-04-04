@@ -9,8 +9,10 @@ import java.util.UUID;
 
 import com.google.common.base.Preconditions;
 
+import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
+import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Entity;
@@ -39,6 +41,9 @@ public class GameWorld implements World
 	//the list of Tanks that exist in the world
 	private List<Entity> tanks = new ArrayList<Entity>();
 	
+	//list of world controllers
+	private List<Controller> worldControllers  = new ArrayList<Controller>();
+	
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -61,6 +66,8 @@ public class GameWorld implements World
 		this.worldMapHeight = worldMapHeight;
 		
 		mapTiles = new Tile[worldMapWidth][worldMapHeight];
+		
+		worldControllers.add(new AITreeController());
 	}
 
 	@Override
@@ -175,6 +182,11 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+		// Update all world controllers
+		for (Controller c : worldControllers)
+		{
+			c.update(this);
+		}
 		// Update all entities.
 		for (Entity e : entities)
 		{
