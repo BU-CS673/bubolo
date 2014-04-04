@@ -17,7 +17,7 @@ public class AITreeControllerTest
 	public void test()
 	{
 		LibGdxAppTester.createApp();
-		Controller c = new AITreeController(mock(Tree.class));
+		Controller c = new AITreeController();
 		c.update(mock(World.class));
 	}
 }

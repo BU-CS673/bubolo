@@ -1,5 +1,9 @@
 package bubolo.integration;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.text.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -8,6 +12,7 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -26,10 +31,10 @@ public class TreeControllerTestApplication implements GameApplication
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Tree Controller Integration";
-		cfg.width = 1067;
-		cfg.height = 600;
+		cfg.width = 640;
+		cfg.height = 640;
 		cfg.useGL20 = true;
-		new LwjglApplication(new TreeControllerTestApplication(1067, 600), cfg);
+	new LwjglApplication(new TreeControllerTestApplication(640, 640), cfg);
 	}
 	
 	private int windowWidth;
@@ -82,17 +87,27 @@ public class TreeControllerTestApplication implements GameApplication
 		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(32*94, 32*94);
+		//world = new GameWorld(32*94, 32*94);
 		
-		for (int row = 0; row < 94; row++)
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
+		try
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
+			world = fileParser.parseMap(path);
 		}
-		Tree tree = world.addEntity(Tree.class);
-		tree.setParams(320, 320, 0);
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+//		for (int row = 0; row < 94; row++)
+//		{
+//			for (int column = 0; column < 94; column++)
+//			{
+//				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
+//			}
+//		}
+//		Tree tree = world.addEntity(Tree.class);
+//		tree.setParams(320, 320, 0);
 
 		ready = true;
 	}

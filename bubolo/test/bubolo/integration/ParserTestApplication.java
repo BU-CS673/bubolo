@@ -29,7 +29,7 @@ public class ParserTestApplication implements GameApplication
 	}
 
 	private int windowWidth;
-	private int windowHeight;
+	private int windowHeight;	
 
 	private Graphics graphics;
 	private World world;
