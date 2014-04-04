@@ -52,7 +52,7 @@ class TankCameraController implements CameraController
 
 		// The libgdx camera's position is from the bottom left corner:
 		// https://github.com/libgdx/libgdx/wiki/Orthographic-camera
-		camera.position.set(tankX, tankY, 0.f);
+		camera.position.set(Math.round(tankX), Math.round(tankY), 0.f);
 		camera.update();
 	}
 
