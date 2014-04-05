@@ -24,14 +24,15 @@ public class NetworkSystem implements Network
 
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
-	
+
 	// Specifies whether the network system is running in debug mode.
 	private boolean debug = false;
 
 	private static volatile Network instance;
-	
+
 	/**
 	 * Returns the network system instance.
+	 * 
 	 * @return the network system instance.
 	 */
 	public static Network getInstance()
@@ -42,16 +43,25 @@ public class NetworkSystem implements Network
 		}
 		return instance;
 	}
-	
+
 	private NetworkSystem()
 	{
 	}
-	
+
 	@Override
 	public void startServer() throws NetworkException, IllegalStateException
 	{
+		startServer(1);
+	}
+
+	@Override
+	public void startServer(int clientCount) throws NetworkException, IllegalStateException
+	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
+
+		checkArgument(clientCount > 0, "clientCount must be greater than zero, but found %s.",
+				clientCount);
 
 		// Don't allow the server to run in debug mode, since it requires external resources.
 		// Instead, test this properly in an integration test.
@@ -59,7 +69,7 @@ public class NetworkSystem implements Network
 		{
 			return;
 		}
-		
+
 		Server server = new Server(this);
 		server.startServer();
 		subsystem = server;
@@ -77,12 +87,12 @@ public class NetworkSystem implements Network
 		{
 			return;
 		}
-		
+
 		Client client = new Client(this);
 		client.connect(serverIpAddress);
 		subsystem = client;
 	}
-	
+
 	@Override
 	public void startDebug()
 	{
@@ -92,14 +102,14 @@ public class NetworkSystem implements Network
 	@Override
 	public void send(NetworkCommand command)
 	{
-		// Returns without sending the command if the system is running in debug mode. 
+		// Returns without sending the command if the system is running in debug mode.
 		if (debug)
 		{
 			return;
 		}
-		
+
 		// Explicit check rather than a call to checkState, because FindBugs
-		// was unable to identify checkState as a valid defense against null pointer dereferencing. 
+		// was unable to identify checkState as a valid defense against null pointer dereferencing.
 		if (subsystem == null)
 		{
 			throw new NetworkException("Unable to send command: the network is not initialized.");

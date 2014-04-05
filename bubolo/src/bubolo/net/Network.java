@@ -29,6 +29,21 @@ public interface Network
 	void startServer() throws NetworkException, IllegalStateException;
 
 	/**
+	 * Identifies this player as the game server, and begins accepting connections from other
+	 * players. There should only be one game server per game. The game will not start until the
+	 * number of clients equals the clientCount parameter.
+	 * 
+	 * @param clientCount
+	 *            the number of clients to wait for.
+	 * 
+	 * @throws NetworkException
+	 *             if a network error occurs.
+	 * @throws IllegalStateException
+	 *             if startServer or connect was already called.
+	 */
+	void startServer(int clientCount) throws NetworkException, IllegalStateException;
+
+	/**
 	 * Attempts to connect to the specified IP address.
 	 * 
 	 * @param serverIpAddress
