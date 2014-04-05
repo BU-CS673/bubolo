@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2014 BU MET CS673 Game Engineering Team
+ *
+ * See the file license.txt for copying permission.
+ */
+
 package bubolo.net;
 
 import bubolo.util.GameException;

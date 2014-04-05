@@ -17,42 +17,54 @@ class WallSprite extends Sprite<Wall>
 {
 	private TextureRegion[] frames;
 
-	/**
-	 * Represents the total number of different damaged states that exist in this sprite's
-	 * texture.
-	 */
-	private final int DAMAGED_STATES = 4;
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "wall.png";
 
 	/**
-	 * Represents the discrete damaged state that the sprite should be in, calculated from
-	 * the Entity's relative health. 
-	 * NOTE: Currently throws a "field not used" warning, as expected, since the damaged states aren't implemented yet.
+	 * Represents the total number of different damaged states that exist in this sprite's texture.
 	 */
-	private int damagedState;
+	// TODO (cdc - 3/27/2014): Uncomment the next line once the damaged state
+	// functionality is implemented.
+	// private static final int DAMAGED_STATES = 4;
 
 	/**
-	 * Constructor for the WallSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system.
+	 * Represents the discrete damaged state that the sprite should be in, calculated from the
+	 * Entity's relative health.
+	 */
+	// TODO (cdc - 3/27/2014): Uncomment the next line once the damaged state
+	// functionality is implemented.
+	// private int damagedState;
+
+	/**
+	 * Constructor for the WallSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
+	 * 
+	 * @param wall
+	 *            the wall entity.
 	 */
 	WallSprite(Wall wall)
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, wall);
 
-		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + "wall.png");
+		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);
 	}
 
 	/**
-	 * Returns an integer between 0 and DAMAGED_STATES -1 representing the damaged state
-	 * of this Sprite's Entity. 0 means 0 HP/fully dead!
+	 * Returns an integer between 0 and DAMAGED_STATES -1 representing the damaged state of this
+	 * Sprite's Entity. 0 means 0 HP/fully dead!
 	 */
 	private void updateDamagedState()
 	{
 		// Compute the amount of health remaining for this Sprite's Entity as a fraction
 		// of its max HP.
-		float healthFraction = (float) this.getEntity().getHP() / this.getEntity().getMaxHP();
+
+		// TODO (cdc - 3/27/2014): Uncomment the next lines once this method is implemented.
+
+		// float healthFraction = (float) this.getEntity().getHP() / this.getEntity().getMaxHP();
 		// Convert that fraction to an integer between 0 and DAMAGED_STATES -1.
-		damagedState = Math.round(healthFraction * DAMAGED_STATES);
+
+		// damagedState = Math.round(healthFraction * DAMAGED_STATES);
 	}
 
 	@Override
@@ -67,7 +79,7 @@ class WallSprite extends Sprite<Wall>
 		{
 			// TODO: Point to different texture regions based on the damagedState field,
 			// which changes with Entity HP percentage.
-			drawTexture(batch, camera, layer, frames[this.getEntity().getState()]);
+			drawTexture(batch, camera, layer, frames[this.getEntity().getTilingState()]);
 		}
 	}
 }

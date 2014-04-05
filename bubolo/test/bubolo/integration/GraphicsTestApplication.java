@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Base;
@@ -55,12 +57,12 @@ public class GraphicsTestApplication implements GameApplication
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -87,38 +89,42 @@ public class GraphicsTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Network net = NetworkSystem.getInstance();
+		net.startDebug();
+		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(50*30, 50*30);
+		world = new GameWorld(50*32, 50*32);
 		
 		for (int i = 0; i < 50; i++)
 		{
 			for (int j = 0; j < 50; j++)
 			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 32, 32, 0);
+				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
 			}
 		}
 		
 		// TODO: Adjust as needed.
-		world.addEntity(Tank.class).setParams(100, 100, 32, 32, 0);
-		world.addEntity(Base.class).setParams(32*6, 32*4, 32, 32, 0);
-		world.addEntity(Bullet.class).setParams(32*7, 32*4, 32, 32, 90);
-		world.addEntity(Crater.class).setParams(32*8, 32*5, 32, 32, 0);
-		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 32, 32, 0);
-		world.addEntity(Engineer.class).setParams(32*8, 32*6, 32, 32, 0);
-		world.addEntity(Mine.class).setParams(32*8, 32*7, 32, 32, 0);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 32, 32, 0);
-		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 60,60,0);
+		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);
+		t.setLocalPlayer(true);
+		world.addEntity(Base.class).setParams(32*6, 32*4, 0);
+		world.addEntity(Bullet.class).setParams(32*7, 32*4, 90);
+		world.addEntity(Crater.class).setParams(32*8, 32*5, 0);
+		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 0);
+		world.addEntity(Engineer.class).setParams(32*8, 32*6, 0);
+		world.addEntity(Mine.class).setParams(32*8, 32*7, 0);
+		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
+		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 0);
 		
 		// 2 roads
-		world.addEntity(Road.class).setParams(32*10, 32*10, 32, 32, 0);
-		world.addEntity(Road.class).setParams(32*10, 32*11, 32, 32, 0);
+		world.addEntity(Road.class).setParams(32*10, 32*10, 0);
+		world.addEntity(Road.class).setParams(32*10, 32*11, 0);
 		
-		world.addEntity(Rubble.class).setParams(32*11, 32*6, 32, 32, 0);
-		world.addEntity(Swamp.class).setParams(32*12, 32*11, 32, 32, 0);
-		world.addEntity(Tree.class).setParams(32*12, 32*12, 32, 32, 0);
-		world.addEntity(Wall.class).setParams(32*13, 32*12, 32, 32, 0);
-		world.addEntity(Water.class).setParams(32*14, 32*12, 32, 32, 0);
+		world.addEntity(Rubble.class).setParams(32*11, 32*6, 0);
+		world.addEntity(Swamp.class).setParams(32*12, 32*11, 0);
+		world.addEntity(Tree.class).setParams(32*12, 32*12, 0);
+		world.addEntity(Wall.class).setParams(32*13, 32*12, 0);
+		world.addEntity(Water.class).setParams(32*14, 32*12, 0);
 		
 		ready = true;
 	}
@@ -133,13 +139,16 @@ public class GraphicsTestApplication implements GameApplication
 		graphics.draw(world);
 		world.update();
 		
+		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
+		// the game is extremely jittery when this is used instead of calling update continuously.
+		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
+//		long currentMillis = System.currentTimeMillis();
+//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+//		{
+//			world.update();
+//			lastUpdate = currentMillis;
+//		}
 	}
 	
 	/**

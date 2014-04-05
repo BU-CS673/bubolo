@@ -6,8 +6,8 @@ import bubolo.world.Tile;
 import bubolo.world.World;
 
 /**
- * Basic class for DrawableEntities that do not move (i.e., those that are fixed a single
- * location on the map grid).
+ * Basic class for DrawableEntities that do not move (i.e., those that are fixed a single location
+ * on the map grid).
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -28,7 +28,7 @@ public abstract class StationaryEntity extends Entity
 	 */
 	public StationaryEntity()
 	{
-		super();
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -40,7 +40,6 @@ public abstract class StationaryEntity extends Entity
 	public StationaryEntity(UUID id)
 	{
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -57,10 +56,19 @@ public abstract class StationaryEntity extends Entity
 	}
 
 	/**
-	 * Get the x position of this StationaryEntity in World coordinates. Uses the grid
-	 * position of this entity's Tile object to calculate its world position. If this
-	 * StationaryEntity does not belong to a Tile, it returns the Entity default getX()
-	 * method.
+	 * Returns the Tile object to which this StationaryEntity belongs.
+	 * 
+	 * @return a reference to this StationaryEntity's Tile object.
+	 */
+	public Tile getTile()
+	{
+		return myTile;
+	}
+
+	/**
+	 * Get the x position of this StationaryEntity in World coordinates. Uses the grid position of
+	 * this entity's Tile object to calculate its world position. If this StationaryEntity does not
+	 * belong to a Tile, it returns the Entity default getX() method.
 	 */
 	@Override
 	public float getX()
@@ -74,10 +82,9 @@ public abstract class StationaryEntity extends Entity
 	}
 
 	/**
-	 * Get the y position of this StationaryEntity in World coordinates. Uses the grid
-	 * position of this entity's Tile object to calculate its world position. If this
-	 * StationaryEntity does not belong to a Tile, it returns the Entity default getY()
-	 * method.
+	 * Get the y position of this StationaryEntity in World coordinates. Uses the grid position of
+	 * this entity's Tile object to calculate its world position. If this StationaryEntity does not
+	 * belong to a Tile, it returns the Entity default getY() method.
 	 */
 	@Override
 	public float getY()
@@ -89,7 +96,7 @@ public abstract class StationaryEntity extends Entity
 		else
 			return super.getY();
 	}
-	
+
 	@Override
 	public void update(World world)
 	{

@@ -1,4 +1,5 @@
-package bubolo.integration;
+package bubolo.integration.sprint1;
+
 
 import bubolo.ui.LoadingScreen;
 import bubolo.ui.MenuScreen;
@@ -36,7 +37,6 @@ public class Sprint1
 			ex.printStackTrace();
 		}
 	}
-	
 
 	public static void setup()
 	{

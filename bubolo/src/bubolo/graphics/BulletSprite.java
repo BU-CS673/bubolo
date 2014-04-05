@@ -14,6 +14,9 @@ import bubolo.world.entity.Entity;
 class BulletSprite extends Sprite<Entity>
 {
 	private Texture image;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "bullet.png";
 
 	/**
 	 * Constructor for the BulletSprite. This is Package-private because sprites should
@@ -26,7 +29,7 @@ class BulletSprite extends Sprite<Entity>
 	{
 		super(DrawLayer.EFFECTS, bullet);
 
-		image = Graphics.getTexture(Graphics.TEXTURE_PATH + "bullet.png");
+		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import bubolo.world.entity.concrete.Engineer;
  */
 class EngineerSprite extends Sprite<Engineer>
 {
-
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
 
@@ -51,6 +50,9 @@ class EngineerSprite extends Sprite<Engineer>
 	// The last animation state that the Engineer was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	/** The file name of the texture. */
+	static final String TEXTURE_FILE = "engineer.png";
 
 	/**
 	 * Constructor for the EngineerSprite. This is Package-private because sprites should
@@ -63,7 +65,7 @@ class EngineerSprite extends Sprite<Engineer>
 	{
 		super(DrawLayer.ACTORS, engi);
 
-		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + "engineer.png");
+		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		allFrames = TextureUtil.splitFrames(texture, 21, 21);
 
 		runningFrames = new TextureRegion[][] { allFrames[1], allFrames[2], allFrames[3],
