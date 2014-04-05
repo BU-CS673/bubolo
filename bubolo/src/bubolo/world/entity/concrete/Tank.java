@@ -41,6 +41,9 @@ public class Tank extends Actor
 
 	// Specifies whether the tank decelerated this tick.
 	private boolean decelerated;
+	
+	// Specifies whether the tank is hidden in trees
+	private boolean hidden;
 
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.05f;
