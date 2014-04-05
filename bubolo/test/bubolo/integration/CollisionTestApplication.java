@@ -1,8 +1,10 @@
 package bubolo.integration;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -47,7 +49,7 @@ public class CollisionTestApplication implements GameApplication
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever exist.
@@ -88,10 +90,11 @@ public class CollisionTestApplication implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			// The test is cancelled if the map failed to load.
+			return;
 		}
 
 		Tank tank = world.addEntity(Tank.class);
@@ -113,13 +116,16 @@ public class CollisionTestApplication implements GameApplication
 		graphics.draw(world);
 		world.update();
 
+		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
+		// the game is extremely jittery when this is used instead of calling update continuously. 
+		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
+//		long currentMillis = System.currentTimeMillis();
+//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+//		{
+//			world.update();
+//			lastUpdate = currentMillis;
+//		}
 	}
 
 	/**

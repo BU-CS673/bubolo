@@ -140,9 +140,9 @@ abstract class Sprite<T extends Entity> implements Drawable
 	{
 		if (layer == getDrawLayer())
 		{
-			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, new Vector2(getEntity()
-					.getX() - (texture.getWidth() / 2), getEntity().getY()
-					- (texture.getHeight() / 2)));
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
+					new Vector2(getEntity().getX() - (texture.getWidth() / 2),
+							getEntity().getY() - (texture.getHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 
