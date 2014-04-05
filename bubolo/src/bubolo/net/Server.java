@@ -89,10 +89,7 @@ class Server implements NetworkSubsystem
 	@Override
 	public void send(NetworkCommand command)
 	{
-		for (ClientSocket client : clients)
-		{
-			sender.execute(new NetworkSender(client.getOutputStream(), command));
-		}
+		send(command, null);
 	}
 
 	@Override
@@ -103,12 +100,33 @@ class Server implements NetworkSubsystem
 
 	/**
 	 * Removes the client
+	 * 
 	 * @param client
 	 */
 	void removeClient(ClientSocket client)
 	{
 		client.dispose();
 		clients.remove(client);
+	}
+
+	/**
+	 * Queues a network command to be sent to the other players.
+	 * 
+	 * @param command
+	 *            the network command to send.
+	 * @param clientToIgnore
+	 *            the client to ignore (i.e., the client that will not receive the command), or null
+	 *            if all clients should receive the command.
+	 */
+	void send(NetworkCommand command, ClientSocket clientToIgnore)
+	{
+		for (ClientSocket client : clients)
+		{
+			if (clientToIgnore != null && client == clientToIgnore)
+			{
+				sender.execute(new NetworkSender(client.getOutputStream(), command));
+			}
+		}
 	}
 
 	/**
@@ -158,6 +176,7 @@ class Server implements NetworkSubsystem
 				while (!shutdown.get())
 				{
 					NetworkCommand command = (NetworkCommand)inputStream.readObject();
+					server.send(command, client);
 					network.postToGameThread(command);
 				}
 			}
