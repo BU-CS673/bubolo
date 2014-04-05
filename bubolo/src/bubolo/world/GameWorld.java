@@ -106,7 +106,8 @@ public class GameWorld implements World
     {
     	if (entityMap.containsKey(id))
 		{
-			throw new GameLogicException("The specified entity already exists. Entity id: " + id);
+			throw new GameLogicException("The specified entity already exists. Entity id: " + id +
+					". Entity type: " + entityMap.get(id).getClass().getName());
 		}
     	
         T entity;
