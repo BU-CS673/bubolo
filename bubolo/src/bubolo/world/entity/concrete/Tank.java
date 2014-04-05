@@ -365,9 +365,15 @@ public class Tank extends Actor
 
 	private void checkTrees(World world)
 	{
-		int tX = TileUtil.getClosestTileX(getX());
-		int tY = TileUtil.getClosestTileY(getY());
-		Tile closeTile = world.getMapTiles()[tX][tY];
+		int gridX = TileUtil.getClosestTileX(getX());
+		int gridY = TileUtil.getClosestTileY(getY());
+		Tile[][] allTiles = world.getMapTiles();
+		if (allTiles == null)
+		{
+			hidden = false;
+			return;
+		}
+		Tile closeTile = allTiles[gridX][gridY];
 		boolean[] corners = TileUtil.getCornerMatches(closeTile, world, new Class[] { Tree.class });
 		boolean[] edges = TileUtil.getEdgeMatches(closeTile, world, new Class[] { Tree.class });
 		for (int i = 0; i < 4; i++)
