@@ -24,72 +24,67 @@ public class TankSpriteTest
 	@Before
 	public void setUp()
 	{	
-		synchronized(LibGdxAppTester.getLock())
-		{
-			LibGdxAppTester.createApp();
-			
-			batch = new SpriteBatch();
-			camera = new OrthographicCamera(100, 100);
-			Graphics g = new Graphics(50, 500);
-		}
+		LibGdxAppTester.createApp();
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				batch = new SpriteBatch();
+				camera = new OrthographicCamera(100, 100);
+				Graphics g = new Graphics(50, 500);
+			}
+		});
 	}
 	
 	@Test
 	public void constructTankSprite() throws InterruptedException
 	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			isComplete = false;
-			passed = false;
-			
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run()
-				{
-					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
-					
-					passed = true;
-					isComplete = true;
-				}
-			});
-	
-			while (!isComplete)
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
 			{
-				Thread.yield();
+				// Fails if the constructor throws an exception.
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
+				
+				passed = true;
+				isComplete = true;
 			}
-			
-			assertTrue(passed);
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
 		}
+		
+		assertTrue(passed);
 	}
 
 	
 	@Test
 	public void drawTankSprite()
 	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			isComplete = false;
-			passed = false;
-			
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run()
-				{
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
-					batch.begin();
-					sprite.draw(batch, camera, DrawLayer.TANKS);
-					passed = true;
-					isComplete = true;
-				}
-			});
-	
-			while (!isComplete)
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
 			{
-				Thread.yield();
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
+				batch.begin();
+				sprite.draw(batch, camera, DrawLayer.ACTORS);
+				passed = true;
+				isComplete = true;
 			}
-			
-			assertTrue(passed);
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
 		}
+		
+		assertTrue(passed);
 	}
 }

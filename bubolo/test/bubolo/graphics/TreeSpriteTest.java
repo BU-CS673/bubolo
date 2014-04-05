@@ -26,19 +26,19 @@ public class TreeSpriteTest
 	@Before
 	public void setUp()
 	{	
-		synchronized(LibGdxAppTester.getLock())
-		{
-			LibGdxAppTester.createApp();
-			
-			batch = new SpriteBatch();
-			camera = new OrthographicCamera(100, 100);
-			Graphics g = new Graphics(50, 500);
-		}
+		LibGdxAppTester.createApp();
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				batch = new SpriteBatch();
+				camera = new OrthographicCamera(100, 100);
+				Graphics g = new Graphics(50, 500);
+			}
+		});
 	}
 	
-
 	@Test
-	public void drawTreeSprite()
+	public void constructTreeSprite() throws InterruptedException
 	{
 		synchronized(LibGdxAppTester.getLock())
 		{
@@ -49,9 +49,9 @@ public class TreeSpriteTest
 				@Override
 				public void run()
 				{
+					// Fails if the constructor throws an exception.
 					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
-					batch.begin();
-					sprite.draw(batch, camera, DrawLayer.OBJECTS);
+					
 					passed = true;
 					isComplete = true;
 				}
@@ -64,6 +64,32 @@ public class TreeSpriteTest
 			
 			assertTrue(passed);
 		}
+	}	
+
+	@Test
+	public void drawTreeSprite()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+				batch.begin();
+				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
+				passed = true;
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		
+		assertTrue(passed);
 	}
 
 }

@@ -21,51 +21,53 @@ public class SpriteTest
 	@Before
 	public void setUp()
 	{	
-		synchronized(LibGdxAppTester.getLock())
-		{
-			LibGdxAppTester.createApp();
-			
-			batch = new SpriteBatch();
-			camera = new OrthographicCamera(100, 100);
-			Graphics g = new Graphics(50, 500);
-		}
+		LibGdxAppTester.createApp();
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				batch = new SpriteBatch();
+				camera = new OrthographicCamera(100, 100);
+				Graphics g = new Graphics(50, 500);
+			}
+		});
 	}
 	
 	@Test
 	public void testDrawTextureRegion()
 	{
-		synchronized(LibGdxAppTester.getLock())
-		{
-			isComplete = false;
-			passed = false;
-			
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run()
-				{
-					Sprite<?> sprite = new MockSpriteTextureRegion();
-					batch.begin();
-					sprite.draw(batch, camera, sprite.getDrawLayer());
-					passed = true;
-					isComplete = true;
-				}
-			});
-	
-			while (!isComplete)
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
 			{
-				Thread.yield();
+				Sprite<?> sprite = new MockSpriteTextureRegion();
+				batch.begin();
+				sprite.draw(batch, camera, sprite.getDrawLayer());
+				passed = true;
+				isComplete = true;
 			}
-			
-			assertTrue(passed);
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
 		}
+		
+		assertTrue(passed);
 	}
 	
 	@Test
 	public void testDrawTextureRegionWrongLayer()
 	{
-		Camera camera = new OrthographicCamera();
-		SpriteBatch batch = new SpriteBatch();
-		Sprite<?> sprite = new MockSpriteTextureRegion();
-		sprite.draw(batch, camera, DrawLayer.TERRAIN_MODIFIERS);
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				Camera camera = new OrthographicCamera();
+				SpriteBatch batch = new SpriteBatch();
+				Sprite<?> sprite = new MockSpriteTextureRegion();
+				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+			}
+		});
 	}
 }
