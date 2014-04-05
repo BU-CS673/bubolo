@@ -1,8 +1,6 @@
-<<<<<<< HEAD:bubolo/test/bubolo/integration/Sprint1Application.java
- package bubolo.integration;
-=======
+
 package bubolo.integration.sprint1;
->>>>>>> origin/production:bubolo/test/bubolo/integration/sprint1/Sprint1Application.java
+
 
 import bubolo.GameApplication;
 import bubolo.graphics.Graphics;
