@@ -21,12 +21,14 @@ import bubolo.world.entity.Terrain;
  */
 public class TileUtil
 {
-	private static final int LOCAL_TILE_RADIUS = 5;
+	private static final int LOCAL_TILE_DISTANCE = 2;
 
 	private static boolean isValidTile(int gridX, int gridY, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
-		if (gridX >= mapTiles.length || gridX < 0 || gridY >= mapTiles[gridX].length || gridY < 0)
+		System.out.println(mapTiles);
+		if (mapTiles == null || gridX >= mapTiles.length || gridX < 0
+				|| gridY >= mapTiles[gridX].length || gridY < 0)
 		{
 			return false;
 		}
@@ -35,53 +37,99 @@ public class TileUtil
 			return true;
 		}
 	}
+	
+	/**
+	 * Returns the x index of the closest Tile to the given world x value.
+	 * @param x
+	 * 		The x component of the target position in world coordinates.
+	 * @return
+	 * 		The x component of the grid index of the tile closest to the x coordinate given.
+	 */
+	public static int getClosestTileX(float x){
+		return (int) (x / 32);
+	}
+	
+	/**
+	 * Returns the x index of the closest Tile to the given world y value.
+	 * @param y
+	 * 		The y component of the target position in world coordinates.
+	 * @return
+	 * 		The y component of the grid index of the tile closest to the y coordinate given.
+
+	 */
+	public static int getClosestTileY(float y){
+		return (int) (y/ 32);
+	}
 
 	/**
-	 * Get all entities are likely to overlap with Entities within the given grid location.
-	 * @param gridX is the X index of the target grid location.
-	 * @param gridY is the Y index of the target grid location.
-	 * @param w is the World in which the Entities reside.
+	 * Get all entities are likely to overlap with Entities within the given grid
+	 * location.
+	 * 
+	 * @param gridX
+	 *            is the X index of the target grid location.
+	 * @param gridY
+	 *            is the Y index of the target grid location.
+	 * @param w
+	 *            is the World in which the Entities reside.
 	 * @return a List of all Entities which could be near the target location.
 	 */
 	public static List<Entity> getLocalEntities(int gridX, int gridY, World w)
 	{
 		ArrayList<Entity> localEnts = new ArrayList<Entity>();
 		Tile[][] worldTiles = w.getMapTiles();
-		int startX = gridX - 2;
-		int startY = gridY - 2;
-		for (int i = 0; i < 5; i++)
+		if (worldTiles == null)
 		{
-			for (int j = 0; j < 5; j++)
+			localEnts.addAll(w.getEntities());
+		}
+		else
+		{
+			int startX = gridX - LOCAL_TILE_DISTANCE;
+			int startY = gridY - LOCAL_TILE_DISTANCE;
+			for (int i = 0; i < 5; i++)
 			{
-
-				if (isValidTile(startX + i, startY + j, w))
+				for (int j = 0; j < 5; j++)
 				{
-					Tile targetTile = worldTiles[startX + i][startY + j];
-					localEnts.add(targetTile.getTerrain());
-					if (targetTile.hasElement()){
-						localEnts.add(targetTile.getElement());
+
+					if (isValidTile(startX + i, startY + j, w))
+					{
+						Tile targetTile = worldTiles[startX + i][startY + j];
+						localEnts.add(targetTile.getTerrain());
+						if (targetTile.hasElement())
+						{
+							localEnts.add(targetTile.getElement());
+						}
 					}
 				}
 			}
+			if (w.getActors() != null)
+			{
+				localEnts.addAll(w.getActors());
+			}
+			if (w.getEffects() != null)
+			{
+				localEnts.addAll(w.getEffects());
+			}
+
 		}
-		localEnts.addAll(w.getActors());
-		localEnts.addAll(w.getEffects());
-		
 		return localEnts;
 	}
 
-	
 	/**
-	 * Get all entities are likely to overlap with an Entity at the given x and y World coordinates.
-	 * @param x is the x component of the target Entity's position in World coordinates.
-	 * @param y is the y component of the target Entity's position in World coordinates.
-	 * @param w is the World in which the Entities reside.
+	 * Get all entities are likely to overlap with an Entity at the given x and y World
+	 * coordinates.
+	 * 
+	 * @param x
+	 *            is the x component of the target Entity's position in World coordinates.
+	 * @param y
+	 *            is the y component of the target Entity's position in World coordinates.
+	 * @param w
+	 *            is the World in which the Entities reside.
 	 * @return a List of all Entities which could be near the target location.
 	 */
 	public static List<Entity> getLocalEntities(float x, float y, World w)
 	{
-		int gridX = (int) (x / 32);
-		int gridY = (int) (y / 32);
+		int gridX = getClosestTileX(x);
+		int gridY = getClosestTileY(y);
 		return getLocalEntities(gridX, gridY, w);
 	}
 

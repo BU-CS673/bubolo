@@ -68,7 +68,7 @@ public class GameWorld implements World
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 
-		mapTiles = new Tile[worldMapWidth][worldMapHeight];
+		//mapTiles = new Tile[worldMapWidth][worldMapHeight];
 	}
 
 	@Override
