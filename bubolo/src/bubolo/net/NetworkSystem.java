@@ -71,7 +71,7 @@ public class NetworkSystem implements Network
 		}
 
 		Server server = new Server(this);
-		server.startServer();
+		server.startServer(clientCount);
 		subsystem = server;
 	}
 
