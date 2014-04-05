@@ -54,7 +54,7 @@ public class AITreeController implements Controller
 	{
 		pickATile(world);
 		getTempTileScore(world);
-		if (tempScore > tileScore)
+		if ((tempScore > tileScore))
 		{
 			createAtX = tempX;
 			createAtY = tempY;
@@ -63,10 +63,12 @@ public class AITreeController implements Controller
 		}
 		else
 		{
-			if (ticksSinceReset >= ticksPerGrowth)
+			if (ticksSinceReset >= ticksPerGrowth && tileScore >0)
 			{
-				System.out.print("Spawning a tree at X:" + createAtX + " Y: " + createAtY + " *** ");
-				world.addEntity(Tree.class).setParams(createAtX*32-16, createAtY*32-16, 0);
+				System.out.print("Spawning a tree at X:" + createAtX + " Y: " + createAtY + '\n');
+				Tree tree = world.addEntity(Tree.class);
+				tree.setParams(createAtX*32-16, createAtY*32-16, 0);
+				world.getMapTiles()[createAtX-1][createAtY-1].setElement(tree);
 				ticksSinceReset = 0;
 				tileScore = 0;				
 			}
@@ -83,8 +85,11 @@ public class AITreeController implements Controller
 		int mapWidth = world.getMapWidth()/32;
 		
 		//get a random tile that is not on the border
-		tempX = randomGenerator.nextInt(mapWidth-2)+1;
-		tempY = randomGenerator.nextInt(mapHeight-2)+1;
+		tempX = randomGenerator.nextInt(mapWidth-2)+2;
+		tempY = randomGenerator.nextInt(mapHeight-2)+2;
+		//tempX = 7;
+		//tempY = 7;
+	
 	}
 	/**
 	 * sums up the score of a tile based on all its neighbors
@@ -95,8 +100,15 @@ public class AITreeController implements Controller
 		unbuildable = false;
 		tempScore = 0;
 		Tile[][] tiles = world.getMapTiles();
-		Tile tile = tiles[tempX][tempY];
-		if (tile != null)
+		Tile tile = tiles[tempX-1][tempY-1];
+		//System.out.print(tile.getTerrain().toString()+'\n');
+		//if(tile.hasElement())
+			//System.out.print(tile.getElement().toString()+'\n');
+		if (tile == null)
+		{
+			unbuildable = false;
+		}
+		else
 		{
 			Terrain terrain = tile.getTerrain();
 			//trees will grow on grass or craters or rubble nothing else
@@ -107,7 +119,10 @@ public class AITreeController implements Controller
 				if (terrain.getClass() == Grass.class)
 					tempScore = 40;
 				else
-					unbuildable = true;			
+					if(terrain.getClass() == Road.class)
+						tempScore = 10;
+					else
+						unbuildable = true;			
 			}
 			else
 			{
@@ -128,7 +143,8 @@ public class AITreeController implements Controller
 				tempScore += getNeighborTileScore(tiles[tempX-1][tempY+1]);
 				tempScore += getNeighborTileScore(tiles[tempX-1][tempY]);
 				tempScore += getNeighborTileScore(tiles[tempX-1][tempY-1]);
-			}
+			}else
+				tempScore = 0;
 		}
 	}
 	/**
@@ -165,7 +181,7 @@ public class AITreeController implements Controller
 			//tree is most valuable however any other stationary element is a 0
 			if (tile.getElement().getClass() == Tree.class)
 			{
-				score = 5;
+				score = 10;
 			}
 		}
 		return score;
