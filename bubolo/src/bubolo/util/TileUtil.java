@@ -26,7 +26,6 @@ public class TileUtil
 	private static boolean isValidTile(int gridX, int gridY, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
-		System.out.println(mapTiles);
 		if (mapTiles == null || gridX >= mapTiles.length || gridX < 0
 				|| gridY >= mapTiles[gridX].length || gridY < 0)
 		{
