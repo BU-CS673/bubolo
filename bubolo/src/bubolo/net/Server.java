@@ -122,7 +122,7 @@ class Server implements NetworkSubsystem
 	{
 		for (ClientSocket client : clients)
 		{
-			if (clientToIgnore != null && client == clientToIgnore)
+			if ((clientToIgnore == null) || (clientToIgnore != null && client != clientToIgnore))
 			{
 				sender.execute(new NetworkSender(client.getOutputStream(), command));
 			}
@@ -260,19 +260,6 @@ class Server implements NetworkSubsystem
 		{
 			return clientStream;
 		}
-
-		/**
-		 * Returns the client socket's input stream.
-		 * 
-		 * @return the client socket's input stream.
-		 * @throws IOException
-		 *             if an I/O error occurs when creating the input stream, the socket is closed,
-		 *             the socket is not connected
-		 */
-		// InputStream getInputStream() throws IOException
-		// {
-		// return client.getInputStream();
-		// }
 
 		/**
 		 * Closes the connection.
