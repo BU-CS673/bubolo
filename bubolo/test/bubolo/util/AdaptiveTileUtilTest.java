@@ -33,7 +33,7 @@ public class AdaptiveTileUtilTest
 	@Test
 	public void getCornerStates()
 	{
-		boolean[] corners = AdaptiveTileUtil.getCornerMatches(tiles[0][0], world, new Class[] { Water.class });
+		boolean[] corners = TileUtil.getCornerMatches(tiles[0][0], world, new Class[] { Water.class });
 		assertEquals("Tile (0,0) has wrong top-right corner state!", true, corners[1]);
 		assertEquals("Tile (1,0) has wrong top-right corner state!", false, corners[0]);
 	}
@@ -41,7 +41,7 @@ public class AdaptiveTileUtilTest
 	@Test
 	public void getEdgeMatches()
 	{
-		boolean[] edges = AdaptiveTileUtil.getEdgeMatches(tiles[1][0], world, new Class[] { Grass.class });
+		boolean[] edges = TileUtil.getEdgeMatches(tiles[1][0], world, new Class[] { Grass.class });
 		assertEquals("Tile (1,0) has wrong top state!", false, edges[0]);
 		assertEquals("Tile (1,0) has wrong bottom state!", true, edges[2]);
 	}
@@ -49,7 +49,7 @@ public class AdaptiveTileUtilTest
 	@Test
 	public void getTilingState()
 	{
-		assertEquals("Tile (1,0) has the wrong tiling state!", 9, AdaptiveTileUtil.getTilingState(tiles[0][0], world, new Class[] { Grass.class }));
+		assertEquals("Tile (1,0) has the wrong tiling state!", 9, TileUtil.getTilingState(tiles[0][0], world, new Class[] { Grass.class }));
 	}
 
 }

@@ -4,19 +4,25 @@
 
 package bubolo.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bubolo.world.Tile;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 
 /**
- * This utility provides various functions for determining the tiling state of
- * StationaryEntities that have multiple display states based on their surroundings.
+ * This utility provides various functions for working with Tile objects based on their
+ * position relative to other objects in the world.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class AdaptiveTileUtil
+public class TileUtil
 {
+	private static final int LOCAL_TILE_RADIUS = 5;
+
 	private static boolean isValidTile(int gridX, int gridY, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
@@ -28,6 +34,55 @@ public class AdaptiveTileUtil
 		{
 			return true;
 		}
+	}
+
+	/**
+	 * Get all entities are likely to overlap with Entities within the given grid location.
+	 * @param gridX is the X index of the target grid location.
+	 * @param gridY is the Y index of the target grid location.
+	 * @param w is the World in which the Entities reside.
+	 * @return a List of all Entities which could be near the target location.
+	 */
+	public static List<Entity> getLocalEntities(int gridX, int gridY, World w)
+	{
+		ArrayList<Entity> localEnts = new ArrayList<Entity>();
+		Tile[][] worldTiles = w.getMapTiles();
+		int startX = gridX - 2;
+		int startY = gridY - 2;
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+
+				if (isValidTile(startX + i, startY + j, w))
+				{
+					Tile targetTile = worldTiles[startX + i][startY + j];
+					localEnts.add(targetTile.getTerrain());
+					if (targetTile.hasElement()){
+						localEnts.add(targetTile.getElement());
+					}
+				}
+			}
+		}
+		localEnts.addAll(w.getActors());
+		localEnts.addAll(w.getEffects());
+		
+		return localEnts;
+	}
+
+	
+	/**
+	 * Get all entities are likely to overlap with an Entity at the given x and y World coordinates.
+	 * @param x is the x component of the target Entity's position in World coordinates.
+	 * @param y is the y component of the target Entity's position in World coordinates.
+	 * @param w is the World in which the Entities reside.
+	 * @return a List of all Entities which could be near the target location.
+	 */
+	public static List<Entity> getLocalEntities(float x, float y, World w)
+	{
+		int gridX = (int) (x / 32);
+		int gridY = (int) (y / 32);
+		return getLocalEntities(gridX, gridY, w);
 	}
 
 	private static boolean containsTargetElement(Tile targetTile, Class<?>[] targetClasses)

@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Entity;
@@ -203,16 +204,16 @@ public class Tank extends Actor
 	private List<Entity> getLookaheadEntities(World w)
 	{
 		ArrayList<Entity> intersects = new ArrayList<Entity>();
-		List<Entity> allEntities = w.getEntities();
-		for (int ii = 0; ii < allEntities.size(); ii++)
+		List<Entity> localEntities = TileUtil.getLocalEntities(getX(), getY(), w);
+		for (int ii = 0; ii < localEntities.size(); ii++)
 		{
-			if (allEntities.get(ii) != this)
+			if (localEntities.get(ii) != this)
 			{
-				if (overlapsEntity(allEntities.get(ii))
-						|| Intersector.overlapConvexPolygons(lookAheadBounds(), allEntities.get(ii)
+				if (overlapsEntity(localEntities.get(ii))
+						|| Intersector.overlapConvexPolygons(lookAheadBounds(), localEntities.get(ii)
 								.getBounds()))
 				{
-					intersects.add(allEntities.get(ii));
+					intersects.add(localEntities.get(ii));
 				}
 			}
 		}
