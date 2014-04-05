@@ -40,18 +40,4 @@ public class ServerTest
 	{
 		server.send(mock(NetworkCommand.class));
 	}
-
-	/**
-	 * Test method for {@link bubolo.net.Server#run()}.
-	 */
-	@Test
-	public void testRun()
-	{
-		try {
-			server.run();
-			fail("Expected IllegalStateException, but none encountered");
-		} catch (IllegalStateException e) {
-		}
-	}
-
 }

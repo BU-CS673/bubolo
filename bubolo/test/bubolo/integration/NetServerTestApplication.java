@@ -1,5 +1,11 @@
 package bubolo.integration;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -23,22 +29,33 @@ import bubolo.world.entity.concrete.Tank;
  */
 public class NetServerTestApplication implements GameApplication
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws UnknownHostException
 	{
+		String clientCountText = (String)JOptionPane.showInputDialog(null, 
+				null, 
+				"Number of clients: ",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null);
+		int clientCount = Integer.parseInt(clientCountText);
+		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new NetServerTestApplication(1067, 600), cfg);
+		new LwjglApplication(new NetServerTestApplication(1067, 600, clientCount), cfg);
 	}
 	
-	private int windowWidth;
-	private int windowHeight;
+	private final int windowWidth;
+	private final int windowHeight;
 	
 	private Graphics graphics;
 	private World world;
 	private Network network;
+	
+	private final int clientCount;
 	
 	private long lastUpdate;
 	
@@ -60,10 +77,11 @@ public class NetServerTestApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public NetServerTestApplication(int windowWidth, int windowHeight)
+	public NetServerTestApplication(int windowWidth, int windowHeight, int clientCount)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+		this.clientCount = clientCount;
 	}
 	
 	@Override
@@ -80,7 +98,7 @@ public class NetServerTestApplication implements GameApplication
 	public void create()
 	{
 		network = NetworkSystem.getInstance();
-		network.startServer();
+		network.startServer(clientCount);
 		
 		network.send(new HelloNetworkCommand("Hello from the server."));
 		

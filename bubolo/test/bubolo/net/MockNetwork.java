@@ -64,4 +64,11 @@ public class MockNetwork implements Network
 	{
 	}
 
+	@Override
+	public void startServer(int clientCount) throws NetworkException, IllegalStateException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }

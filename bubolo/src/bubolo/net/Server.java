@@ -7,7 +7,6 @@
 package bubolo.net;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -53,9 +52,9 @@ class Server implements NetworkSubsystem
 	}
 
 	/**
-	 * Identifies this player as the game server, and begins accepting connections from
-	 * other players. <code>startServer</code> must be called before calling
-	 * <code>connect</code>. There should only be one game server per game.
+	 * Identifies this player as the game server, and begins accepting connections from other
+	 * players. <code>startServer</code> must be called before calling <code>connect</code>. There
+	 * should only be one game server per game.
 	 * 
 	 * @param clientCount
 	 *            the number of clients to wait for until the game beings.
@@ -68,7 +67,7 @@ class Server implements NetworkSubsystem
 		try
 		{
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
-			clients = new ArrayList<Socket>(clientCount);
+			clients = new ArrayList<ClientSocket>(clientCount);
 
 			for (int i = 0; i < clientCount; ++i)
 			{
@@ -77,7 +76,7 @@ class Server implements NetworkSubsystem
 				clients.get(i).getClient().setTcpNoDelay(true);
 
 				// Start the network reader thread.
-				
+
 				new Thread(new ClientReader(clients.get(i), this, network, shutdown)).start();
 			}
 		}
@@ -102,11 +101,21 @@ class Server implements NetworkSubsystem
 		shutdown.set(true);
 	}
 
+	/**
+	 * Removes the client
+	 * @param client
+	 */
 	void removeClient(ClientSocket client)
 	{
 		client.dispose();
+		clients.remove(client);
 	}
 
+	/**
+	 * Reads data from client connections.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
 	private static class ClientReader implements Runnable
 	{
 		private final AtomicBoolean shutdown;
@@ -114,6 +123,18 @@ class Server implements NetworkSubsystem
 		private final ClientSocket client;
 		private final Server server;
 
+		/**
+		 * Constructs a new ClientReader.
+		 * 
+		 * @param client
+		 *            the connected ClientSocket object.
+		 * @param server
+		 *            the Server object.
+		 * @param network
+		 *            reference to the network system.
+		 * @param shutdown
+		 *            reference to the server's shutdown object.
+		 */
 		ClientReader(ClientSocket client, Server server, Network network, AtomicBoolean shutdown)
 		{
 			if (client == null)
@@ -131,11 +152,12 @@ class Server implements NetworkSubsystem
 		@Override
 		public void run()
 		{
-			try (ObjectInputStream inputStream = new ObjectInputStream(client.getClient() .getInputStream()))
+			try (ObjectInputStream inputStream = new ObjectInputStream(
+					client.getClient().getInputStream()))
 			{
 				while (!shutdown.get())
 				{
-					NetworkCommand command = (NetworkCommand) inputStream.readObject();
+					NetworkCommand command = (NetworkCommand)inputStream.readObject();
 					network.postToGameThread(command);
 				}
 			}
@@ -150,32 +172,43 @@ class Server implements NetworkSubsystem
 			{
 				class RemoveClient implements Runnable
 				{
-					private final Server server;
-					private final ClientSocket client;
-					
+					private final Server serverSocket;
+					private final ClientSocket clientSocket;
+
 					RemoveClient(Server server, ClientSocket client)
 					{
-						this.client = client;
-						this.server = server;
+						this.clientSocket = client;
+						this.serverSocket = server;
 					}
-					
+
 					@Override
 					public void run()
 					{
-						server.removeClient(client);
+						serverSocket.removeClient(clientSocket);
 					}
 				}
-				
+
 				Gdx.app.postRunnable(new RemoveClient(server, client));
 			}
 		}
 	}
 
+	/**
+	 * Wraps a client Socket connection and a client stream.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
 	private static class ClientSocket
 	{
 		private final Socket client;
 		private final ObjectOutputStream clientStream;
 
+		/**
+		 * Constructs a new ClientSocket.
+		 * 
+		 * @param client
+		 *            the connected client Socket object.
+		 */
 		ClientSocket(Socket client)
 		{
 			this.client = client;
@@ -189,21 +222,42 @@ class Server implements NetworkSubsystem
 			}
 		}
 
+		/**
+		 * Returns a reference to the underlying client Socket.
+		 * 
+		 * @return a reference to the underlying client Socket.
+		 */
 		Socket getClient()
 		{
 			return client;
 		}
 
+		/**
+		 * Returns the client's object output stream.
+		 * 
+		 * @return the client's object output stream.
+		 */
 		ObjectOutputStream getOutputStream()
 		{
 			return clientStream;
 		}
-		
-		InputStream getInputStream() throws IOException
-		{
-			return client.getInputStream();
-		}
 
+		/**
+		 * Returns the client socket's input stream.
+		 * 
+		 * @return the client socket's input stream.
+		 * @throws IOException
+		 *             if an I/O error occurs when creating the input stream, the socket is closed,
+		 *             the socket is not connected
+		 */
+		// InputStream getInputStream() throws IOException
+		// {
+		// return client.getInputStream();
+		// }
+
+		/**
+		 * Closes the connection.
+		 */
 		void dispose()
 		{
 			try
