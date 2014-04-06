@@ -1,8 +1,10 @@
 package bubolo.integration;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -13,12 +15,8 @@ import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.util.Parser;
-import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
-import bubolo.world.entity.concrete.Pillbox;
-import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
+
 
 /**
  * For testing only.
@@ -95,7 +93,7 @@ public class TreeControllerTestApplication implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e )
 		{
 			e.printStackTrace();
 		}
