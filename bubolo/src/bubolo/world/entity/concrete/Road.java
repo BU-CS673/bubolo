@@ -26,6 +26,11 @@ public class Road extends Terrain implements Adaptable
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
 	private Class<?>[] matchingTypes = new Class[] { Road.class };
+	
+	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.85F;
 
 	/**
 	 * Construct a new Road with a random UUID.
@@ -79,6 +84,14 @@ public class Road extends Terrain implements Adaptable
 	public void setTilingState(int newState)
 	{
 		tilingState = newState;
+	}
+
+	/**
+	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	public static float getMaxSpeedModifier() {
+		return maxSpeedModifier;
 	}
 
 	// TODO: Add Road functionality!

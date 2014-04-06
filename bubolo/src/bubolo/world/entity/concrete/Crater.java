@@ -23,6 +23,11 @@ public class Crater extends StationaryElement implements Adaptable
 	private int tilingState = 0;
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.85F;
+	
+	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
@@ -80,6 +85,15 @@ public class Crater extends StationaryElement implements Adaptable
 	{
 		tilingState = newState;
 	}
+	
+	/**
+	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	public static float getMaxSpeedModifier() {
+		return maxSpeedModifier;
+	}
+
 
 	// TODO: Add Crater functionality!
 }

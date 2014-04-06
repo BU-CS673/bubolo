@@ -18,6 +18,11 @@ public class Rubble extends StationaryElement
 	private static final long serialVersionUID = 6510667006657276377L;
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.85F;
+	
+	/**
 	 * Construct a new Rubble with a random UUID.
 	 */
 	public Rubble()
@@ -39,5 +44,12 @@ public class Rubble extends StationaryElement
 		updateBounds();
 	}
 
+	/**
+	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	public static float getMaxSpeedModifier() {
+		return maxSpeedModifier;
+	}
 	// TODO: Add Rubble functionality!
 }

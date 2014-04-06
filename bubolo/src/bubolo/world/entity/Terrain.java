@@ -15,6 +15,7 @@ public abstract class Terrain extends StationaryEntity
 	 * Used when serializing and de-serializing.
 	 */
 	private static final long serialVersionUID = 6373697443259757484L;
+	
 
 	/**
 	 * Construct a new Terrain with a random UUID.
