@@ -57,9 +57,9 @@ public class TileUtilTest
 	
 	@Test
 	public void getLocalEntites(){
-		List l = TileUtil.getLocalEntities(0, 0, 2,world);
+		List l = TileUtil.getLocalEntities(0, 0, world);
 		assertEquals("List of local Entities does not contain correct objects!", true,  l.contains(tiles[0][0].getTerrain()));
-		l = TileUtil.getLocalEntities(3*32f + 16f, 3*32f + 16f, 2, world);
+		l = TileUtil.getLocalEntities(3*32f + 16f, 3*32f + 16f, world);
 		assertEquals("List of local Entities does not contain correct objects!", true,  l.contains(tiles[1][1].getTerrain()));
 		assertEquals("List of local Entities contains incorrect objects!", false,  l.contains(tiles[0][0].getTerrain()));
 

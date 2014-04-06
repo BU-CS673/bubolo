@@ -204,7 +204,7 @@ public class Tank extends Actor
 	private List<Entity> getLookaheadEntities(World w)
 	{
 		ArrayList<Entity> intersects = new ArrayList<Entity>();
-		List<Entity> localEntities = TileUtil.getLocalEntities(getX(), getY(), 2, w);
+		List<Entity> localEntities = TileUtil.getLocalEntities(getX(), getY(), w);
 		for (int ii = 0; ii < localEntities.size(); ii++)
 		{
 			if (localEntities.get(ii) != this)
