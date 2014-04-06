@@ -33,4 +33,13 @@ public class RoadTest
 	{
 		road.updateTilingState(null);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		road = new Road();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = road.getMaxSpeedModifier();
+		assertEquals(road.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }
