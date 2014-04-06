@@ -20,7 +20,7 @@ public class Rubble extends Terrain
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.85F;
+	private static float maxSpeedModifier = 0.65F;
 	
 	/**
 	 * Construct a new Rubble with a random UUID.
@@ -48,7 +48,7 @@ public class Rubble extends Terrain
 	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
 	 * @return maxSpeedModifier
 	 */
-	public static float getMaxSpeedModifier() {
+	public float getMaxSpeedModifier() {
 		return maxSpeedModifier;
 	}
 	// TODO: Add Rubble functionality!

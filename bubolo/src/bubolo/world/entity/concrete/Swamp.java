@@ -19,7 +19,7 @@ public class Swamp extends Terrain
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.85F;
+	private static float maxSpeedModifier = 0.75F;
 	
 	/**
 	 * Construct a new Swamp with a random UUID.

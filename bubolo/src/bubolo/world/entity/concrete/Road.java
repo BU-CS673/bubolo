@@ -30,7 +30,7 @@ public class Road extends Terrain implements Adaptable
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 1.1F;
+	private static float maxSpeedModifier = 1.25F;
 
 	/**
 	 * Construct a new Road with a random UUID.
