@@ -5,7 +5,7 @@ import java.util.UUID;
 import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.Terrain;
 
 /**
  * Craters are created when another Terrain type is blown up using a Mine. They reduce Tank movement
@@ -13,7 +13,7 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Crater extends StationaryElement implements Adaptable
+public class Crater extends Terrain implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
