@@ -106,7 +106,8 @@ public class DeepWater extends Terrain implements Adaptable
 	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
 	 * @return maxSpeedModifier
 	 */
-	public static float getMaxSpeedModifier() {
+	@Override
+	public float getMaxSpeedModifier() {
 		return maxSpeedModifier;
 	}
 

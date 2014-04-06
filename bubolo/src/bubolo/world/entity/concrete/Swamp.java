@@ -47,7 +47,8 @@ public class Swamp extends Terrain
 	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
 	 * @return maxSpeedModifier
 	 */
-	public static float getMaxSpeedModifier() {
+	@Override
+	public float getMaxSpeedModifier() {
 		return maxSpeedModifier;
 	}
 	// TODO: Add Swamp functionality!

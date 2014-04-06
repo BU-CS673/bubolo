@@ -11,6 +11,7 @@ import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.Terrain;
 
 /**
  * The tank, which may be controlled by a local player, a networked player, or an AI bot.
@@ -26,6 +27,11 @@ public class Tank extends Actor
 
 	// Max speed in pixels per tick.
 	private static final float maxSpeed = 4.f;
+	
+	/**
+	 * Used to calculate the maxSpeed based upon the interaction with the intersected terrains
+	 */
+	private float modifiedMaxSpeed = maxSpeed;
 
 	// The tank's current speed.
 	private float speed = 0.f;
@@ -108,12 +114,17 @@ public class Tank extends Actor
 	 */
 	public void accelerate()
 	{
-		if (speed < maxSpeed && !accelerated)
+		if(speed > modifiedMaxSpeed)
+		{
+			this.decelerate();
+		}
+		
+		else if (speed < modifiedMaxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
-			if (speed > maxSpeed)
+			if (speed > modifiedMaxSpeed)
 			{
-				speed = maxSpeed;
+				speed = modifiedMaxSpeed;
 			}
 			accelerated = true;
 		}
@@ -368,6 +379,9 @@ public class Tank extends Actor
 	private void moveTank(World world)
 	{
 
+		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
+		modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
+		
 		/**
 		 * Booleans used to record which, if any, bumpers were hit.
 		 */

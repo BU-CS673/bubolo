@@ -57,7 +57,7 @@ public class TileUtil
 
 	 */
 	public static int getClosestTileY(float y){
-		return (int) (y/ 32);
+		return (int) (y / 32);
 	}
 
 	/**
@@ -359,5 +359,19 @@ public class TileUtil
 
 		return corners;
 
+	}
+	
+	/**
+	 * This function is intended to return a single tile to the requester
+	 * 
+	 * @param x the x of the requested tile in world coordinates
+	 * @param y the y of the requested tile in world coordinates 
+	 * @param w the world that the entity wants the tile from
+	 * @return a tile from the world
+	 */
+	public static Terrain getTileTerrain(float x, float y, World w)
+	{
+		Tile[][] mapTiles = w.getMapTiles();
+		return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
 	}
 }
