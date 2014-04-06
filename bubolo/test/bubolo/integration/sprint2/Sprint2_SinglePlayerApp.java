@@ -1,8 +1,10 @@
 package bubolo.integration.sprint2;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -89,7 +91,7 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

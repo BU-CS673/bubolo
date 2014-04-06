@@ -35,6 +35,22 @@ public interface World
 	 * @return the list of tanks.
 	 */
 	public List<Entity> getTanks();
+	
+	/**
+	 * Returns the list of all actors in the world. Ordering should not be 
+	 * assumed, and may change between calls.
+	 * @return the list of actors.
+	 */
+	public List<Entity> getActors();
+	
+	/**
+	 * Returns the list of all actors in the world. Ordering should not be 
+	 * assumed, and may change between calls.
+	 * @return the list of effects.
+	 */
+	public List<Entity> getEffects();
+	
+	
 	/**
 	 * Performs the following actions:
 	 * <ol>
