@@ -43,7 +43,7 @@ public class AITreeController implements Controller
 	 * timing variables
 	 */
 	private int ticksSinceReset = 0;
-	private int ticksPerGrowth = 30;
+	private int ticksPerGrowth = 300;
 	/**
 	 * random number generator used to decide a random tile to grow on
 	 */
