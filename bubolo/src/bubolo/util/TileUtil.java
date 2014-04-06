@@ -21,8 +21,6 @@ import bubolo.world.entity.Terrain;
  */
 public class TileUtil
 {
-	private static final int LOCAL_TILE_DISTANCE = 2;
-
 	private static boolean isValidTile(int gridX, int gridY, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
@@ -68,11 +66,13 @@ public class TileUtil
 	 *            is the X index of the target grid location.
 	 * @param gridY
 	 *            is the Y index of the target grid location.
+	 * @param localTileDistance 
+	 * 			the distance in each direction to look for entities
 	 * @param w
 	 *            is the World in which the Entities reside.
 	 * @return a List of all Entities which could be near the target location.
 	 */
-	public static List<Entity> getLocalEntities(int gridX, int gridY, World w)
+	public static List<Entity> getLocalEntities(int gridX, int gridY, int localTileDistance, World w)
 	{
 		ArrayList<Entity> localEnts = new ArrayList<Entity>();
 		Tile[][] worldTiles = w.getMapTiles();
@@ -82,9 +82,9 @@ public class TileUtil
 		}
 		else
 		{
-			int startX = gridX - LOCAL_TILE_DISTANCE;
-			int startY = gridY - LOCAL_TILE_DISTANCE;
-			for (int i = 0; i < 5; i++)
+			int startX = gridX - localTileDistance;
+			int startY = gridY - localTileDistance;
+			for (int i = 0; i < (localTileDistance*2+1); i++)
 			{
 				for (int j = 0; j < 5; j++)
 				{
@@ -121,15 +121,17 @@ public class TileUtil
 	 *            is the x component of the target Entity's position in World coordinates.
 	 * @param y
 	 *            is the y component of the target Entity's position in World coordinates.
+	 * @param localTileDistance 
+	 * 			the distance in each direction to look for entities
 	 * @param w
 	 *            is the World in which the Entities reside.
 	 * @return a List of all Entities which could be near the target location.
 	 */
-	public static List<Entity> getLocalEntities(float x, float y, World w)
+	public static List<Entity> getLocalEntities(float x, float y, int localTileDistance, World w)
 	{
 		int gridX = getClosestTileX(x);
 		int gridY = getClosestTileY(y);
-		return getLocalEntities(gridX, gridY, w);
+		return getLocalEntities(gridX, gridY, localTileDistance, w);
 	}
 
 	private static boolean containsTargetElement(Tile targetTile, Class<?>[] targetClasses)

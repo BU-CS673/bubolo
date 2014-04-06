@@ -29,7 +29,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	/*
 	 * Max range to locate a target. Pillbox will not fire unless there is a tank within this range
 	 */
-	private double range = 300;
+	private int range = 5;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -144,7 +144,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	 * 
 	 * @return range distance at which the pillbox will attempt to fire at an enemy
 	 */
-	public double getRange()
+	public int getRange()
 	{
 		return this.range;
 	}
@@ -155,7 +155,7 @@ public class Pillbox extends StationaryElement implements Ownable
 	 * @param range
 	 *            distance at which the pillbox will attempt to fire at an enemy
 	 */
-	public void setRange(double range)
+	public void setRange(int range)
 	{
 		this.range = range;
 	}
