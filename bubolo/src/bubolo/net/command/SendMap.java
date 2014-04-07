@@ -66,8 +66,8 @@ public class SendMap implements NetworkCommand
 	@Override
 	public void execute(World world)
 	{
-		world.setWidth(worldWidth);
-		world.setHeight(worldHeight);
+		world.setMapWidth(worldWidth);
+		world.setMapHeight(worldHeight);
 
 		Tile[][] mapTiles = new Tile[rows][columns];
 

@@ -125,14 +125,14 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public void setHeight(int height)
+	public void setMapHeight(int height)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setWidth(int width)
+	public void setMapWidth(int width)
 	{
 		// TODO Auto-generated method stub
 		

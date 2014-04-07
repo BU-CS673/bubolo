@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
@@ -74,14 +75,16 @@ public class GameWorld implements World
 	}
 
 	@Override
-	public void setHeight(int height)
+	public void setMapHeight(int height)
 	{
+		checkArgument(height > 0, "height parameter must be greater than zero: %s", height);
 		worldMapHeight = height;
 	}
 
 	@Override
-	public void setWidth(int width)
+	public void setMapWidth(int width)
 	{
+		checkArgument(width > 0, "width parameter must be greater than zero: %s", width);
 		worldMapWidth = width;
 	}
 
