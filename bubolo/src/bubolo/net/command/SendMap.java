@@ -4,6 +4,7 @@
 
 package bubolo.net.command;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -65,7 +66,8 @@ public class SendMap implements NetworkCommand
 		for (final TileInfo t : tiles)
 		{
 			Terrain terrain = world.addEntity(t.getTerrainClass(), t.getTerrainId());
-			mapTiles[t.getGridX()][t.getGridY()].setTerrain(terrain);
+			mapTiles[t.getGridX()][t.getGridY()] = new Tile((int)terrain.getX(),
+					(int)terrain.getY(), terrain);
 
 			if (t.getStationaryElementClass() != null)
 			{
@@ -81,8 +83,10 @@ public class SendMap implements NetworkCommand
 	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
-	private class TileInfo
+	private class TileInfo implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
+
 		private final int gridX;
 		private final int gridY;
 

@@ -29,9 +29,8 @@ public class Tile
 	/**
 	 * Create a new Tile with the specified Terrain at the given map unit coordinates.
 	 * 
-	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it is
-	 * strongly advised that they be constructed using World.AddEntity(), which ensures proper
-	 * Sprite handling and Entity indexing.
+	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, they must be
+	 * constructed using World.addEntity(), or they won't be fully added to the game world.
 	 * 
 	 * @param x
 	 *            is the x coordinate of this Tile in map/grid units.
@@ -147,7 +146,7 @@ public class Tile
 		{
 			myElement.dispose();
 		}
-		
+
 		myElement = null;
 		return this;
 	}
@@ -169,7 +168,7 @@ public class Tile
 		{
 			myElement.dispose();
 		}
-		
+
 		myElement = e;
 		e.setTile(this);
 		e.updateBounds();
@@ -195,7 +194,7 @@ public class Tile
 			{
 				myTerrain.dispose();
 			}
-			
+
 			myTerrain = t;
 			t.setTile(this);
 			t.updateBounds();

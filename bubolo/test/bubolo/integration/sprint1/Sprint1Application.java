@@ -124,4 +124,9 @@ public class Sprint1Application implements GameApplication
 	public void resume()
 	{
 	}
+
+	@Override
+	public void startGame()
+	{
+	}
 }
