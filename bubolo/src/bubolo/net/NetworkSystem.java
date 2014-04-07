@@ -49,21 +49,10 @@ public class NetworkSystem implements Network
 	}
 
 	@Override
-	public void startServer(World gameWorld) throws NetworkException, IllegalStateException
-	{
-		startServer(gameWorld, 1);
-	}
-
-	@Override
-	public void startServer(World world, int clientCount) throws NetworkException,
-			IllegalStateException
+	public void startServer() throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
-
-		checkNotNull(world, "world parameter cannot be null.");
-		checkArgument(clientCount > 0, "clientCount must be greater than zero, but found %s.",
-				clientCount);
 
 		// Don't allow the server to run in debug mode, since it requires external resources.
 		// Instead, test this properly in an integration test.
@@ -73,7 +62,7 @@ public class NetworkSystem implements Network
 		}
 
 		Server server = new Server(this);
-		server.startServer(world, clientCount);
+		server.startServer();
 		subsystem = server;
 	}
 
@@ -99,6 +88,15 @@ public class NetworkSystem implements Network
 	public void startDebug()
 	{
 		debug = true;
+	}
+	
+	@Override
+	public void startGame(World world)
+	{
+		if (subsystem instanceof Server)
+		{
+			((Server)subsystem).startGame(world);
+		}
 	}
 
 	@Override

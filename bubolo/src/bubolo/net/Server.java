@@ -11,9 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -66,35 +65,18 @@ class Server implements NetworkSubsystem
 	 * players. <code>startServer</code> must be called before calling <code>connect</code>. There
 	 * should only be one game server per game.
 	 * 
-	 * @param world
-	 *            reference to the game world.
-	 * @param clientCount
-	 *            the number of clients to wait for until the game beings.
-	 * 
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 */
-	void startServer(World world, int clientCount) throws NetworkException
+	void startServer() throws NetworkException
 	{
 		try
 		{
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
-			clients = new ArrayList<ClientSocket>(clientCount);
+			clients = new CopyOnWriteArrayList<ClientSocket>();
 
-			clientAcceptor = new ClientAcceptor(shutdown, gameStarted, clients, network)
-			
-			for (int i = 0; i < clientCount; ++i)
-			{
-				// TODO (cdc - 3/23/2013): Move accept() into a different thread.
-				clients.add(new ClientSocket(socket.accept()));
-				clients.get(i).getClient().setTcpNoDelay(true);
-
-				// Start the network reader thread.
-				new Thread(new ClientReader(clients.get(i), this, network, shutdown)).start();
-			}
-
-			StartGame startGameCommand = new StartGame(new SendMap(world));
-			send(startGameCommand);
+			clientAcceptor = new Thread(
+					new ClientAcceptor(shutdown, gameStarted, clients, socket, this, network));
 		}
 		catch (IOException e)
 		{
@@ -104,10 +86,17 @@ class Server implements NetworkSubsystem
 
 	/**
 	 * Notifies clients that the game is ready to start.
+	 * 
+	 * @param world
+	 *            reference to the game world.
 	 */
-	void startGame()
+	void startGame(World world)
 	{
 		gameStarted.set(true);
+		clientAcceptor.interrupt();
+
+		StartGame startGameCommand = new StartGame(new SendMap(world));
+		send(startGameCommand);
 	}
 
 	@Override
@@ -158,13 +147,14 @@ class Server implements NetworkSubsystem
 	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
-	private class ClientAcceptor implements Runnable
+	private static class ClientAcceptor implements Runnable
 	{
-		private final AtomicBoolean isShutdown;
-		private final AtomicBoolean isGameStarted;
-		private final List<ClientSocket> clientList;
+		private final AtomicBoolean shutdown;
+		private final AtomicBoolean gameStarted;
+		private final List<ClientSocket> clients;
+		private final ServerSocket socket;
 		private final Server server;
-		private final Network networkSystem;
+		private final Network network;
 
 		/**
 		 * Constructs a client connection acceptor.
@@ -175,31 +165,44 @@ class Server implements NetworkSubsystem
 		 *            reference to the gameStarted atomic boolean.
 		 * @param clients
 		 *            the instantiated list of clients.
+		 * @param socket
+		 *            the server socket.
 		 * @param server
 		 *            reference to the server.
 		 * @param network
 		 *            reference to the network system.
 		 */
 		ClientAcceptor(AtomicBoolean shutdown, AtomicBoolean gameStarted,
-				List<ClientSocket> clients, Server server, Network network)
+				List<ClientSocket> clients, ServerSocket socket, Server server, Network network)
 		{
-			this.isShutdown = shutdown;
-			this.isGameStarted = gameStarted;
-			this.clientList = clients;
+			this.shutdown = shutdown;
+			this.gameStarted = gameStarted;
+			this.clients = clients;
+			this.socket = socket;
 			this.server = server;
-			this.networkSystem = network;
+			this.network = network;
 		}
 
 		@Override
 		public void run()
 		{
 			int clientCount = 0;
+			// Continue accepting connections until the network has been shut down, the game has
+			// been started, or this thread has received an interrupt.
 			while (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
 			{
 				try
 				{
-					clients.add(new ClientSocket(socket.accept()));
-					clients.get(clientCount).getClient().setTcpNoDelay(true);
+					ClientSocket clientSocket = new ClientSocket(socket.accept());
+					if (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
+					{
+						clients.add(clientSocket);
+						clients.get(clientCount).getClient().setTcpNoDelay(true);
+					}
+					else
+					{
+						clientSocket.dispose();
+					}
 				}
 				catch (IOException e)
 				{
