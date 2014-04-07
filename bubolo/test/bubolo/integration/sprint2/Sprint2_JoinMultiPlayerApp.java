@@ -46,7 +46,7 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600, address), cfg);
+		new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600), cfg);
 	}
 
 	private int windowWidth;
@@ -59,8 +59,6 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	private long lastUpdate;
 
 	private boolean ready;
-
-	private InetAddress serverAddress;
 	
 	private boolean gameStarted;
 
@@ -82,15 +80,11 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	 *            the width of the window.
 	 * @param windowHeight
 	 *            the height of the window.
-	 * @param serverAddress
-	 *            the server's ip address.
 	 */
-	public Sprint2_JoinMultiPlayerApp(int windowWidth, int windowHeight, InetAddress serverAddress)
+	public Sprint2_JoinMultiPlayerApp(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-
-		this.serverAddress = serverAddress;
 	}
 
 	@Override
