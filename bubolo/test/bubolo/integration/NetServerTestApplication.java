@@ -109,7 +109,6 @@ public class NetServerTestApplication implements GameApplication
 		}
 		catch (ParseException | IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -119,9 +118,8 @@ public class NetServerTestApplication implements GameApplication
 		network.send(new HelloNetworkCommand("Hello from the server."));
 		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1100, 100, 0);
 		tank.setLocalPlayer(true);
-		
 		network.send(new CreateTank(tank));
 		
 		ready = true;

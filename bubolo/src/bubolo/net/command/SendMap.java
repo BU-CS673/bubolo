@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import bubolo.net.NetworkCommand;
+import bubolo.util.Coordinates;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
@@ -40,7 +41,7 @@ public class SendMap implements NetworkCommand
 	{
 		this.worldWidth = world.getMapWidth();
 		this.worldHeight = world.getMapHeight();
-		
+
 		this.tiles = new ArrayList<TileInfo>();
 
 		Tile[][] map = world.getMapTiles();
@@ -68,23 +69,27 @@ public class SendMap implements NetworkCommand
 	{
 		world.setWidth(worldWidth);
 		world.setHeight(worldHeight);
-		
+
 		Tile[][] mapTiles = new Tile[rows][columns];
 
 		for (final TileInfo t : tiles)
 		{
 			Terrain terrain = world.addEntity(t.getTerrainClass(), t.getTerrainId());
-			mapTiles[t.getGridX()][t.getGridY()] = new Tile((int)terrain.getX(),
-					(int)terrain.getY(), terrain);
+			terrain.setRotation((float)Math.PI / 2.f);
+			mapTiles[t.getGridX()][t.getGridY()] = new Tile(
+					t.getGridX(),
+					t.getGridY(),
+					terrain);
 
 			if (t.getStationaryElementClass() != null)
 			{
-				mapTiles[t.getGridX()][t.getGridY()].setElement(
-						world.addEntity(t.getStationaryElementClass(),
-								t.getStationaryElementId()));
+				StationaryElement element = world.addEntity(t.getStationaryElementClass(),
+						t.getStationaryElementId());
+				element.setRotation((float)Math.PI / 2);
+				mapTiles[t.getGridX()][t.getGridY()].setElement(element);
 			}
 		}
-		
+
 		world.setMapTiles(mapTiles);
 	}
 
