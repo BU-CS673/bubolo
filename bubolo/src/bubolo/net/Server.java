@@ -17,6 +17,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bubolo.net.command.SendMap;
+import bubolo.net.command.StartGame;
+import bubolo.world.World;
+
 import com.badlogic.gdx.Gdx;
 
 /**
@@ -56,13 +60,15 @@ class Server implements NetworkSubsystem
 	 * players. <code>startServer</code> must be called before calling <code>connect</code>. There
 	 * should only be one game server per game.
 	 * 
+	 * @param world
+	 *            reference to the game world.
 	 * @param clientCount
 	 *            the number of clients to wait for until the game beings.
 	 * 
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 */
-	void startServer(int clientCount) throws NetworkException
+	void startServer(World world, int clientCount) throws NetworkException
 	{
 		try
 		{
@@ -76,9 +82,11 @@ class Server implements NetworkSubsystem
 				clients.get(i).getClient().setTcpNoDelay(true);
 
 				// Start the network reader thread.
-
 				new Thread(new ClientReader(clients.get(i), this, network, shutdown)).start();
 			}
+
+			StartGame startGameCommand = new StartGame(new SendMap(world));
+			send(startGameCommand);
 		}
 		catch (IOException e)
 		{

@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -18,6 +22,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Grass;
@@ -99,25 +104,14 @@ public class NetClientTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		graphics = new Graphics(windowWidth, windowHeight);
+
 		network = NetworkSystem.getInstance();
 		network.send(new HelloNetworkCommand("Hello from the client."));
 		
-		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
-		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
-		}
-		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(400, 100, 0);
+		tank.setParams(1250, 100, 0);
 		tank.setLocalPlayer(true);
-		
 		network.send(new CreateTank(tank));
 		
 		ready = true;

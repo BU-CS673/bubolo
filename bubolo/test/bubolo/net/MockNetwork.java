@@ -30,7 +30,7 @@ public class MockNetwork implements Network
 	}
 
 	@Override
-	public void startServer() throws NetworkException, IllegalStateException
+	public void startServer(World world) throws NetworkException, IllegalStateException
 	{
 	}
 
@@ -65,7 +65,7 @@ public class MockNetwork implements Network
 	}
 
 	@Override
-	public void startServer(int clientCount) throws NetworkException, IllegalStateException
+	public void startServer(World world, int clientCount) throws NetworkException, IllegalStateException
 	{
 		// TODO Auto-generated method stub
 		

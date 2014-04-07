@@ -15,7 +15,7 @@ import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 
 /**
- * Sends the game map to a client.
+ * Command that is used to send the game map to a client.
  * 
  * @author BU CS673 - Clone Productions
  */

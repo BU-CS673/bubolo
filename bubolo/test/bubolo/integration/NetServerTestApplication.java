@@ -57,8 +57,6 @@ public class NetServerTestApplication implements GameApplication
 	
 	private final int clientCount;
 	
-	private long lastUpdate;
-	
 	private boolean ready;
 	
 	/**
@@ -97,13 +95,7 @@ public class NetServerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
-		network = NetworkSystem.getInstance();
-		network.startServer(clientCount);
-		
-		network.send(new HelloNetworkCommand("Hello from the server."));
-		
 		graphics = new Graphics(windowWidth, windowHeight);
-		
 		world = new GameWorld(32*94, 32*94);
 		
 		for (int row = 0; row < 94; row++)
@@ -113,6 +105,11 @@ public class NetServerTestApplication implements GameApplication
 				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
 			}
 		}
+		
+		network = NetworkSystem.getInstance();
+		network.startServer(world, clientCount);
+		
+		network.send(new HelloNetworkCommand("Hello from the server."));
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);

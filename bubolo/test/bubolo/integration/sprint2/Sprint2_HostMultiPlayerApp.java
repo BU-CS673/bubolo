@@ -88,13 +88,8 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	@Override
 	public void create()
 	{
-		network = NetworkSystem.getInstance();
-		network.startServer();
-
-		network.send(new HelloNetworkCommand("Hello from the server."));
-
 		graphics = new Graphics(windowWidth, windowHeight);
-
+		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
@@ -106,6 +101,11 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		network = NetworkSystem.getInstance();
+		network.startServer(world);
+
+		network.send(new HelloNetworkCommand("Hello from the server."));
 
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1050, 100, 0);
