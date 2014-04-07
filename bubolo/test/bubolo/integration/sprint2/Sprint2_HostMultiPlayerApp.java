@@ -47,6 +47,8 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	private long lastUpdate;
 
 	private boolean ready;
+	
+	private boolean gameStarted;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -163,5 +165,11 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public void startGame()
+	{
+		gameStarted = true;
 	}
 }

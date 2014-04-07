@@ -1,16 +1,10 @@
 package bubolo.integration;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-
-import org.json.simple.parser.ParseException;
-
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -19,13 +13,9 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
-import bubolo.util.Parser;
-import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -59,8 +49,6 @@ public class NetClientTestApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 	private Network network;
-	
-	private long lastUpdate;
 	
 	private boolean ready;
 	
@@ -162,6 +150,11 @@ public class NetClientTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void startGame()
 	{
 	}
 }

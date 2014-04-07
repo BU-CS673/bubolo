@@ -37,8 +37,6 @@ public class PillboxControllerTestApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 	
-	private long lastUpdate;
-	
 	private boolean ready;
 	
 	/**
@@ -146,6 +144,11 @@ public class PillboxControllerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void startGame()
 	{
 	}
 }

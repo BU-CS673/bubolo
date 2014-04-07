@@ -1,9 +1,7 @@
 package bubolo.integration;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -14,7 +12,6 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.world.GameWorld;
@@ -165,6 +162,11 @@ public class NetServerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void startGame()
 	{
 	}
 }

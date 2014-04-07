@@ -8,12 +8,8 @@ import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
-import bubolo.ui.LoadingScreen;
-import bubolo.ui.MenuScreen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
-import bubolo.world.entity.concrete.Tank;
 
 /**
  * For testing only.
@@ -149,6 +145,11 @@ public class AudioTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void startGame()
 	{
 	}
 }

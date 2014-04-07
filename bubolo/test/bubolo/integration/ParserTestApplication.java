@@ -36,8 +36,6 @@ public class ParserTestApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 
-	private long lastUpdate;
-
 	private boolean ready;
 
 	/**
@@ -155,4 +153,8 @@ public class ParserTestApplication implements GameApplication
 	{
 	}
 
+	@Override
+	public void startGame()
+	{
+	}
 }

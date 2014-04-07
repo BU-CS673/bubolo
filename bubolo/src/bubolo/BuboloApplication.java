@@ -21,6 +21,8 @@ public class BuboloApplication implements GameApplication
 	
 	private boolean ready;
 	
+	private boolean gameStarted;
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -47,6 +49,12 @@ public class BuboloApplication implements GameApplication
 	public boolean isReady()
 	{
 		return ready;
+	}
+	
+	@Override
+	public void startGame()
+	{
+		gameStarted = true;
 	}
 
 	/**

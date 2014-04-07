@@ -61,6 +61,8 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	private boolean ready;
 
 	private InetAddress serverAddress;
+	
+	private boolean gameStarted;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -123,6 +125,11 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 			e.printStackTrace();
 		}
 
+		while (!gameStarted)
+		{
+			network.update(world);
+		}
+		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);
 		tank.setLocalPlayer(true);
@@ -179,5 +186,11 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public void startGame()
+	{
+		gameStarted = true;
 	}
 }

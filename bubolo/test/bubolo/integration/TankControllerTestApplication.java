@@ -36,8 +36,6 @@ public class TankControllerTestApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 	
-	private long lastUpdate;
-	
 	private boolean ready;
 	
 	/**
@@ -141,6 +139,11 @@ public class TankControllerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void startGame()
 	{
 	}
 }
