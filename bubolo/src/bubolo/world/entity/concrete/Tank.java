@@ -116,7 +116,8 @@ public class Tank extends Actor
 	{
 		if(speed > modifiedMaxSpeed)
 		{
-			this.decelerate();
+			//this.decelerate();
+			speed = modifiedMaxSpeed;
 		}
 		
 		else if (speed < modifiedMaxSpeed && !accelerated)
@@ -135,6 +136,9 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
+		if (speed > modifiedMaxSpeed){
+			speed = modifiedMaxSpeed;
+		}
 		if (speed > 0 && !decelerated)
 		{
 			speed -= decelerationRate;

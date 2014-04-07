@@ -25,13 +25,13 @@ public class Crater extends Terrain implements Adaptable
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.65F;
+	private static float maxSpeedModifier = 0.3F;
 	
 	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
-	private Class<?>[] matchingTypes = new Class[] { Road.class, Water.class };
+	private Class<?>[] matchingTypes = new Class[] { Crater.class, Water.class };
 
 	/**
 	 * Construct a new Crater with a random UUID.
