@@ -43,7 +43,7 @@ public class Tile
 	}
 
 	/**
-	 * Returns this Tile's x position in World coordinates.
+	 * Returns this Tile's center x position in World coordinates.
 	 * 
 	 * @return a float representing this Tile's world x position.
 	 */
@@ -53,7 +53,7 @@ public class Tile
 	}
 
 	/**
-	 * Returns this Tile's y position in World coordinates.
+	 * Returns this Tile's center y position in World coordinates.
 	 * 
 	 * @return a float representing this Tile's world y position.
 	 */

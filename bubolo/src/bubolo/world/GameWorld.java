@@ -65,7 +65,7 @@ public class GameWorld implements World
 	}
 
 	/**
-	 * Constructs a default game world. This is intended for used with the network. The map's height
+	 * Constructs a default game world. This is intended for use by the network. The map's height
 	 * and width must be set before calling the <code>update</code> method.
 	 */
 	public GameWorld()
