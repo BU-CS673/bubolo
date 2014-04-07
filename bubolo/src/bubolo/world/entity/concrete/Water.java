@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileUtil;
+import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
 import bubolo.world.entity.Terrain;
@@ -63,8 +63,8 @@ public class Water extends Terrain implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
-			cornerMatches = AdaptiveTileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
+			setTilingState(TileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			cornerMatches = TileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
 		}
 		else
 		{
