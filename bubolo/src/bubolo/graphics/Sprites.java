@@ -10,7 +10,6 @@ import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Crater;
 import bubolo.world.entity.concrete.DeepWater;
 import bubolo.world.entity.concrete.Engineer;
-import bubolo.world.entity.concrete.GenericExplosion;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.MineExplosion;
@@ -89,6 +88,15 @@ public class Sprites
 		Sprite<? extends Entity> sprite = spriteFactories.get(entity.getClass()).create(entity);
 		sprites.add(sprite);
 		return sprite;
+	}
+	
+	/**
+	 * Adds a sprite that is not attached to an entity.
+	 * @param sprite the sprite to add.
+	 */
+	void addSprite(Sprite<?> sprite)
+	{
+		sprites.add(sprite);
 	}
 
 	/**
@@ -172,14 +180,6 @@ public class Sprites
 			public Sprite<? extends Entity> create(Entity e)
 			{
 				return new EngineerSprite((Engineer) e);
-			}
-		});
-
-		factories.put(GenericExplosion.class, new SpriteFactory() {
-			@Override
-			public Sprite<? extends Entity> create(Entity e)
-			{
-				return new GenericExplosionSprite((GenericExplosion) e);
 			}
 		});
 

@@ -15,12 +15,15 @@ class BulletSprite extends Sprite<Entity>
 {
 	private Texture image;
 	
+	private int x;
+	private int y;
+
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "bullet.png";
+	private static final String TEXTURE_FILE = "bullet.png";
 
 	/**
-	 * Constructor for the BulletSprite. This is Package-private because sprites should
-	 * not be directly created outside of the graphics system.
+	 * Constructor for the BulletSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param bullet
 	 *            Reference to the Bullet that this BulletSprite represents.
@@ -37,12 +40,16 @@ class BulletSprite extends Sprite<Entity>
 	{
 		if (isEntityDisposed())
 		{
-			Sprites.getInstance().removeSprite(this);
+			Sprites spriteSystem = Sprites.getInstance();
+			spriteSystem.addSprite(new BulletExplosionSprite(x, y));
+			spriteSystem.removeSprite(this);
 		}
 		else
 		{
 			drawTexture(batch, camera, layer, image);
-
+			
+			this.x = Math.round(getEntity().getX());
+			this.y = Math.round(getEntity().getY());
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class GenericExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new GenericExplosionSprite(new GenericExplosion());
+				Sprite<?> sprite = new BulletExplosionSprite(new GenericExplosion());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
