@@ -17,7 +17,7 @@ class BulletExplosionSprite extends Sprite<Entity>
 	private TextureRegion[][] frames;
 
 	// The number of milliseconds per frame.
-	private static final long millisPerFrame = 75;
+	private static final long millisPerFrame = 50;
 
 	// The amount of time remaining for the current frame.
 	private long frameTimeRemaining;
