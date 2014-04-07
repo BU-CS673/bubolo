@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-
 import javax.swing.JOptionPane;
 
 import org.json.simple.parser.ParseException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -22,7 +22,6 @@ import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -34,21 +33,12 @@ public class NetServerTestApplication implements GameApplication
 {
 	public static void main(String[] args) throws UnknownHostException
 	{
-		String clientCountText = (String)JOptionPane.showInputDialog(null, 
-				null, 
-				"Number of clients: ",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                null);
-		int clientCount = Integer.parseInt(clientCountText);
-		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new NetServerTestApplication(1067, 600, clientCount), cfg);
+		new LwjglApplication(new NetServerTestApplication(1067, 600), cfg);
 	}
 	
 	private final int windowWidth;
@@ -57,8 +47,6 @@ public class NetServerTestApplication implements GameApplication
 	private Graphics graphics;
 	private World world;
 	private Network network;
-	
-	private final int clientCount;
 	
 	private boolean ready;
 	
@@ -78,11 +66,10 @@ public class NetServerTestApplication implements GameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public NetServerTestApplication(int windowWidth, int windowHeight, int clientCount)
+	public NetServerTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-		this.clientCount = clientCount;
 	}
 	
 	@Override
@@ -113,7 +100,51 @@ public class NetServerTestApplication implements GameApplication
 		}
 		
 		network = NetworkSystem.getInstance();
-		network.startServer(world, clientCount);
+		network.startServer();
+		
+//		class StartGameDialog implements Runnable
+//		{
+//			private final AtomicInteger startGameResponse;
+//			
+//			StartGameDialog()
+//			{
+//				this.startGameResponse = new AtomicInteger(-1);
+//			}
+//			
+//			int getResponse()
+//			{
+//				return startGameResponse.get();
+//			}
+//			
+//			@Override
+//			public void run()
+//			{
+//				int response = JOptionPane.showConfirmDialog(null,
+//						"Click OK to start the game.",
+//						"Start Game",
+//						JOptionPane.OK_CANCEL_OPTION);
+//				startGameResponse.set(response);
+//			}	
+//		}
+//		
+//		StartGameDialog startGameDialog = new StartGameDialog();
+//		new Thread(startGameDialog).start();
+//		
+//		while (startGameDialog.getResponse() == -1)
+//		{
+//
+//		}
+		
+		int response = JOptionPane.showConfirmDialog(null,
+				"Click OK to start the game.",
+				"Start Game",
+				JOptionPane.OK_CANCEL_OPTION);
+		
+		if (response == JOptionPane.CANCEL_OPTION)
+		{
+			Gdx.app.exit();
+		}
+		network.startGame(world);
 		
 		network.send(new HelloNetworkCommand("Hello from the server."));
 		

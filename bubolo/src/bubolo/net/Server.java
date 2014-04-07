@@ -17,9 +17,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bubolo.net.command.HelloNetworkCommand;
 import bubolo.net.command.SendMap;
 import bubolo.net.command.StartGame;
 import bubolo.world.World;
+import static com.google.common.base.Preconditions.checkState;
 
 import com.badlogic.gdx.Gdx;
 
@@ -57,6 +59,7 @@ class Server implements NetworkSubsystem
 	Server(Network network)
 	{
 		this.network = network;
+		this.clients = new CopyOnWriteArrayList<ClientSocket>();
 		this.sender = Executors.newSingleThreadExecutor();
 	}
 
@@ -73,10 +76,10 @@ class Server implements NetworkSubsystem
 		try
 		{
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
-			clients = new CopyOnWriteArrayList<ClientSocket>();
 
 			clientAcceptor = new Thread(
 					new ClientAcceptor(shutdown, gameStarted, clients, socket, this, network));
+			clientAcceptor.start();
 		}
 		catch (IOException e)
 		{
@@ -92,6 +95,8 @@ class Server implements NetworkSubsystem
 	 */
 	void startGame(World world)
 	{
+		checkState(!clients.isEmpty(), "No clients are connected.");
+		
 		gameStarted.set(true);
 		clientAcceptor.interrupt();
 
@@ -197,7 +202,8 @@ class Server implements NetworkSubsystem
 					if (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
 					{
 						clients.add(clientSocket);
-						clients.get(clientCount).getClient().setTcpNoDelay(true);
+						clientSocket.getClient().setTcpNoDelay(true);
+						network.send(new HelloNetworkCommand("Hello from Server"));
 					}
 					else
 					{
@@ -206,6 +212,7 @@ class Server implements NetworkSubsystem
 				}
 				catch (IOException e)
 				{
+					System.out.println(e);
 					throw new NetworkException(e);
 					// TODO (cdc - 4/7/2014): Pass this to the main thread.
 				}
