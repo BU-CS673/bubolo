@@ -3,6 +3,7 @@ package bubolo.integration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -32,7 +33,7 @@ import bubolo.world.entity.concrete.Water;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class GraphicsTestApplication implements GameApplication
+public class GraphicsTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -48,9 +49,6 @@ public class GraphicsTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -72,12 +70,6 @@ public class GraphicsTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -124,7 +116,7 @@ public class GraphicsTestApplication implements GameApplication
 		world.addEntity(Wall.class).setParams(32*13, 32*12, 0);
 		world.addEntity(Water.class).setParams(32*14, 32*12, 0);
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -171,11 +163,6 @@ public class GraphicsTestApplication implements GameApplication
 
 	@Override
 	public void resume()
-	{
-	}
-
-	@Override
-	public void startGame()
 	{
 	}
 }

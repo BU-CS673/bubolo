@@ -60,7 +60,6 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 
 	private boolean ready;
 	
-	private boolean gameStarted;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -119,7 +118,7 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 			e.printStackTrace();
 		}
 
-		while (!gameStarted)
+		while (!isGameStarted())
 		{
 			network.update(world);
 		}
@@ -183,8 +182,8 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	}
 
 	@Override
-	public void startGame()
+	public boolean isGameStarted()
 	{
-		gameStarted = true;
+		return world.getMapTiles() != null;
 	}
 }

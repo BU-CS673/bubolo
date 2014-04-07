@@ -3,6 +3,7 @@ package bubolo.integration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -19,7 +20,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class PillboxControllerTestApplication implements GameApplication
+public class PillboxControllerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -35,9 +36,6 @@ public class PillboxControllerTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -59,12 +57,6 @@ public class PillboxControllerTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -97,7 +89,7 @@ public class PillboxControllerTestApplication implements GameApplication
 		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 0);
 		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 0);
 
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -144,11 +136,6 @@ public class PillboxControllerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
-	{
-	}
-
-	@Override
-	public void startGame()
 	{
 	}
 }

@@ -126,7 +126,8 @@ public class Sprint1Application implements GameApplication
 	}
 
 	@Override
-	public void startGame()
+	public boolean isGameStarted()
 	{
+		return true;
 	}
 }

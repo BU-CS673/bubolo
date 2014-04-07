@@ -3,7 +3,6 @@ package bubolo;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
-import bubolo.world.World;
 
 /**
  * The Game: this is where the subsystems are initialized, as well as where
@@ -16,7 +15,6 @@ public class BuboloApplication extends AbstractGameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	
 	private long lastUpdate;
 	

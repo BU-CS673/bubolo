@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+
 import javax.swing.JOptionPane;
 
 import org.json.simple.parser.ParseException;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -29,7 +31,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetServerTestApplication implements GameApplication
+public class NetServerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args) throws UnknownHostException
 	{
@@ -45,10 +47,7 @@ public class NetServerTestApplication implements GameApplication
 	private final int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	private Network network;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -70,12 +69,6 @@ public class NetServerTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -120,7 +113,7 @@ public class NetServerTestApplication implements GameApplication
 		tank.setLocalPlayer(true);
 		network.send(new CreateTank(tank));
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -168,11 +161,6 @@ public class NetServerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
-	{
-	}
-
-	@Override
-	public void startGame()
 	{
 	}
 }

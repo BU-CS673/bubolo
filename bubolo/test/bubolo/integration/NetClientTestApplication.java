@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -25,7 +26,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetClientTestApplication implements GameApplication
+public class NetClientTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -49,10 +50,7 @@ public class NetClientTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	private Network network;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -74,12 +72,6 @@ public class NetClientTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -106,7 +98,7 @@ public class NetClientTestApplication implements GameApplication
 		tank.setLocalPlayer(true);
 		network.send(new CreateTank(tank));
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -154,11 +146,6 @@ public class NetClientTestApplication implements GameApplication
 
 	@Override
 	public void resume()
-	{
-	}
-
-	@Override
-	public void startGame()
 	{
 	}
 }

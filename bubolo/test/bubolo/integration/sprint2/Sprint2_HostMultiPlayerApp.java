@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -48,10 +49,8 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	private Network network;
 
 	private long lastUpdate;
-
-	private boolean ready;
 	
-	private boolean gameStarted;
+	private boolean ready;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -76,12 +75,6 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -182,8 +175,14 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	}
 
 	@Override
-	public void startGame()
+	public boolean isReady()
 	{
-		gameStarted = true;
+		return ready;
+	}
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return world.getMapTiles() != null;
 	}
 }

@@ -4,6 +4,8 @@
 
 package bubolo;
 
+import bubolo.world.World;
+
 /**
  * Abstract base class for Game Applications.
  * 
@@ -12,7 +14,9 @@ package bubolo;
 public abstract class AbstractGameApplication implements GameApplication
 {
 	private boolean ready;
-	private boolean gameStarted;
+	
+	/** The game world. **/
+	protected World world;
 	
 	@Override
 	public final boolean isReady()
@@ -30,21 +34,6 @@ public abstract class AbstractGameApplication implements GameApplication
 	}
 	
 	@Override
-	public final void startGame()
-	{
-		gameStarted = true;
-	}
-	
-	/**
-	 * Specifies whether the game has started.
-	 * @return whether the game has started.
-	 */
-	protected boolean isGameStarted()
-	{
-		return gameStarted;
-	}
-	
-	@Override
 	public void pause()
 	{
 	}
@@ -57,5 +46,12 @@ public abstract class AbstractGameApplication implements GameApplication
 	@Override
 	public void resume()
 	{
+	}
+	
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return (world.getMapTiles() != null);
 	}
 }

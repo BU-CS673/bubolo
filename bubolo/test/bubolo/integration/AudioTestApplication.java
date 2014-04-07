@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.audio.Sfx;
@@ -16,7 +17,7 @@ import bubolo.world.World;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class AudioTestApplication implements GameApplication
+public class AudioTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -32,11 +33,8 @@ public class AudioTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	
 	private long lastUpdate;
-	
-	private boolean ready;
 	
 	private int frame = 0;
 	private long MAX_FRAMES = TICKS_PER_SECOND * 15;
@@ -62,12 +60,6 @@ public class AudioTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -82,7 +74,7 @@ public class AudioTestApplication implements GameApplication
 		
 		Audio.startMusic();
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -145,11 +137,6 @@ public class AudioTestApplication implements GameApplication
 
 	@Override
 	public void resume()
-	{
-	}
-
-	@Override
-	public void startGame()
 	{
 	}
 }

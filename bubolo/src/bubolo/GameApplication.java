@@ -15,7 +15,8 @@ public interface GameApplication extends ApplicationListener
 	public boolean isReady();
 	
 	/**
-	 * Starts the game.
+	 * Specifies whether the game has started.
+	 * @return true if the game has started.
 	 */
-	public void startGame();
+	public boolean isGameStarted();
 }
