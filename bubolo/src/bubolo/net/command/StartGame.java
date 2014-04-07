@@ -5,7 +5,6 @@
 package bubolo.net.command;
 
 import static com.google.common.base.Preconditions.*;
-
 import bubolo.net.NetworkCommand;
 import bubolo.world.World;
 

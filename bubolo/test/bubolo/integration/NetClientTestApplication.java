@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -15,6 +16,7 @@ import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
+import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
@@ -93,9 +95,16 @@ public class NetClientTestApplication implements GameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-
+		
 		network = NetworkSystem.getInstance();
 		network.send(new HelloNetworkCommand("Hello from the client."));
+		
+		world = new GameWorld();
+		
+		while (world.getMapTiles() == null)
+		{
+			network.update(world);
+		}
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);

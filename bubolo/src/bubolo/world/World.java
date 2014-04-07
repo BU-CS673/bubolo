@@ -15,6 +15,18 @@ import bubolo.world.entity.Entity;
 public interface World
 {
 	/**
+	 * Sets the world's height.
+	 * @param height the world's height.
+	 */
+	public void setHeight(int height);
+	
+	/**
+	 * Sets the world's width.
+	 * @param width the world's width.
+	 */
+	public void setWidth(int width);
+	
+	/**
 	 * Returns an entity from a user id. Throws a GameLogicException if the 
 	 * entity is not found.
 	 * @param id the entity's unique id.

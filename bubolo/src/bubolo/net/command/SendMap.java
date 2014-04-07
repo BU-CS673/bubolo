@@ -27,6 +27,8 @@ public class SendMap implements NetworkCommand
 	private final List<TileInfo> tiles;
 	private final int rows;
 	private final int columns;
+	private final int worldWidth;
+	private final int worldHeight;
 
 	/**
 	 * Constructs a Send Map network command.
@@ -36,6 +38,9 @@ public class SendMap implements NetworkCommand
 	 */
 	public SendMap(World world)
 	{
+		this.worldWidth = world.getMapWidth();
+		this.worldHeight = world.getMapHeight();
+		
 		this.tiles = new ArrayList<TileInfo>();
 
 		Tile[][] map = world.getMapTiles();
@@ -61,6 +66,9 @@ public class SendMap implements NetworkCommand
 	@Override
 	public void execute(World world)
 	{
+		world.setWidth(worldWidth);
+		world.setHeight(worldHeight);
+		
 		Tile[][] mapTiles = new Tile[rows][columns];
 
 		for (final TileInfo t : tiles)
@@ -76,6 +84,8 @@ public class SendMap implements NetworkCommand
 								t.getStationaryElementId()));
 			}
 		}
+		
+		world.setMapTiles(mapTiles);
 	}
 
 	/**

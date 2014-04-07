@@ -123,4 +123,18 @@ public class MockWorld implements World
 		// do nothing
 		return null;
 	}
+
+	@Override
+	public void setHeight(int height)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setWidth(int width)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

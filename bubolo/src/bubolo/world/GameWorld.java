@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkState;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
@@ -19,8 +19,8 @@ import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
 
 /**
- * The concrete implementation of the World interface. GameWorld is the sole owner of
- * Entity objects.
+ * The concrete implementation of the World interface. GameWorld is the sole owner of Entity
+ * objects.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -60,15 +60,29 @@ public class GameWorld implements World
 	 */
 	public GameWorld(int worldMapWidth, int worldMapHeight)
 	{
-		Preconditions.checkArgument(worldMapWidth > 0,
-				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
-		Preconditions.checkArgument(worldMapHeight > 0,
-				"worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
-
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+	}
 
-		//mapTiles = new Tile[worldMapWidth][worldMapHeight];
+	/**
+	 * Constructs a default game world. This is intended for used with the network. The map's height
+	 * and width must be set before calling the <code>update</code> method.
+	 */
+	public GameWorld()
+	{
+		this(0, 0);
+	}
+
+	@Override
+	public void setHeight(int height)
+	{
+		worldMapHeight = height;
+	}
+
+	@Override
+	public void setWidth(int width)
+	{
+		worldMapWidth = width;
 	}
 
 	@Override
@@ -133,7 +147,8 @@ public class GameWorld implements World
 
 		Sprites.getInstance().createSprite(entity);
 		Controllers.getInstance().createController(entity, controllerFactory);
-		if (entity.getClass() == Tank.class)
+
+		if (entity instanceof Tank)
 		{
 			tanks.add(entity);
 		}
@@ -177,12 +192,14 @@ public class GameWorld implements World
 	}
 
 	@Override
-	public List<Entity> getActors(){
+	public List<Entity> getActors()
+	{
 		return actors;
 	}
-	
+
 	@Override
-	public List<Entity> getEffects(){
+	public List<Entity> getEffects()
+	{
 		return effects;
 	}
 
@@ -219,6 +236,11 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+		checkState(worldMapWidth > 0,
+				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
+		checkState(worldMapHeight > 0,
+				"worldMapHeight must be greater than 0. worldMapHeight: %s", worldMapHeight);
+
 		// Update all entities.
 		for (Entity e : entities)
 		{
