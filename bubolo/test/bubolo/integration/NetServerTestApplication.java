@@ -102,39 +102,6 @@ public class NetServerTestApplication implements GameApplication
 		network = NetworkSystem.getInstance();
 		network.startServer();
 		
-//		class StartGameDialog implements Runnable
-//		{
-//			private final AtomicInteger startGameResponse;
-//			
-//			StartGameDialog()
-//			{
-//				this.startGameResponse = new AtomicInteger(-1);
-//			}
-//			
-//			int getResponse()
-//			{
-//				return startGameResponse.get();
-//			}
-//			
-//			@Override
-//			public void run()
-//			{
-//				int response = JOptionPane.showConfirmDialog(null,
-//						"Click OK to start the game.",
-//						"Start Game",
-//						JOptionPane.OK_CANCEL_OPTION);
-//				startGameResponse.set(response);
-//			}	
-//		}
-//		
-//		StartGameDialog startGameDialog = new StartGameDialog();
-//		new Thread(startGameDialog).start();
-//		
-//		while (startGameDialog.getResponse() == -1)
-//		{
-//
-//		}
-		
 		int response = JOptionPane.showConfirmDialog(null,
 				"Click OK to start the game.",
 				"Start Game",

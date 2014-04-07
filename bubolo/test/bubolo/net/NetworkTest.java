@@ -56,7 +56,7 @@ public class NetworkTest
 	@Test
 	public void testStartServer()
 	{
-		net.startServer(new MockWorld());
+		net.startServer();
 	}
 
 	/**

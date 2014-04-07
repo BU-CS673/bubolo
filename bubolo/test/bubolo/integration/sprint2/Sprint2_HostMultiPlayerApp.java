@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import javax.swing.JOptionPane;
+
 import org.json.simple.parser.ParseException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -105,7 +108,18 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		}
 		
 		network = NetworkSystem.getInstance();
-		network.startServer(world);
+		network.startServer();
+		
+		int response = JOptionPane.showConfirmDialog(null,
+				"Click OK to start the game.",
+				"Start Game",
+				JOptionPane.OK_CANCEL_OPTION);
+		
+		if (response == JOptionPane.CANCEL_OPTION)
+		{
+			Gdx.app.exit();
+		}
+		network.startGame(world);
 
 		network.send(new HelloNetworkCommand("Hello from the server."));
 

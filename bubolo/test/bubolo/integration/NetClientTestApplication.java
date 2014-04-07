@@ -42,7 +42,7 @@ public class NetClientTestApplication implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new NetClientTestApplication(1067, 600, address), cfg);
+		new LwjglApplication(new NetClientTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -53,8 +53,6 @@ public class NetClientTestApplication implements GameApplication
 	private Network network;
 	
 	private boolean ready;
-	
-	private InetAddress serverAddress;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -71,14 +69,11 @@ public class NetClientTestApplication implements GameApplication
 	 * ever exist.
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
-	 * @param serverAddress the server's ip address.
 	 */
-	public NetClientTestApplication(int windowWidth, int windowHeight, InetAddress serverAddress)
+	public NetClientTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-
-		this.serverAddress = serverAddress;
 	}
 	
 	@Override
