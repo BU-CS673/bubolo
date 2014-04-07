@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.world.entity.concrete.GenericExplosion;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -49,7 +47,7 @@ public class GenericExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(new GenericExplosion());
+				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;
