@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -100,6 +101,12 @@ public class Tank extends Actor
 	public float getSpeed()
 	{
 		return speed;
+	}
+	
+	public void setSpeed(NetTankSpeed speed)
+	{
+		this.speed = speed.getSpeed();
+		accelerated = true;
 	}
 
 	// TODO: Add Tank functionality!
