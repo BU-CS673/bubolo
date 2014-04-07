@@ -59,14 +59,14 @@ public class Tank extends Actor
 	private float bumperHeight = 4.0f;
 
 	/**
-	 * The default amount to rotate the Tank by when a bumper collision is detected. Used
-	 * to prevent getting 'stuck' on walls.
+	 * The default amount to rotate the Tank by when a bumper collision is detected. Used to prevent
+	 * getting 'stuck' on walls.
 	 */
-	private float rotationOffsetAmount = (float) Math.toRadians(1);
+	private float rotationOffsetAmount = (float)Math.toRadians(1);
 
 	/**
-	 * The default amount to reposition the Tank by when a bumper collision is detected.
-	 * Used to prevent getting 'stuck' on walls.
+	 * The default amount to reposition the Tank by when a bumper collision is detected. Used to
+	 * prevent getting 'stuck' on walls.
 	 */
 	private float positionOffsetAmount = 0.1f;
 
@@ -102,11 +102,21 @@ public class Tank extends Actor
 	{
 		return speed;
 	}
-	
-	public void setSpeed(NetTankSpeed speed)
+
+	/**
+	 * Sets the tank's speed. Intended for use with the network system.
+	 * 
+	 * @param newSpeed
+	 *            a NetTankSpeed object that contains the tank's new speed.
+	 */
+	public void setSpeed(NetTankSpeed newSpeed)
 	{
-		this.speed = speed.getSpeed();
-		accelerated = true;
+		if (newSpeed.getSpeed() > this.speed)
+		{
+			accelerated = true;
+		}
+
+		this.speed = newSpeed.getSpeed();
 	}
 
 	// TODO: Add Tank functionality!
@@ -169,8 +179,7 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
-	 * reload.
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
 	 * 
 	 * @param world
 	 *            reference to the world.
@@ -197,16 +206,16 @@ public class Tank extends Actor
 	{
 		Polygon lookAheadBounds = getBounds();
 
-		float newX = (float) (getX() + Math.cos(getRotation()) * speed);
-		float newY = (float) (getY() + Math.sin(getRotation()) * speed);
+		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 
 		lookAheadBounds.setPosition(newX, newY);
 		return lookAheadBounds;
 	}
 
 	/**
-	 * Returns a list of all Entities that would overlap with this Tank if it was where it
-	 * will be in one game tick, along its current trajectory.
+	 * Returns a list of all Entities that would overlap with this Tank if it was where it will be
+	 * in one game tick, along its current trajectory.
 	 */
 	private List<Entity> getLookaheadEntities(World w)
 	{
@@ -237,13 +246,12 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and
-	 * rotation.
+	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
 	private void updateLeftBumper()
 	{
-		float newX = (float) (getX() + Math.cos(getRotation()) * (speed));
-		float newY = (float) (getY() + Math.sin(getRotation()) * (speed));
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
 		float w = getWidth();
 		float h = getHeight();
 		// Defines the corners of the left bumper as a 4x4 pixel box, placed at the
@@ -258,17 +266,16 @@ public class Tank extends Actor
 		leftBumper.setPosition(newX, newY);
 		leftBumper.setOrigin(0, 0);
 		leftBumper.setVertices(corners);
-		leftBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
+		leftBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and
-	 * rotation.
+	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
 	private void updateRightBumper()
 	{
-		float newX = (float) (getX() + Math.cos(getRotation()) * (speed));
-		float newY = (float) (getY() + Math.sin(getRotation()) * (speed));
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
 		float w = getWidth();
 		float h = getHeight();
 
@@ -284,7 +291,7 @@ public class Tank extends Actor
 		rightBumper.setPosition(newX, newY);
 		rightBumper.setOrigin(0, 0);
 		rightBumper.setVertices(corners);
-		rightBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
+		rightBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	/**
@@ -366,8 +373,8 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Updates the Tank's world position according to its speed, acceleration/deceleration
-	 * state, and collision information.
+	 * Updates the Tank's world position according to its speed, acceleration/deceleration state,
+	 * and collision information.
 	 * 
 	 * @param world
 	 *            is a reference to the world that this Tank belongs to.
@@ -382,8 +389,7 @@ public class Tank extends Actor
 		boolean collidingRight = false;
 
 		/**
-		 * Floats used the offset that should be applied to the Tank to record wall
-		 * collisions.
+		 * Floats used the offset that should be applied to the Tank to record wall collisions.
 		 */
 		float rotationOffset = 0f;
 		float xOffset = 0;
@@ -397,15 +403,14 @@ public class Tank extends Actor
 		float rotation = getRotation();
 
 		/**
-		 * The position where the Tank will be after one game tick, if it continues its
-		 * current trajectory and speed.
+		 * The position where the Tank will be after one game tick, if it continues its current
+		 * trajectory and speed.
 		 */
-		float newX = (float) (xPos + Math.cos(rotation) * (speed));
-		float newY = (float) (yPos + Math.sin(rotation) * (speed));
+		float newX = (float)(xPos + Math.cos(rotation) * (speed));
+		float newY = (float)(yPos + Math.sin(rotation) * (speed));
 
 		/**
-		 * Update (replace) the right and left bumper polygons to make sure collisions are
-		 * accurate.
+		 * Update (replace) the right and left bumper polygons to make sure collisions are accurate.
 		 */
 		updateBumpers();
 
@@ -430,9 +435,8 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the Tank hit something with its left bumper, restrict travel in the
-		 * appropriate direction, and offset/rotate the Tank to 'slide' away from the
-		 * collision.
+		 * If the Tank hit something with its left bumper, restrict travel in the appropriate
+		 * direction, and offset/rotate the Tank to 'slide' away from the collision.
 		 */
 		if (collidingLeft)
 		{
@@ -473,9 +477,8 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the Tank hit something with its right bumper, restrict travel in the
-		 * appropriate direction, and offset/rotate the Tank to 'slide' away from the
-		 * collision.
+		 * If the Tank hit something with its right bumper, restrict travel in the appropriate
+		 * direction, and offset/rotate the Tank to 'slide' away from the collision.
 		 */
 		if (collidingRight)
 		{
@@ -515,10 +518,9 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the speed of the Tank is greater than zero, modify its position and rotation
-		 * by the offsets given earlier. Note that if a Tank collides on the left and
-		 * right bumpers simultaneously, the rotational offsets will cancel each other
-		 * out.
+		 * If the speed of the Tank is greater than zero, modify its position and rotation by the
+		 * offsets given earlier. Note that if a Tank collides on the left and right bumpers
+		 * simultaneously, the rotational offsets will cancel each other out.
 		 */
 		if (speed > 0)
 		{
