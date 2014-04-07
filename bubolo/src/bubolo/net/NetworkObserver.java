@@ -41,4 +41,12 @@ public interface NetworkObserver
 	 *            the name of the player who disconnected.
 	 */
 	void onClientDisconnected(String clientName);
+
+	/**
+	 * Called when a networked game starts.
+	 * 
+	 * @param timeUntilStart
+	 *            the number of seconds until the game starts.
+	 */
+	void onGameStart(int timeUntilStart);
 }

@@ -99,8 +99,6 @@ class DeepWaterSprite extends Sprite<DeepWater>
 			{
 				drawTexture(batch, camera, layer, frames[19]);
 			}
-
 		}
-
 	}
 }

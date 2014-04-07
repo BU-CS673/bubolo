@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 
 import bubolo.net.NetworkCommand;
-import bubolo.util.Coordinates;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;

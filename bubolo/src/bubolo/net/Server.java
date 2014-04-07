@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -38,10 +39,15 @@ class Server implements NetworkSubsystem
 	// Specifies whether the server has shut down.
 	private AtomicBoolean shutdown = new AtomicBoolean(false);
 
+	// Specifies whether the game has started.
+	private AtomicBoolean gameStarted = new AtomicBoolean(false);
+
 	private final Executor sender;
 
 	// Reference to the network system.
 	private final Network network;
+
+	private Thread clientAcceptor;
 
 	/**
 	 * Constructs a Server object.
@@ -75,6 +81,8 @@ class Server implements NetworkSubsystem
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
 			clients = new ArrayList<ClientSocket>(clientCount);
 
+			clientAcceptor = new ClientAcceptor(shutdown, gameStarted, clients, network)
+			
 			for (int i = 0; i < clientCount; ++i)
 			{
 				// TODO (cdc - 3/23/2013): Move accept() into a different thread.
@@ -92,6 +100,14 @@ class Server implements NetworkSubsystem
 		{
 			throw new NetworkException(e);
 		}
+	}
+
+	/**
+	 * Notifies clients that the game is ready to start.
+	 */
+	void startGame()
+	{
+		gameStarted.set(true);
 	}
 
 	@Override
@@ -133,6 +149,68 @@ class Server implements NetworkSubsystem
 			if ((clientToIgnore == null) || (clientToIgnore != null && client != clientToIgnore))
 			{
 				sender.execute(new NetworkSender(client.getOutputStream(), command));
+			}
+		}
+	}
+
+	/**
+	 * A client connection acceptor.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
+	private class ClientAcceptor implements Runnable
+	{
+		private final AtomicBoolean isShutdown;
+		private final AtomicBoolean isGameStarted;
+		private final List<ClientSocket> clientList;
+		private final Server server;
+		private final Network networkSystem;
+
+		/**
+		 * Constructs a client connection acceptor.
+		 * 
+		 * @param shutdown
+		 *            reference to the shutdown atomic boolean.
+		 * @param gameStarted
+		 *            reference to the gameStarted atomic boolean.
+		 * @param clients
+		 *            the instantiated list of clients.
+		 * @param server
+		 *            reference to the server.
+		 * @param network
+		 *            reference to the network system.
+		 */
+		ClientAcceptor(AtomicBoolean shutdown, AtomicBoolean gameStarted,
+				List<ClientSocket> clients, Server server, Network network)
+		{
+			this.isShutdown = shutdown;
+			this.isGameStarted = gameStarted;
+			this.clientList = clients;
+			this.server = server;
+			this.networkSystem = network;
+		}
+
+		@Override
+		public void run()
+		{
+			int clientCount = 0;
+			while (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
+			{
+				try
+				{
+					clients.add(new ClientSocket(socket.accept()));
+					clients.get(clientCount).getClient().setTcpNoDelay(true);
+				}
+				catch (IOException e)
+				{
+					throw new NetworkException(e);
+					// TODO (cdc - 4/7/2014): Pass this to the main thread.
+				}
+
+				// Start the network reader thread.
+				new Thread(new ClientReader(
+						clients.get(clientCount), server, network, shutdown)).start();
+				++clientCount;
 			}
 		}
 	}
