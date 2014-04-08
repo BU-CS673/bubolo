@@ -14,7 +14,7 @@ import bubolo.world.entity.concrete.Engineer;
  * 
  * @author BU CS673 - Clone Productions
  */
-class EngineerSprite extends Sprite<Engineer>
+class EngineerSprite extends AbstractEntitySprite<Engineer>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;

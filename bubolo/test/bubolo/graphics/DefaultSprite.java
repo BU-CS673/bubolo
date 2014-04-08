@@ -11,7 +11,7 @@ import bubolo.world.entity.Entity;
  * @author BU673 - Clone Industries
  * @deprecated DO NOT USE - MAY BE DELETED IN THE FUTURE.
  */
-class DefaultSprite extends Sprite<Entity>
+class DefaultSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	

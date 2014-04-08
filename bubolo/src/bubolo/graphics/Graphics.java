@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import bubolo.world.World;
-import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -57,11 +56,11 @@ public class Graphics
 	private static Graphics instance = null;
 
 	// The comparator used to sort sprites.
-	private static Comparator<Sprite<?>> spriteComparator;
+	private static Comparator<Sprite> spriteComparator;
 
-	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
+	private List<Sprite> spritesInView = new ArrayList<Sprite>();
 
-	private List<Sprite<?>> background;
+	private List<Sprite> background;
 
 	/**
 	 * Gets a reference to the Graphics system. The Graphics system must be explicitly constructed
@@ -153,7 +152,7 @@ public class Graphics
 		// Get list of sprites, and clip sprites that are outside of the camera's
 		// view.
 		spritesInView.clear();
-		for (Sprite<?> sprite : spriteSystem.getSprites())
+		for (Sprite sprite : spriteSystem.getSprites())
 		{
 			if (withinCameraView(camera, sprite))
 			{
@@ -182,7 +181,7 @@ public class Graphics
 		}
 
 		// Remove destroyed sprites from the list.
-		List<Sprite<?>> sprites = spriteSystem.getSprites();
+		List<Sprite> sprites = spriteSystem.getSprites();
 		for (int i = 0; i < sprites.size(); ++i)
 		{
 			if (sprites.get(i).isEntityDisposed())
@@ -211,7 +210,7 @@ public class Graphics
 	 * @param currentLayer
 	 *            the current layer to draw.
 	 */
-	private void drawEntities(List<Sprite<? extends Entity>> sprites, DrawLayer currentLayer)
+	private void drawEntities(List<Sprite> sprites, DrawLayer currentLayer)
 	{
 		if (sprites.size() == 0)
 		{
@@ -219,7 +218,7 @@ public class Graphics
 		}
 
 		batch.begin();
-		for (Sprite<? extends Entity> sprite : sprites)
+		for (Sprite sprite : sprites)
 		{
 			sprite.draw(batch, camera, currentLayer);
 		}
@@ -234,7 +233,7 @@ public class Graphics
 		}
 
 		batch.begin();
-		for (Sprite<?> sprite : background)
+		for (Sprite sprite : background)
 		{
 			sprite.draw(batch, camera, DrawLayer.BACKGROUND);
 		}
@@ -250,12 +249,12 @@ public class Graphics
 	 *            the height of the game map.
 	 * @return reference to the background images list.
 	 */
-	private static List<Sprite<?>> setBackground(int mapWidth, int mapHeight)
+	private static List<Sprite> setBackground(int mapWidth, int mapHeight)
 	{
-		int rows = Math.round(mapHeight / BackgroundSprite.HEIGHT) + 1;
-		int columns = Math.round(mapWidth / BackgroundSprite.WIDTH) + 1;
+		int rows = mapHeight / BackgroundSprite.HEIGHT + 1;
+		int columns = mapWidth / BackgroundSprite.WIDTH + 1;
 
-		List<Sprite<?>> background = new ArrayList<Sprite<?>>(rows + columns);
+		List<Sprite> background = new ArrayList<Sprite>(rows + columns);
 
 		for (int row = 0; row < rows; ++row)
 		{
@@ -278,7 +277,7 @@ public class Graphics
 	 *            the sprite to check.
 	 * @return true if the sprite is within the camera's view, or false otherwise.
 	 */
-	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
+	private static boolean withinCameraView(Camera camera, Sprite sprite)
 	{
 		final float cameraX = camera.position.x;
 		final float cameraY = camera.position.y;
@@ -312,10 +311,10 @@ public class Graphics
 	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
-	private static class SpriteComparator implements Comparator<Sprite<?>>
+	private static class SpriteComparator implements Comparator<Sprite>
 	{
 		@Override
-		public int compare(Sprite<?> o1, Sprite<?> o2)
+		public int compare(Sprite o1, Sprite o2)
 		{
 			return (o1.getClass().getName().compareTo(o2.getClass().getName()));
 		}

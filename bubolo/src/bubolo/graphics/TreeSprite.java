@@ -11,7 +11,7 @@ import bubolo.world.entity.concrete.Tree;
  * 
  * @author BU673 - Clone Industries
  */
-class TreeSprite extends Sprite<Tree>
+class TreeSprite extends AbstractEntitySprite<Tree>
 {
 	private Texture image;
 

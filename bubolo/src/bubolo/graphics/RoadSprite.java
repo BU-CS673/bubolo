@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.Road;
  * 
  * @author BU673 - Clone Industries
  */
-class RoadSprite extends Sprite<Road>
+class RoadSprite extends AbstractEntitySprite<Road>
 {
 	private TextureRegion[] frames;
 	

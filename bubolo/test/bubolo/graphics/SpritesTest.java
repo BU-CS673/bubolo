@@ -37,7 +37,7 @@ public class SpritesTest
 				try
 				{
 					Sprites.getInstance().createSprite(new Tank());
-					Sprite<?> sprite = Sprites.getInstance().getSprites().get(0);
+					Sprite sprite = Sprites.getInstance().getSprites().get(0);
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -67,7 +67,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+					Sprite sprite = Sprites.getInstance().createSprite(new Tree());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -97,7 +97,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
+					Sprite sprite = Sprites.getInstance().createSprite(new Grass());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -127,7 +127,7 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
+					Sprite sprite = Sprites.getInstance().createSprite(new Road());
 					assertNotNull(sprite);
 					hadException = false;
 				}
@@ -151,7 +151,7 @@ public class SpritesTest
 	{
 		try
 		{
-			Sprite<?> sprite = Sprites.getInstance().createSprite(new MockTank());
+			Sprite sprite = Sprites.getInstance().createSprite(new MockTank());
 			fail("createSprite should have failed, since it is not designed to handle MockTank objects, but did not.");
 		}
 		catch (Exception e) {}

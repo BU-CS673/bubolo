@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.MineExplosion;
  * 
  * @author BU673 - Clone Industries
  */
-class MineExplosionSprite extends Sprite<Entity>
+class MineExplosionSprite extends AbstractEntitySprite<Entity>
 {
 
 	// The index representing which animation frame will be drawn.

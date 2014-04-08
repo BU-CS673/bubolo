@@ -11,7 +11,7 @@ import bubolo.world.entity.concrete.Rubble;
  * 
  * @author BU673 - Clone Industries
  */
-class RubbleSprite extends Sprite<Rubble>
+class RubbleSprite extends AbstractEntitySprite<Rubble>
 {
 	private Texture image;
 	

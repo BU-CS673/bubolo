@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.DeepWater;
  * 
  * @author BU673 - Clone Industries
  */
-class DeepWaterSprite extends Sprite<DeepWater>
+class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 {
 	// list of texture regions, used for different tiling states
 	private TextureRegion[] frames;

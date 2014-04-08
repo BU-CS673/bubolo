@@ -48,7 +48,7 @@ public class WallSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Wall());
+				Sprite sprite = Sprites.getInstance().createSprite(new Wall());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;

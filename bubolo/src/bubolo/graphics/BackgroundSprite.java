@@ -13,7 +13,7 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU673 - Clone Industries
  */
-class BackgroundSprite extends Sprite<Entity>
+class BackgroundSprite extends AbstractEntitySprite<Entity>
 {
 	private TextureRegion[][] frames;
 

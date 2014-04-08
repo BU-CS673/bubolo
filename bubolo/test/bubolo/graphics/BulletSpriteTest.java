@@ -50,7 +50,7 @@ public class BulletSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletSprite(mock(Entity.class));
+				Sprite sprite = new BulletSprite(mock(Entity.class));
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;

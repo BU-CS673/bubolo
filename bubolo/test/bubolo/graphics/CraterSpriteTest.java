@@ -48,7 +48,7 @@ public class CraterSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Crater());
+					Sprite sprite = Sprites.getInstance().createSprite(new Crater());
 					
 					passed = true;
 					isComplete = true;
@@ -74,7 +74,7 @@ public class CraterSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Crater());
+				Sprite sprite = Sprites.getInstance().createSprite(new Crater());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 				passed = true;

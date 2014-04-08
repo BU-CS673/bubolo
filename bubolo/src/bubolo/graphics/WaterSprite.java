@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.Water;
  * 
  * @author BU673 - Clone Industries
  */
-class WaterSprite extends Sprite<Water>
+class WaterSprite extends AbstractEntitySprite<Water>
 {
 	private TextureRegion[] frames;
 	

@@ -14,7 +14,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-class TankSprite extends Sprite<Tank>
+class TankSprite extends AbstractEntitySprite<Tank>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;

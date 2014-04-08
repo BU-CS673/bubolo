@@ -52,7 +52,7 @@ public class BaseSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Base());
+				Sprite sprite = Sprites.getInstance().createSprite(new Base());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 				passed = true;

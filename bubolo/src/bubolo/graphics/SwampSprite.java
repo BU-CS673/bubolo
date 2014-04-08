@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  * @author BU673 - Clone Industries
  */
-class SwampSprite extends Sprite<Swamp>
+class SwampSprite extends AbstractEntitySprite<Swamp>
 {
 	private Texture image;
 	

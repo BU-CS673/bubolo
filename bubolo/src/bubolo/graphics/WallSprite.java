@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Wall;
  * 
  * @author BU673 - Clone Industries
  */
-class WallSprite extends Sprite<Wall>
+class WallSprite extends AbstractEntitySprite<Wall>
 {
 	private TextureRegion[] frames;
 

@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Base;
  * 
  * @author BU673 - Clone Industries
  */
-class BaseSprite extends Sprite<Base>
+class BaseSprite extends AbstractEntitySprite<Base>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;

@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Crater;
  * 
  * @author BU673 - Clone Industries
  */
-class CraterSprite extends Sprite<Crater>
+class CraterSprite extends AbstractEntitySprite<Crater>
 {
 	private TextureRegion[] frames;
 	

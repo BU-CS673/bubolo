@@ -47,7 +47,7 @@ public class SwampSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
+					Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
 					
 					passed = true;
 					isComplete = true;
@@ -73,7 +73,7 @@ public class SwampSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
+				Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 				passed = true;

@@ -42,7 +42,7 @@ public class SpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new MockSpriteTextureRegion();
+				Sprite sprite = new MockSpriteTextureRegion();
 				batch.begin();
 				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
@@ -65,7 +65,7 @@ public class SpriteTest
 			@Override public void run() {
 				Camera camera = new OrthographicCamera();
 				SpriteBatch batch = new SpriteBatch();
-				Sprite<?> sprite = new MockSpriteTextureRegion();
+				Sprite sprite = new MockSpriteTextureRegion();
 				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 			}
 		});

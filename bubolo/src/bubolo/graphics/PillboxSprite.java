@@ -12,7 +12,7 @@ import bubolo.world.entity.concrete.Pillbox;
  * 
  * @author BU673 - Clone Industries
  */
-class PillboxSprite extends Sprite<Pillbox>
+class PillboxSprite extends AbstractEntitySprite<Pillbox>
 {
 	private TextureRegion[][] allFrames;
 

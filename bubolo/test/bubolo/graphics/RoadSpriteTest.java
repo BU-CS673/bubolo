@@ -48,7 +48,7 @@ public class RoadSpriteTest
 				@Override
 				public void run()
 				{
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Road());
+					Sprite sprite = Sprites.getInstance().createSprite(new Road());
 					batch.begin();
 					sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
 					passed = true;

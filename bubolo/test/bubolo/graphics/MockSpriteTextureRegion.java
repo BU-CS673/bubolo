@@ -11,7 +11,7 @@ import bubolo.test.MockTank;
  * in the Graphics system.
  * @author BU CS673 - Clone Productions
  */
-public class MockSpriteTextureRegion extends Sprite<MockTank>
+public class MockSpriteTextureRegion extends AbstractEntitySprite<MockTank>
 {
 	/**
 	 * Constructs a mock Tank object.

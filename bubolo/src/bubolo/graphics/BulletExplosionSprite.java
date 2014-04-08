@@ -12,7 +12,7 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU673 - Clone Industries
  */
-class BulletExplosionSprite extends Sprite<Entity>
+class BulletExplosionSprite extends AbstractEntitySprite<Entity>
 {
 	private TextureRegion[][] frames;
 

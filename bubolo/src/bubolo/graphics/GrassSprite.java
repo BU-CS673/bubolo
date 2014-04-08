@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Grass;
  * 
  * @author BU673 - Clone Industries
  */
-class GrassSprite extends Sprite<Grass>
+class GrassSprite extends AbstractEntitySprite<Grass>
 {
 	private Texture image;
 	

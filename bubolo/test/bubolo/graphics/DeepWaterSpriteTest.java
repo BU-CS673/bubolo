@@ -49,7 +49,7 @@ public class DeepWaterSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new DeepWater());
+					Sprite sprite = Sprites.getInstance().createSprite(new DeepWater());
 					
 					passed = true;
 					isComplete = true;
@@ -76,7 +76,7 @@ public class DeepWaterSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new DeepWater());
+				Sprite sprite = Sprites.getInstance().createSprite(new DeepWater());
 				batch.begin();
 				sprite.draw(batch, camera, DrawLayer.TERRAIN);
 				passed = true;

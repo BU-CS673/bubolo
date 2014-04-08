@@ -11,7 +11,7 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU673 - Clone Industries
  */
-class BulletSprite extends Sprite<Entity>
+class BulletSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
