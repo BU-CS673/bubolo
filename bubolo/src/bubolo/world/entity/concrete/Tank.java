@@ -78,6 +78,32 @@ public class Tank extends Actor
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
+	
+	/**
+	 * The health of the tank
+	 */
+	private int hitPoints;
+	
+	/**
+	 * The amount of ammo of the tank
+	 */
+	private int ammoCount;
+	
+	/**
+	 * The amount of the tree resource the tank has
+	 */
+	private int treeCount;
+	
+	/**
+	 * The number of mines in the tank
+	 */
+	private int mineCount;
+	
+	/**
+	 * The number of pillboxes in the tank
+	 */
+	private int pillboxCount;
+	
 	public Tank()
 	{
 		this(UUID.randomUUID());
@@ -96,6 +122,11 @@ public class Tank extends Actor
 		setHeight(22);
 		updateBounds();
 		setSolid(true);
+		hitPoints = 100;
+		ammoCount = 100;
+		treeCount = 0;
+		pillboxCount = 0;
+		mineCount = 0;
 	}
 
 	/**
@@ -197,7 +228,8 @@ public class Tank extends Actor
 
 		bullet.setX(startX).setY(startY);
 		bullet.setRotation(getRotation());
-
+		ammoCount--;
+			
 		return bullet;
 	}
 
@@ -546,4 +578,161 @@ public class Tank extends Actor
 		accelerated = false;
 		decelerated = false;
 	}
+	
+	/**
+	 * Returns the current health of the tank
+	 * @return current hit point count
+	 */
+	public int getHitPoints() {
+		return hitPoints;
+	}
+
+	/**
+	 * Returns the current ammo count of the tank
+	 * @return current ammo count
+	 */
+	public int getAmmoCount() {
+		return ammoCount;
+	}
+
+	/**
+	 * Returns the current number of trees that the tank has gathered
+	 * @return the current tree resource count
+	 */
+	public int getTreeCount() {
+		return treeCount;
+	}
+
+	/**
+	 * Returns the number of mines the tank currently contains
+	 * @return the current mine count
+	 */
+	public int getMineCount() {
+		return mineCount;
+	}
+
+	/**
+	 * Returns the number of pillboxes the tank has on board 
+	 * @return the pillbox count for the tank
+	 */
+	public int getPillboxCount() {
+		return pillboxCount;
+	}
+	
+	/**
+	 * Changes the hit point count after taking damage
+	 * @param damagePoints how much damage the tank has taken
+	 */
+	public void takeHit(int damagePoints)
+	{
+		hitPoints -= damagePoints;
+	}
+	
+	/**
+	 * Increments the tanks health by a given amount 
+	 * @param healPoints - how many points the tank is given
+	 */
+	public void heal(int healPoints)
+	{
+		if(hitPoints < 100)
+		{
+			hitPoints += healPoints;
+		}
+		
+		if(hitPoints > 100)
+		{
+			hitPoints = 100;
+		}
+	}
+	
+	/**
+	 * Resupplies the tank ammo given a set ammount
+	 * @param newAmmo - amount of ammo being transfered to the tank
+	 */
+	public void gatherAmmo(int newAmmo)
+	{
+		if(ammoCount + newAmmo < 100)
+		{
+			ammoCount += newAmmo;
+		}
+		
+		else
+		{
+			ammoCount = 100;
+		}
+	}
+	
+	/**
+	 * Used to increment the tree count upon gathering a tree
+	 */
+	public void gatherTree()
+	{
+		treeCount++;
+	}
+	/**
+	 * This method is used to consume trees
+	 * @param treesUsed - the number of trees consumed in the action 
+	 */
+	public void useTrees(int treesUsed)
+	{
+		if(treeCount - treesUsed >= 0)
+		{
+			treeCount -= treesUsed;
+		}
+	}
+	
+	/**
+	 * This method consumes trees to increment the mine inventory in the tank
+	 */
+	public void buildMine()
+	{
+		if(mineCount < 10)
+		{
+			mineCount ++;
+			useTrees(1);
+		}
+	}
+	
+	/**
+	 * This method creates the mine in world and passes it back to the caller
+	 * @param world - the world to create the mine in
+	 * @param startX - The X position of the mine in world coordinates
+	 * @param startY - The Y position of the mine in world coordinates
+	 * @return - the mine that is created is returned
+	 */
+	public Mine dropMine(World world, float startX, float startY)
+	{
+		Mine mine = world.addEntity(Mine.class);
+		
+		mine.setX(startX).setY(startY);
+		mine.setRotation(getRotation());
+		mineCount--;
+		return mine;
+	}
+	
+	/**
+	 * This method increments the pillbox count of the tank. The caller should remove the pillbox from the world.
+	 */
+	public void gatherPillbox()
+	{
+		pillboxCount++;
+	}
+	
+	/**
+	 * This method creates a pillbox in the world from the tank's inventory
+	 * @param world - the world in which the pillbox is to be created
+	 * @param startX - the X position of the pillbox in world coordinates
+	 * @param startY - the Y position of the pillbox in world coordinates
+	 * @return - returns the created pillbox
+	 */
+	public Pillbox dropPillbox(World world, float startX, float startY)
+	{
+		Pillbox pillbox = world.addEntity(Pillbox.class);
+		
+		pillbox.setX(startX).setY(startY);
+		pillbox.setRotation(getRotation());
+		pillboxCount--;
+		return pillbox;
+	}
+	
 }

@@ -70,7 +70,7 @@ public class KeyboardTankController implements Controller
 
 	private static void processCannon(Tank tank, World world)
 	{
-		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady())
+		if (Gdx.input.isKeyPressed(Keys.SPACE) && tank.isCannonReady() && (tank.getAmmoCount() > 0) )
 		{
 			float tankCenterX = tank.getX();
 			float tankCenterY = tank.getY();
@@ -80,10 +80,11 @@ public class KeyboardTankController implements Controller
 			Bullet bullet = tank.fireCannon(world,
 					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
 					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
-
+			
 			Network net = NetworkSystem.getInstance();
 			net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
 					bullet.getRotation()));
+
 		}
 	}
 

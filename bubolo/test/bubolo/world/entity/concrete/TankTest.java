@@ -97,4 +97,85 @@ public class TankTest
 		tank.rotateRight();
 		assertEquals(rotation + 0.05f, tank.getRotation(), 0.0001f);
 	}
+	
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(100, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getAmmoCount()
+	{
+		assertEquals(100, tank.getAmmoCount(), 0);
+	}
+	
+	@Test
+	public void getTreeCount()
+	{
+		assertEquals(0, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void getMineCount()
+	{
+		assertEquals(0, tank.getMineCount(), 0);
+	}
+	
+	@Test
+	public void getPillBoxCount()
+	{
+		assertEquals(0, tank.getPillboxCount(), 0);
+	}
+	
+	@Test
+	public void takeHit()
+	{
+		tank.takeHit(20);
+		assertEquals(80, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void heal()
+	{
+		tank.takeHit(20);
+		tank.heal(5);
+		assertEquals(85, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void gatherTree()
+	{
+		tank.gatherTree();
+		assertEquals(1, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void useTrees()
+	{
+		tank.gatherTree();
+		tank.useTrees(1);
+		assertEquals(0, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void buildMine()
+	{
+		tank.buildMine();
+		assertEquals(1, tank.getMineCount(), 0);
+	}
+	
+	@Test
+	public void gatherPillBox()
+	{
+		tank.gatherPillbox();
+		assertEquals(1, tank.getPillboxCount(), 0);
+	}
+	
+	@Test
+	public void gatherAmmo()
+	{
+		tank.gatherAmmo(10);
+		assertEquals(100, tank.getAmmoCount(), 0);
+	}
 }
