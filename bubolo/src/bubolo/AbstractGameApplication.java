@@ -14,25 +14,27 @@ import bubolo.world.World;
 public abstract class AbstractGameApplication implements GameApplication
 {
 	private boolean ready;
-	
+
 	/** The game world. **/
 	protected World world;
-	
+
 	@Override
 	public final boolean isReady()
 	{
 		return ready;
 	}
-	
+
 	/**
 	 * Sets whether the game is ready.
-	 * @param value true if the game is ready.
+	 * 
+	 * @param value
+	 *            true if the game is ready.
 	 */
 	protected void setReady(boolean value)
 	{
 		ready = value;
 	}
-	
+
 	@Override
 	public void pause()
 	{
@@ -47,11 +49,10 @@ public abstract class AbstractGameApplication implements GameApplication
 	public void resume()
 	{
 	}
-	
 
 	@Override
 	public boolean isGameStarted()
 	{
-		return (world.getMapTiles() != null);
+		return (isReady() && world != null && world.getMapTiles() != null);
 	}
 }

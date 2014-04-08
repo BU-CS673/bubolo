@@ -97,7 +97,7 @@ public class SendMap implements NetworkCommand
 	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
-	private class TileInfo implements Serializable
+	private static class TileInfo implements Serializable
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -110,7 +110,7 @@ public class SendMap implements NetworkCommand
 		private final Class<? extends StationaryElement> stationaryElementClass;
 		private final UUID stationaryElementId;
 
-		TileInfo(int gridX, int gridY,
+		private TileInfo(int gridX, int gridY,
 				Class<? extends Terrain> terrainClass, UUID terrainId,
 				Class<? extends StationaryElement> stationaryElementClass,
 				UUID stationaryElementId)
@@ -128,7 +128,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the grid x coordinate.
 		 */
-		int getGridX()
+		private int getGridX()
 		{
 			return gridX;
 		}
@@ -138,7 +138,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the grid y coordinate.
 		 */
-		int getGridY()
+		private int getGridY()
 		{
 			return gridY;
 		}
@@ -148,7 +148,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the terrain's id.
 		 */
-		UUID getTerrainId()
+		private UUID getTerrainId()
 		{
 			return terrainId;
 		}
@@ -158,7 +158,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the terrain class.
 		 */
-		Class<? extends Terrain> getTerrainClass()
+		private Class<? extends Terrain> getTerrainClass()
 		{
 			return terrainClass;
 		}
@@ -168,7 +168,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the stationary element's id.
 		 */
-		UUID getStationaryElementId()
+		private UUID getStationaryElementId()
 		{
 			return stationaryElementId;
 		}
@@ -178,7 +178,7 @@ public class SendMap implements NetworkCommand
 		 * 
 		 * @return the stationary element class, or null if it does not exist.
 		 */
-		Class<? extends StationaryElement> getStationaryElementClass()
+		private Class<? extends StationaryElement> getStationaryElementClass()
 		{
 			return stationaryElementClass;
 		}
