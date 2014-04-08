@@ -38,7 +38,7 @@ class BulletSprite extends AbstractEntitySprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites spriteSystem = Sprites.getInstance();
 			spriteSystem.addSprite(new BulletExplosionSprite(x, y));

@@ -49,7 +49,7 @@ abstract class AbstractEntitySprite<T extends Entity> extends Sprite
 	 * @return true if the underlying entity is destroyed, or false otherwise.
 	 */
 	@Override
-	protected boolean isEntityDisposed()
+	protected boolean isDisposed()
 	{
 		return entity.isDisposed();
 	}

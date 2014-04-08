@@ -91,7 +91,7 @@ class PillboxSprite extends AbstractEntitySprite<Pillbox>
 		updateDamagedState();
 		updateColorSet();
 
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 			return;

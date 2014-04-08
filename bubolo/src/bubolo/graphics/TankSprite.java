@@ -81,7 +81,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 			return;

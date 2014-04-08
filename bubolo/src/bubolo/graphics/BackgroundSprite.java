@@ -54,7 +54,7 @@ class BackgroundSprite extends AbstractEntitySprite<Entity>
 	}
 
 	@Override
-	public boolean isEntityDisposed()
+	public boolean isDisposed()
 	{
 		return false;
 	}

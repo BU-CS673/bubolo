@@ -37,7 +37,7 @@ class WaterSprite extends AbstractEntitySprite<Water>
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		int currentState = this.getEntity().getTilingState();
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 

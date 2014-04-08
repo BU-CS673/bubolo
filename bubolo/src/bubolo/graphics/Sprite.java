@@ -48,11 +48,11 @@ abstract class Sprite implements Drawable
 	}
 	
 	/**
-	 * Returns true if the underlying entity is destroyed, or false otherwise.
+	 * Returns true if the sprite should be removed, or false otherwise.
 	 * 
-	 * @return true if the underlying entity is destroyed, or false otherwise.
+	 * @return true if the sprite should be removed, or false otherwise.
 	 */
-	protected abstract boolean isEntityDisposed();
+	protected abstract boolean isDisposed();
 	
 	/**
 	 * Draws the sprite to the screen.

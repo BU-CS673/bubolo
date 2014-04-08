@@ -71,7 +71,7 @@ class WallSprite extends AbstractEntitySprite<Wall>
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
 		updateDamagedState();
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

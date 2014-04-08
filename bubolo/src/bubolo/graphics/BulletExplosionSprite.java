@@ -64,7 +64,7 @@ class BulletExplosionSprite extends AbstractEntitySprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
@@ -95,7 +95,7 @@ class BulletExplosionSprite extends AbstractEntitySprite<Entity>
 	}
 
 	@Override
-	public boolean isEntityDisposed()
+	public boolean isDisposed()
 	{
 		return disposed;
 	}

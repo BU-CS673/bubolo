@@ -202,7 +202,7 @@ public class BulletExplosionSpriteTest
 			public void run()
 			{
 				Sprite sprite = new BulletExplosionSprite(1, 1);
-				passed = (sprite.isEntityDisposed() == false);
+				passed = (sprite.isDisposed() == false);
 				isComplete = true;
 			}
 		});

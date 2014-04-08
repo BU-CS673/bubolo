@@ -40,7 +40,7 @@ class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 
 		int currentState = this.getEntity().getTilingState();
 
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
