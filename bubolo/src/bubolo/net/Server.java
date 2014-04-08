@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.net.command.SendMap;
 import bubolo.net.command.StartGame;
+import bubolo.util.Nullable;
 import bubolo.world.World;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -96,7 +97,7 @@ class Server implements NetworkSubsystem
 	void startGame(World world)
 	{
 		checkState(!clients.isEmpty(), "No clients are connected.");
-		
+
 		gameStarted.set(true);
 		clientAcceptor.interrupt();
 
@@ -128,7 +129,7 @@ class Server implements NetworkSubsystem
 	}
 
 	/**
-	 * Queues a network command to be sent to the other players.
+	 * Sends a network command to the other players.
 	 * 
 	 * @param command
 	 *            the network command to send.
@@ -136,7 +137,7 @@ class Server implements NetworkSubsystem
 	 *            the client to ignore (i.e., the client that will not receive the command), or null
 	 *            if all clients should receive the command.
 	 */
-	private void send(NetworkCommand command, ClientSocket clientToIgnore)
+	private void send(NetworkCommand command, @Nullable ClientSocket clientToIgnore)
 	{
 		for (ClientSocket client : clients)
 		{
@@ -249,7 +250,8 @@ class Server implements NetworkSubsystem
 		 * @param shutdown
 		 *            reference to the server's shutdown object.
 		 */
-		private ClientReader(ClientSocket client, Server server, Network network, AtomicBoolean shutdown)
+		private ClientReader(ClientSocket client, Server server, Network network,
+				AtomicBoolean shutdown)
 		{
 			if (client == null)
 			{
