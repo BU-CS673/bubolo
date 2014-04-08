@@ -50,13 +50,13 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
-	
+
 	/** The file name of the texture. */
 	static final String TEXTURE_FILE = "tank.png";
 
 	/**
-	 * Constructor for the TankSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system.
+	 * Constructor for the TankSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param tank
 	 *            Reference to the tank that this TankSprite represents.
@@ -90,11 +90,13 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-		
+
 		if (getEntity().isHidden() && !getEntity().isLocalPlayer())
 		{
-			updateColorSet();
+			return;
 		}
+
+		updateColorSet();
 
 		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 		if (this.getEntity().getSpeed() > 0.0f)
@@ -161,8 +163,8 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	}
 
 	/**
-	 * Initializes the tank. This is needed because the Tank entity may not know whether
-	 * it is local or not at construction time.
+	 * Initializes the tank. This is needed because the Tank entity may not know whether it is local
+	 * or not at construction time.
 	 * 
 	 * @param camera
 	 *            reference to the camera.
