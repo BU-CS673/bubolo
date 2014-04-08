@@ -11,31 +11,45 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import bubolo.net.command.HelloNetworkCommand;
+import bubolo.net.command.SendMap;
+import bubolo.net.command.StartGame;
+import bubolo.util.Nullable;
+import bubolo.world.World;
+import static com.google.common.base.Preconditions.checkState;
+
+import com.badlogic.gdx.Gdx;
 
 /**
  * The game server.
  * 
  * @author BU CS673 - Clone Productions
  */
-class Server implements NetworkSubsystem, Runnable
+class Server implements NetworkSubsystem
 {
 	private ServerSocket socket;
 
-	// TODO (cdc - 3/23/2014): Expand this to allow multiple connections.
-	private Socket client;
+	// The list of connected clients.
+	private List<ClientSocket> clients;
 
 	// Specifies whether the server has shut down.
 	private AtomicBoolean shutdown = new AtomicBoolean(false);
+
+	// Specifies whether the game has started.
+	private AtomicBoolean gameStarted = new AtomicBoolean(false);
 
 	private final Executor sender;
 
 	// Reference to the network system.
 	private final Network network;
 
-	private ObjectOutputStream clientStream;
+	private Thread clientAcceptor;
 
 	/**
 	 * Constructs a Server object.
@@ -46,6 +60,7 @@ class Server implements NetworkSubsystem, Runnable
 	Server(Network network)
 	{
 		this.network = network;
+		this.clients = new CopyOnWriteArrayList<ClientSocket>();
 		this.sender = Executors.newSingleThreadExecutor();
 	}
 
@@ -63,14 +78,9 @@ class Server implements NetworkSubsystem, Runnable
 		{
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
 
-			// TODO (cdc - 3/23/2013): Move accept() into a different thread.
-			client = socket.accept();
-			client.setTcpNoDelay(true);
-
-			clientStream = new ObjectOutputStream(client.getOutputStream());
-
-			// Start the network reader thread.
-			new Thread(this).start();
+			clientAcceptor = new Thread(
+					new ClientAcceptor(shutdown, gameStarted, clients, socket, this, network));
+			clientAcceptor.start();
 		}
 		catch (IOException e)
 		{
@@ -78,10 +88,27 @@ class Server implements NetworkSubsystem, Runnable
 		}
 	}
 
+	/**
+	 * Notifies clients that the game is ready to start.
+	 * 
+	 * @param world
+	 *            reference to the game world.
+	 */
+	void startGame(World world)
+	{
+		checkState(!clients.isEmpty(), "No clients are connected.");
+
+		gameStarted.set(true);
+		clientAcceptor.interrupt();
+
+		StartGame startGameCommand = new StartGame(new SendMap(world));
+		send(startGameCommand);
+	}
+
 	@Override
 	public void send(NetworkCommand command)
 	{
-		sender.execute(new NetworkSender(clientStream, command));
+		send(command, null);
 	}
 
 	@Override
@@ -90,30 +117,252 @@ class Server implements NetworkSubsystem, Runnable
 		shutdown.set(true);
 	}
 
-	@Override
-	public void run()
+	/**
+	 * Removes the client
+	 * 
+	 * @param client
+	 */
+	private void removeClient(ClientSocket client)
 	{
-		if (client == null)
-		{
-			throw new IllegalStateException(
-					"Unable to run server; the network system has not been started.");
-		}
+		client.dispose();
+		clients.remove(client);
+	}
 
-		try (ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream()))
+	/**
+	 * Sends a network command to the other players.
+	 * 
+	 * @param command
+	 *            the network command to send.
+	 * @param clientToIgnore
+	 *            the client to ignore (i.e., the client that will not receive the command), or null
+	 *            if all clients should receive the command.
+	 */
+	private void send(NetworkCommand command, @Nullable ClientSocket clientToIgnore)
+	{
+		for (ClientSocket client : clients)
 		{
-			while (!shutdown.get())
+			if ((clientToIgnore == null) || (clientToIgnore != null && client != clientToIgnore))
 			{
-				NetworkCommand command = (NetworkCommand)inputStream.readObject();
-				network.postToGameThread(command);
+				sender.execute(new NetworkSender(client.getOutputStream(), command));
 			}
 		}
-		catch (IOException | ClassNotFoundException e)
+	}
+
+	/**
+	 * A client connection acceptor.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
+	private static class ClientAcceptor implements Runnable
+	{
+		private final AtomicBoolean shutdown;
+		private final AtomicBoolean gameStarted;
+		private final List<ClientSocket> clients;
+		private final ServerSocket socket;
+		private final Server server;
+		private final Network network;
+
+		/**
+		 * Constructs a client connection acceptor.
+		 * 
+		 * @param shutdown
+		 *            reference to the shutdown atomic boolean.
+		 * @param gameStarted
+		 *            reference to the gameStarted atomic boolean.
+		 * @param clients
+		 *            the instantiated list of clients.
+		 * @param socket
+		 *            the server socket.
+		 * @param server
+		 *            reference to the server.
+		 * @param network
+		 *            reference to the network system.
+		 */
+		private ClientAcceptor(AtomicBoolean shutdown, AtomicBoolean gameStarted,
+				List<ClientSocket> clients, ServerSocket socket, Server server, Network network)
 		{
-			// TODO: Pass this exception to the primary thread, and eliminate the stack track.
-			e.printStackTrace();
-			throw new NetworkException(e);
+			this.shutdown = shutdown;
+			this.gameStarted = gameStarted;
+			this.clients = clients;
+			this.socket = socket;
+			this.server = server;
+			this.network = network;
 		}
-		finally
+
+		@Override
+		public void run()
+		{
+			int clientCount = 0;
+			// Continue accepting connections until the network has been shut down, the game has
+			// been started, or this thread has received an interrupt.
+			while (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
+			{
+				try
+				{
+					ClientSocket clientSocket = new ClientSocket(socket.accept());
+					if (!shutdown.get() && !gameStarted.get() && !Thread.interrupted())
+					{
+						clients.add(clientSocket);
+						clientSocket.getClient().setTcpNoDelay(true);
+						network.send(new HelloNetworkCommand("Hello from Server"));
+					}
+					else
+					{
+						clientSocket.dispose();
+					}
+				}
+				catch (IOException e)
+				{
+					System.out.println(e);
+					throw new NetworkException(e);
+					// TODO (cdc - 4/7/2014): Pass this to the main thread.
+				}
+
+				// Start the network reader thread.
+				new Thread(new ClientReader(
+						clients.get(clientCount), server, network, shutdown)).start();
+				++clientCount;
+			}
+		}
+	}
+
+	/**
+	 * Reads data from client connections.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
+	private static class ClientReader implements Runnable
+	{
+		private final AtomicBoolean shutdown;
+		private final Network network;
+		private final ClientSocket client;
+		private final Server server;
+
+		/**
+		 * Constructs a new ClientReader.
+		 * 
+		 * @param client
+		 *            the connected ClientSocket object.
+		 * @param server
+		 *            the Server object.
+		 * @param network
+		 *            reference to the network system.
+		 * @param shutdown
+		 *            reference to the server's shutdown object.
+		 */
+		private ClientReader(ClientSocket client, Server server, Network network,
+				AtomicBoolean shutdown)
+		{
+			if (client == null)
+			{
+				throw new IllegalStateException(
+						"Unable to run server; the network system has not been started.");
+			}
+
+			this.client = client;
+			this.network = network;
+			this.shutdown = shutdown;
+			this.server = server;
+		}
+
+		@Override
+		public void run()
+		{
+			try (ObjectInputStream inputStream = new ObjectInputStream(
+					client.getClient().getInputStream()))
+			{
+				while (!shutdown.get())
+				{
+					NetworkCommand command = (NetworkCommand)inputStream.readObject();
+					server.send(command, client);
+					network.postToGameThread(command);
+				}
+			}
+			catch (IOException | ClassNotFoundException e)
+			{
+				// TODO: Pass this exception to the primary thread, and eliminate the
+				// stack track.
+				e.printStackTrace();
+				throw new NetworkException(e);
+			}
+			finally
+			{
+				class RemoveClient implements Runnable
+				{
+					private final Server serverSocket;
+					private final ClientSocket clientSocket;
+
+					RemoveClient(Server server, ClientSocket client)
+					{
+						this.clientSocket = client;
+						this.serverSocket = server;
+					}
+
+					@Override
+					public void run()
+					{
+						serverSocket.removeClient(clientSocket);
+					}
+				}
+
+				Gdx.app.postRunnable(new RemoveClient(server, client));
+			}
+		}
+	}
+
+	/**
+	 * Wraps a client Socket connection and a client stream.
+	 * 
+	 * @author BU CS673 - Clone Productions
+	 */
+	private static class ClientSocket
+	{
+		private final Socket client;
+		private final ObjectOutputStream clientStream;
+
+		/**
+		 * Constructs a new ClientSocket.
+		 * 
+		 * @param client
+		 *            the connected client Socket object.
+		 */
+		private ClientSocket(Socket client)
+		{
+			this.client = client;
+			try
+			{
+				this.clientStream = new ObjectOutputStream(client.getOutputStream());
+			}
+			catch (IOException e)
+			{
+				throw new NetworkException(e);
+			}
+		}
+
+		/**
+		 * Returns a reference to the underlying client Socket.
+		 * 
+		 * @return a reference to the underlying client Socket.
+		 */
+		private Socket getClient()
+		{
+			return client;
+		}
+
+		/**
+		 * Returns the client's object output stream.
+		 * 
+		 * @return the client's object output stream.
+		 */
+		private ObjectOutputStream getOutputStream()
+		{
+			return clientStream;
+		}
+
+		/**
+		 * Closes the connection.
+		 */
+		private void dispose()
 		{
 			try
 			{

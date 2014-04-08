@@ -1,19 +1,29 @@
 package bubolo.integration;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import javax.swing.JOptionPane;
+
+import org.json.simple.parser.ParseException;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -21,9 +31,9 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetServerTestApplication implements GameApplication
+public class NetServerTestApplication extends AbstractGameApplication
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws UnknownHostException
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Server Integration";
@@ -33,16 +43,11 @@ public class NetServerTestApplication implements GameApplication
 		new LwjglApplication(new NetServerTestApplication(1067, 600), cfg);
 	}
 	
-	private int windowWidth;
-	private int windowHeight;
+	private final int windowWidth;
+	private final int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	private Network network;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -65,12 +70,6 @@ public class NetServerTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -79,30 +78,42 @@ public class NetServerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		graphics = new Graphics(windowWidth, windowHeight);
+		world = new GameWorld(32*94, 32*94);
+		
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+		try
+		{
+			world = fileParser.parseMap(path);
+		}
+		catch (ParseException | IOException e)
+		{
+			e.printStackTrace();
+		}
+		
 		network = NetworkSystem.getInstance();
 		network.startServer();
 		
+		int response = JOptionPane.showConfirmDialog(null,
+				"Click OK to start the game.",
+				"Start Game",
+				JOptionPane.OK_CANCEL_OPTION);
+		
+		if (response == JOptionPane.CANCEL_OPTION)
+		{
+			Gdx.app.exit();
+		}
+		network.startGame(world);
+		
 		network.send(new HelloNetworkCommand("Hello from the server."));
 		
-		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
-		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
-		}
-		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1100, 100, 0);
 		tank.setLocalPlayer(true);
-		
 		network.send(new CreateTank(tank));
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**

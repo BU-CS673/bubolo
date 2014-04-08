@@ -63,14 +63,14 @@ public class MockWorld implements World
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -78,7 +78,7 @@ public class MockWorld implements World
 	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -86,7 +86,7 @@ public class MockWorld implements World
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -94,18 +94,47 @@ public class MockWorld implements World
 
 	public List<Entity> getTanks() 
 	{
+		// do nothing
 		return null;
 	}
 
 	@Override
 	public void setMapTiles(Tile[][] mapTiles)
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		
 	}
 	public Tile[][] getMapTiles()
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
+	}
+
+	@Override
+	public List<Entity> getActors()
+	{
+		// do nothing
+		return null;
+	}
+
+	@Override
+	public List<Entity> getEffects()
+	{
+		// do nothing
+		return null;
+	}
+
+	@Override
+	public void setMapHeight(int height)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setMapWidth(int width)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
