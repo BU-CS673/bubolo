@@ -59,4 +59,16 @@ public class BuboloApplicationTest
 	{
 		ga.resume();
 	}
+	
+	@Test
+	public void isGameStarted()
+	{
+		assertFalse(ga.isGameStarted());
+	}
+	
+	@Test
+	public void disposeTest()
+	{
+		ga.dispose();
+	}
 }
