@@ -24,6 +24,8 @@ public class BuboloApplicationTest
 	public void testIsReady()
 	{
 		assertFalse(ga.isReady());
+		ga.setReady(true);
+		assertTrue(ga.isReady());
 	}
 
 	@Test
