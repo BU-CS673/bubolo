@@ -45,14 +45,14 @@ class BaseSprite extends Sprite<Base>
 	// The last animation state that the Base was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
-	
+
 	/** The file name of the texture. */
 	static final String TEXTURE_FILE = "base.png";
 
 	/**
-	 * Constructor for the BaseSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * Constructor for the BaseSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system (instead, call the Sprite.create(entity)
+	 * static method).
 	 * 
 	 * @param base
 	 *            Reference to the Base that this BaseSprite represents.
@@ -95,11 +95,8 @@ class BaseSprite extends Sprite<Base>
 		else
 		{
 			updateColorSet();
-			
-			if (this.getEntity().isCharging())
-				animationState = 1;
-			else
-				animationState = 0;
+
+			animationState = (this.getEntity().isCharging()) ? 1 : animationState;
 
 			switch (animationState)
 			{
