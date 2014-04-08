@@ -90,8 +90,11 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-
-		updateColorSet();
+		
+		if (getEntity().isHidden() && !getEntity().isLocalPlayer())
+		{
+			updateColorSet();
+		}
 
 		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 		if (this.getEntity().getSpeed() > 0.0f)
