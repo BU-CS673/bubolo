@@ -48,8 +48,18 @@ public class BulletExplosionSpriteTest
 			public void run()
 			{
 				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
-				passed = true;
-				isComplete = true;
+				
+				try {
+					batch.begin();
+					sprite.draw(batch, camera, sprite.getDrawLayer());
+					passed = true;
+				} catch (Exception e) {
+					e.printStackTrace();
+					passed = false;	
+				} finally {
+					batch.end();
+					isComplete = true;
+				}
 			}
 		});
 
