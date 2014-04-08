@@ -279,6 +279,13 @@ public class Graphics
 	 */
 	private static boolean withinCameraView(Camera camera, Sprite sprite)
 	{
+		if (sprite instanceof TankSprite)
+		{
+			// Always draw the tank, since otherwise the camera won't be attached to it if the tank
+			// starts off screen.
+			return true;
+		}
+
 		final float cameraX = camera.position.x;
 		final float cameraY = camera.position.y;
 
