@@ -61,6 +61,8 @@ public class Graphics
 
 	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
 
+	private List<Sprite<?>> background;
+
 	/**
 	 * Gets a reference to the Graphics system. The Graphics system must be explicitly constructed
 	 * using the <code>Graphics(width, height)</code> constructor before this is called, or an
@@ -127,6 +129,7 @@ public class Graphics
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
 		spriteSystem = Sprites.getInstance();
+
 		loadAllTextures();
 
 		synchronized (Graphics.class)
@@ -147,7 +150,7 @@ public class Graphics
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's
+		// Get list of sprites, and clip sprites that are outside of the camera's
 		// view.
 		spritesInView.clear();
 		for (Sprite<?> sprite : spriteSystem.getSprites())
@@ -158,10 +161,13 @@ public class Graphics
 			}
 		}
 
-		// 3. Sort list by sprite type, to facilitate batching.
+		// Sort list by sprite type, to facilitate batching.
 		Collections.sort(spritesInView, spriteComparator);
 
-		// 4. Render sprites by layer.
+		// Draw the background layer.
+		drawBackground(world);
+
+		// Render sprites by layer.
 		drawEntities(spritesInView, DrawLayer.BACKGROUND);
 		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
 		drawEntities(spritesInView, DrawLayer.TERRAIN);
@@ -220,6 +226,49 @@ public class Graphics
 		batch.end();
 	}
 
+	private void drawBackground(World world)
+	{
+		if (background == null)
+		{
+			background = setBackground(world.getMapWidth(), world.getMapHeight());
+		}
+
+		batch.begin();
+		for (Sprite<?> sprite : background)
+		{
+			sprite.draw(batch, camera, DrawLayer.BACKGROUND);
+		}
+		batch.end();
+	}
+
+	/**
+	 * Sets the background images.
+	 * 
+	 * @param mapWidth
+	 *            the width of the game map.
+	 * @param mapHeight
+	 *            the height of the game map.
+	 * @return reference to the background images list.
+	 */
+	private static List<Sprite<?>> setBackground(int mapWidth, int mapHeight)
+	{
+		int rows = Math.round(mapHeight / BackgroundSprite.HEIGHT) + 1;
+		int columns = Math.round(mapWidth / BackgroundSprite.WIDTH) + 1;
+
+		List<Sprite<?>> background = new ArrayList<Sprite<?>>(rows + columns);
+
+		for (int row = 0; row < rows; ++row)
+		{
+			for (int column = 0; column < columns; ++column)
+			{
+				background.add(new BackgroundSprite(
+						column * BackgroundSprite.WIDTH, row * BackgroundSprite.HEIGHT));
+			}
+		}
+
+		return background;
+	}
+
 	/**
 	 * Returns true if the x, y, height and width of the sprite are within the camera's view.
 	 * 
@@ -235,9 +284,9 @@ public class Graphics
 		final float cameraY = camera.position.y;
 
 		return (sprite.getX() + sprite.getWidth() / 2 + cameraX > 0
-				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth * 2
+				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth
 				&& sprite.getY() + sprite.getHeight() / 2 + cameraY > 0
-				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight * 2);
+				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight);
 	}
 
 	/**
