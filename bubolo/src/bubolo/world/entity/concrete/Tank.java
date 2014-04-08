@@ -12,6 +12,7 @@ import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
 
 /**
  * The tank, which may be controlled by a local player, a networked player, or an AI bot.
@@ -374,6 +375,20 @@ public class Tank extends Actor
 			return;
 		}
 		Tile closeTile = allTiles[gridX][gridY];
+		StationaryElement closeElement;
+
+		if (!closeTile.hasElement())
+		{
+			hidden = false;
+			return;
+		}
+
+		closeElement = closeTile.getElement();
+		if (!(closeElement instanceof Tree))
+		{
+			hidden = false;
+			return;
+		}
 		boolean[] corners = TileUtil.getCornerMatches(closeTile, world, new Class[] { Tree.class });
 		boolean[] edges = TileUtil.getEdgeMatches(closeTile, world, new Class[] { Tree.class });
 		for (int i = 0; i < 4; i++)
