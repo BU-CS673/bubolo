@@ -121,8 +121,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			}
 			drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 
-			// Progress the tank building animation.
-			// TODO: only change frames when the tank is actually building.
+			// Progress the tank drive forward animation.
 			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
 			lastFrameTime = System.currentTimeMillis();
 			if (frameTimeRemaining < 0)
@@ -140,8 +139,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			}
 			drawTexture(batch, camera, layer, backwardFrames[frameIndex][colorId]);
 
-			// Progress the tank building animation.
-			// TODO: only change frames when the tank is actually building.
+			// Progress the tank drive backward animation.
 			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
 			lastFrameTime = System.currentTimeMillis();
 			if (frameTimeRemaining < 0)
