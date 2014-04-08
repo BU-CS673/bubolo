@@ -32,6 +32,13 @@ public class TileUtilTest
 		tiles[1][1] = new Tile(0, 1, new Water());
 		world.setMapTiles(tiles);
 	}
+	
+	@Test
+	public void isValidTile(){
+		assertEquals(true, TileUtil.isValidTile(0,0, world));
+		assertEquals(false, TileUtil.isValidTile(3,3, world));
+		assertEquals(false, TileUtil.isValidTile(-1,0, world));
+	}
 
 	@Test
 	public void getCornerStates()
