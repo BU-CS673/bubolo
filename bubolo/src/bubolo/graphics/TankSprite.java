@@ -1,6 +1,7 @@
 package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,10 +27,10 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// Why the y value first? Because the y value represents the color set to be used.
 	private TextureRegion[][] frames;
 
-	// An array of the frames to be used for the driving forwards animation.
+	// An array of the frames to be used for the driving backward animation.
 	private TextureRegion[][] backwardFrames;
 
-	// An array of the frames to be used for the driving backwards animation.
+	// An array of the frames to be used for the driving forward animation.
 	private TextureRegion[][] forwardFrames;
 
 	// Frame to be used for the standing (idle) animation
@@ -50,6 +51,8 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+
+	private Color color;
 
 	/** The file name of the texture. */
 	static final String TEXTURE_FILE = "tank.png";
@@ -97,17 +100,8 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		}
 
 		updateColorSet();
-
-		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
-		if (this.getEntity().getSpeed() > 0.0f)
-		{
-			animationState = 1;
-		}
-		else
-		{
-			animationState = 0;
-		}
-
+		
+		animationState = (getEntity().getSpeed() > 0.f) ? 1 : 0;
 		switch (animationState)
 		{
 		case 0:
