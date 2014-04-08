@@ -219,6 +219,10 @@ public class Tank extends Actor
 	}
 
 	/**
+<<<<<<< HEAD
+	 * Returns a list of all Entities that would overlap with this Tank if it was where it will be
+	 * in one game tick, along its current trajectory.
+=======
 	 * Checks to see whether this Tank is currently hidden (ex. by being in a clump of
 	 * trees)
 	 * 
@@ -232,6 +236,7 @@ public class Tank extends Actor
 	/**
 	 * Returns a list of all Entities that would overlap with this Tank if it was where it
 	 * will be in one game tick, along its current trajectory.
+>>>>>>> production
 	 */
 	private List<Entity> getLookaheadEntities(World w)
 	{

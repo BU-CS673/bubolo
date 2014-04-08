@@ -40,9 +40,15 @@ public class TankTest
 	}
 
 	@Test
+	public void isHidden()
+	{
+		assertEquals(false, tank.isHidden());
+	}
+
+	@Test
 	public void getSpeed()
 	{
-		assertEquals(0, (int)tank.getSpeed());
+		assertEquals(0, (int) tank.getSpeed());
 	}
 
 	@Test
@@ -83,7 +89,7 @@ public class TankTest
 	@Test
 	public void rotateLeft()
 	{
-		tank.setRotation((float)Math.PI / 2);
+		tank.setRotation((float) Math.PI / 2);
 		float rotation = tank.getRotation();
 		tank.rotateLeft();
 		assertEquals((rotation - 0.05f), tank.getRotation(), 0.0001f);
@@ -92,7 +98,7 @@ public class TankTest
 	@Test
 	public void rotateRight()
 	{
-		tank.setRotation((float)Math.PI / 2);
+		tank.setRotation((float) Math.PI / 2);
 		float rotation = tank.getRotation();
 		tank.rotateRight();
 		assertEquals(rotation + 0.05f, tank.getRotation(), 0.0001f);
