@@ -121,7 +121,7 @@ class Server implements NetworkSubsystem
 	 * 
 	 * @param client
 	 */
-	void removeClient(ClientSocket client)
+	private void removeClient(ClientSocket client)
 	{
 		client.dispose();
 		clients.remove(client);
@@ -136,7 +136,7 @@ class Server implements NetworkSubsystem
 	 *            the client to ignore (i.e., the client that will not receive the command), or null
 	 *            if all clients should receive the command.
 	 */
-	void send(NetworkCommand command, ClientSocket clientToIgnore)
+	private void send(NetworkCommand command, ClientSocket clientToIgnore)
 	{
 		for (ClientSocket client : clients)
 		{
@@ -177,7 +177,7 @@ class Server implements NetworkSubsystem
 		 * @param network
 		 *            reference to the network system.
 		 */
-		ClientAcceptor(AtomicBoolean shutdown, AtomicBoolean gameStarted,
+		private ClientAcceptor(AtomicBoolean shutdown, AtomicBoolean gameStarted,
 				List<ClientSocket> clients, ServerSocket socket, Server server, Network network)
 		{
 			this.shutdown = shutdown;
@@ -249,7 +249,7 @@ class Server implements NetworkSubsystem
 		 * @param shutdown
 		 *            reference to the server's shutdown object.
 		 */
-		ClientReader(ClientSocket client, Server server, Network network, AtomicBoolean shutdown)
+		private ClientReader(ClientSocket client, Server server, Network network, AtomicBoolean shutdown)
 		{
 			if (client == null)
 			{
@@ -324,7 +324,7 @@ class Server implements NetworkSubsystem
 		 * @param client
 		 *            the connected client Socket object.
 		 */
-		ClientSocket(Socket client)
+		private ClientSocket(Socket client)
 		{
 			this.client = client;
 			try
@@ -342,7 +342,7 @@ class Server implements NetworkSubsystem
 		 * 
 		 * @return a reference to the underlying client Socket.
 		 */
-		Socket getClient()
+		private Socket getClient()
 		{
 			return client;
 		}
@@ -352,7 +352,7 @@ class Server implements NetworkSubsystem
 		 * 
 		 * @return the client's object output stream.
 		 */
-		ObjectOutputStream getOutputStream()
+		private ObjectOutputStream getOutputStream()
 		{
 			return clientStream;
 		}
@@ -360,7 +360,7 @@ class Server implements NetworkSubsystem
 		/**
 		 * Closes the connection.
 		 */
-		void dispose()
+		private void dispose()
 		{
 			try
 			{

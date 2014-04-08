@@ -57,10 +57,4 @@ public class ServerTest
 			fail("Exception expected, but none encountered.");
 		} catch (IllegalStateException e) { }
 	}
-	
-//	@Test
-//	public void testRemove()
-//	{
-//		server.removeClient(mock(ClientSocket.class));
-//	}
 }
