@@ -33,7 +33,7 @@ public class GameWorldTest
 {
 	boolean isComplete = false;
 	boolean passed = false;
-	
+
 	@BeforeClass
 	public static void setupClass()
 	{
@@ -60,6 +60,42 @@ public class GameWorldTest
 	}
 
 	@Test
+	public void getTanks()
+	{
+		World w= new GameWorld(500, 500);
+		Tank t = w.addEntity(Tank.class);
+		List l = w.getTanks();
+		assertEquals("List does not contain the target tank!", true, l.contains(t));
+		w.removeEntity(t);
+		l = w.getTanks();
+		assertEquals("List contains the target tank after it was removed!", false, l.contains(t));
+	}
+
+	@Test
+	public void getEffects()
+	{
+		World w= new GameWorld(500, 500);
+		Bullet b = w.addEntity(Bullet.class);
+		List l = w.getEffects();
+		assertEquals("List does not contain the target tank!", true, l.contains(b));
+		w.removeEntity(b);
+		l = w.getEffects();
+		assertEquals("List contains the target tank after it was removed!", false, l.contains(b));
+	}
+
+	@Test
+	public void getActors()
+	{
+		World w= new GameWorld(500, 500);
+		Tank t = w.addEntity(Tank.class);
+		List l = w.getActors();
+		assertEquals("List does not contain the target tank!", true, l.contains(t));
+		w.removeEntity(t);
+		l = w.getActors();
+		assertEquals("List contains the target tank after it was removed!", false, l.contains(t));
+	}
+
+	@Test
 	public void gameWorldBadHeight()
 	{
 		try
@@ -71,184 +107,226 @@ public class GameWorldTest
 		{
 		}
 	}
-	
+
 	@Test
 	public void testAddEntityBase()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Base.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityBullet()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Bullet.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityCrater()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Crater.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityDeepWater()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(DeepWater.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityGrass()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Grass.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityEngineer()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Engineer.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityMine()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Mine.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityPillbox()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Pillbox.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityRoad()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Road.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityRubble()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Rubble.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntitySwamp()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Swamp.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityTank()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Tank.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
+
 	@Test
 	public void testAddEntityTree()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Tree.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
-	
-//	@Test
-//	public void testAddEntityWall()
-//	{
-//		boolean isComplete = false;
-//		passed = false;
-//		
-//		Gdx.app.postRunnable(new AddEntityRunnable(Wall.class));
-//		
-//		while (!isComplete) { Thread.yield(); }		
-//		assertTrue(passed);
-//	}
-	
+
+	// @Test
+	// public void testAddEntityWall()
+	// {
+	// boolean isComplete = false;
+	// passed = false;
+	//
+	// Gdx.app.postRunnable(new AddEntityRunnable(Wall.class));
+	//
+	// while (!isComplete) { Thread.yield(); }
+	// assertTrue(passed);
+	// }
+
 	@Test
 	public void testAddEntityWater()
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new AddEntityRunnable(Water.class));
-		
-		while (!isComplete) { Thread.yield(); }		
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
 		assertTrue(passed);
 	}
 
@@ -257,7 +335,7 @@ public class GameWorldTest
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run()
@@ -274,7 +352,7 @@ public class GameWorldTest
 		{
 			Thread.yield();
 		}
-		
+
 		assertTrue(passed);
 	}
 
@@ -283,7 +361,7 @@ public class GameWorldTest
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run()
@@ -300,8 +378,8 @@ public class GameWorldTest
 		{
 			Thread.yield();
 		}
-		
-		assertTrue(passed);	
+
+		assertTrue(passed);
 	}
 
 	@Test
@@ -309,31 +387,37 @@ public class GameWorldTest
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run()
 			{
 				World w = new GameWorld(1, 1);
 				UUID id = null;
-				try {
+				try
+				{
 					w.addEntity(Road.class);
 					w.update();
 					Entity e = w.getEntities().get(0);
 					id = e.getId();
-	
+
 					w.removeEntity(e);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 					isComplete = true;
 					return;
 				}
-				
-				try {					
+
+				try
+				{
 					w.getEntity(id);
 					isComplete = true;
 					passed = false;
-				} catch (Exception exception) { 
+				}
+				catch (Exception exception)
+				{
 					passed = true;
 					isComplete = true;
 				}
@@ -344,7 +428,7 @@ public class GameWorldTest
 		{
 			Thread.yield();
 		}
-		
+
 		assertTrue(passed);
 	}
 
@@ -353,26 +437,29 @@ public class GameWorldTest
 	{
 		isComplete = false;
 		passed = false;
-		
+
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run()
 			{
 				passed = false;
 				isComplete = false;
-				
+
 				World w = new GameWorld(1, 1);
 				UUID id = null;
-				try {
+				try
+				{
 					Tank t = w.addEntity(Tank.class);
 					w.update();
 					id = t.getId();
 					w.removeEntity(id);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					isComplete = true;
 					return;
 				}
-				
+
 				try
 				{
 					w.getEntity(id);
@@ -390,7 +477,7 @@ public class GameWorldTest
 		{
 			Thread.yield();
 		}
-		
+
 		assertTrue(passed);
 	}
 
@@ -408,21 +495,19 @@ public class GameWorldTest
 		assertEquals(50, w.getMapHeight());
 	}
 
-	
-	
 	private class AddEntityRunnable implements Runnable
 	{
 		private Class<? extends Entity> c;
-		
+
 		AddEntityRunnable(Class<? extends Entity> c)
 		{
 			this.c = c;
 		}
-		
-		@Override 
-		public void run() 
+
+		@Override
+		public void run()
 		{
-			try 
+			try
 			{
 				isComplete = false;
 				passed = false;
@@ -430,11 +515,11 @@ public class GameWorldTest
 				world.addEntity(c);
 				passed = true;
 				isComplete = true;
-			} 
-			catch (Exception e) 
-			{ 
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
-				isComplete = true; 
+				isComplete = true;
 			}
 		}
 	};

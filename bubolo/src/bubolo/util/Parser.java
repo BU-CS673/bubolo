@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.ParseException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
@@ -20,8 +20,8 @@ import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.*;
 
 /**
- * The Parser object. The game utility to translate a give map file into a game world to
- * be executed.
+ * The Parser object. The game utility to translate a give map file into a game world to be
+ * executed.
  * 
  * @author BU673 - Clone Productions
  */
@@ -32,8 +32,8 @@ public class Parser
 	private static Parser currentParser = null;
 
 	/**
-	 * Parser is a singleton object. No need for multiple parsers within one instance of
-	 * the application.
+	 * Parser is a singleton object. No need for multiple parsers within one instance of the
+	 * application.
 	 */
 	protected Parser()
 	{
@@ -43,8 +43,8 @@ public class Parser
 	/**
 	 * Generates new parser or returns existing object. Lazy instantiation is used.
 	 * 
-	 * @return either a new parser if one has not been created previously or a the
-	 *         previously created instance
+	 * @return either a new parser if one has not been created previously or a the previously
+	 *         created instance
 	 */
 	public static Parser getInstance()
 	{
@@ -64,8 +64,10 @@ public class Parser
 	 * @return a World representation of the map file that was parsed
 	 * @throws ParseException
 	 *             for invalid JSON files
+	 * @throws IOException when 
+	 * @throws org.json.simple.parser.ParseException 
 	 */
-	public World parseMap(Path mapPath) throws ParseException
+	public World parseMap(Path mapPath) throws IOException, ParseException
 	{
 		int mapHeight = 0;
 		int mapWidth = 0;
@@ -82,17 +84,17 @@ public class Parser
 			JSONParser parser = new JSONParser();
 			obj = parser.parse(reader);
 
-			JSONObject jsonObject = (JSONObject) obj;
+			JSONObject jsonObject = (JSONObject)obj;
 
-			mapHeight = (int) ((long) jsonObject.get("height"));
-			mapWidth = (int) ((long) jsonObject.get("width"));
+			mapHeight = (int)((long)jsonObject.get("height"));
+			mapWidth = (int)((long)jsonObject.get("width"));
 
 			Tile[][] mapTiles = new Tile[mapWidth][mapHeight];
 
-			layerArray = (JSONArray) jsonObject.get("layers");
+			layerArray = (JSONArray)jsonObject.get("layers");
 
-			layerObject = (JSONObject) layerArray.get(0);
-			tileData = (JSONArray) layerObject.get("data");
+			layerObject = (JSONObject)layerArray.get(0);
+			tileData = (JSONArray)layerObject.get("data");
 			String dataString = null;
 			world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidth,
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeight);
@@ -103,15 +105,15 @@ public class Parser
 				{
 					dataString = tileData.get(i * mapWidth + j).toString();
 					int tileYIndex = mapHeight - i - 1;
-					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, (Terrain) world.addEntity(
-							layerOneSwitch(dataString)).setRotation((float) Math.PI / 2));
+					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, (Terrain)world.addEntity(
+							layerOneSwitch(dataString)).setRotation((float)Math.PI / 2));
 				}
 			}
 
 			if (layerArray.size() > 1)
 			{
-				layerObject = (JSONObject) layerArray.get(1);
-				tileData = (JSONArray) layerObject.get("data");
+				layerObject = (JSONObject)layerArray.get(1);
+				tileData = (JSONArray)layerObject.get("data");
 
 				for (int i = 0; i < mapHeight; i++)
 				{
@@ -125,8 +127,8 @@ public class Parser
 							{
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
-							mapTiles[j][tileYIndex].setElement((StationaryElement) world.addEntity(
-									layerTwoSwitch(dataString)).setRotation(((float) Math.PI / 2)));
+							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(
+									layerTwoSwitch(dataString)).setRotation(((float)Math.PI / 2)));
 						}
 					}
 				}
@@ -135,28 +137,20 @@ public class Parser
 
 			world.setMapTiles(mapTiles);
 		}
-		catch (IOException e1)
-		{
-			e1.printStackTrace();
-		}
-		catch (org.json.simple.parser.ParseException e)
-		{
-			e.printStackTrace();
-		}
+
 
 		return world;
 	}
 
 	/**
-	 * The following switches are used to more clearly show the logic for deciding what
-	 * object the mapParser will create.
+	 * The following switches are used to more clearly show the logic for deciding what object the
+	 * mapParser will create.
 	 * 
 	 * @param input
 	 *            string to convert to a class object
 	 * @return a class based upon the input string
-	 * @throws an
-	 *             InvalidMapException if a string doesn't match a valid class for the
-	 *             first layer in the map
+	 * @throws InvalidMapException
+	 *             if a string doesn't match a valid class for the first layer in the map
 	 */
 	private static Class<? extends Terrain> layerOneSwitch(String input) throws InvalidMapException
 	{
@@ -183,15 +177,14 @@ public class Parser
 	}
 
 	/**
-	 * The following switches are used to more clearly show the logic for deciding what
-	 * object the mapParser will create.
+	 * The following switches are used to more clearly show the logic for deciding what object the
+	 * mapParser will create.
 	 * 
 	 * @param input
 	 *            string to convert to a class object
 	 * @return a class based upon the input string
-	 * @throws an
-	 *             InvalidMapException if a string doesn't match a valid class for the
-	 *             first layer in the map
+	 * @throws InvalidMapException
+	 *             if a string doesn't match a valid class for the first layer in the map
 	 */
 	private static Class<? extends Entity> layerTwoSwitch(String input) throws InvalidMapException
 	{
