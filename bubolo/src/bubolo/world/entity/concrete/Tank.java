@@ -368,7 +368,7 @@ public class Tank extends Actor
 		int gridX = TileUtil.getClosestTileX(getX());
 		int gridY = TileUtil.getClosestTileY(getY());
 		Tile[][] allTiles = world.getMapTiles();
-		if (allTiles == null)
+		if (allTiles == null || TileUtil.isValidTile(gridX, gridY, world) == false)
 		{
 			hidden = false;
 			return;

@@ -23,7 +23,7 @@ public class TileUtil
 {
 	private static final int LOCAL_TILE_DISTANCE = 2;
 
-	private static boolean isValidTile(int gridX, int gridY, World w)
+	public static boolean isValidTile(int gridX, int gridY, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
 		if (mapTiles == null || gridX >= mapTiles.length || gridX < 0
@@ -36,28 +36,31 @@ public class TileUtil
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Returns the x index of the closest Tile to the given world x value.
+	 * 
 	 * @param x
-	 * 		The x component of the target position in world coordinates.
-	 * @return
-	 * 		The x component of the grid index of the tile closest to the x coordinate given.
+	 *            The x component of the target position in world coordinates.
+	 * @return The x component of the grid index of the tile closest to the x coordinate
+	 *         given.
 	 */
-	public static int getClosestTileX(float x){
+	public static int getClosestTileX(float x)
+	{
 		return (int) (x / 32);
 	}
-	
+
 	/**
 	 * Returns the x index of the closest Tile to the given world y value.
+	 * 
 	 * @param y
-	 * 		The y component of the target position in world coordinates.
-	 * @return
-	 * 		The y component of the grid index of the tile closest to the y coordinate given.
-
+	 *            The y component of the target position in world coordinates.
+	 * @return The y component of the grid index of the tile closest to the y coordinate
+	 *         given.
 	 */
-	public static int getClosestTileY(float y){
-		return (int) (y/ 32);
+	public static int getClosestTileY(float y)
+	{
+		return (int) (y / 32);
 	}
 
 	/**
