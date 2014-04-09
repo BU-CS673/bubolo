@@ -101,7 +101,7 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		}
 		
 		network = NetworkSystem.getInstance();
-		network.startServer();
+		network.startServer("Server");
 		
 		int response = JOptionPane.showConfirmDialog(null,
 				"Click OK to start the game.",

@@ -56,7 +56,7 @@ public class NetworkTest
 	@Test
 	public void testStartServer()
 	{
-		net.startServer();
+		net.startServer("Server player");
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class NetworkTest
 	{
 		try
 		{
-			net.connect(InetAddress.getByName("127.0.0.1"));
+			net.connect(InetAddress.getByName("127.0.0.1"), "Client player");
 		}
 		catch (NetworkException | IllegalStateException | UnknownHostException e)
 		{

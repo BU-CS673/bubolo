@@ -14,7 +14,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import bubolo.AbstractGameApplication;
-import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
@@ -24,7 +23,6 @@ import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
 import bubolo.world.GameWorld;
-import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -94,7 +92,8 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		}
 		
 		network = NetworkSystem.getInstance();
-		network.startServer();
+		network.addObserver(this);
+		network.startServer("Server");
 		
 		int response = JOptionPane.showConfirmDialog(null,
 				"Click OK to start the game.",
@@ -127,17 +126,6 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		graphics.draw(world);
 		world.update();
 		network.update(world);
-		
-		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
-		// the game is extremely jittery when this is used instead of calling update continuously.
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-//		long currentMillis = System.currentTimeMillis();
-//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-//		{
-//			world.update();
-//			lastUpdate = currentMillis;
-//		}
 	}
 	
 	/**

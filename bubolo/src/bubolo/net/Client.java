@@ -15,6 +15,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bubolo.net.command.ClientConnected;
+
 /**
  * The game client.
  * 
@@ -32,6 +34,9 @@ class Client implements NetworkSubsystem, Runnable
 	// Reference to the network system.
 	private final Network network;
 	
+	// The name of this player.
+	private String playerName;
+
 	private ObjectOutputStream serverStream;
 
 	/**
@@ -52,18 +57,23 @@ class Client implements NetworkSubsystem, Runnable
 	 * @param serverIpAddress
 	 *            the IP address of a server. Note that this isn't necessarily the <i>game</i>
 	 *            server, since clients also connect directly to each other.
+	 * @param clientName
+	 *            the name of this client.
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 */
-	void connect(InetAddress serverIpAddress) throws NetworkException
+	void connect(InetAddress serverIpAddress, String clientName) throws NetworkException
 	{
 		try
 		{
+			playerName = clientName;
+			
 			server = new Socket(serverIpAddress, NetworkInformation.GAME_PORT);
 			server.setTcpNoDelay(true);
-			
+
 			serverStream = new ObjectOutputStream(server.getOutputStream());
-			
+			send(new ClientConnected(playerName));
+
 			// Start the network reader thread.
 			new Thread(this).start();
 		}
@@ -93,7 +103,7 @@ class Client implements NetworkSubsystem, Runnable
 			throw new IllegalStateException(
 					"Unable to run client; the network system has not been started.");
 		}
-		
+
 		try (ObjectInputStream inputStream = new ObjectInputStream(server.getInputStream()))
 		{
 			while (!shutdown.get())

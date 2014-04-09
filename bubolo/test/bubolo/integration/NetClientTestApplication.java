@@ -37,7 +37,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
         InetAddress address = Inet4Address.getByName(addressString);
         
         Network net = NetworkSystem.getInstance();
-        net.connect(address);
+        net.connect(address, "Client");
 		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Client Integration";
@@ -93,7 +93,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		{
 			network.update(world);
 		}
-		network.send(new HelloNetworkCommand("Hello from the client."));
+//		network.send(new HelloNetworkCommand("Hello from the client."));
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);

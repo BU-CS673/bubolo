@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author BU CS673 - Clone Productions
  */
-class NetworkObserverNotifier
+public class NetworkObserverNotifier
 {
 	// The list of network observers.
 	private List<NetworkObserver> observers;
@@ -51,7 +51,7 @@ class NetworkObserverNotifier
 	}
 
 	/**
-	 * Notify observers that this client connected to a server.
+	 * Notify observers that this client has connected to a server.
 	 * 
 	 * @param serverName
 	 *            the name of the server that connected.
@@ -65,7 +65,7 @@ class NetworkObserverNotifier
 	}
 
 	/**
-	 * Notify observers that a client connected to this server.
+	 * Notify observers that a client has connected to this server.
 	 * @param clientName the name of the client that connected.
 	 */
 	public void notifyClientConnected(String clientName)

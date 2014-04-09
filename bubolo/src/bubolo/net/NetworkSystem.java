@@ -53,7 +53,7 @@ public class NetworkSystem implements Network
 	}
 
 	@Override
-	public void startServer() throws NetworkException, IllegalStateException
+	public void startServer(String serverName) throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
@@ -66,12 +66,13 @@ public class NetworkSystem implements Network
 		}
 
 		Server server = new Server(this);
-		server.startServer();
 		subsystem = server;
+		server.startServer(serverName);
 	}
 
 	@Override
-	public void connect(InetAddress serverIpAddress) throws NetworkException
+	public void connect(InetAddress serverIpAddress, String clientName) 
+			throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
@@ -84,8 +85,8 @@ public class NetworkSystem implements Network
 		}
 
 		Client client = new Client(this);
-		client.connect(serverIpAddress);
 		subsystem = client;
+		client.connect(serverIpAddress, clientName);
 	}
 
 	@Override
@@ -136,7 +137,7 @@ public class NetworkSystem implements Network
 	@Override
 	public void addObserver(NetworkObserver o)
 	{
-		observerNotifier.removeObserver(o);
+		observerNotifier.addObserver(o);
 	}
 
 	@Override
