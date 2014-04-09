@@ -91,24 +91,12 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-
-		if (getEntity().isHidden())
-		{
-			if (getEntity().isLocalPlayer())
-			{
-				setColor(new Color(Color.WHITE).mul(1.f, 1.f, 1.f, 0.6f));
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			setColor(Color.WHITE);
-		}
-
 		updateColorSet();
+
+		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN)
+		{
+			return;
+		}
 		
 		animationState = (getEntity().getSpeed() > 0.f) ? 1 : 0;
 		switch (animationState)
@@ -131,13 +119,8 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 
 			// Progress the tank drive forward animation.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == forwardFrames.length - 1) ? 0 : frameIndex + 1;
-			}
+			animate(forwardFrames);
+
 			break;
 
 		case 2:
@@ -149,13 +132,8 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			drawTexture(batch, camera, layer, backwardFrames[frameIndex][colorId]);
 
 			// Progress the tank drive backward animation.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == backwardFrames.length - 1) ? 0 : frameIndex + 1;
-			}
+			animate(backwardFrames);
+			
 			break;
 
 		default:
@@ -163,6 +141,38 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		}
 	}
 
+	private Visibility processVisibility()
+	{
+		if (getEntity().isHidden())
+		{
+			if (getEntity().isLocalPlayer())
+			{
+				setColor(new Color(Color.WHITE).mul(1.f, 1.f, 1.f, 0.6f));
+				return Visibility.HIDDEN;
+			}
+			else
+			{
+				return Visibility.NETWORK_TANK_HIDDEN;
+			}
+		}
+		else
+		{
+			setColor(Color.WHITE);
+			return Visibility.VISIBLE;
+		}
+	}
+	
+	private void animate(TextureRegion[][] animationFrames)
+	{
+		frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+		lastFrameTime = System.currentTimeMillis();
+		if (frameTimeRemaining < 0)
+		{
+			frameTimeRemaining = millisPerFrame;
+			frameIndex = (frameIndex == animationFrames.length - 1) ? 0 : frameIndex + 1;
+		}
+	}
+	
 	/**
 	 * Initializes the tank. This is needed because the Tank entity may not know whether it is local
 	 * or not at construction time.
@@ -187,5 +197,10 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			Graphics.getInstance().addCameraController(controller);
 			controller.setCamera(camera);
 		}
+	}
+	
+	private enum Visibility
+	{
+		VISIBLE, NETWORK_TANK_HIDDEN, HIDDEN
 	}
 }

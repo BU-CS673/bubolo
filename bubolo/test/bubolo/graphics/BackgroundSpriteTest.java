@@ -11,10 +11,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * Test for BulletExplosion Sprite
+ * Test for BackgroundSprite
  */
-
-public class BulletExplosionSpriteTest
+public class BackgroundSpriteTest
 {
 	private SpriteBatch batch;
 	private Camera camera;
@@ -47,7 +46,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BackgroundSprite(1, 1);
 				
 				try {
 					batch.begin();
@@ -81,7 +80,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BackgroundSprite(1, 1);
 				passed = (sprite.getX() == 1.f);
 				isComplete = true;
 			}
@@ -105,7 +104,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 2);
+				Sprite sprite = new BackgroundSprite(1, 2);
 				passed = (sprite.getY() == 2.f);
 				isComplete = true;
 			}
@@ -129,8 +128,8 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
-				passed = (sprite.getHeight() == 32);
+				Sprite sprite = new BackgroundSprite(1, 1);
+				passed = (sprite.getHeight() == BackgroundSprite.HEIGHT);
 				isComplete = true;
 			}
 		});
@@ -153,7 +152,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BackgroundSprite(1, 1);
 				passed = (sprite.getRotation() == 0.f);
 				isComplete = true;
 			}
@@ -177,8 +176,8 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
-				passed = (sprite.getWidth() == 32);
+				Sprite sprite = new BackgroundSprite(1, 1);
+				passed = (sprite.getWidth() == BackgroundSprite.WIDTH);
 				isComplete = true;
 			}
 		});
@@ -201,7 +200,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BackgroundSprite(1, 1);
 				passed = (sprite.isDisposed() == false);
 				isComplete = true;
 			}
