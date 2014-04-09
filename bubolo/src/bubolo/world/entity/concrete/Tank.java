@@ -490,7 +490,10 @@ public class Tank extends Actor
 	{
 
 		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
-		modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
+		if(currentTerrain != null)
+		{
+			modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
+		}
 		
 		/**
 		 * Booleans used to record which, if any, bumpers were hit.

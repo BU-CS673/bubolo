@@ -383,6 +383,21 @@ public class TileUtil
 	public static Terrain getTileTerrain(float x, float y, World w)
 	{
 		Tile[][] mapTiles = w.getMapTiles();
-		return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
+		if(mapTiles == null)
+		{
+			return null;
+		}
+		else if(getClosestTileX(x) > mapTiles.length - 1 || x < 0)
+		{
+			return null;
+		}
+		else if (getClosestTileY(y) > mapTiles[0].length - 1 || y < 0)
+		{
+			return null;
+		}
+		else
+		{
+			return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
+		}
 	}
 }
