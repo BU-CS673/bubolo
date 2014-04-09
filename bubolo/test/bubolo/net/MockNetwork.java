@@ -68,4 +68,20 @@ public class MockNetwork implements Network
 	public void startGame(World world)
 	{
 	}
+
+	@Override
+	public void addObserver(NetworkObserver observer)
+	{
+	}
+
+	@Override
+	public void removeObserver(NetworkObserver observer)
+	{
+	}
+
+	@Override
+	public NetworkObserverNotifier getNotifier()
+	{
+		return null;
+	}
 }

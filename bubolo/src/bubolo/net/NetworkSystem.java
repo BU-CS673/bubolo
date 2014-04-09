@@ -23,7 +23,9 @@ public class NetworkSystem implements Network
 	private NetworkSubsystem subsystem;
 
 	// Queue of commands that should be run in the game logic thread.
-	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
+	private final Queue<NetworkCommand> postedCommands;
+	
+	private final NetworkObserverNotifier observerNotifier;
 
 	// Specifies whether the network system is running in debug mode.
 	private boolean debug = false;
@@ -46,6 +48,8 @@ public class NetworkSystem implements Network
 
 	private NetworkSystem()
 	{
+		this.postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
+		this.observerNotifier = new NetworkObserverNotifier();
 	}
 
 	@Override
@@ -129,6 +133,25 @@ public class NetworkSystem implements Network
 		}
 	}
 
+	@Override
+	public void addObserver(NetworkObserver o)
+	{
+		observerNotifier.removeObserver(o);
+	}
+
+	@Override
+	public void removeObserver(NetworkObserver o)
+	{
+		observerNotifier.removeObserver(o);
+	}
+	
+
+	@Override
+	public NetworkObserverNotifier getNotifier()
+	{
+		return observerNotifier;
+	}
+	
 	@Override
 	public void postToGameThread(NetworkCommand command)
 	{

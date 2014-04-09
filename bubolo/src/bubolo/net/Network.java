@@ -78,6 +78,29 @@ public interface Network
 	void startGame(World world);
 
 	/**
+	 * Adds an observer to the network observer list.
+	 * 
+	 * @param observer
+	 *            the observer to add.
+	 */
+	void addObserver(NetworkObserver observer);
+
+	/**
+	 * Removes an observer from the network observer list.
+	 * 
+	 * @param observer
+	 *            the observer to remove.
+	 */
+	void removeObserver(NetworkObserver observer);
+
+	/**
+	 * Returns a reference to the observer notifier.
+	 * 
+	 * @return reference to the observer notifier.
+	 */
+	NetworkObserverNotifier getNotifier();
+
+	/**
 	 * Shuts down the network system.
 	 */
 	void dispose();
