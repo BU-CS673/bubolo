@@ -105,7 +105,7 @@ public class Sprites
 	 * @param sprite
 	 *            the sprite to remove.
 	 */
-	public void removeSprite(AbstractEntitySprite<?> sprite)
+	public void removeSprite(Sprite sprite)
 	{
 		for (int i = 0; i < sprites.size(); ++i)
 		{

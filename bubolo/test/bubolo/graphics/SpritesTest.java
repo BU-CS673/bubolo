@@ -36,9 +36,87 @@ public class SpritesTest
 			{
 				try
 				{
-					Sprites.getInstance().createSprite(new Tank());
-					Sprite sprite = Sprites.getInstance().getSprites().get(0);
+					Sprites spriteSystem = Sprites.getInstance();
+					int spriteCount = spriteSystem.getSprites().size();
+					
+					Sprite sprite1 = spriteSystem.createSprite(new Tank());
+					Sprite sprite2 = spriteSystem.getSprites().get(spriteCount);
+					assertNotNull(sprite1);
+					assertNotNull(sprite2);
+					assertSame(sprite1, sprite2);
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void spriteRemove() throws InterruptedException
+	{
+		isComplete = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					Sprites spriteSystem = Sprites.getInstance();
+					int spriteCount = spriteSystem.getSprites().size();
+					
+					spriteSystem.createSprite(new Tank());
+					Sprite sprite = spriteSystem.getSprites().get(spriteCount);
 					assertNotNull(sprite);
+					
+					spriteSystem.removeSprite(sprite);
+					assertEquals(spriteSystem.getSprites().size(), spriteSystem.getSprites().size());
+					
+					hadException = false;
+				}
+				catch (Exception e)
+				{
+					hadException = true;
+				}
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		assertFalse("Exception thrown when creating sprite.", hadException);
+	}
+	
+	@Test
+	public void spritesRemove() throws InterruptedException
+	{
+		isComplete = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					Sprites spriteSystem = Sprites.getInstance();
+					int spriteCount = spriteSystem.getSprites().size();
+					
+					spriteSystem.addSprite(new BulletExplosionSprite(0, 0));
+					Sprite sprite = spriteSystem.getSprites().get(spriteCount);
+					assertNotNull(sprite);
+					
 					hadException = false;
 				}
 				catch (Exception e)
