@@ -9,6 +9,7 @@ package bubolo.graphics;
 import bubolo.util.Coordinates;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,19 +23,24 @@ abstract class Sprite implements Drawable
 {
 	// The layer that this sprite is drawn to.
 	private DrawLayer drawLayer;
-		
+
+	// The sprite's color. White draws the texture as it appears in the file.
+	private Color color;
 
 	// Ideally, these probably should not be placed into Sprite<T>.
 	private static final float SCALE_X = 1.f;
 	private static final float SCALE_Y = 1.f;
-	
+
 	/**
 	 * Constructs a sprite.
-	 * @param layer the sprite's draw layer.
+	 * 
+	 * @param layer
+	 *            the sprite's draw layer.
 	 */
 	protected Sprite(DrawLayer layer)
 	{
 		this.drawLayer = layer;
+		this.color = new Color(Color.WHITE);
 	}
 
 	/**
@@ -46,14 +52,36 @@ abstract class Sprite implements Drawable
 	{
 		return drawLayer;
 	}
-	
+
+	/**
+	 * Gets the sprite's color. Sprites are white by default, which means that they draw the texture
+	 * without changes.
+	 * 
+	 * @return the sprite's color.
+	 */
+	protected Color getColor()
+	{
+		return color;
+	}
+
+	/**
+	 * Sets the sprite's color. The color can be used to tint the texture image. White causes the
+	 * texture image to be drawn without changes.
+	 * 
+	 * @param color the sprite's new color.
+	 */
+	protected void setColor(Color color)
+	{
+		this.color = new Color(color);
+	}
+
 	/**
 	 * Returns true if the sprite should be removed, or false otherwise.
 	 * 
 	 * @return true if the sprite should be removed, or false otherwise.
 	 */
 	protected abstract boolean isDisposed();
-	
+
 	/**
 	 * Draws the sprite to the screen.
 	 * 
@@ -92,6 +120,7 @@ abstract class Sprite implements Drawable
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 
+			batch.setColor(color);
 			batch.draw(
 					texture,
 					cameraCoordinates.x,
@@ -132,6 +161,7 @@ abstract class Sprite implements Drawable
 
 			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
 
+			batch.setColor(color);
 			batch.draw(
 					texture,
 					cameraCoordinates.x,

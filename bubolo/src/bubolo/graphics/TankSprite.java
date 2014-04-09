@@ -52,8 +52,6 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// the starting frame.
 	private int lastAnimationState = 0;
 
-	private Color color;
-
 	/** The file name of the texture. */
 	static final String TEXTURE_FILE = "tank.png";
 
@@ -94,9 +92,20 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			initialize(camera);
 		}
 
-		if (getEntity().isHidden() && !getEntity().isLocalPlayer())
+		if (getEntity().isHidden())
 		{
-			return;
+			if (getEntity().isLocalPlayer())
+			{
+				setColor(new Color(Color.WHITE).mul(1.f, 1.f, 1.f, 0.6f));
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			setColor(Color.WHITE);
 		}
 
 		updateColorSet();
