@@ -48,7 +48,7 @@ abstract class Sprite implements Drawable
 	 * 
 	 * @return the sprite's draw layer.
 	 */
-	protected DrawLayer getDrawLayer()
+	protected final DrawLayer getDrawLayer()
 	{
 		return drawLayer;
 	}
@@ -59,7 +59,7 @@ abstract class Sprite implements Drawable
 	 * 
 	 * @return the sprite's color.
 	 */
-	protected Color getColor()
+	protected final Color getColor()
 	{
 		return color;
 	}
@@ -70,7 +70,7 @@ abstract class Sprite implements Drawable
 	 * 
 	 * @param color the sprite's new color.
 	 */
-	protected void setColor(Color color)
+	protected final void setColor(Color color)
 	{
 		this.color = new Color(color);
 	}
@@ -110,7 +110,7 @@ abstract class Sprite implements Drawable
 	 * @param texture
 	 *            The texture to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
+	protected final void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
 	{
 		if (layer == getDrawLayer())
 		{
@@ -150,7 +150,7 @@ abstract class Sprite implements Drawable
 	 * @param texture
 	 *            The texture region to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
+	protected final void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
 			TextureRegion texture)
 	{
 		if (layer == getDrawLayer())

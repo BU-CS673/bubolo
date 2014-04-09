@@ -187,7 +187,7 @@ public class Sprites
 			@Override
 			public Sprite create(Entity e)
 			{
-				return new GrassSprite((Grass) e);
+				return new GrassSprite(e);
 			}
 		});
 
@@ -227,7 +227,7 @@ public class Sprites
 			@Override
 			public Sprite create(Entity e)
 			{
-				return new RubbleSprite((Rubble) e);
+				return new RubbleSprite(e);
 			}
 		});
 
@@ -235,7 +235,7 @@ public class Sprites
 			@Override
 			public Sprite create(Entity e)
 			{
-				return new SwampSprite((Swamp) e);
+				return new SwampSprite(e);
 			}
 		});
 
@@ -251,7 +251,7 @@ public class Sprites
 			@Override
 			public Sprite create(Entity e)
 			{
-				return new TreeSprite((Tree) e);
+				return new TreeSprite(e);
 			}
 		});
 
