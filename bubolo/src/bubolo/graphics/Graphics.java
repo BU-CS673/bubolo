@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bubolo.ui.NetworkLobby;
 import bubolo.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -137,6 +138,14 @@ public class Graphics
 			spriteComparator = new SpriteComparator();
 		}
 	}
+	
+	public void draw(GameScreen lobby)
+	{
+		Gdx.gl20.glClearColor(0, 0, 0, 1);
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		
+		
+	}
 
 	/**
 	 * Draws the entities that are within the camera's clipping boundary.
@@ -197,7 +206,7 @@ public class Graphics
 	 * @param controller
 	 *            a camera controller. The update method will be called once per draw call.
 	 */
-	public void addCameraController(CameraController controller)
+	void addCameraController(CameraController controller)
 	{
 		cameraControllers.add(controller);
 	}
