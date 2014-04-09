@@ -93,26 +93,39 @@ public class Tank extends Actor
 	/**
 	 * The amount of ammo of the tank
 	 */
+	
+	public static final int TANK_MAX_HIT_POINTS = 100;
+	
 	private int ammoCount;
 	
 	/**
 	 * The amount of the tree resource the tank has
 	 */
+	
+	public static final int TANK_MAX_AMMO = 100;
+	
 	private int treeCount;
 	
 	/**
 	 * The number of mines in the tank
 	 */
+	
+	public static final int TANK_MAX_TREE_INVENTORY = 100;
+	
 	private int mineCount;
 	
 	/**
 	 * The number of pillboxes in the tank
 	 */
+	
+	public static final int TANK_MAX_MINE_COUNT = 10;
+	
 	private int pillboxCount;
 	
 	/**
 	 * Constructor for the Tank object
 	 */
+	
 	public Tank()
 	{
 		this(UUID.randomUUID());
@@ -131,11 +144,11 @@ public class Tank extends Actor
 		setHeight(22);
 		updateBounds();
 		setSolid(true);
-		hitPoints = 100;
-		ammoCount = 100;
+		hitPoints = TANK_MAX_HIT_POINTS;
+		ammoCount = TANK_MAX_AMMO;
 		treeCount = 0;
 		pillboxCount = 0;
-		mineCount = 0;
+		mineCount = TANK_MAX_MINE_COUNT;
 	}
 
 	/**
@@ -176,7 +189,8 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
-		if (speed > modifiedMaxSpeed){
+		if (speed > modifiedMaxSpeed)
+		{
 			speed = modifiedMaxSpeed;
 		}
 		if (speed > 0 && !decelerated)
@@ -651,7 +665,8 @@ public class Tank extends Actor
 	 * Returns the current ammo count of the tank
 	 * @return current ammo count
 	 */
-	public int getAmmoCount() {
+	public int getAmmoCount() 
+	{
 		return ammoCount;
 	}
 
@@ -659,7 +674,8 @@ public class Tank extends Actor
 	 * Returns the current number of trees that the tank has gathered
 	 * @return the current tree resource count
 	 */
-	public int getTreeCount() {
+	public int getTreeCount() 
+	{
 		return treeCount;
 	}
 
@@ -667,7 +683,8 @@ public class Tank extends Actor
 	 * Returns the number of mines the tank currently contains
 	 * @return the current mine count
 	 */
-	public int getMineCount() {
+	public int getMineCount() 
+	{
 		return mineCount;
 	}
 
@@ -675,7 +692,8 @@ public class Tank extends Actor
 	 * Returns the number of pillboxes the tank has on board 
 	 * @return the pillbox count for the tank
 	 */
-	public int getPillboxCount() {
+	public int getPillboxCount() 
+	{
 		return pillboxCount;
 	}
 	
@@ -685,7 +703,9 @@ public class Tank extends Actor
 	 */
 	public void takeHit(int damagePoints)
 	{
-		hitPoints -= damagePoints;
+		
+		hitPoints -= Math.abs(damagePoints);
+		//TODO: This method is the first opportunity to set off "death" chain of events
 	}
 	
 	/**
@@ -694,31 +714,31 @@ public class Tank extends Actor
 	 */
 	public void heal(int healPoints)
 	{
-		if(hitPoints < 100)
+		if(hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
 		{
-			hitPoints += healPoints;
+			hitPoints += Math.abs(healPoints);
 		}
 		
-		if(hitPoints > 100)
+		else 
 		{
 			hitPoints = 100;
 		}
 	}
 	
 	/**
-	 * Resupplies the tank ammo given a set ammount
+	 * Supplies the tank ammo with given a set amount
 	 * @param newAmmo - amount of ammo being transfered to the tank
 	 */
 	public void gatherAmmo(int newAmmo)
 	{
-		if(ammoCount + newAmmo < 100)
+		if(ammoCount + Math.abs(newAmmo) < TANK_MAX_AMMO)
 		{
-			ammoCount += newAmmo;
+			ammoCount += Math.abs(newAmmo);
 		}
 		
 		else
 		{
-			ammoCount = 100;
+			ammoCount = TANK_MAX_AMMO;
 		}
 	}
 	
@@ -727,7 +747,10 @@ public class Tank extends Actor
 	 */
 	public void gatherTree()
 	{
-		treeCount++;
+		if(treeCount < TANK_MAX_TREE_INVENTORY)
+		{
+			treeCount++;
+		}
 	}
 	/**
 	 * This method is used to consume trees
@@ -735,21 +758,26 @@ public class Tank extends Actor
 	 */
 	public void useTrees(int treesUsed)
 	{
-		if(treeCount - treesUsed >= 0)
+		if(treeCount - Math.abs(treesUsed) >= 0)
 		{
-			treeCount -= treesUsed;
+			treeCount -= Math.abs(treesUsed);
 		}
 	}
 	
+
 	/**
-	 * This method consumes trees to increment the mine inventory in the tank
+	 * This method supplies the tank with mines
+	 * @param minesGathered - the number of mines to supply the tank with
 	 */
-	public void buildMine()
+	public void gatherMine(int minesGathered)
 	{
-		if(mineCount < 10)
+		if(mineCount + Math.abs(minesGathered) < TANK_MAX_MINE_COUNT)
 		{
-			mineCount ++;
-			useTrees(1);
+			mineCount += minesGathered;
+		}
+		else 
+		{
+			mineCount = TANK_MAX_MINE_COUNT;
 		}
 	}
 	

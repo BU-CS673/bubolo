@@ -25,6 +25,9 @@ public class Grass extends Terrain
 	 */
 	private static float maxSpeedModifier = 1.0F;
 	
+	/**
+	 * Construct a new Grass with a random UUID.
+	 */
 	public Grass()
 	{
 		this(UUID.randomUUID());
@@ -45,11 +48,12 @@ public class Grass extends Terrain
 	}
 
 	/**
-	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
 	 * @return maxSpeedModifier
 	 */
 	@Override
-	public float getMaxSpeedModifier() {
+	public float getMaxSpeedModifier() 
+	{
 		return maxSpeedModifier;
 	}
 

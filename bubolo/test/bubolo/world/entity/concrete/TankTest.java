@@ -165,12 +165,11 @@ public class TankTest
 	}
 	
 	@Test
-	public void buildMine()
+	public void gatherMine()
 	{
-		tank.buildMine();
-		assertEquals(1, tank.getMineCount(), 0);
+		tank.gatherMine(1);
+		assertEquals(tank.TANK_MAX_MINE_COUNT, tank.getMineCount(), 0);
 	}
-	
 	@Test
 	public void gatherPillBox()
 	{

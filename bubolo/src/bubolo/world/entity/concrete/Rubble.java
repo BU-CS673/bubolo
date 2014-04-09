@@ -45,10 +45,12 @@ public class Rubble extends Terrain
 	}
 
 	/**
-	 * Returns a percentage factor for capping an objects speed while travesing this terrain 
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
 	 * @return maxSpeedModifier
 	 */
-	public float getMaxSpeedModifier() {
+	@Override
+	public float getMaxSpeedModifier() 
+	{
 		return maxSpeedModifier;
 	}
 	// TODO: Add Rubble functionality!
