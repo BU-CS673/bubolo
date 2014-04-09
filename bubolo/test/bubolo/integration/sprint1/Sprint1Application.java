@@ -124,4 +124,10 @@ public class Sprint1Application implements GameApplication
 	public void resume()
 	{
 	}
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return true;
+	}
 }
