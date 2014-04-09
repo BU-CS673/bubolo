@@ -16,8 +16,6 @@ public class BuboloApplication extends AbstractGameApplication
 	
 	private Graphics graphics;
 	
-	private long lastUpdate;
-	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -64,30 +62,8 @@ public class BuboloApplication extends AbstractGameApplication
 	@Override
 	public void render()
 	{
-		long startMillis = System.currentTimeMillis();
-		
 		graphics.draw(world);
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
-		
-		long millisUntilNextUpdate = System.currentTimeMillis() - startMillis - Graphics.MILLIS_PER_TICK;
-		if (millisUntilNextUpdate > 0)
-		{
-			try
-			{
-				Thread.sleep(millisUntilNextUpdate);
-			}
-			catch (InterruptedException e)
-			{
-				// TODO: does this need to be handled?
-			}
-		}
+		world.update();
 	}
 	
 	/**

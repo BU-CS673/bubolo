@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -45,6 +46,36 @@ public class SpriteTest
 				Sprite sprite = new MockSpriteTextureRegion();
 				batch.begin();
 				sprite.draw(batch, camera, sprite.getDrawLayer());
+				passed = true;
+				isComplete = true;
+			}
+		});
+
+		while (!isComplete)
+		{
+			Thread.yield();
+		}
+		
+		assertTrue(passed);
+	}
+	
+	@Test
+	public void testColor()
+	{
+		isComplete = false;
+		passed = false;
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run()
+			{
+				Sprite sprite = new BackgroundSprite(1, 1);
+				
+				assertEquals(Color.WHITE, sprite.getColor());
+				
+				sprite.setColor(Color.BLACK);
+				assertEquals(Color.BLACK, sprite.getColor());
+			
 				passed = true;
 				isComplete = true;
 			}
