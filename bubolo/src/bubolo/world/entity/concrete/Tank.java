@@ -784,18 +784,25 @@ public class Tank extends Actor
 	/**
 	 * This method creates the mine in world and passes it back to the caller
 	 * @param world - the world to create the mine in
-	 * @param startX - The X position of the mine in world coordinates
-	 * @param startY - The Y position of the mine in world coordinates
-	 * @return - the mine that is created is returned
+	 * @param startX - The integer X position of the mine in world coordinates
+	 * @param startY - The integer Y position of the mine in world coordinates
+	 * @return - the mine that is created is returned or null if there are none to place or invalid placement location
 	 */
-	public Mine dropMine(World world, float startX, float startY)
+	public Mine dropMine(World world, int startX, int startY)
 	{
-		Mine mine = world.addEntity(Mine.class);
-		
-		mine.setX(startX).setY(startY);
-		mine.setRotation(getRotation());
-		mineCount--;
-		return mine;
+		if((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
+		{
+			Mine mine = world.addEntity(Mine.class);
+			world.getMapTiles()[startX / 32][startY / 32].setElement(mine);
+			mine.setX(startX).setY(startY);
+			mine.setRotation(getRotation());
+			mineCount--;
+			return mine;
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	/**
@@ -809,18 +816,26 @@ public class Tank extends Actor
 	/**
 	 * This method creates a pillbox in the world from the tank's inventory
 	 * @param world - the world in which the pillbox is to be created
-	 * @param startX - the X position of the pillbox in world coordinates
-	 * @param startY - the Y position of the pillbox in world coordinates
-	 * @return - returns the created pillbox
+	 * @param startX - the integer X position of the pillbox in world coordinates
+	 * @param startY - the integer Y position of the pillbox in world coordinates
+	 * @return - returns the created pillbox or null if there are none to place or invalid placement location
 	 */
-	public Pillbox dropPillbox(World world, float startX, float startY)
+	public Pillbox dropPillbox(World world, int startX, int startY)
 	{
-		Pillbox pillbox = world.addEntity(Pillbox.class);
+		if((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
+		{
+			Pillbox pillbox = world.addEntity(Pillbox.class);
+			world.getMapTiles()[startX / 32][startY / 32].setElement(pillbox);
+			pillbox.setX(startX / 32 + 16).setY(startY / 32 + 16);
+			pillbox.setRotation(getRotation());
+			pillboxCount--;
+			return pillbox;
+		}
 		
-		pillbox.setX(startX).setY(startY);
-		pillbox.setRotation(getRotation());
-		pillboxCount--;
-		return pillbox;
+		else
+		{
+			return null;
+		}
 	}
 	
 }
