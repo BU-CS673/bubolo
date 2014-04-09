@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of Rubble.
  * 
  * @author BU673 - Clone Industries
  */
-class RubbleSprite extends AbstractEntitySprite<Rubble>
+class RubbleSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
@@ -25,7 +25,7 @@ class RubbleSprite extends AbstractEntitySprite<Rubble>
 	 * @param rubble
 	 *            Reference to the Rubble that this RubbleSprite represents.
 	 */
-	RubbleSprite(Rubble rubble)
+	RubbleSprite(Entity rubble)
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, rubble);
 

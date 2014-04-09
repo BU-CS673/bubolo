@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of a Tree.
  * 
  * @author BU673 - Clone Industries
  */
-class TreeSprite extends AbstractEntitySprite<Tree>
+class TreeSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 
@@ -25,7 +25,7 @@ class TreeSprite extends AbstractEntitySprite<Tree>
 	 * @param tree
 	 *            Reference to the Tree that this TreeSprite represents.
 	 */
-	TreeSprite(Tree tree)
+	TreeSprite(Entity tree)
 	{
 		super(DrawLayer.STATIONARY_ELEMENTS, tree);
 

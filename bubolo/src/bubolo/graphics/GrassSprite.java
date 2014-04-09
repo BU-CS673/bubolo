@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.TextureUtil;
-import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of grass entity.
  * 
  * @author BU673 - Clone Industries
  */
-class GrassSprite extends AbstractEntitySprite<Grass>
+class GrassSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
@@ -29,7 +29,7 @@ class GrassSprite extends AbstractEntitySprite<Grass>
 	 * @param grass
 	 *            Reference to the Grass that this GrassSprite represents.
 	 */
-	GrassSprite(Grass grass)
+	GrassSprite(Entity grass)
 	{
 		super(DrawLayer.BASE_TERRAIN, grass);
 

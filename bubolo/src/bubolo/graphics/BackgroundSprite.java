@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.TextureUtil;
-import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of a GenericExplosion entity.
  * 
  * @author BU673 - Clone Industries
  */
-class BackgroundSprite extends AbstractEntitySprite<Entity>
+class BackgroundSprite extends Sprite
 {
 	private TextureRegion[][] frames;
 
@@ -38,7 +37,7 @@ class BackgroundSprite extends AbstractEntitySprite<Entity>
 	 */
 	BackgroundSprite(int x, int y)
 	{
-		super(DrawLayer.BACKGROUND, null);
+		super(DrawLayer.BACKGROUND);
 
 		Texture image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, HEIGHT, WIDTH);
