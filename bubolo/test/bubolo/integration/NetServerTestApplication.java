@@ -3,7 +3,6 @@ package bubolo.integration;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
@@ -22,7 +21,6 @@ import bubolo.net.Network;
 import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
-import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.entity.concrete.Tank;
