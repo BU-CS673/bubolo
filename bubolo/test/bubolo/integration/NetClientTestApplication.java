@@ -14,6 +14,7 @@ import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
+import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
@@ -26,7 +27,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetClientTestApplication extends AbstractGameApplication
+public class NetClientTestApplication extends AbstractGameApplication implements NetworkObserver
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -84,7 +85,7 @@ public class NetClientTestApplication extends AbstractGameApplication
 		graphics = new Graphics(windowWidth, windowHeight);
 		
 		network = NetworkSystem.getInstance();
-		network.send(new HelloNetworkCommand("Hello from the client."));
+		network.addObserver(this);
 		
 		world = new GameWorld();
 		
@@ -92,6 +93,7 @@ public class NetClientTestApplication extends AbstractGameApplication
 		{
 			network.update(world);
 		}
+		network.send(new HelloNetworkCommand("Hello from the client."));
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);
@@ -111,17 +113,6 @@ public class NetClientTestApplication extends AbstractGameApplication
 		graphics.draw(world);
 		world.update();
 		network.update(world);
-		
-		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
-		// the game is extremely jittery when this is used instead of calling update continuously.
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-//		long currentMillis = System.currentTimeMillis();
-//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-//		{
-//			world.update();
-//			lastUpdate = currentMillis;
-//		}
 	}
 	
 	/**
@@ -147,5 +138,29 @@ public class NetClientTestApplication extends AbstractGameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public void onConnect(String serverName)
+	{
+		
+	}
+
+	@Override
+	public void onClientConnected(String clientName)
+	{
+		System.out.println(clientName + " joined the game.");
+	}
+
+	@Override
+	public void onClientDisconnected(String clientName)
+	{
+		System.out.println(clientName + " left the game.");
+	}
+
+	@Override
+	public void onGameStart(int timeUntilStart)
+	{
+		System.out.println("Game is starting.");
 	}
 }

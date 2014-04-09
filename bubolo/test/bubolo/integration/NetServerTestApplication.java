@@ -18,6 +18,7 @@ import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
+import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
@@ -31,7 +32,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetServerTestApplication extends AbstractGameApplication
+public class NetServerTestApplication extends AbstractGameApplication implements NetworkObserver
 {
 	public static void main(String[] args) throws UnknownHostException
 	{
@@ -162,5 +163,29 @@ public class NetServerTestApplication extends AbstractGameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public void onConnect(String serverName)
+	{
+		System.out.println("Connected to server. The host is " + serverName);
+	}
+
+	@Override
+	public void onClientConnected(String clientName)
+	{
+		System.out.println(clientName + " joined the game.");
+	}
+
+	@Override
+	public void onClientDisconnected(String clientName)
+	{
+		System.out.println(clientName + " left the game.");
+	}
+
+	@Override
+	public void onGameStart(int timeUntilStart)
+	{
+		System.out.println("Game is starting.");
 	}
 }
