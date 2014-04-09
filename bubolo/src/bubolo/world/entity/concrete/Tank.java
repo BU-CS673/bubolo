@@ -8,10 +8,13 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
 import bubolo.util.TileUtil;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
+
 
 /**
  * The tank, which may be controlled by a local player, a networked player, or an AI bot.
@@ -47,6 +50,9 @@ public class Tank extends Actor
 
 	// Specifies whether the tank decelerated this tick.
 	private boolean decelerated;
+
+	// Specifies whether the tank is hidden in trees
+	private boolean hidden;
 
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.05f;
@@ -104,6 +110,9 @@ public class Tank extends Actor
 	 */
 	private int pillboxCount;
 	
+	/**
+	 * Constructor for the Tank object
+	 */
 	public Tank()
 	{
 		this(UUID.randomUUID());
@@ -245,6 +254,17 @@ public class Tank extends Actor
 	}
 
 	/**
+	 * Checks to see whether this Tank is currently hidden (ex. by being in a clump of
+	 * trees)
+	 * 
+	 * @return true if the Tank is hidden, false otherwise.
+	 */
+	public boolean isHidden()
+	{
+		return hidden;
+	}
+
+	/**
 	 * Returns a list of all Entities that would overlap with this Tank if it was where it
 	 * will be in one game tick, along its current trajectory.
 	 */
@@ -257,8 +277,8 @@ public class Tank extends Actor
 			if (localEntities.get(ii) != this)
 			{
 				if (overlapsEntity(localEntities.get(ii))
-						|| Intersector.overlapConvexPolygons(lookAheadBounds(), localEntities.get(ii)
-								.getBounds()))
+						|| Intersector.overlapConvexPolygons(lookAheadBounds(),
+								localEntities.get(ii).getBounds()))
 				{
 					intersects.add(localEntities.get(ii));
 				}
@@ -395,11 +415,51 @@ public class Tank extends Actor
 			return false;
 	}
 
+	private void checkTrees(World world)
+	{
+		int gridX = TileUtil.getClosestTileX(getX());
+		int gridY = TileUtil.getClosestTileY(getY());
+		Tile[][] allTiles = world.getMapTiles();
+		if (allTiles == null || TileUtil.isValidTile(gridX, gridY, world) == false)
+		{
+			hidden = false;
+			return;
+		}
+		Tile closeTile = allTiles[gridX][gridY];
+		StationaryElement closeElement;
+
+		if (!closeTile.hasElement())
+		{
+			hidden = false;
+			return;
+		}
+
+		closeElement = closeTile.getElement();
+		if (!(closeElement instanceof Tree))
+		{
+			hidden = false;
+			return;
+		}
+		boolean[] corners = TileUtil.getCornerMatches(closeTile, world, new Class[] { Tree.class });
+		boolean[] edges = TileUtil.getEdgeMatches(closeTile, world, new Class[] { Tree.class });
+		for (int i = 0; i < 4; i++)
+		{
+			if (corners[i] == false || edges[i] == false)
+			{
+				hidden = false;
+				return;
+			}
+		}
+
+		hidden = true;
+	}
+
 	@Override
 	public void update(World world)
 	{
 		updateControllers(world);
 		moveTank(world);
+		checkTrees(world);
 
 		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
 		// responsibility of a bullet.
