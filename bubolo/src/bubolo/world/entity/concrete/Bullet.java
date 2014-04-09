@@ -44,6 +44,8 @@ public class Bullet extends Effect
 
 	// Specifies whether the bullet is initialized.
 	private boolean initialized;
+	
+	private Entity parent = null;
 
 	/**
 	 * Construct a new Bullet with a random UUID.
@@ -112,6 +114,24 @@ public class Bullet extends Effect
 		// simple, what's the point?
 		move(world);
 	}
+	/**
+	 * return the Entity that spawned this bullet
+	 * @return
+	 * 		the entity that spawned this bullet
+	 */
+	public Entity getParent()
+	{
+		return this.parent;
+	}
+	/**
+	 *  sets the Parent field of this bullet
+	 * @param parent
+	 * 		the entity to set as the parent of this bullet
+	 */
+	public void setParent(Entity parent)
+	{
+		this.parent = parent;
+	}
 
 	/**
 	 * Moves the bullet. Calls dispose() on this entity if the distance travelled has exceeded the
@@ -161,16 +181,15 @@ public class Bullet extends Effect
 	private List<Entity> getLookaheadEntities(World w)
 	{
 		ArrayList<Entity> intersects = new ArrayList<Entity>();
-		List<Entity> localEntities = TileUtil.getLocalEntities(getX(), getY(), w);
-		for (int ii = 0; ii < localEntities.size(); ii++)
+
+		for (Entity localEntity: TileUtil.getLocalEntities(getX(),getY(), w))
 		{
-			if (localEntities.get(ii) != this)
+			if (localEntity!=this && localEntity!=this.parent)
 			{
-				if (overlapsEntity(localEntities.get(ii))
-						|| Intersector.overlapConvexPolygons(lookAheadBounds(), localEntities.get(ii)
-								.getBounds()))
+				if (overlapsEntity(localEntity)
+						||Intersector.overlapConvexPolygons(lookAheadBounds(), localEntity.getBounds()))
 				{
-					intersects.add(localEntities.get(ii));
+					intersects.add(localEntity);	
 				}
 			}
 		}

@@ -134,7 +134,8 @@ public class Pillbox extends StationaryElement implements Ownable
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-
+		bullet.setParent(this);
+		
 		bullet.setX(this.getX()).setY(this.getY());
 		bullet.setRotation(getCannonRotation());
 	}

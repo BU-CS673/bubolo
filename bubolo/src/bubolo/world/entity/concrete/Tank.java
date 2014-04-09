@@ -184,6 +184,7 @@ public class Tank extends Actor
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
+		bullet.setParent(this);
 
 		bullet.setX(startX).setY(startY);
 		bullet.setRotation(getRotation());
