@@ -51,6 +51,12 @@ public class NetworkLobby implements NetworkObserver, GameScreen
 		
 	}
 	
+	@Override
+	public void onMessageReceived(String message)
+	{
+		
+	}
+	
 	public void dispose()
 	{
 		

@@ -166,4 +166,11 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	{
 		System.out.println("Game is starting.");
 	}
+
+	@Override
+	public void onMessageReceived(String message)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

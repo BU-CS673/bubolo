@@ -51,7 +51,7 @@ public class NetworkObserverNotifier
 	}
 
 	/**
-	 * Notify observers that this client has connected to a server.
+	 * Notifies observers that this client has connected to a server.
 	 * 
 	 * @param clientName
 	 *            the name of the client that connected.
@@ -60,51 +60,64 @@ public class NetworkObserverNotifier
 	 */
 	public void notifyConnect(String clientName, String serverName)
 	{
-		for (NetworkObserver o : observers)
+		for (final NetworkObserver o : observers)
 		{
 			o.onConnect(clientName, serverName);
 		}
 	}
 
 	/**
-	 * Notify observers that a client has connected to this server.
+	 * Notifies observers that a client has connected to this server.
 	 * 
 	 * @param clientName
 	 *            the name of the client that connected.
 	 */
 	public void notifyClientConnected(String clientName)
 	{
-		for (NetworkObserver o : observers)
+		for (final NetworkObserver o : observers)
 		{
 			o.onClientConnected(clientName);
 		}
 	}
 
 	/**
-	 * Notify observers that a client has disconnected.
+	 * Notifies observers that a client has disconnected.
 	 * 
 	 * @param clientName
 	 *            the name of the client that disconnected.
 	 */
 	public void notifyClientDisconnected(String clientName)
 	{
-		for (NetworkObserver o : observers)
+		for (final NetworkObserver o : observers)
 		{
 			o.onClientDisconnected(clientName);
 		}
 	}
 
 	/**
-	 * Notify observers that the game is starting.
+	 * Notifies observers that the game is starting.
 	 * 
 	 * @param timeUntilStart
 	 *            countdown until the game begins.
 	 */
 	public void notifyGameStart(int timeUntilStart)
 	{
-		for (NetworkObserver o : observers)
+		for (final NetworkObserver o : observers)
 		{
 			o.onGameStart(timeUntilStart);
+		}
+	}
+
+	/**
+	 * Notifies observers that a message has been received.
+	 * 
+	 * @param message the message text.
+	 */
+	public void notifyMessageReceived(String message)
+	{
+		for (final NetworkObserver o : observers)
+		{
+			o.onMessageReceived(message);
 		}
 	}
 }

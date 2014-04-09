@@ -51,4 +51,12 @@ public interface NetworkObserver
 	 *            the number of seconds until the game starts.
 	 */
 	void onGameStart(int timeUntilStart);
+
+	/**
+	 * Called when a message is received through the network.
+	 * 
+	 * @param message
+	 *            the message text.
+	 */
+	void onMessageReceived(String message);
 }
