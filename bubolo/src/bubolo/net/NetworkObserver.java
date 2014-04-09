@@ -19,12 +19,14 @@ package bubolo.net;
 public interface NetworkObserver
 {
 	/**
-	 * Called when this player has successfully connected to the server.
+	 * Called when a player has successfully connected to the server.
 	 * 
+	 * @param clientName
+	 *            the name of the client that connected.
 	 * @param serverName
 	 *            the name of the server player.
 	 */
-	void onConnect(String serverName);
+	void onConnect(String clientName, String serverName);
 
 	/**
 	 * Called when a new client has connected to the server.

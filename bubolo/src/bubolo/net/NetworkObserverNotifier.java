@@ -53,20 +53,24 @@ public class NetworkObserverNotifier
 	/**
 	 * Notify observers that this client has connected to a server.
 	 * 
+	 * @param clientName
+	 *            the name of the client that connected.
 	 * @param serverName
-	 *            the name of the server that connected.
+	 *            the name of the server.
 	 */
-	public void notifyConnect(String serverName)
+	public void notifyConnect(String clientName, String serverName)
 	{
 		for (NetworkObserver o : observers)
 		{
-			o.onConnect(serverName);
+			o.onConnect(clientName, serverName);
 		}
 	}
 
 	/**
 	 * Notify observers that a client has connected to this server.
-	 * @param clientName the name of the client that connected.
+	 * 
+	 * @param clientName
+	 *            the name of the client that connected.
 	 */
 	public void notifyClientConnected(String clientName)
 	{
@@ -78,7 +82,9 @@ public class NetworkObserverNotifier
 
 	/**
 	 * Notify observers that a client has disconnected.
-	 * @param clientName the name of the client that disconnected.
+	 * 
+	 * @param clientName
+	 *            the name of the client that disconnected.
 	 */
 	public void notifyClientDisconnected(String clientName)
 	{
@@ -90,7 +96,9 @@ public class NetworkObserverNotifier
 
 	/**
 	 * Notify observers that the game is starting.
-	 * @param timeUntilStart countdown until the game begins.
+	 * 
+	 * @param timeUntilStart
+	 *            countdown until the game begins.
 	 */
 	public void notifyGameStart(int timeUntilStart)
 	{

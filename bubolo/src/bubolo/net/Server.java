@@ -17,6 +17,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bubolo.net.command.ClientConnected;
 import bubolo.net.command.ConnectedToServer;
 import bubolo.net.command.SendMap;
 import bubolo.net.command.StartGame;
@@ -216,7 +217,6 @@ class Server implements NetworkSubsystem
 					{
 						clients.add(clientSocket);
 						clientSocket.getClient().setTcpNoDelay(true);
-						network.send(new ConnectedToServer(server.getServerName()));
 					}
 					else
 					{
@@ -284,6 +284,10 @@ class Server implements NetworkSubsystem
 			try (ObjectInputStream inputStream = new ObjectInputStream(
 					client.getClient().getInputStream()))
 			{
+				ClientConnected welcomeCommand = (ClientConnected)inputStream.readObject();
+				server.send(new ConnectedToServer(welcomeCommand.getClientName(), server.getServerName()));
+				network.postToGameThread(welcomeCommand);
+				
 				while (!shutdown.get())
 				{
 					NetworkCommand command = (NetworkCommand)inputStream.readObject();

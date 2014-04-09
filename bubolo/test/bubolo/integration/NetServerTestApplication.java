@@ -1,6 +1,8 @@
 package bubolo.integration;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -32,18 +34,25 @@ import bubolo.world.entity.concrete.Tank;
  */
 public class NetServerTestApplication extends AbstractGameApplication implements NetworkObserver
 {
-	public static void main(String[] args) throws UnknownHostException
+	public static void main(String[] args) throws IOException
 	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.print("Name: ");
+        String name = br.readLine();
+		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new NetServerTestApplication(1067, 600), cfg);
+		new LwjglApplication(new NetServerTestApplication(1067, 600, name), cfg);
 	}
 	
 	private final int windowWidth;
 	private final int windowHeight;
+	
+	private final String playerName;
 	
 	private Graphics graphics;
 	private Network network;
@@ -64,10 +73,11 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public NetServerTestApplication(int windowWidth, int windowHeight)
+	public NetServerTestApplication(int windowWidth, int windowHeight, String name)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+		this.playerName = name;
 	}
 
 	/**
@@ -93,7 +103,7 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		
 		network = NetworkSystem.getInstance();
 		network.addObserver(this);
-		network.startServer("Server");
+		network.startServer(playerName);
 		
 		int response = JOptionPane.showConfirmDialog(null,
 				"Click OK to start the game.",
@@ -105,8 +115,6 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 			Gdx.app.exit();
 		}
 		network.startGame(world);
-		
-		network.send(new HelloNetworkCommand("Hello from the server."));
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1100, 100, 0);
@@ -154,9 +162,8 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	}
 
 	@Override
-	public void onConnect(String serverName)
+	public void onConnect(String clientName, String serverName)
 	{
-		System.out.println("Connected to server. The host is " + serverName);
 	}
 
 	@Override

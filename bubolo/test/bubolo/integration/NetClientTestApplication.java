@@ -32,12 +32,16 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	public static void main(String[] args) throws IOException
 	{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.print("Name: ");
+        String name = br.readLine();
+		
         System.out.print("Server IP Address: ");
         String addressString = br.readLine();
         InetAddress address = Inet4Address.getByName(addressString);
         
         Network net = NetworkSystem.getInstance();
-        net.connect(address, "Client");
+        net.connect(address, name);
 		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Client Integration";
@@ -93,7 +97,6 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		{
 			network.update(world);
 		}
-//		network.send(new HelloNetworkCommand("Hello from the client."));
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);
@@ -141,9 +144,9 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	}
 
 	@Override
-	public void onConnect(String serverName)
+	public void onConnect(String clientName, String serverName)
 	{
-		
+		System.out.println(clientName + " connected to game. The host is " + serverName + ".");
 	}
 
 	@Override

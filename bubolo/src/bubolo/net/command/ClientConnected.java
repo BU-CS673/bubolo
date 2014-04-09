@@ -33,6 +33,16 @@ public class ClientConnected implements NetworkCommand
 		this.playerName = playerName;
 	}
 
+	/**
+	 * Returns the name of the client.
+	 * 
+	 * @return the name of the client.
+	 */
+	public String getClientName()
+	{
+		return playerName;
+	}
+
 	@Override
 	public void execute(World world)
 	{

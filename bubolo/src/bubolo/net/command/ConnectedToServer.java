@@ -20,16 +20,20 @@ public class ConnectedToServer implements NetworkCommand
 {
 	private static final long serialVersionUID = 1L;
 
+	private final String clientName;
 	private final String serverName;
-
+	
 	/**
 	 * Constructs a ConnectedToServer object.
 	 * 
+	 * @param clientName
+	 *            the name of the client that connected.
 	 * @param serverName
 	 *            the name of the server player.
 	 */
-	public ConnectedToServer(String serverName)
+	public ConnectedToServer(String clientName, String serverName)
 	{
+		this.clientName = clientName;
 		this.serverName = serverName;
 	}
 
@@ -37,6 +41,6 @@ public class ConnectedToServer implements NetworkCommand
 	public void execute(World world)
 	{
 		Network net = NetworkSystem.getInstance();
-		net.getNotifier().notifyConnect(serverName);
+		net.getNotifier().notifyConnect(clientName, serverName);
 	}
 }
