@@ -30,7 +30,7 @@ public class GameWorld implements World
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
 
-	private Tile[][] mapTiles;
+	private Tile[][] mapTiles = null;
 
 	// The list of entities to remove. The entities array can't be modified while it
 	// is being iterated over.

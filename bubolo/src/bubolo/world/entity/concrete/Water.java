@@ -30,6 +30,11 @@ public class Water extends Terrain implements Adaptable
 	private Class<?>[] matchingTypes = new Class[] { Water.class, DeepWater.class, Crater.class };
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.4F;
+	
+	/**
 	 * Construct a new Water with a random UUID.
 	 */
 	public Water()
@@ -95,5 +100,15 @@ public class Water extends Terrain implements Adaptable
 	public void setTilingState(int newState)
 	{
 		tilingState = newState;
+	}
+
+	/**
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	@Override
+	public float getMaxSpeedModifier() 
+	{
+		return maxSpeedModifier;
 	}
 }

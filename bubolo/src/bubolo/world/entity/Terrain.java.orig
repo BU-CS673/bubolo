@@ -36,6 +36,8 @@ public abstract class Terrain extends StationaryEntity
 	{
 		super(id);
 	}
+<<<<<<< HEAD
+=======
 
 	/**
 	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
@@ -46,4 +48,5 @@ public abstract class Terrain extends StationaryEntity
 		return maxSpeedModifier;
 	}
 	// TODO: Add Terrain functionality!
+>>>>>>> production
 }

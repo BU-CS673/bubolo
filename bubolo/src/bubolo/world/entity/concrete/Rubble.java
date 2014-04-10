@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.Terrain;
 
 /**
  * Rubble is created when structures (like Walls) are destroyed. It replaces whatever Terrain type
@@ -10,13 +10,18 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Rubble extends StationaryElement
+public class Rubble extends Terrain
 {
 	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = 6510667006657276377L;
 
+	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.4F;
+	
 	/**
 	 * Construct a new Rubble with a random UUID.
 	 */
@@ -37,5 +42,15 @@ public class Rubble extends StationaryElement
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+	}
+
+	/**
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	@Override
+	public float getMaxSpeedModifier() 
+	{
+		return maxSpeedModifier;
 	}
 }

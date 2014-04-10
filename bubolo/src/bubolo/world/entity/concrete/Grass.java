@@ -19,6 +19,15 @@ public class Grass extends Terrain
 	/**
 	 * Construct a new Grass with a random UUID.
 	 */
+	
+	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 1.0F;
+	
+	/**
+	 * Construct a new Grass with a random UUID.
+	 */
 	public Grass()
 	{
 		this(UUID.randomUUID());
@@ -36,5 +45,15 @@ public class Grass extends Terrain
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+	}
+
+	/**
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	@Override
+	public float getMaxSpeedModifier() 
+	{
+		return maxSpeedModifier;
 	}
 }
