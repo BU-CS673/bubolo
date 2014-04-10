@@ -51,6 +51,16 @@ public class NetworkObserverNotifier
 	}
 
 	/**
+	 * Gets the observer count.
+	 * 
+	 * @return the observer count.
+	 */
+	int getObserverCount()
+	{
+		return observers.size();
+	}
+
+	/**
 	 * Notifies observers that this client has connected to a server.
 	 * 
 	 * @param clientName
@@ -111,7 +121,8 @@ public class NetworkObserverNotifier
 	/**
 	 * Notifies observers that a message has been received.
 	 * 
-	 * @param message the message text.
+	 * @param message
+	 *            the message text.
 	 */
 	public void notifyMessageReceived(String message)
 	{

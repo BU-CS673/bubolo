@@ -38,4 +38,13 @@ public class SendMessage implements NetworkCommand
 		Network net = NetworkSystem.getInstance();
 		net.getNotifier().notifyMessageReceived(message);
 	}
+	
+	/**
+	 * Gets the message.
+	 * @return the message.
+	 */
+	String getMessage()
+	{
+		return message;
+	}
 }

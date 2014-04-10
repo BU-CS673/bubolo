@@ -43,4 +43,22 @@ public class ConnectedToServer implements NetworkCommand
 		Network net = NetworkSystem.getInstance();
 		net.getNotifier().notifyConnect(clientName, serverName);
 	}
+	
+	/**
+	 * Gets the name of the client.
+	 * @return the name of the client.
+	 */
+	String getClientName()
+	{
+		return clientName;
+	}
+	
+	/**
+	 * Gets the name of the server.
+	 * @return the name of the server.
+	 */
+	String getServerName()
+	{
+		return serverName;
+	}
 }
