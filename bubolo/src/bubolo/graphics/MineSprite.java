@@ -59,7 +59,7 @@ class MineSprite extends AbstractEntitySprite<Mine>
 	 */
 	MineSprite(Mine mine)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, mine);
+		super(DrawLayer.THIRD, mine);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 21, 21);

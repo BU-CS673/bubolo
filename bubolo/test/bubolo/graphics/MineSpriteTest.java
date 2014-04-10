@@ -49,7 +49,7 @@ public class MineSpriteTest
 			{
 				Sprite sprite = Sprites.getInstance().createSprite(new Mine());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

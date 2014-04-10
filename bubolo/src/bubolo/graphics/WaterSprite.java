@@ -28,7 +28,7 @@ class WaterSprite extends AbstractEntitySprite<Water>
 	 */
 	WaterSprite(Water water)
 	{
-		super(DrawLayer.TERRAIN, water);
+		super(DrawLayer.FIRST, water);
 		frames = TextureUtil.adaptiveSplit_water(Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE));
 	}

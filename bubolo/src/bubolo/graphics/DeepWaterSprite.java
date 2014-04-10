@@ -29,7 +29,7 @@ class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 	 */
 	DeepWaterSprite(DeepWater deepWater)
 	{
-		super(DrawLayer.TERRAIN, deepWater);
+		super(DrawLayer.FIRST, deepWater);
 		frames = TextureUtil.adaptiveSplit_water((Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE)));
 	}

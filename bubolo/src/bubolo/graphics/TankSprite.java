@@ -64,7 +64,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	 */
 	TankSprite(Tank tank)
 	{
-		super(DrawLayer.ACTORS, tank);
+		super(DrawLayer.THIRD, tank);
 	}
 
 	private void updateColorSet()

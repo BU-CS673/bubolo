@@ -183,12 +183,10 @@ public class Graphics
 		drawBackground(world);
 
 		// Render sprites by layer.
-		drawEntities(spritesInView, DrawLayer.BACKGROUND);
-		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
-		drawEntities(spritesInView, DrawLayer.TERRAIN);
-		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
-		drawEntities(spritesInView, DrawLayer.ACTORS);
-		drawEntities(spritesInView, DrawLayer.EFFECTS);
+		drawEntities(spritesInView, DrawLayer.FIRST);
+		drawEntities(spritesInView, DrawLayer.SECOND);
+		drawEntities(spritesInView, DrawLayer.THIRD);
+		drawEntities(spritesInView, DrawLayer.TOP);
 
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)

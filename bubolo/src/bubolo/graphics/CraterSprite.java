@@ -29,7 +29,7 @@ class CraterSprite extends AbstractEntitySprite<Crater>
 	 */
 	CraterSprite(Crater crater)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, crater);
+		super(DrawLayer.FIRST, crater);
 
 		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);

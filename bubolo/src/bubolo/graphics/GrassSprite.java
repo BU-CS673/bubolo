@@ -31,7 +31,7 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 	 */
 	GrassSprite(Entity grass)
 	{
-		super(DrawLayer.BASE_TERRAIN, grass);
+		super(DrawLayer.FIRST, grass);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, 48, 48);

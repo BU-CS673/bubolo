@@ -28,7 +28,7 @@ class RoadSprite extends AbstractEntitySprite<Road>
 	 */
 	RoadSprite(Road road)
 	{
-		super(DrawLayer.TERRAIN, road);
+		super(DrawLayer.FIRST, road);
 
 		frames = TextureUtil.adaptiveSplit_16(Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE));

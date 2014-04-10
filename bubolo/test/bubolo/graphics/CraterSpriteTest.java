@@ -76,7 +76,7 @@ public class CraterSpriteTest
 			{
 				Sprite sprite = Sprites.getInstance().createSprite(new Crater());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

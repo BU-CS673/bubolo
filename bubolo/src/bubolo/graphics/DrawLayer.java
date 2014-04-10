@@ -1,41 +1,42 @@
 package bubolo.graphics;
 
 /**
- * Used to determine the draw order. Sprites that are drawn first may be
- * partially or fully covered by a sprite that is drawn later.
+ * Used to determine the draw order. Sprites that are drawn first may be partially or fully covered
+ * by a sprite that is drawn later.
+ * 
  * @author BU CS673 - Clone Productions
  */
 enum DrawLayer
 {
-	
+
 	/**
-	 * The background layer. Used to fill small holes in transparent textures where no terrain is visible underneath (edges of rivers).
+	 * The background layer. Using this in everything except for the background layer will cause the
+	 * sprite to never be drawn.
 	 */
 	BACKGROUND,
-	
+
 	/**
-	 * The lowest Terrain layer. This will usually be the lowest visible layer. Grass and Swamp.
+	 * The lowest draw layer.
 	 */
-	BASE_TERRAIN, 
-	
+	FIRST,
+
 	/**
-	 * The highest Terrain layer, above base Terrain, below StationaryElements. Used for Terrains that use transparency, such as Roads and Water.
-	 * 
+	 * The second draw layer.
 	 */
-	TERRAIN,
-	
+	SECOND,
+
 	/**
-	 * The StationaryElements layer. This is the fourth layer drawn. Above Terrain, below Actors.
+	 * The third draw layer.
 	 */
-	STATIONARY_ELEMENTS, 
-	
+	THIRD,
+
 	/**
-	 * The Actors layer. This is the second-to-last layer drawn. Above StationaryElements, below Effects.
+	 * The top draw layer.
 	 */
-	ACTORS,
-	
-	/**
-	 * The Effects layer. This is the last layer drawn. Above all other game objects.
-	 */
-	EFFECTS;
+	TOP,
+
+//	/**
+//	 * The Effects layer. This is the last layer drawn. Above all other game objects.
+//	 */
+//	EFFECTS;
 }
