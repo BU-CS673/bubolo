@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bubolo.ui.UiScreen;
 import bubolo.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -138,23 +137,6 @@ public class Graphics
 			Graphics.instance = this;
 			spriteComparator = new SpriteComparator();
 		}
-	}
-
-	/**
-	 * Draws a UI screen within the LWJGL window. This is mutually exclusive with the to the game's
-	 * graphics: Either a UI screen can be drawn in the window, or the game's graphics can be drawn.
-	 * In other words, do not use this method to draw game user interface elements: This is for the
-	 * game lobby, start screen (if moved from swing), etc.
-	 * 
-	 * @param screen
-	 *            the UI screen to draw.
-	 */
-	public void draw(UiScreen screen)
-	{
-		Gdx.gl20.glClearColor(0, 0, 0, 1);
-		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-		screen.draw();
 	}
 
 	/**
