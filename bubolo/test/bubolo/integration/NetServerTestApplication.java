@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JOptionPane;
 
@@ -103,12 +104,36 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		network.addObserver(this);
 		network.startServer(playerName);
 		
-		int response = JOptionPane.showConfirmDialog(null,
-				"Click OK to start the game.",
-				"Start Game",
-				JOptionPane.OK_CANCEL_OPTION);
+		final AtomicInteger response = new AtomicInteger(-99);
 		
-		if (response == JOptionPane.CANCEL_OPTION)
+		class StartGameDialog implements Runnable 
+		{
+			private final AtomicInteger response;
+			
+			StartGameDialog(AtomicInteger response)
+			{
+				this.response = response;
+			}
+			
+			@Override
+			public void run()
+			{
+				int userResponse = JOptionPane.showConfirmDialog(null,
+						"Click OK to start the game.",
+						"Start Game",
+						JOptionPane.OK_CANCEL_OPTION);
+				this.response.set(userResponse);
+			}
+		}
+		
+		new Thread(new StartGameDialog(response)).start();
+		
+		while (response.get() == -99)
+		{
+			network.update(world);
+		}
+		
+		if (response.get() == JOptionPane.CANCEL_OPTION)
 		{
 			Gdx.app.exit();
 		}
