@@ -677,7 +677,8 @@ public class Tank extends Actor
 	 * Returns the current health of the tank
 	 * @return current hit point count
 	 */
-	public int getHitPoints() {
+	public int getHitPoints() 
+	{
 		return hitPoints;
 	}
 

@@ -18,6 +18,7 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.test.MockBulletCreator;
 import bubolo.test.MockWorld;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.EntityTestCase;
@@ -189,15 +190,21 @@ public class TankTest
 	public void dropMine()
 	{
 		tank.gatherMine(2);
-		world = mock(GameWorld.class);
+		world = new MockWorld();
+		Tile mapTile = new Tile(0, 0, world.addEntity(Grass.class));
 		Mine mine = tank.dropMine(world, 0, 0);
+		assertNotNull(mine);
+		assertNotNull(mapTile.getElement());
 	}
 	
 	@Test
 	public void dropPillbox()
 	{
 		tank.gatherPillbox();
-		world = mock(GameWorld.class);
+		world = new MockWorld();
+		Tile mapTile = new Tile(0, 0, world.addEntity(Grass.class));
 		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
+		assertNotNull(pillbox);
+		assertNotNull(mapTile.getElement());
 	}
 }
