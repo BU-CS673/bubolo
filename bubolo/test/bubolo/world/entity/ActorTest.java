@@ -74,16 +74,4 @@ public class ActorTest
 		// dead.
 		fail();
 	}
-
-	@Test
-	public void dispose()
-	{
-		Actor act2 = new Tank();
-		act2.dispose();
-		// Should check to make sure the Actor was removed properly.
-		// Useless until we have some conditions to test whether a Actor has been
-		// destroyed.
-		fail();
-	}
-
 }
