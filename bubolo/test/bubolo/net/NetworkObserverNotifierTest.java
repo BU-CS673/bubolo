@@ -17,11 +17,13 @@ import static org.mockito.Mockito.mock;
 public class NetworkObserverNotifierTest
 {
 	private NetworkObserverNotifier notifier;
+	private NetObserver o;
 	
 	@Before
 	public void setup()
 	{
 		this.notifier = new NetworkObserverNotifier();
+		this.o = new NetObserver();
 	}
 	
 	/**
@@ -40,8 +42,6 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testRemoveObserver()
 	{
-		NetObserver o = new NetObserver();
-		
 		notifier.addObserver(o);
 		notifier.removeObserver(o);
 		assertEquals(0, notifier.getObserverCount());
@@ -53,7 +53,7 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testNotifyConnect()
 	{
-		NetObserver o = new NetObserver();
+		notifier.addObserver(o);
 		
 		final String CLIENT = "CLIENT";
 		final String SERVER = "SERVER";
@@ -69,7 +69,7 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testNotifyClientConnected()
 	{
-		NetObserver o = new NetObserver();
+		notifier.addObserver(o);
 		
 		final String CLIENT = "CLIENT";
 		notifier.notifyClientConnected(CLIENT);
@@ -83,7 +83,7 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testNotifyClientDisconnected()
 	{
-		NetObserver o = new NetObserver();
+		notifier.addObserver(o);
 		
 		final String CLIENT = "CLIENT";
 		notifier.notifyClientDisconnected(CLIENT);
@@ -97,7 +97,7 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testNotifyGameStart()
 	{
-		NetObserver o = new NetObserver();
+		notifier.addObserver(o);
 		
 		final int TIME = 8;
 		notifier.notifyGameStart(TIME);
@@ -111,7 +111,7 @@ public class NetworkObserverNotifierTest
 	@Test
 	public void testNotifyMessageReceived()
 	{
-		NetObserver o = new NetObserver();
+		notifier.addObserver(o);
 		
 		final String MESSAGE = "MESSAGE";
 		notifier.notifyMessageReceived(MESSAGE);
