@@ -36,14 +36,4 @@ public class ControllersTest
 		assertEquals(1, tank.getControllerCount());
 	}
 
-	// TODO: this will not pass until at least one tree controller has been implemented.
-	@Test
-	public void testCreateTreeControllerFactory()
-	{
-		Controllers controllerSystem = Controllers.getInstance();
-		Tree tree = new Tree();
-		controllerSystem.createController(tree, null);
-		assertEquals(1, tree.getControllerCount());
-	}
-
 }

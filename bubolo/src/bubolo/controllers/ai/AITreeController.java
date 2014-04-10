@@ -21,7 +21,7 @@ public class AITreeController implements Controller
 	/**
 	 * base score for tiles based on terrain.  surrounding tiles use these divided by 8
 	 */
-	private int grassScore = 40;
+	private int grassScore = 20;
 	private int rubbleCraterScore = 10;
 	private int treeScore = 40;
 
@@ -60,40 +60,58 @@ public class AITreeController implements Controller
 	@Override
 	public void update(World world) 
 	{
-		pickATile(world);
-		getTempTileScore(world);
-		if ((tempScore > tileScore))
+		if(pickATile(world))
 		{
-			createAtX = tempX;
-			createAtY = tempY;
-			tileScore = tempScore;
-			ticksSinceReset = 0;
-		}
-		else
-		{
-			if ((ticksSinceReset >= ticksPerGrowth) && tileScore >0)
+			getTempTileScore(world);
+			if ((tempScore > tileScore))
 			{
-				Tree tree = world.addEntity(Tree.class);
-				tree.setParams(createAtX*32-16, createAtY*32-16, 0);
-				world.getMapTiles()[createAtX-1][createAtY-1].setElement(tree);
+				createAtX = tempX;
+				createAtY = tempY;
+				tileScore = tempScore;
 				ticksSinceReset = 0;
-				tileScore = 0;				
 			}
 			else
 			{
-				ticksSinceReset++;
+				if ((ticksSinceReset >= ticksPerGrowth) && tileScore >0)
+				{
+					Tree tree = world.addEntity(Tree.class);
+					Grass grass = world.addEntity(Grass.class);
+					Tile tile = world.getMapTiles()[createAtX-1][createAtY-1];
+					
+					tile.setElement(tree);					
+					tile.setTerrain(grass);
+							
+					ticksSinceReset = 0;
+					tileScore = 0;				
+				}
+				else
+				{
+					ticksSinceReset++;
+				}
 			}
-		}	
+		}
 	}
-	private void pickATile(World world)
+	private boolean pickATile(World world)
 	{
 		//get map size in tiles
+		
 		int mapHeight = world.getMapHeight()/32;
 		int mapWidth = world.getMapWidth()/32;
+		boolean tileFound = false;
 		
 		//get a random tile that is not on the border
-		tempX = randomGenerator.nextInt(mapWidth-2)+2;
-		tempY = randomGenerator.nextInt(mapHeight-2)+2;
+		//if map is too small trees dont grow
+		if(mapHeight > 2 && mapWidth > 2)
+		{
+			tempX = randomGenerator.nextInt(mapWidth-2)+2;
+			tempY = randomGenerator.nextInt(mapHeight-2)+2;
+			tileFound = true;
+		}
+		else
+		{
+			tileFound = false;
+		}
+		return tileFound;
 	}
 	/**
 	 * sums up the score of a tile based on all its neighbors
@@ -105,9 +123,7 @@ public class AITreeController implements Controller
 		tempScore = 0;
 		Tile[][] tiles = world.getMapTiles();
 		Tile tile = tiles[tempX-1][tempY-1];
-		//System.out.print(tile.getTerrain().toString()+'\n');
-		//if(tile.hasElement())
-			//System.out.print(tile.getElement().toString()+'\n');
+		
 		if (tile == null)
 		{
 			unbuildable = false;
