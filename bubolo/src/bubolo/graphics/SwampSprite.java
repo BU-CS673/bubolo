@@ -15,7 +15,7 @@ class SwampSprite extends AbstractEntitySprite<Entity>
 	private Texture image;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "swamp.png";
+	private static final String TEXTURE_FILE = "swamp.png";
 
 	/**
 	 * Constructor for the SwampSprite. This is Package-private because sprites should not
@@ -26,7 +26,7 @@ class SwampSprite extends AbstractEntitySprite<Entity>
 	 */
 	SwampSprite(Entity swamp)
 	{
-		super(DrawLayer.BASE_TERRAIN, swamp);
+		super(DrawLayer.FIRST, swamp);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}

@@ -38,6 +38,4 @@ public class MineExplosion extends Effect
 		setHeight(60);
 		updateBounds();
 	}
-
-	// TODO: Add MineExplosion functionality!
 }

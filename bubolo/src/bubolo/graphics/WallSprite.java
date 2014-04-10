@@ -18,7 +18,7 @@ class WallSprite extends AbstractEntitySprite<Wall>
 	private TextureRegion[] frames;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "wall.png";
+	private static final String TEXTURE_FILE = "wall.png";
 
 	/**
 	 * Represents the total number of different damaged states that exist in this sprite's texture.
@@ -44,7 +44,7 @@ class WallSprite extends AbstractEntitySprite<Wall>
 	 */
 	WallSprite(Wall wall)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, wall);
+		super(DrawLayer.SECOND, wall);
 
 		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);

@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * The top-level class for the Graphics system.
@@ -146,6 +147,19 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
+		draw(world, null);
+	}
+
+	/**
+	 * Draws the entities that are within the camera's clipping boundary.
+	 * 
+	 * @param world
+	 *            the World Model object.
+	 * @param ui
+	 *            the game user interface.
+	 */
+	public void draw(World world, Stage ui)
+	{
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -167,13 +181,19 @@ public class Graphics
 		drawBackground(world);
 
 		// Render sprites by layer.
-		drawEntities(spritesInView, DrawLayer.BACKGROUND);
-		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
-		drawEntities(spritesInView, DrawLayer.TERRAIN);
-		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
-		drawEntities(spritesInView, DrawLayer.ACTORS);
-		drawEntities(spritesInView, DrawLayer.EFFECTS);
-
+		drawEntities(spritesInView, DrawLayer.FIRST);
+		drawEntities(spritesInView, DrawLayer.SECOND);
+		drawEntities(spritesInView, DrawLayer.THIRD);
+		drawEntities(spritesInView, DrawLayer.FOURTH);
+		drawEntities(spritesInView, DrawLayer.TOP);
+		
+		// Render the user interface.
+		if (ui != null)
+		{
+			ui.act(Gdx.graphics.getDeltaTime());
+			ui.draw();
+		}
+		
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
 		{
@@ -197,7 +217,7 @@ public class Graphics
 	 * @param controller
 	 *            a camera controller. The update method will be called once per draw call.
 	 */
-	public void addCameraController(CameraController controller)
+	void addCameraController(CameraController controller)
 	{
 		cameraControllers.add(controller);
 	}

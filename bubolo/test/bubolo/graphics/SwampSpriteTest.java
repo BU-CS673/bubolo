@@ -75,7 +75,7 @@ public class SwampSpriteTest
 			{
 				Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

@@ -17,7 +17,7 @@ class WaterSprite extends AbstractEntitySprite<Water>
 	private TextureRegion[] frames;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "water.png";
+	private static final String TEXTURE_FILE = "water.png";
 
 	/**
 	 * Constructor for the WaterSprite. This is Package-private because sprites should not be
@@ -28,7 +28,7 @@ class WaterSprite extends AbstractEntitySprite<Water>
 	 */
 	WaterSprite(Water water)
 	{
-		super(DrawLayer.TERRAIN, water);
+		super(DrawLayer.FIRST, water);
 		frames = TextureUtil.adaptiveSplit_water(Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE));
 	}

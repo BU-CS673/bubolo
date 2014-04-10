@@ -47,7 +47,7 @@ class BaseSprite extends AbstractEntitySprite<Base>
 	private int lastAnimationState = 0;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "base.png";
+	private static final String TEXTURE_FILE = "base.png";
 
 	/**
 	 * Constructor for the BaseSprite. This is Package-private because sprites should not be
@@ -59,7 +59,7 @@ class BaseSprite extends AbstractEntitySprite<Base>
 	 */
 	BaseSprite(Base base)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, base);
+		super(DrawLayer.SECOND, base);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);

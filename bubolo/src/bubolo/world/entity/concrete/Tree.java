@@ -37,6 +37,4 @@ public class Tree extends StationaryElement
 		setHeight(32);
 		updateBounds();
 	}
-
-	// TODO: Add Tree functionality!
 }

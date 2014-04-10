@@ -53,7 +53,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	private int lastAnimationState = 0;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "tank.png";
+	private static final String TEXTURE_FILE = "tank.png";
 
 	/**
 	 * Constructor for the TankSprite. This is Package-private because sprites should not be
@@ -64,7 +64,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	 */
 	TankSprite(Tank tank)
 	{
-		super(DrawLayer.ACTORS, tank);
+		super(DrawLayer.FOURTH, tank);
 	}
 
 	private void updateColorSet()

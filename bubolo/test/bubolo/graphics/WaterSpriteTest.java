@@ -77,7 +77,7 @@ public class WaterSpriteTest
 			{
 				Sprite sprite = Sprites.getInstance().createSprite(new Water());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

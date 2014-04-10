@@ -19,7 +19,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TileUtil
+public abstract class TileUtil
 {
 	private static final int LOCAL_TILE_DISTANCE = 2;
 

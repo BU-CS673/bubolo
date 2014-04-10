@@ -46,7 +46,7 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 	 */
 	MineExplosionSprite(MineExplosion exp)
 	{
-		super(DrawLayer.EFFECTS, exp);
+		super(DrawLayer.TOP, exp);
 
 		frames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 60, 60);

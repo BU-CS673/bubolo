@@ -16,7 +16,7 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 	private Texture image;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "tree.png";
+	private static final String TEXTURE_FILE = "tree.png";
 	
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not
@@ -27,7 +27,7 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 	 */
 	TreeSprite(Entity tree)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, tree);
+		super(DrawLayer.SECOND, tree);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}

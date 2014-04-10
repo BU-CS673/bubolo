@@ -47,7 +47,7 @@ class MineSprite extends AbstractEntitySprite<Mine>
 	private int lastAnimationState = 0;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "mine.png";
+	private static final String TEXTURE_FILE = "mine.png";
 
 	/**
 	 * Constructor for the MineSprite. This is Package-private because sprites should not
@@ -59,7 +59,7 @@ class MineSprite extends AbstractEntitySprite<Mine>
 	 */
 	MineSprite(Mine mine)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, mine);
+		super(DrawLayer.THIRD, mine);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 21, 21);

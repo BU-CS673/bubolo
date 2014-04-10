@@ -34,6 +34,4 @@ public abstract class Terrain extends StationaryEntity
 	{
 		super(id);
 	}
-
-	// TODO: Add Terrain functionality!
 }

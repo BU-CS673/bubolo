@@ -27,7 +27,7 @@ class PillboxSprite extends AbstractEntitySprite<Pillbox>
 	private int colorId = ColorSets.NEUTRAL;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "pillbox.png";
+	private static final String TEXTURE_FILE = "pillbox.png";
 
 	/**
 	 * Represents the discrete damaged state that the sprite should be in, calculated from
@@ -46,7 +46,7 @@ class PillboxSprite extends AbstractEntitySprite<Pillbox>
 	 */
 	PillboxSprite(Pillbox pillbox)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, pillbox);
+		super(DrawLayer.SECOND, pillbox);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);

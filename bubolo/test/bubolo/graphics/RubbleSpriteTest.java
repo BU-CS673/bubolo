@@ -50,7 +50,7 @@ public class RubbleSpriteTest
 			{
 				Sprite sprite = Sprites.getInstance().createSprite(new Rubble());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

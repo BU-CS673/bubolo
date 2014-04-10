@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TextureUtil
+public abstract class TextureUtil
 {
 	/**
 	 * Split a sprite texture up into discrete frames, using the standardized height and
