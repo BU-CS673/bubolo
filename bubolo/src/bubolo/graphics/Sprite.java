@@ -141,8 +141,8 @@ abstract class Sprite<T extends Entity> implements Drawable
 		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX() - (texture.getWidth() / 2),
-							getEntity().getY() - (texture.getHeight() / 2)));
+					new Vector2(getX() - (texture.getWidth() / 2),
+							getY() - (texture.getHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 
@@ -156,7 +156,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+					(float)(MathUtils.radiansToDegrees * (getRotation() - Math.PI / 2.f)),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -181,8 +181,8 @@ abstract class Sprite<T extends Entity> implements Drawable
 		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX() - (texture.getRegionWidth() / 2), getEntity()
-							.getY() - (texture.getRegionHeight() / 2)));
+					new Vector2(getX() - (texture.getRegionWidth() / 2),
+							getY() - (texture.getRegionHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
 
@@ -196,7 +196,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getRegionHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+					(float)(MathUtils.radiansToDegrees * (getRotation() - Math.PI / 2.f)));
 		}
 
 	}

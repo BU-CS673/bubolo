@@ -52,6 +52,7 @@ public class GameWorldTest
 		try
 		{
 			World w = new GameWorld(-100, 1000);
+			w.update();
 			fail("GameWorld did not fail on invalid input");
 		}
 		catch (Exception e)
@@ -101,6 +102,7 @@ public class GameWorldTest
 		try
 		{
 			World w = new GameWorld(100, -1000);
+			w.update();
 			fail("GameWorld did not fail on invalid input");
 		}
 		catch (Exception e)
@@ -508,7 +510,23 @@ public class GameWorldTest
 		World w = new GameWorld(10, 50);
 		assertEquals(50, w.getMapHeight());
 	}
+	
+	@Test
+	public void testSetMapHeight()
+	{
+		World w = new GameWorld(0, 0);
+		w.setMapHeight(40);
+		assertEquals(40, w.getMapHeight());
+	}
 
+	@Test
+	public void testSetMapWidth()
+	{
+		World w = new GameWorld(0, 0);
+		w.setMapWidth(75);
+		assertEquals(75, w.getMapWidth());
+	}
+	
 	private class AddEntityRunnable implements Runnable
 	{
 		private Class<? extends Entity> c;

@@ -30,11 +30,6 @@ public class MockNetwork implements Network
 	}
 
 	@Override
-	public void startServer() throws NetworkException, IllegalStateException
-	{
-	}
-
-	@Override
 	public void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException
 	{
 	}
@@ -64,4 +59,13 @@ public class MockNetwork implements Network
 	{
 	}
 
+	@Override
+	public void startServer() throws NetworkException, IllegalStateException
+	{
+	}
+
+	@Override
+	public void startGame(World world)
+	{
+	}
 }

@@ -13,4 +13,10 @@ public interface GameApplication extends ApplicationListener
 	 * @return true if the game's subsystems have been set up.
 	 */
 	public boolean isReady();
+	
+	/**
+	 * Specifies whether the game has started.
+	 * @return true if the game has started.
+	 */
+	public boolean isGameStarted();
 }

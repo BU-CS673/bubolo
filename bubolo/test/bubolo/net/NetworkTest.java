@@ -106,4 +106,10 @@ public class NetworkTest
 	{
 		net.postToGameThread(mock(NetworkCommand.class));
 	}
+	
+	@Test
+	public void startGame()
+	{
+		net.startGame(new MockWorld());
+	}
 }

@@ -176,7 +176,7 @@ public class Sprint2
 					cfg.width = 1067;
 					cfg.height = 600;
 					cfg.useGL20 = true;
-					new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600, address), cfg);
+					new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600), cfg);
 					IP_popup.setVisible(false);
 					fp.setVisible(false);
 				}

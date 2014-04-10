@@ -1,7 +1,6 @@
 package bubolo.integration;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
@@ -10,17 +9,16 @@ import java.net.InetAddress;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -28,7 +26,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetClientTestApplication implements GameApplication
+public class NetClientTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -45,21 +43,14 @@ public class NetClientTestApplication implements GameApplication
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new NetClientTestApplication(1067, 600, address), cfg);
+		new LwjglApplication(new NetClientTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	private Network network;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
-	
-	private InetAddress serverAddress;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -76,20 +67,11 @@ public class NetClientTestApplication implements GameApplication
 	 * ever exist.
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
-	 * @param serverAddress the server's ip address.
 	 */
-	public NetClientTestApplication(int windowWidth, int windowHeight, InetAddress serverAddress)
+	public NetClientTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-
-		this.serverAddress = serverAddress;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -99,28 +81,24 @@ public class NetClientTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		graphics = new Graphics(windowWidth, windowHeight);
+		
 		network = NetworkSystem.getInstance();
 		network.send(new HelloNetworkCommand("Hello from the client."));
 		
-		graphics = new Graphics(windowWidth, windowHeight);
+		world = new GameWorld();
 		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
+		while (world.getMapTiles() == null)
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
+			network.update(world);
 		}
 		
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(400, 100, 0);
+		tank.setParams(1250, 100, 0);
 		tank.setLocalPlayer(true);
-		
 		network.send(new CreateTank(tank));
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
