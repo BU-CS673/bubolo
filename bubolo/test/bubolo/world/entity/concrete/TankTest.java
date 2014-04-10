@@ -21,6 +21,7 @@ import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.EntityTestCase;
+import static org.mockito.Mockito.*;
 
 public class TankTest
 {
@@ -182,5 +183,21 @@ public class TankTest
 	{
 		tank.gatherAmmo(10);
 		assertEquals(100, tank.getAmmoCount(), 0);
+	}
+	
+	@Test
+	public void dropMine()
+	{
+		tank.gatherMine(2);
+		world = mock(GameWorld.class);
+		Mine mine = tank.dropMine(world, 0, 0);
+	}
+	
+	@Test
+	public void dropPillbox()
+	{
+		tank.gatherPillbox();
+		world = mock(GameWorld.class);
+		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
 	}
 }

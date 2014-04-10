@@ -257,19 +257,27 @@ public class Tank extends Actor
 	 * @param startY
 	 *            the bullet's start y position.
 	 * 
-	 * @return bullet reference to the new bullet.
+	 * @return bullet reference to the new bullet or null if the tank cannot fire.
 	 */
 	public Bullet fireCannon(World world, float startX, float startY)
 	{
-		cannonFireTime = System.currentTimeMillis();
-
-		Bullet bullet = world.addEntity(Bullet.class);
-
-		bullet.setX(startX).setY(startY);
-		bullet.setRotation(getRotation());
-		ammoCount--;
-			
-		return bullet;
+		if( (ammoCount > 0) && (cannonFireTime - System.currentTimeMillis() < 0) )
+		{
+			cannonFireTime = System.currentTimeMillis();
+	
+			Bullet bullet = world.addEntity(Bullet.class);
+	
+			bullet.setX(startX).setY(startY);
+			bullet.setRotation(getRotation());
+			ammoCount--;
+				
+			return bullet;
+		}
+		
+		else
+		{
+			return null;
+		}
 	}
 
 	private Polygon lookAheadBounds()

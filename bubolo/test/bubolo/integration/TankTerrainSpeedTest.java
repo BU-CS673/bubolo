@@ -158,4 +158,10 @@ public class TankTerrainSpeedTest implements GameApplication
 	public void resume()
 	{
 	}
+
+	@Override
+	public boolean isGameStarted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

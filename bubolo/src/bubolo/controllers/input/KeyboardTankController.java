@@ -78,10 +78,12 @@ public class KeyboardTankController implements Controller
 			Bullet bullet = tank.fireCannon(world,
 					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
 					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
-			
-			Network net = NetworkSystem.getInstance();
-			net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
+			if(bullet != null)
+			{
+				Network net = NetworkSystem.getInstance();
+				net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
 					bullet.getRotation()));
+			}
 
 		}
 	}
