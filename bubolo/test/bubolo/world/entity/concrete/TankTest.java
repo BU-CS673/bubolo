@@ -190,21 +190,25 @@ public class TankTest
 	public void dropMine()
 	{
 		tank.gatherMine(2);
-		world = new MockWorld();
-		Tile mapTile = new Tile(0, 0, world.addEntity(Grass.class));
+		world = new GameWorld(32, 32);
+		Tile[][] mapTile = new Tile[1][1];
+		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		world.setMapTiles(mapTile);
 		Mine mine = tank.dropMine(world, 0, 0);
 		assertNotNull(mine);
-		assertNotNull(mapTile.getElement());
+		assertNotNull(world.getMapTiles()[0][0].getElement());
 	}
 	
 	@Test
 	public void dropPillbox()
 	{
 		tank.gatherPillbox();
-		world = new MockWorld();
-		Tile mapTile = new Tile(0, 0, world.addEntity(Grass.class));
+		world = new GameWorld(32, 32);
+		Tile[][] mapTile = new Tile[1][1];
+		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		world.setMapTiles(mapTile);
 		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
 		assertNotNull(pillbox);
-		assertNotNull(mapTile.getElement());
+		assertNotNull(world.getMapTiles()[0][0].getElement());
 	}
 }
