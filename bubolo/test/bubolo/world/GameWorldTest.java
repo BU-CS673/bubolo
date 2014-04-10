@@ -494,6 +494,20 @@ public class GameWorldTest
 		World w = new GameWorld(10, 50);
 		assertEquals(50, w.getMapHeight());
 	}
+	@Test
+	public void testGetMapTiles()
+	{
+		World w = new GameWorld(10, 50);
+		Tile[][] tiles = new Tile[10][50];
+		w.setMapTiles(tiles);
+		assertEquals(tiles, w.getMapTiles());
+	}
+	@Test
+	public void testSetMapTiles()
+	{
+		World w = new GameWorld(10, 50);
+		assertEquals(50, w.getMapHeight());
+	}
 
 	private class AddEntityRunnable implements Runnable
 	{
