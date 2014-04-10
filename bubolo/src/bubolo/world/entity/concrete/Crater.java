@@ -25,7 +25,7 @@ public class Crater extends Terrain implements Adaptable
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.3F;
+	private static final float MAX_SPEED_MODIFIER = 0.3F;
 	
 	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
@@ -49,7 +49,7 @@ public class Crater extends Terrain implements Adaptable
 	 */
 	public Crater(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -84,15 +84,5 @@ public class Crater extends Terrain implements Adaptable
 	public void setTilingState(int newState)
 	{
 		tilingState = newState;
-	}
-	
-	/**
-	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
-	 * @return maxSpeedModifier
-	 */
-	@Override
-	public float getMaxSpeedModifier() 
-	{
-		return maxSpeedModifier;
 	}
 }
