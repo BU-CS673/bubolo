@@ -70,6 +70,14 @@ public interface Network
 	void postToGameThread(NetworkCommand command);
 
 	/**
+	 * Notifies the clients that the game should start. This method is not needed by clients.
+	 * 
+	 * @param world
+	 *            reference to the game world.
+	 */
+	void startGame(World world);
+
+	/**
 	 * Shuts down the network system.
 	 */
 	void dispose();

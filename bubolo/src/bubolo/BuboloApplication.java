@@ -1,25 +1,22 @@
 package bubolo;
 
+import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
-import bubolo.world.World;
 
 /**
  * The Game: this is where the subsystems are initialized, as well as where
  * the main game loop is. 
  * @author BU CS673 - Clone Productions
  */
-public class BuboloApplication implements GameApplication
+public class BuboloApplication extends AbstractGameApplication
 {
 	private int windowWidth;
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	
 	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -42,12 +39,6 @@ public class BuboloApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -63,8 +54,7 @@ public class BuboloApplication implements GameApplication
 		world = new GameWorld(500, 500);
 		
 		// TODO: add other systems here.
-		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -107,20 +97,6 @@ public class BuboloApplication implements GameApplication
 	@Override
 	public void dispose()
 	{
-	}
-
-	@Override
-	public void pause()
-	{
-	}
-
-	@Override
-	public void resize(int width, int height)
-	{
-	}
-
-	@Override
-	public void resume()
-	{
+		Audio.dispose();
 	}
 }

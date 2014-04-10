@@ -24,14 +24,15 @@ public class NetworkSystem implements Network
 
 	// Queue of commands that should be run in the game logic thread.
 	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
-	
+
 	// Specifies whether the network system is running in debug mode.
 	private boolean debug = false;
 
 	private static volatile Network instance;
-	
+
 	/**
 	 * Returns the network system instance.
+	 * 
 	 * @return the network system instance.
 	 */
 	public static Network getInstance()
@@ -42,11 +43,11 @@ public class NetworkSystem implements Network
 		}
 		return instance;
 	}
-	
+
 	private NetworkSystem()
 	{
 	}
-	
+
 	@Override
 	public void startServer() throws NetworkException, IllegalStateException
 	{
@@ -59,7 +60,7 @@ public class NetworkSystem implements Network
 		{
 			return;
 		}
-		
+
 		Server server = new Server(this);
 		server.startServer();
 		subsystem = server;
@@ -77,29 +78,38 @@ public class NetworkSystem implements Network
 		{
 			return;
 		}
-		
+
 		Client client = new Client(this);
 		client.connect(serverIpAddress);
 		subsystem = client;
 	}
-	
+
 	@Override
 	public void startDebug()
 	{
 		debug = true;
 	}
+	
+	@Override
+	public void startGame(World world)
+	{
+		if (subsystem instanceof Server)
+		{
+			((Server)subsystem).startGame(world);
+		}
+	}
 
 	@Override
 	public void send(NetworkCommand command)
 	{
-		// Returns without sending the command if the system is running in debug mode. 
+		// Returns without sending the command if the system is running in debug mode.
 		if (debug)
 		{
 			return;
 		}
-		
+
 		// Explicit check rather than a call to checkState, because FindBugs
-		// was unable to identify checkState as a valid defense against null pointer dereferencing. 
+		// was unable to identify checkState as a valid defense against null pointer dereferencing.
 		if (subsystem == null)
 		{
 			throw new NetworkException("Unable to send command: the network is not initialized.");

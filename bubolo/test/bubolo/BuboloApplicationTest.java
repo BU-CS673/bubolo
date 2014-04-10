@@ -24,6 +24,8 @@ public class BuboloApplicationTest
 	public void testIsReady()
 	{
 		assertFalse(ga.isReady());
+		ga.setReady(true);
+		assertTrue(ga.isReady());
 	}
 
 	@Test
@@ -58,5 +60,17 @@ public class BuboloApplicationTest
 	public void resume()
 	{
 		ga.resume();
+	}
+	
+	@Test
+	public void isGameStarted()
+	{
+		assertFalse(ga.isGameStarted());
+	}
+	
+	@Test
+	public void disposeTest()
+	{
+		ga.dispose();
 	}
 }

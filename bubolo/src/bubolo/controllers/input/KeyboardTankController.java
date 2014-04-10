@@ -7,7 +7,7 @@ import bubolo.controllers.Controller;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateEntity;
-import bubolo.net.command.MoveEntity;
+import bubolo.net.command.MoveTank;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;
@@ -75,8 +75,6 @@ public class KeyboardTankController implements Controller
 			float tankCenterX = tank.getX();
 			float tankCenterY = tank.getY();
 
-			// TODO (cdc - 3/14/2014): calculate and update this with correct starting
-			// offset.
 			Bullet bullet = tank.fireCannon(world,
 					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
 					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
@@ -91,7 +89,7 @@ public class KeyboardTankController implements Controller
 	private static void sendMove(Tank tank)
 	{
 		Network net = NetworkSystem.getInstance();
-		net.send(new MoveEntity(tank));
+		net.send(new MoveTank(tank));
 	}
 
 	// TODO (cdc - 3/15/2014): Uncomment this once it's ready to be implemented.
