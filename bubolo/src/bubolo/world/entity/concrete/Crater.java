@@ -80,6 +80,4 @@ public class Crater extends StationaryElement implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Crater functionality!
 }

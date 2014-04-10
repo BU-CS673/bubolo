@@ -80,6 +80,4 @@ public class Road extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Road functionality!
 }

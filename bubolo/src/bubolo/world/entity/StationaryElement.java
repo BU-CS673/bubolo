@@ -70,6 +70,4 @@ public abstract class StationaryElement extends StationaryEntity implements Dama
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	// TODO: Add StationaryElement functionality!
 }

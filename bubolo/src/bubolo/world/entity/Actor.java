@@ -106,6 +106,4 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	{
 		this.isOwned = owned;
 	}
-	// TODO: Add Actor functionality!
-
 }

@@ -74,10 +74,10 @@ public class Water extends Terrain implements Adaptable
 
 	/**
 	 * Return an array of booleans representing whether the tiles along the corners of this
-	 * DeepWater's tile contain a matching object for the adaptive tiling procedure.
+	 * Water's tile contain a matching object for the adaptive tiling procedure.
 	 * 
 	 * @return an array of booleans, where the elements represent whether a matching object was
-	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         found to the top left, top right, bottom left, and bottom right of this object, in
 	 *         order.
 	 */
 	public boolean[] getCornerMatches()
@@ -96,6 +96,4 @@ public class Water extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Water functionality!
 }

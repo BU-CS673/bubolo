@@ -96,6 +96,4 @@ public class DeepWater extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add DeepWater functionality!
 }

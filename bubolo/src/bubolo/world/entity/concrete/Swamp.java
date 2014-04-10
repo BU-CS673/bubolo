@@ -37,6 +37,4 @@ public class Swamp extends Terrain
 		setHeight(32);
 		updateBounds();
 	}
-
-	// TODO: Add Swamp functionality!
 }

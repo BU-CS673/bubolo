@@ -54,7 +54,6 @@ public class Base extends StationaryElement implements Ownable
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -102,6 +101,4 @@ public class Base extends StationaryElement implements Ownable
 	{
 		isCharging = charge;
 	}
-
-	// TODO: Add Base functionality!
 }

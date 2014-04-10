@@ -37,6 +37,4 @@ public class Grass extends Terrain
 		setHeight(32);
 		updateBounds();
 	}
-
-	// TODO: Add Grass functionality!
 }

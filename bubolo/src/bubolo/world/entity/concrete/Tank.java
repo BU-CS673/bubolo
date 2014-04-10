@@ -124,7 +124,6 @@ public class Tank extends Actor
 		this.speed = newSpeed.getSpeed();
 	}
 
-	// TODO: Add Tank functionality!
 	/**
 	 * Accelerates the tank.
 	 */
@@ -423,9 +422,6 @@ public class Tank extends Actor
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
-
-		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
-		// responsibility of a bullet.
 	}
 
 	/**

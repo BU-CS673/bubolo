@@ -38,6 +38,4 @@ public class Rubble extends StationaryElement
 		setHeight(32);
 		updateBounds();
 	}
-
-	// TODO: Add Rubble functionality!
 }
