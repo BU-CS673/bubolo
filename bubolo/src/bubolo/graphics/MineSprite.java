@@ -47,7 +47,7 @@ class MineSprite extends AbstractEntitySprite<Mine>
 	private int lastAnimationState = 0;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "mine.png";
+	private static final String TEXTURE_FILE = "mine.png";
 
 	/**
 	 * Constructor for the MineSprite. This is Package-private because sprites should not

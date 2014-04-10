@@ -18,7 +18,7 @@ class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 	private TextureRegion[] frames;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "deepwater.png";
+	private static final String TEXTURE_FILE = "deepwater.png";
 
 	/**
 	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should not be
@@ -29,7 +29,7 @@ class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 	 */
 	DeepWaterSprite(DeepWater deepWater)
 	{
-		super(DrawLayer.FIRST, deepWater);
+		super(DrawLayer.BOTTOM, deepWater);
 		frames = TextureUtil.adaptiveSplit_water((Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE)));
 	}

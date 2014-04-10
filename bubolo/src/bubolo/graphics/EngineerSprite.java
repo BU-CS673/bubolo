@@ -52,7 +52,7 @@ class EngineerSprite extends AbstractEntitySprite<Engineer>
 	private int lastAnimationState = 0;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "engineer.png";
+	private static final String TEXTURE_FILE = "engineer.png";
 
 	/**
 	 * Constructor for the EngineerSprite. This is Package-private because sprites should

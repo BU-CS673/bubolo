@@ -10,33 +10,33 @@ enum DrawLayer
 {
 
 	/**
-	 * The background layer. Using this in everything except for the background layer will cause the
+	 * The background layer. Using this in anything except for the background layer will cause the
 	 * sprite to never be drawn.
 	 */
 	BACKGROUND,
 
 	/**
-	 * The lowest draw layer.
+	 * The lowest sprite draw layer.
 	 */
-	FIRST,
+	BOTTOM,
 
 	/**
-	 * The second draw layer.
+	 * The second-level sprite draw layer.
 	 */
 	SECOND,
 
 	/**
-	 * The third draw layer.
+	 * The third-level sprite draw layer.
 	 */
 	THIRD,
 
 	/**
-	 * The top draw layer.
+	 * The fourth sprite draw layer.
+	 */
+	FOURTH,
+	
+	/**
+	 * The top sprite draw layer.
 	 */
 	TOP,
-
-//	/**
-//	 * The Effects layer. This is the last layer drawn. Above all other game objects.
-//	 */
-//	EFFECTS;
 }

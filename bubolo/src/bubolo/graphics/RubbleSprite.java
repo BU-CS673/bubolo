@@ -16,7 +16,7 @@ class RubbleSprite extends AbstractEntitySprite<Entity>
 	private Texture image;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "rubble.png";
+	private static final String TEXTURE_FILE = "rubble.png";
 
 	/**
 	 * Constructor for the RubbleSprite. This is Package-private because sprites should not
@@ -27,7 +27,7 @@ class RubbleSprite extends AbstractEntitySprite<Entity>
 	 */
 	RubbleSprite(Entity rubble)
 	{
-		super(DrawLayer.FIRST, rubble);
+		super(DrawLayer.BOTTOM, rubble);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}

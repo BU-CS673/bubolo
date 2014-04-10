@@ -16,7 +16,7 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 	private Texture image;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "tree.png";
+	private static final String TEXTURE_FILE = "tree.png";
 	
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not

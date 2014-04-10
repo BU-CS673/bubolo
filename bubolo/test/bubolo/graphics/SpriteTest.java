@@ -99,8 +99,8 @@ public class SpriteTest
 				Camera cam = new OrthographicCamera();
 				SpriteBatch spriteBatch = new SpriteBatch();
 				Sprite sprite = new MockSpriteTextureRegion();
-				DrawLayer wrongLayer = (sprite.getDrawLayer() != DrawLayer.FIRST) 
-						? DrawLayer.FIRST : DrawLayer.SECOND;
+				DrawLayer wrongLayer = (sprite.getDrawLayer() != DrawLayer.BOTTOM) 
+						? DrawLayer.BOTTOM : DrawLayer.SECOND;
 				sprite.draw(spriteBatch, cam, wrongLayer);
 			}
 		});
