@@ -199,9 +199,10 @@ public class Graphics
 		drawBackground(world);
 
 		// Render sprites by layer.
-		drawEntities(spritesInView, DrawLayer.BOTTOM);
+		drawEntities(spritesInView, DrawLayer.FIRST);
 		drawEntities(spritesInView, DrawLayer.SECOND);
 		drawEntities(spritesInView, DrawLayer.THIRD);
+		drawEntities(spritesInView, DrawLayer.FOURTH);
 		drawEntities(spritesInView, DrawLayer.TOP);
 		
 		// Render the user interface.

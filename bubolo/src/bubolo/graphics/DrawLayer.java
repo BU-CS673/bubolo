@@ -16,25 +16,25 @@ enum DrawLayer
 	BACKGROUND,
 
 	/**
-	 * The lowest sprite draw layer.
+	 * The lowest sprite draw layer. Higher numbers are drawn above lower numbers.
 	 */
-	BOTTOM,
+	FIRST,
 
 	/**
-	 * The second-level sprite draw layer.
+	 * The second-level sprite draw layer. Higher numbers are drawn above lower numbers.
 	 */
 	SECOND,
 
 	/**
-	 * The third-level sprite draw layer.
+	 * The third-level sprite draw layer. Higher numbers are drawn above lower numbers.
 	 */
 	THIRD,
 
 	/**
-	 * The fourth sprite draw layer.
+	 * The fourth sprite draw layer. Higher numbers are drawn above lower numbers.
 	 */
 	FOURTH,
-	
+
 	/**
 	 * The top sprite draw layer.
 	 */
