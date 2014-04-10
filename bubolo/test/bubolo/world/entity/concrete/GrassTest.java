@@ -26,4 +26,13 @@ public class GrassTest
 	{
 		assertTrue(true);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		grass = new Grass();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = grass.getMaxSpeedModifier();
+		assertEquals(grass.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }

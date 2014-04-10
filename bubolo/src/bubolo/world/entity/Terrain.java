@@ -15,6 +15,8 @@ public abstract class Terrain extends StationaryEntity
 	 * Used when serializing and de-serializing.
 	 */
 	private static final long serialVersionUID = 6373697443259757484L;
+	
+	private float maxSpeedModifier = 1F;
 
 	/**
 	 * Construct a new Terrain with a random UUID.
@@ -35,5 +37,13 @@ public abstract class Terrain extends StationaryEntity
 		super(id);
 	}
 
+	/**
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	public float getMaxSpeedModifier()
+	{
+		return maxSpeedModifier;
+	}
 	// TODO: Add Terrain functionality!
 }

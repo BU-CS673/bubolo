@@ -170,6 +170,12 @@ public class Parser
 
 		case "5":
 			return Road.class;
+			
+		case "6":
+			return Crater.class;
+
+		case "7":
+			return Rubble.class;
 
 		default:
 			throw new InvalidMapException("Invalid terrain type within map file");
@@ -190,29 +196,26 @@ public class Parser
 	{
 		switch (input)
 		{
-		case "6":
+		case "8":
 			return Pillbox.class;
 
-		case "7":
+		case "9":
 			return Tree.class;
 
-		case "8":
+		case "10":
 			return Mine.class;
 
-		case "9":
+		case "11":
 			return Wall.class;
 
-		case "10":
+		case "12":
 			return Base.class;
 
-		case "11":
-			return Crater.class;
-
-		case "12":
-			return Rubble.class;
-			/*
-			 * case "13": return PlayerSpawn.class;
-			 */
+		/*
+		 * case "13": 
+		 * return PlayerSpawn.class;
+		 */
+			
 		case "0":
 			return null;
 

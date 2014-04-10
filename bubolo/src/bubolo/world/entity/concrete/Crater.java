@@ -5,7 +5,7 @@ import java.util.UUID;
 import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.Terrain;
 
 /**
  * Craters are created when another Terrain type is blown up using a Mine. They reduce Tank movement
@@ -13,7 +13,7 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Crater extends StationaryElement implements Adaptable
+public class Crater extends Terrain implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
@@ -23,10 +23,15 @@ public class Crater extends StationaryElement implements Adaptable
 	private int tilingState = 0;
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static float maxSpeedModifier = 0.3F;
+	
+	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
-	private Class<?>[] matchingTypes = new Class[] { Road.class, Water.class };
+	private Class<?>[] matchingTypes = new Class[] { Crater.class, Water.class };
 
 	/**
 	 * Construct a new Crater with a random UUID.
@@ -80,6 +85,17 @@ public class Crater extends StationaryElement implements Adaptable
 	{
 		tilingState = newState;
 	}
+	
+	/**
+	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
+	 * @return maxSpeedModifier
+	 */
+	@Override
+	public float getMaxSpeedModifier() 
+	{
+		return maxSpeedModifier;
+	}
+
 
 	// TODO: Add Crater functionality!
 }

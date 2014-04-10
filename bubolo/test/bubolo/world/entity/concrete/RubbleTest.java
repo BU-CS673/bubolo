@@ -26,4 +26,13 @@ public class RubbleTest
 	{
 		assertTrue(true);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		rubble = new Rubble();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = rubble.getMaxSpeedModifier();
+		assertEquals(rubble.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }
