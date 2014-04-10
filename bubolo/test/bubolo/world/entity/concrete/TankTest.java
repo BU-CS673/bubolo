@@ -126,7 +126,7 @@ public class TankTest
 	@Test
 	public void getMineCount()
 	{
-		assertEquals(0, tank.getMineCount(), 0);
+		assertEquals(10, tank.getMineCount(), 0);
 	}
 	
 	@Test
