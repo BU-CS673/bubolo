@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Base;
  * 
  * @author BU673 - Clone Industries
  */
-class BaseSprite extends Sprite<Base>
+class BaseSprite extends AbstractEntitySprite<Base>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
@@ -45,21 +45,21 @@ class BaseSprite extends Sprite<Base>
 	// The last animation state that the Base was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
-	
+
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "base.png";
+	private static final String TEXTURE_FILE = "base.png";
 
 	/**
-	 * Constructor for the BaseSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system (instead, call the
-	 * Sprite.create(entity) static method).
+	 * Constructor for the BaseSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system (instead, call the Sprite.create(entity)
+	 * static method).
 	 * 
 	 * @param base
 	 *            Reference to the Base that this BaseSprite represents.
 	 */
 	BaseSprite(Base base)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, base);
+		super(DrawLayer.SECOND, base);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);
@@ -88,18 +88,15 @@ class BaseSprite extends Sprite<Base>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
 		else
 		{
 			updateColorSet();
-			
-			if (this.getEntity().isCharging())
-				animationState = 1;
-			else
-				animationState = 0;
+
+			animationState = (this.getEntity().isCharging()) ? 1 : animationState;
 
 			switch (animationState)
 			{

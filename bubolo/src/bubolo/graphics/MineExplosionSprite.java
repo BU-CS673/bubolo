@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.MineExplosion;
  * 
  * @author BU673 - Clone Industries
  */
-class MineExplosionSprite extends Sprite<Entity>
+class MineExplosionSprite extends AbstractEntitySprite<Entity>
 {
 
 	// The index representing which animation frame will be drawn.
@@ -46,7 +46,7 @@ class MineExplosionSprite extends Sprite<Entity>
 	 */
 	MineExplosionSprite(MineExplosion exp)
 	{
-		super(DrawLayer.EFFECTS, exp);
+		super(DrawLayer.TOP, exp);
 
 		frames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 60, 60);
@@ -55,7 +55,7 @@ class MineExplosionSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

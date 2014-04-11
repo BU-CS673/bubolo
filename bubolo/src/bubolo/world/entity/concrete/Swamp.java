@@ -19,7 +19,7 @@ public class Swamp extends Terrain
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.75F;
+	private static final float MAX_SPEED_MODIFIER = 0.75F;
 	
 	/**
 	 * Construct a new Swamp with a random UUID.
@@ -37,20 +37,9 @@ public class Swamp extends Terrain
 	 */
 	public Swamp(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
 	}
-
-	/**
-	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
-	 * @return maxSpeedModifier
-	 */
-	@Override
-	public float getMaxSpeedModifier() 
-	{
-		return maxSpeedModifier;
-	}
-	// TODO: Add Swamp functionality!
 }

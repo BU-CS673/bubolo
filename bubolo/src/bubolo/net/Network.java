@@ -21,24 +21,29 @@ public interface Network
 	 * Identifies this player as the game server, and begins accepting connections from other
 	 * players. There should only be one game server per game.
 	 * 
+	 * @param serverName
+	 *            the name of this server.
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 * @throws IllegalStateException
 	 *             if startServer or connect was already called.
 	 */
-	void startServer() throws NetworkException, IllegalStateException;
+	void startServer(String serverName) throws NetworkException, IllegalStateException;
 
 	/**
 	 * Attempts to connect to the specified IP address.
 	 * 
 	 * @param serverIpAddress
 	 *            the IP address of a server.
+	 * @param clientName
+	 *            the name of this client.
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 * @throws IllegalStateException
 	 *             if startServer or connect was already called.
 	 */
-	void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException;
+	void connect(InetAddress serverIpAddress, String clientName)
+			throws NetworkException, IllegalStateException;
 
 	/**
 	 * Starts the network system in debug mode. Use this to run unit tests and integration tests
@@ -76,6 +81,29 @@ public interface Network
 	 *            reference to the game world.
 	 */
 	void startGame(World world);
+
+	/**
+	 * Adds an observer to the network observer list.
+	 * 
+	 * @param observer
+	 *            the observer to add.
+	 */
+	void addObserver(NetworkObserver observer);
+
+	/**
+	 * Removes an observer from the network observer list.
+	 * 
+	 * @param observer
+	 *            the observer to remove.
+	 */
+	void removeObserver(NetworkObserver observer);
+
+	/**
+	 * Returns a reference to the observer notifier.
+	 * 
+	 * @return reference to the observer notifier.
+	 */
+	NetworkObserverNotifier getNotifier();
 
 	/**
 	 * Shuts down the network system.

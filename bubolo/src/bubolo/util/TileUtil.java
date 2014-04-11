@@ -19,7 +19,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TileUtil
+public abstract class TileUtil
 {
 	private static final int LOCAL_TILE_DISTANCE = 2;
 
@@ -182,15 +182,8 @@ public class TileUtil
 
 		Tile targetTile = w.getMapTiles()[gridX][gridY];
 
-		if (containsTargetTerrain(targetTile, targetClasses)
-				|| containsTargetElement(targetTile, targetClasses))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return (containsTargetTerrain(targetTile, targetClasses)
+				|| containsTargetElement(targetTile, targetClasses));
 	}
 
 	/**
@@ -268,44 +261,12 @@ public class TileUtil
 		int y = t.getGridY();
 		boolean[] edges = new boolean[4];
 
-		if (matchesType(x, y + 1, w, targetClasses))
-		{
-			edges[0] = true;
-		}
-		else
-		{
-			edges[0] = false;
-		}
-
-		if (matchesType(x, y - 1, w, targetClasses))
-		{
-			edges[1] = true;
-		}
-		else
-		{
-			edges[1] = false;
-		}
-
-		if (matchesType(x - 1, y, w, targetClasses))
-		{
-			edges[2] = true;
-		}
-		else
-		{
-			edges[2] = false;
-		}
-
-		if (matchesType(x + 1, y, w, targetClasses))
-		{
-			edges[3] = true;
-		}
-		else
-		{
-			edges[3] = false;
-		}
+		edges[0] = matchesType(x, y + 1, w, targetClasses);
+		edges[1] = matchesType(x, y - 1, w, targetClasses);
+		edges[2] = matchesType(x - 1, y, w, targetClasses);
+		edges[3] = matchesType(x + 1, y, w, targetClasses);
 
 		return edges;
-
 	}
 
 	/**
@@ -332,44 +293,12 @@ public class TileUtil
 		int y = t.getGridY();
 		boolean[] corners = new boolean[4];
 
-		if (matchesType(x - 1, y + 1, w, targetClasses))
-		{
-			corners[0] = true;
-		}
-		else
-		{
-			corners[0] = false;
-		}
-
-		if (matchesType(x + 1, y + 1, w, targetClasses))
-		{
-			corners[1] = true;
-		}
-		else
-		{
-			corners[1] = false;
-		}
-
-		if (matchesType(x - 1, y - 1, w, targetClasses))
-		{
-			corners[2] = true;
-		}
-		else
-		{
-			corners[2] = false;
-		}
-
-		if (matchesType(x + 1, y - 1, w, targetClasses))
-		{
-			corners[3] = true;
-		}
-		else
-		{
-			corners[3] = false;
-		}
+		corners[0] = matchesType(x - 1, y + 1, w, targetClasses);
+		corners[1] = matchesType(x + 1, y + 1, w, targetClasses);
+		corners[2] = matchesType(x - 1, y - 1, w, targetClasses);
+		corners[3] = matchesType(x + 1, y - 1, w, targetClasses);
 
 		return corners;
-
 	}
 	
 	/**

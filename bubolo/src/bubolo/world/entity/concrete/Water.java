@@ -32,8 +32,8 @@ public class Water extends Terrain implements Adaptable
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 0.4F;
-	
+	private static final float MAX_SPEED_MODIFIER = 0.4f;
+
 	/**
 	 * Construct a new Water with a random UUID.
 	 */
@@ -50,7 +50,7 @@ public class Water extends Terrain implements Adaptable
 	 */
 	public Water(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -78,11 +78,11 @@ public class Water extends Terrain implements Adaptable
 	}
 
 	/**
-	 * Return an array of booleans representing whether the tiles along the corners of this
-	 * DeepWater's tile contain a matching object for the adaptive tiling procedure.
+	 * Return an array of booleans representing whether the tiles along the corners of this Water's
+	 * tile contain a matching object for the adaptive tiling procedure.
 	 * 
 	 * @return an array of booleans, where the elements represent whether a matching object was
-	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         found to the top left, top right, bottom left, and bottom right of this object, in
 	 *         order.
 	 */
 	public boolean[] getCornerMatches()
@@ -101,15 +101,4 @@ public class Water extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	/**
-	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
-	 * @return maxSpeedModifier
-	 */
-	@Override
-	public float getMaxSpeedModifier() 
-	{
-		return maxSpeedModifier;
-	}
-	// TODO: Add Water functionality!
 }
