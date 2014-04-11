@@ -38,5 +38,5 @@ enum DrawLayer
 	/**
 	 * The top sprite draw layer.
 	 */
-	TOP,
+	TOP
 }
