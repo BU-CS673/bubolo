@@ -127,7 +127,8 @@ public class EntityTest
 	public void updateTest()
 	{
 		Entity tank = new Tank();
-		tank.addController(new Controller() {
+		tank.addController(new Controller() 
+		{
 			@Override
 			public void update(World world)
 			{

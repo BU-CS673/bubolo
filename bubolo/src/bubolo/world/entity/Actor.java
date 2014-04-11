@@ -2,7 +2,6 @@ package bubolo.world.entity;
 
 import java.util.UUID;
 
-import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 
 /**
@@ -11,7 +10,7 @@ import bubolo.world.Ownable;
  * 
  * @author BU CS673 - Clone Productions
  */
-public abstract class Actor extends Entity implements Damageable, Ownable
+public abstract class Actor extends Entity implements Ownable
 {
 
 	/**
@@ -46,41 +45,6 @@ public abstract class Actor extends Entity implements Damageable, Ownable
 	public Actor(UUID id)
 	{
 		super(id);
-	}
-
-	@Override
-	public Actor setHP(int i)
-	{
-		return this;
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public int getHP()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getMaxHP()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Actor modifyHP(int i)
-	{
-		// TODO Auto-generated method stub
-		return this;
-	}
-
-	@Override
-	public boolean isAlive()
-	{
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

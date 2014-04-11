@@ -34,4 +34,13 @@ public class CraterTest
 	{
 		crater.updateTilingState(null);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		crater = new Crater();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = crater.getMaxSpeedModifier();
+		assertEquals(crater.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }
