@@ -122,11 +122,16 @@ public class AITreeController implements Controller
 		 boolean unbuildable = false;
 		tempScore = 0;
 		Tile[][] tiles = world.getMapTiles();
-		Tile tile = tiles[tempX-1][tempY-1];
+		Tile tile = null;
+		
+		if (tiles != null)
+		{
+			tile = tiles[tempX-1][tempY-1];
+		}
 		
 		if (tile == null)
 		{
-			unbuildable = false;
+			unbuildable = true;
 		}
 		else
 		{
