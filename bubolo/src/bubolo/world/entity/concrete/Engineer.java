@@ -98,9 +98,6 @@ public class Engineer extends Actor
 	@Override
 	public void update(World world)
 	{
-		// TODO Auto-generated method stub
-		
+		super.updateControllers(world);
 	}
-
-	// TODO: Add Engineer functionality!
 }

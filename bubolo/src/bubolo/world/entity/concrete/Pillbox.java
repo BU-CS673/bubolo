@@ -18,18 +18,22 @@ public class Pillbox extends StationaryElement implements Ownable
 	 * time at witch cannon was last fired
 	 */
 	private long cannonFireTime = 0;
+	
 	/*
 	 * time required to reload cannon
 	 */
 	private static final long cannonReloadSpeed = 500;
+	
 	/*
 	 * current direction pillbox is going to fire
 	 */
 	private float cannonRotation = 0;
+	
 	/*
 	 * Max range to locate a target. Pillbox will not fire unless there is a tank within this range
 	 */
 	private double range = 300;
+	
 	/**
 	 * Used in serialization/de-serialization.
 	 */

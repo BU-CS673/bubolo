@@ -99,6 +99,4 @@ public class Mine extends StationaryElement implements Ownable
 	{
 		this.isExploding = explode;
 	}
-
-	// TODO: Add Mine functionality!
 }

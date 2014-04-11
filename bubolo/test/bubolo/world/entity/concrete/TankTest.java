@@ -18,9 +18,11 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.test.MockBulletCreator;
 import bubolo.test.MockWorld;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.EntityTestCase;
+import static org.mockito.Mockito.*;
 
 public class TankTest
 {
@@ -40,9 +42,15 @@ public class TankTest
 	}
 
 	@Test
+	public void isHidden()
+	{
+		assertEquals(false, tank.isHidden());
+	}
+
+	@Test
 	public void getSpeed()
 	{
-		assertEquals(0, (int)tank.getSpeed());
+		assertEquals(0, (int) tank.getSpeed());
 	}
 
 	@Test
@@ -83,7 +91,7 @@ public class TankTest
 	@Test
 	public void rotateLeft()
 	{
-		tank.setRotation((float)Math.PI / 2);
+		tank.setRotation((float) Math.PI / 2);
 		float rotation = tank.getRotation();
 		tank.rotateLeft();
 		assertEquals((rotation - 0.05f), tank.getRotation(), 0.0001f);
@@ -92,9 +100,115 @@ public class TankTest
 	@Test
 	public void rotateRight()
 	{
-		tank.setRotation((float)Math.PI / 2);
+		tank.setRotation((float) Math.PI / 2);
 		float rotation = tank.getRotation();
 		tank.rotateRight();
 		assertEquals(rotation + 0.05f, tank.getRotation(), 0.0001f);
+	}
+	
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(100, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getAmmoCount()
+	{
+		assertEquals(100, tank.getAmmoCount(), 0);
+	}
+	
+	@Test
+	public void getTreeCount()
+	{
+		assertEquals(0, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void getMineCount()
+	{
+		assertEquals(10, tank.getMineCount(), 0);
+	}
+	
+	@Test
+	public void getPillBoxCount()
+	{
+		assertEquals(0, tank.getPillboxCount(), 0);
+	}
+	
+	@Test
+	public void takeHit()
+	{
+		tank.takeHit(20);
+		assertEquals(80, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void heal()
+	{
+		tank.takeHit(20);
+		tank.heal(5);
+		assertEquals(85, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void gatherTree()
+	{
+		tank.gatherTree();
+		assertEquals(1, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void useTrees()
+	{
+		tank.gatherTree();
+		tank.useTrees(1);
+		assertEquals(0, tank.getTreeCount(), 0);
+	}
+	
+	@Test
+	public void gatherMine()
+	{
+		tank.gatherMine(1);
+		assertEquals(tank.TANK_MAX_MINE_COUNT, tank.getMineCount(), 0);
+	}
+	@Test
+	public void gatherPillBox()
+	{
+		tank.gatherPillbox();
+		assertEquals(1, tank.getPillboxCount(), 0);
+	}
+	
+	@Test
+	public void gatherAmmo()
+	{
+		tank.gatherAmmo(10);
+		assertEquals(100, tank.getAmmoCount(), 0);
+	}
+	
+	@Test
+	public void dropMine()
+	{
+		tank.gatherMine(2);
+		world = new GameWorld(32, 32);
+		Tile[][] mapTile = new Tile[1][1];
+		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		world.setMapTiles(mapTile);
+		Mine mine = tank.dropMine(world, 0, 0);
+		assertNotNull(mine);
+		assertNotNull(world.getMapTiles()[0][0].getElement());
+	}
+	
+	@Test
+	public void dropPillbox()
+	{
+		tank.gatherPillbox();
+		world = new GameWorld(32, 32);
+		Tile[][] mapTile = new Tile[1][1];
+		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		world.setMapTiles(mapTile);
+		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
+		assertNotNull(pillbox);
+		assertNotNull(world.getMapTiles()[0][0].getElement());
 	}
 }

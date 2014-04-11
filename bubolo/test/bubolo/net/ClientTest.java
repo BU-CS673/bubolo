@@ -9,6 +9,7 @@ package bubolo.net;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -49,12 +50,26 @@ public class ClientTest
 	{
 		try
 		{
-			client.connect(InetAddress.getByName("127.0.0.1"));
+			client.connect(InetAddress.getByName("127.0.0.1"), "Player 1");
 		}
-		catch (NetworkException | UnknownHostException e)
+		catch (NetworkException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (e.getCause().getClass() == ConnectException.class)
+			{
+				// OK: expected behavior is for address to be understood, but connection to be refused.
+			}
+			else
+			{
+				// Fail on unknown NetworkException.
+				System.out.println(e);
+				fail();
+			}
+		}
+		catch (UnknownHostException e)
+		{
+			// Fail on UnknownHostException.
+			System.out.println(e);
+			fail();
 		}
 	}
 

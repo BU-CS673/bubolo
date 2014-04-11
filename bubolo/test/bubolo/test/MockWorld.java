@@ -1,7 +1,9 @@
 package bubolo.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
@@ -18,17 +20,25 @@ import bubolo.world.entity.MockEntity;
  */
 public class MockWorld implements World
 {
+	private List<Entity> entities = new ArrayList<Entity>();
+	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	
+	public void add(Entity e)
+	{
+		entities.add(e);
+		entityMap.put(e.getId(), e);
+	}
 
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
-		return null;
+		return entityMap.get(id);
 	}
 
 	@Override
 	public List<Entity> getEntities()
 	{
-		return new ArrayList<Entity>();
+		return entities;
 	}
 
 	@Override
@@ -104,6 +114,8 @@ public class MockWorld implements World
 		// do nothing
 		
 	}
+	
+	@Override
 	public Tile[][] getMapTiles()
 	{
 		// do nothing
@@ -122,5 +134,19 @@ public class MockWorld implements World
 	{
 		// do nothing
 		return null;
+	}
+
+	@Override
+	public void setMapHeight(int height)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setMapWidth(int width)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

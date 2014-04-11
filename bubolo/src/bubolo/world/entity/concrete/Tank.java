@@ -7,10 +7,14 @@ import java.util.UUID;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.Terrain;
 
 /**
  * The tank, which may be controlled by a local player, a networked player, or an AI bot.
@@ -27,6 +31,11 @@ public class Tank extends Actor
 	// Max speed in pixels per tick.
 	private static final float maxSpeed = 4.f;
 
+	/**
+	 * Used to calculate the maxSpeed based upon the interaction with the intersected terrains
+	 */
+	private float modifiedMaxSpeed = maxSpeed;
+
 	// The tank's current speed.
 	private float speed = 0.f;
 
@@ -41,6 +50,9 @@ public class Tank extends Actor
 
 	// Specifies whether the tank decelerated this tick.
 	private boolean decelerated;
+
+	// Specifies whether the tank is hidden in trees
+	private boolean hidden;
 
 	// The tank's rate of rotation per tick.
 	private static final float rotationRate = 0.05f;
@@ -58,20 +70,62 @@ public class Tank extends Actor
 	private float bumperHeight = 4.0f;
 
 	/**
-	 * The default amount to rotate the Tank by when a bumper collision is detected. Used
-	 * to prevent getting 'stuck' on walls.
+	 * The default amount to rotate the Tank by when a bumper collision is detected. Used to prevent
+	 * getting 'stuck' on walls.
 	 */
-	private float rotationOffsetAmount = (float) Math.toRadians(1);
+	private float rotationOffsetAmount = (float)Math.toRadians(1);
 
 	/**
-	 * The default amount to reposition the Tank by when a bumper collision is detected.
-	 * Used to prevent getting 'stuck' on walls.
+	 * The default amount to reposition the Tank by when a bumper collision is detected. Used to
+	 * prevent getting 'stuck' on walls.
 	 */
 	private float positionOffsetAmount = 0.1f;
 
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
+
+	/**
+	 * The health of the tank
+	 */
+	private int hitPoints;
+
+	/**
+	 * The amount of ammo of the tank
+	 */
+
+	public static final int TANK_MAX_HIT_POINTS = 100;
+
+	private int ammoCount;
+
+	/**
+	 * The amount of the tree resource the tank has
+	 */
+
+	public static final int TANK_MAX_AMMO = 100;
+
+	private int treeCount;
+
+	/**
+	 * The number of mines in the tank
+	 */
+
+	public static final int TANK_MAX_TREE_INVENTORY = 100;
+
+	private int mineCount;
+
+	/**
+	 * The number of pillboxes in the tank
+	 */
+
+	public static final int TANK_MAX_MINE_COUNT = 10;
+
+	private int pillboxCount;
+
+	/**
+	 * Constructor for the Tank object
+	 */
+
 	public Tank()
 	{
 		this(UUID.randomUUID());
@@ -90,6 +144,11 @@ public class Tank extends Actor
 		setHeight(22);
 		updateBounds();
 		setSolid(true);
+		hitPoints = TANK_MAX_HIT_POINTS;
+		ammoCount = TANK_MAX_AMMO;
+		treeCount = 0;
+		pillboxCount = 0;
+		mineCount = TANK_MAX_MINE_COUNT;
 	}
 
 	/**
@@ -102,18 +161,39 @@ public class Tank extends Actor
 		return speed;
 	}
 
-	// TODO: Add Tank functionality!
+	/**
+	 * Sets the tank's speed. Intended for use with the network system.
+	 * 
+	 * @param newSpeed
+	 *            a NetTankSpeed object that contains the tank's new speed.
+	 */
+	public void setSpeed(NetTankSpeed newSpeed)
+	{
+		if (newSpeed.getSpeed() > this.speed)
+		{
+			accelerated = true;
+		}
+
+		this.speed = newSpeed.getSpeed();
+	}
+
 	/**
 	 * Accelerates the tank.
 	 */
 	public void accelerate()
 	{
-		if (speed < maxSpeed && !accelerated)
+		if (speed > modifiedMaxSpeed)
+		{
+			// this.decelerate();
+			speed = modifiedMaxSpeed;
+		}
+
+		else if (speed < modifiedMaxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
-			if (speed > maxSpeed)
+			if (speed > modifiedMaxSpeed)
 			{
-				speed = maxSpeed;
+				speed = modifiedMaxSpeed;
 			}
 			accelerated = true;
 		}
@@ -124,6 +204,10 @@ public class Tank extends Actor
 	 */
 	public void decelerate()
 	{
+		if (speed > modifiedMaxSpeed)
+		{
+			speed = modifiedMaxSpeed;
+		}
 		if (speed > 0 && !decelerated)
 		{
 			speed -= decelerationRate;
@@ -162,8 +246,7 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
-	 * reload.
+	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon reload.
 	 * 
 	 * @param world
 	 *            reference to the world.
@@ -172,34 +255,53 @@ public class Tank extends Actor
 	 * @param startY
 	 *            the bullet's start y position.
 	 * 
-	 * @return bullet reference to the new bullet.
+	 * @return bullet reference to the new bullet or null if the tank cannot fire.
 	 */
 	public Bullet fireCannon(World world, float startX, float startY)
 	{
-		cannonFireTime = System.currentTimeMillis();
+		if ((ammoCount > 0) && (cannonFireTime - System.currentTimeMillis() < 0))
+		{
+			cannonFireTime = System.currentTimeMillis();
 
-		Bullet bullet = world.addEntity(Bullet.class);
+			Bullet bullet = world.addEntity(Bullet.class);
 
-		bullet.setX(startX).setY(startY);
-		bullet.setRotation(getRotation());
+			bullet.setX(startX).setY(startY);
+			bullet.setRotation(getRotation());
+			ammoCount--;
 
-		return bullet;
+			return bullet;
+		}
+
+		else
+		{
+			return null;
+		}
 	}
 
 	private Polygon lookAheadBounds()
 	{
 		Polygon lookAheadBounds = getBounds();
 
-		float newX = (float) (getX() + Math.cos(getRotation()) * speed);
-		float newY = (float) (getY() + Math.sin(getRotation()) * speed);
+		float newX = (float)(getX() + Math.cos(getRotation()) * speed);
+		float newY = (float)(getY() + Math.sin(getRotation()) * speed);
 
 		lookAheadBounds.setPosition(newX, newY);
 		return lookAheadBounds;
 	}
 
 	/**
-	 * Returns a list of all Entities that would overlap with this Tank if it was where it
-	 * will be in one game tick, along its current trajectory.
+	 * Checks to see whether this Tank is currently hidden (ex. by being in a clump of trees)
+	 * 
+	 * @return true if the Tank is hidden, false otherwise.
+	 */
+	public boolean isHidden()
+	{
+		return hidden;
+	}
+
+	/**
+	 * Returns a list of all Entities that would overlap with this Tank if it was where it will be
+	 * in one game tick, along its current trajectory.
 	 */
 	private List<Entity> getLookaheadEntities(World w)
 	{
@@ -210,8 +312,8 @@ public class Tank extends Actor
 			if (localEntities.get(ii) != this)
 			{
 				if (overlapsEntity(localEntities.get(ii))
-						|| Intersector.overlapConvexPolygons(lookAheadBounds(), localEntities.get(ii)
-								.getBounds()))
+						|| Intersector.overlapConvexPolygons(lookAheadBounds(),
+								localEntities.get(ii).getBounds()))
 				{
 					intersects.add(localEntities.get(ii));
 				}
@@ -230,13 +332,12 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and
-	 * rotation.
+	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
 	private void updateLeftBumper()
 	{
-		float newX = (float) (getX() + Math.cos(getRotation()) * (speed));
-		float newY = (float) (getY() + Math.sin(getRotation()) * (speed));
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
 		float w = getWidth();
 		float h = getHeight();
 		// Defines the corners of the left bumper as a 4x4 pixel box, placed at the
@@ -251,17 +352,16 @@ public class Tank extends Actor
 		leftBumper.setPosition(newX, newY);
 		leftBumper.setOrigin(0, 0);
 		leftBumper.setVertices(corners);
-		leftBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
+		leftBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	/**
-	 * Updates the bounding polygon for this Entity with its current position and
-	 * rotation.
+	 * Updates the bounding polygon for this Entity with its current position and rotation.
 	 */
 	private void updateRightBumper()
 	{
-		float newX = (float) (getX() + Math.cos(getRotation()) * (speed));
-		float newY = (float) (getY() + Math.sin(getRotation()) * (speed));
+		float newX = (float)(getX() + Math.cos(getRotation()) * (speed));
+		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
 		float w = getWidth();
 		float h = getHeight();
 
@@ -277,7 +377,7 @@ public class Tank extends Actor
 		rightBumper.setPosition(newX, newY);
 		rightBumper.setOrigin(0, 0);
 		rightBumper.setVertices(corners);
-		rightBumper.rotate((float) Math.toDegrees(getRotation() - Math.PI / 2));
+		rightBumper.rotate((float)Math.toDegrees(getRotation() - Math.PI / 2));
 	}
 
 	/**
@@ -348,25 +448,68 @@ public class Tank extends Actor
 			return false;
 	}
 
+	private void checkTrees(World world)
+	{
+		int gridX = TileUtil.getClosestTileX(getX());
+		int gridY = TileUtil.getClosestTileY(getY());
+		Tile[][] allTiles = world.getMapTiles();
+		if (allTiles == null || TileUtil.isValidTile(gridX, gridY, world) == false)
+		{
+			hidden = false;
+			return;
+		}
+		Tile closeTile = allTiles[gridX][gridY];
+		StationaryElement closeElement;
+
+		if (!closeTile.hasElement())
+		{
+			hidden = false;
+			return;
+		}
+
+		closeElement = closeTile.getElement();
+		if (!(closeElement instanceof Tree))
+		{
+			hidden = false;
+			return;
+		}
+		boolean[] corners = TileUtil.getCornerMatches(closeTile, world, new Class[] { Tree.class });
+		boolean[] edges = TileUtil.getEdgeMatches(closeTile, world, new Class[] { Tree.class });
+		for (int i = 0; i < 4; i++)
+		{
+			if (corners[i] == false || edges[i] == false)
+			{
+				hidden = false;
+				return;
+			}
+		}
+
+		hidden = true;
+	}
+
 	@Override
 	public void update(World world)
 	{
 		updateControllers(world);
 		moveTank(world);
-
-		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
-		// responsibility of a bullet.
+		checkTrees(world);
 	}
 
 	/**
-	 * Updates the Tank's world position according to its speed, acceleration/deceleration
-	 * state, and collision information.
+	 * Updates the Tank's world position according to its speed, acceleration/deceleration state,
+	 * and collision information.
 	 * 
 	 * @param world
 	 *            is a reference to the world that this Tank belongs to.
 	 */
 	private void moveTank(World world)
 	{
+
+		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
+		if (currentTerrain != null)
+		{
+			modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
+		}
 
 		/**
 		 * Booleans used to record which, if any, bumpers were hit.
@@ -375,8 +518,7 @@ public class Tank extends Actor
 		boolean collidingRight = false;
 
 		/**
-		 * Floats used the offset that should be applied to the Tank to record wall
-		 * collisions.
+		 * Floats used the offset that should be applied to the Tank to record wall collisions.
 		 */
 		float rotationOffset = 0f;
 		float xOffset = 0;
@@ -390,15 +532,14 @@ public class Tank extends Actor
 		float rotation = getRotation();
 
 		/**
-		 * The position where the Tank will be after one game tick, if it continues its
-		 * current trajectory and speed.
+		 * The position where the Tank will be after one game tick, if it continues its current
+		 * trajectory and speed.
 		 */
-		float newX = (float) (xPos + Math.cos(rotation) * (speed));
-		float newY = (float) (yPos + Math.sin(rotation) * (speed));
+		float newX = (float)(xPos + Math.cos(rotation) * (speed));
+		float newY = (float)(yPos + Math.sin(rotation) * (speed));
 
 		/**
-		 * Update (replace) the right and left bumper polygons to make sure collisions are
-		 * accurate.
+		 * Update (replace) the right and left bumper polygons to make sure collisions are accurate.
 		 */
 		updateBumpers();
 
@@ -423,9 +564,8 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the Tank hit something with its left bumper, restrict travel in the
-		 * appropriate direction, and offset/rotate the Tank to 'slide' away from the
-		 * collision.
+		 * If the Tank hit something with its left bumper, restrict travel in the appropriate
+		 * direction, and offset/rotate the Tank to 'slide' away from the collision.
 		 */
 		if (collidingLeft)
 		{
@@ -466,9 +606,8 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the Tank hit something with its right bumper, restrict travel in the
-		 * appropriate direction, and offset/rotate the Tank to 'slide' away from the
-		 * collision.
+		 * If the Tank hit something with its right bumper, restrict travel in the appropriate
+		 * direction, and offset/rotate the Tank to 'slide' away from the collision.
 		 */
 		if (collidingRight)
 		{
@@ -508,10 +647,9 @@ public class Tank extends Actor
 		}
 
 		/**
-		 * If the speed of the Tank is greater than zero, modify its position and rotation
-		 * by the offsets given earlier. Note that if a Tank collides on the left and
-		 * right bumpers simultaneously, the rotational offsets will cancel each other
-		 * out.
+		 * If the speed of the Tank is greater than zero, modify its position and rotation by the
+		 * offsets given earlier. Note that if a Tank collides on the left and right bumpers
+		 * simultaneously, the rotational offsets will cancel each other out.
 		 */
 		if (speed > 0)
 		{
@@ -527,5 +665,217 @@ public class Tank extends Actor
 
 		accelerated = false;
 		decelerated = false;
+	}
+
+	/**
+	 * Returns the current health of the tank
+	 * 
+	 * @return current hit point count
+	 */
+	public int getHitPoints()
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Returns the current ammo count of the tank
+	 * 
+	 * @return current ammo count
+	 */
+	public int getAmmoCount()
+	{
+		return ammoCount;
+	}
+
+	/**
+	 * Returns the current number of trees that the tank has gathered
+	 * 
+	 * @return the current tree resource count
+	 */
+	public int getTreeCount()
+	{
+		return treeCount;
+	}
+
+	/**
+	 * Returns the number of mines the tank currently contains
+	 * 
+	 * @return the current mine count
+	 */
+	public int getMineCount()
+	{
+		return mineCount;
+	}
+
+	/**
+	 * Returns the number of pillboxes the tank has on board
+	 * 
+	 * @return the pillbox count for the tank
+	 */
+	public int getPillboxCount()
+	{
+		return pillboxCount;
+	}
+
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the tank has taken
+	 */
+	public void takeHit(int damagePoints)
+	{
+
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events
+	}
+
+	/**
+	 * Increments the tanks health by a given amount
+	 * 
+	 * @param healPoints
+	 *            - how many points the tank is given
+	 */
+	public void heal(int healPoints)
+	{
+		if (hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = 100;
+		}
+	}
+
+	/**
+	 * Supplies the tank ammo with given a set amount
+	 * 
+	 * @param newAmmo
+	 *            - amount of ammo being transfered to the tank
+	 */
+	public void gatherAmmo(int newAmmo)
+	{
+		if (ammoCount + Math.abs(newAmmo) < TANK_MAX_AMMO)
+		{
+			ammoCount += Math.abs(newAmmo);
+		}
+
+		else
+		{
+			ammoCount = TANK_MAX_AMMO;
+		}
+	}
+
+	/**
+	 * Used to increment the tree count upon gathering a tree
+	 */
+	public void gatherTree()
+	{
+		if (treeCount < TANK_MAX_TREE_INVENTORY)
+		{
+			treeCount++;
+		}
+	}
+
+	/**
+	 * This method is used to consume trees
+	 * 
+	 * @param treesUsed
+	 *            - the number of trees consumed in the action
+	 */
+	public void useTrees(int treesUsed)
+	{
+		if (treeCount - Math.abs(treesUsed) >= 0)
+		{
+			treeCount -= Math.abs(treesUsed);
+		}
+	}
+
+	/**
+	 * This method supplies the tank with mines
+	 * 
+	 * @param minesGathered
+	 *            - the number of mines to supply the tank with
+	 */
+	public void gatherMine(int minesGathered)
+	{
+		if (mineCount + Math.abs(minesGathered) < TANK_MAX_MINE_COUNT)
+		{
+			mineCount += minesGathered;
+		}
+		else
+		{
+			mineCount = TANK_MAX_MINE_COUNT;
+		}
+	}
+
+	/**
+	 * This method creates the mine in world and passes it back to the caller
+	 * 
+	 * @param world
+	 *            - the world to create the mine in
+	 * @param startX
+	 *            - The integer X position of the mine in world coordinates
+	 * @param startY
+	 *            - The integer Y position of the mine in world coordinates
+	 * @return - the mine that is created is returned or null if there are none to place or invalid
+	 *         placement location
+	 */
+	public Mine dropMine(World world, int startX, int startY)
+	{
+		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
+		{
+			Mine mine = world.addEntity(Mine.class);
+			world.getMapTiles()[startX / 32][startY / 32].setElement(mine);
+			mine.setX(startX).setY(startY);
+			mine.setRotation(getRotation());
+			mineCount--;
+			return mine;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	/**
+	 * This method increments the pillbox count of the tank. The caller should remove the pillbox
+	 * from the world.
+	 */
+	public void gatherPillbox()
+	{
+		pillboxCount++;
+	}
+
+	/**
+	 * This method creates a pillbox in the world from the tank's inventory
+	 * 
+	 * @param world
+	 *            - the world in which the pillbox is to be created
+	 * @param startX
+	 *            - the integer X position of the pillbox in world coordinates
+	 * @param startY
+	 *            - the integer Y position of the pillbox in world coordinates
+	 * @return - returns the created pillbox or null if there are none to place or invalid placement
+	 *         location
+	 */
+	public Pillbox dropPillbox(World world, int startX, int startY)
+	{
+		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
+		{
+			Pillbox pillbox = world.addEntity(Pillbox.class);
+			world.getMapTiles()[startX / 32][startY / 32].setElement(pillbox);
+			pillbox.setX(startX / 32 + 16).setY(startY / 32 + 16);
+			pillbox.setRotation(getRotation());
+			pillboxCount--;
+			return pillbox;
+		}
+
+		else
+		{
+			return null;
+		}
 	}
 }

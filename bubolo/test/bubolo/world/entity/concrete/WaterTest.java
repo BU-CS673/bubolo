@@ -33,4 +33,13 @@ public class WaterTest
 	{
 		water.updateTilingState(null);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		water = new Water();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = water.getMaxSpeedModifier();
+		assertEquals(water.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }

@@ -24,6 +24,11 @@ public class DeepWater extends Terrain implements Adaptable
 	private boolean[] cornerMatches = new boolean[4];
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static final float MAX_SPEED_MODIFIER = 0.2F;
+	
+	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
@@ -45,7 +50,7 @@ public class DeepWater extends Terrain implements Adaptable
 	 */
 	public DeepWater(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -96,6 +101,4 @@ public class DeepWater extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add DeepWater functionality!
 }

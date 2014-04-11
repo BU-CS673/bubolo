@@ -13,7 +13,7 @@ import bubolo.world.entity.Entity;
  * @author BU CS673 - Clone Productions
  */
 public interface World
-{
+{	
 	/**
 	 * Returns an entity from a user id. Throws a GameLogicException if the 
 	 * entity is not found.
@@ -69,7 +69,7 @@ public interface World
     
     /**
      * @see World#addEntity(Class)
-     * @param c @param c the entity's class object. For example, to create a new Tank, 
+     * @param c the entity's class object. For example, to create a new Tank, 
 	 * call this method using the following form: <code>World.addEntity(Tank.class).</code>
      * @param id the UUID that will be used for the entity.
      * @return reference to the new entity.
@@ -135,6 +135,18 @@ public interface World
 	 * @return the width of the game map.
 	 */
 	public int getMapHeight();
+	
+	/**
+	 * Sets the world's height.
+	 * @param height the world's height.
+	 */
+	public void setMapHeight(int height);
+	
+	/**
+	 * Sets the world's width.
+	 * @param width the world's width.
+	 */
+	public void setMapWidth(int width);
 	
 	/**
 	 * Updates the game world. Must be called once per game tick.
