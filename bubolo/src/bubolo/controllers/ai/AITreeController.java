@@ -140,20 +140,20 @@ public class AITreeController implements Controller
 				}
 				else
 				{
-					unbuildable = true;			
+					if (terrain.getClass() == Rubble.class ||
+							terrain.getClass() == Crater.class )
+					{
+						tempScore = rubbleCraterScore;
+					}
+					else
+					{
+						unbuildable = true;
+					}		
 				}
 			}
 			else
 			{
-				if (tile.getElement().getClass() == Rubble.class ||
-						tile.getElement().getClass() == Crater.class )
-				{
-					tempScore = rubbleCraterScore;
-				}
-				else
-				{
-					unbuildable = true;
-				}
+				unbuildable = true;
 			}
 			if (!unbuildable)
 			{
