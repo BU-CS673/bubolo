@@ -107,9 +107,6 @@ public class Bullet extends Effect
 		{
 			initialize();
 		}
-
-		// TODO: add collision detection, once the required interfaces into the
-		// world have been added.
 		// TODO (cdc - 2014-03-21): This could be made into a controller. However, it's so
 		// simple, what's the point?
 		move(world);
@@ -131,6 +128,7 @@ public class Bullet extends Effect
 	public void setParent(Entity parent)
 	{
 		this.parent = parent;
+
 	}
 
 	/**

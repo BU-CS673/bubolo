@@ -17,7 +17,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import bubolo.net.command.HelloNetworkCommand;
+import bubolo.net.command.ClientConnected;
+import bubolo.net.command.ConnectedToServer;
 import bubolo.net.command.SendMap;
 import bubolo.net.command.StartGame;
 import bubolo.util.Nullable;
@@ -49,6 +50,10 @@ class Server implements NetworkSubsystem
 	// Reference to the network system.
 	private final Network network;
 
+	// The name of the server player.
+	private String serverPlayerName;
+
+	// Thread that accepts new clients.
 	private Thread clientAcceptor;
 
 	/**
@@ -63,19 +68,27 @@ class Server implements NetworkSubsystem
 		this.clients = new CopyOnWriteArrayList<ClientSocket>();
 		this.sender = Executors.newSingleThreadExecutor();
 	}
+	
+	private String getServerName()
+	{
+		return serverPlayerName;
+	}
 
 	/**
 	 * Identifies this player as the game server, and begins accepting connections from other
 	 * players. <code>startServer</code> must be called before calling <code>connect</code>. There
 	 * should only be one game server per game.
 	 * 
+	 * @param serverName
+	 *            the name of this server.
 	 * @throws NetworkException
 	 *             if a network error occurs.
 	 */
-	void startServer() throws NetworkException
+	void startServer(String serverName) throws NetworkException
 	{
 		try
 		{
+			this.serverPlayerName = serverName;
 			socket = new ServerSocket(NetworkInformation.GAME_PORT);
 
 			clientAcceptor = new Thread(
@@ -204,7 +217,6 @@ class Server implements NetworkSubsystem
 					{
 						clients.add(clientSocket);
 						clientSocket.getClient().setTcpNoDelay(true);
-						network.send(new HelloNetworkCommand("Hello from Server"));
 					}
 					else
 					{
@@ -213,9 +225,10 @@ class Server implements NetworkSubsystem
 				}
 				catch (IOException e)
 				{
+					// TODO (cdc - 4/7/2014): Pass this to the main thread, and eliminate the stack
+					// trace.
 					System.out.println(e);
 					throw new NetworkException(e);
-					// TODO (cdc - 4/7/2014): Pass this to the main thread.
 				}
 
 				// Start the network reader thread.
@@ -271,6 +284,10 @@ class Server implements NetworkSubsystem
 			try (ObjectInputStream inputStream = new ObjectInputStream(
 					client.getClient().getInputStream()))
 			{
+				ClientConnected welcomeCommand = (ClientConnected)inputStream.readObject();
+				server.send(new ConnectedToServer(welcomeCommand.getClientName(), server.getServerName()));
+				network.postToGameThread(welcomeCommand);
+				
 				while (!shutdown.get())
 				{
 					NetworkCommand command = (NetworkCommand)inputStream.readObject();

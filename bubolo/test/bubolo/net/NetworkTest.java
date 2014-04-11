@@ -48,30 +48,29 @@ public class NetworkTest
 	}
 
 	/**
-	 * Test method for {@link bubolo.net.NetworkSystem#startServer()}. Note that this does
-	 * not perform a full server test, since a connection to the internet and other
-	 * external resources would be needed. Instead, it tests that the method's invariant
-	 * is true, and then returns. The full test should be performed in integration.
+	 * Test method for {@link bubolo.net.NetworkSystem#startServer()}. Note that this does not
+	 * perform a full server test, since a connection to the internet and other external resources
+	 * would be needed. Instead, it tests that the method's invariant is true, and then returns. The
+	 * full test should be performed in integration.
 	 */
 	@Test
 	public void testStartServer()
 	{
-		net.startServer();
+		net.startServer("Server player");
 	}
 
 	/**
-	 * Test method for {@link bubolo.net.NetworkSystem#connect(java.net.InetAddress)}.
-	 * Note that this does not perform a full server test, since a connection to the
-	 * internet and other external resources would be needed. Instead, it tests that the
-	 * method's invariant is true, and then returns. The full test should be performed in
-	 * integration.
+	 * Test method for {@link bubolo.net.NetworkSystem#connect(java.net.InetAddress)}. Note that
+	 * this does not perform a full server test, since a connection to the internet and other
+	 * external resources would be needed. Instead, it tests that the method's invariant is true,
+	 * and then returns. The full test should be performed in integration.
 	 */
 	@Test
 	public void testConnect()
 	{
 		try
 		{
-			net.connect(InetAddress.getByName("127.0.0.1"));
+			net.connect(InetAddress.getByName("127.0.0.1"), "Client player");
 		}
 		catch (NetworkException | IllegalStateException | UnknownHostException e)
 		{
@@ -98,18 +97,28 @@ public class NetworkTest
 	}
 
 	/**
-	 * Test method for
-	 * {@link bubolo.net.NetworkSystem#postToGameThread(bubolo.net.NetworkCommand)}.
+	 * Test method for {@link bubolo.net.NetworkSystem#postToGameThread(bubolo.net.NetworkCommand)}.
 	 */
 	@Test
 	public void testPostToGameThread()
 	{
 		net.postToGameThread(mock(NetworkCommand.class));
 	}
-	
+
 	@Test
 	public void startGame()
 	{
 		net.startGame(new MockWorld());
+	}
+
+	@Test
+	public void addRemoveObserver()
+	{
+		NetworkObserver o = mock(NetworkObserver.class);
+		net.addObserver(o);
+		assertEquals(1, net.getNotifier().getObserverCount());
+
+		net.removeObserver(o);
+		assertEquals(0, net.getNotifier().getObserverCount());
 	}
 }

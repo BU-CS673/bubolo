@@ -30,7 +30,7 @@ public class MockNetwork implements Network
 	}
 
 	@Override
-	public void connect(InetAddress serverIpAddress) throws NetworkException, IllegalStateException
+	public void connect(InetAddress serverIpAddress, String playerName) throws NetworkException, IllegalStateException
 	{
 	}
 
@@ -60,12 +60,28 @@ public class MockNetwork implements Network
 	}
 
 	@Override
-	public void startServer() throws NetworkException, IllegalStateException
+	public void startServer(String playerName) throws NetworkException, IllegalStateException
 	{
 	}
 
 	@Override
 	public void startGame(World world)
 	{
+	}
+
+	@Override
+	public void addObserver(NetworkObserver observer)
+	{
+	}
+
+	@Override
+	public void removeObserver(NetworkObserver observer)
+	{
+	}
+
+	@Override
+	public NetworkObserverNotifier getNotifier()
+	{
+		return null;
 	}
 }

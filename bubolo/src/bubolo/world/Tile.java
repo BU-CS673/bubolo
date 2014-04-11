@@ -130,7 +130,7 @@ public class Tile
 	}
 
 	/**
-	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does ont exist in
+	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does not exist in
 	 * this Tile.
 	 * 
 	 * @return a reference to this Tile.

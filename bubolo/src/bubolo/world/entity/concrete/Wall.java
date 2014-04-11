@@ -81,6 +81,4 @@ public class Wall extends StationaryElement implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Wall functionality!
 }

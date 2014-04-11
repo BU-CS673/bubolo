@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * Test for GenericExplosion Sprite
+ * Test for BulletExplosion Sprite
  */
 
 public class BulletExplosionSpriteTest
@@ -47,7 +47,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
 				
 				try {
 					batch.begin();
@@ -81,7 +81,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
 				passed = (sprite.getX() == 1.f);
 				isComplete = true;
 			}
@@ -105,7 +105,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 2);
+				Sprite sprite = new BulletExplosionSprite(1, 2);
 				passed = (sprite.getY() == 2.f);
 				isComplete = true;
 			}
@@ -129,7 +129,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
 				passed = (sprite.getHeight() == 32);
 				isComplete = true;
 			}
@@ -153,7 +153,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
 				passed = (sprite.getRotation() == 0.f);
 				isComplete = true;
 			}
@@ -177,7 +177,7 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
 				passed = (sprite.getWidth() == 32);
 				isComplete = true;
 			}
@@ -201,8 +201,8 @@ public class BulletExplosionSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = new BulletExplosionSprite(1, 1);
-				passed = (sprite.isEntityDisposed() == false);
+				Sprite sprite = new BulletExplosionSprite(1, 1);
+				passed = (sprite.isDisposed() == false);
 				isComplete = true;
 			}
 		});
