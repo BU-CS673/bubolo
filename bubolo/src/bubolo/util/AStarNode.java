@@ -1,11 +1,6 @@
 package bubolo.util;
 
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.HashSet;
-
-import bubolo.util.Coordinates;
-import bubolo.util.Tiles;
+import bubolo.world.Tile;
 
 /**
  * A Node that holds all intermediate data required during the execution of
@@ -21,10 +16,17 @@ public class AStarNode implements Comparable<AStarNode>
     // Reference to underlying Tile
     private Tile tile;
 
-    // A-star cost functions
-    private int f;
-    private int g;
-    private int h;
+    // A-star cost functions. Note that although the algorithm will be based
+    // on Tile co-ordinates (which are integer), we'll do the calculations
+    // in float because the H function needs to be perturbed by a slight
+    // fraction in order to revolve ties.
+    private float f;
+    private float g;
+    private float h;
+    
+    // Reference to "parent" node for back-tracking along
+    // shortest path
+    private AStarNode parent;
 
 	/**
 	 * Constructs the AStarNode object.
@@ -39,16 +41,8 @@ public class AStarNode implements Comparable<AStarNode>
         f = 0;
         g = 0;
         h = 0;
+        parent = null;
     }
-
-	/**
-	 * Get this Node's x position in map/grid units.
-	 * @return an integer representing this Node's x position in map/grid units.
-	 */
-    public int getX()
-    {
-        return x;
-	}
 
 	/**
 	 * Compare this node against another node.
@@ -58,6 +52,90 @@ public class AStarNode implements Comparable<AStarNode>
 	 */
     public int compareTo(AStarNode node)
     {
-        return Integer.compare(this.f, node.f);
+        return Float.compare(this.f, node.f);
     }
+
+	/**
+	 * @return the x
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * @return the tile
+	 */
+	public Tile getTile() {
+		return tile;
+	}
+
+	/**
+	 * @param tile the tile to set
+	 */
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
+	/**
+	 * @return the f
+	 */
+	public float getF() {
+		return f;
+	}
+
+	/**
+	 * @param f the f to set
+	 */
+	public void setF(float f) {
+		this.f = f;
+	}
+
+	/**
+	 * @return the g
+	 */
+	public float getG() {
+		return g;
+	}
+
+	/**
+	 * @param g the g to set
+	 */
+	public void setG(float g) {
+		this.g = g;
+	}
+
+	/**
+	 * @return the h
+	 */
+	public float getH() {
+		return h;
+	}
+
+	/**
+	 * @param h the h to set
+	 */
+	public void setH(float h) {
+		this.h = h;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public AStarNode getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(AStarNode parent) {
+		this.parent = parent;
+	}
 }
