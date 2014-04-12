@@ -16,7 +16,6 @@ import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
 
-
 /**
  * The tank, which may be controlled by a local player, a networked player, or an AI bot.
  * 
@@ -31,7 +30,7 @@ public class Tank extends Actor
 
 	// Max speed in pixels per tick.
 	private static final float maxSpeed = 4.f;
-	
+
 	/**
 	 * Used to calculate the maxSpeed based upon the interaction with the intersected terrains
 	 */
@@ -85,48 +84,48 @@ public class Tank extends Actor
 	/**
 	 * Construct a new Tank with a random UUID.
 	 */
-	
+
 	/**
 	 * The health of the tank
 	 */
 	private int hitPoints;
-	
+
 	/**
 	 * The amount of ammo of the tank
 	 */
-	
+
 	public static final int TANK_MAX_HIT_POINTS = 100;
-	
+
 	private int ammoCount;
-	
+
 	/**
 	 * The amount of the tree resource the tank has
 	 */
-	
+
 	public static final int TANK_MAX_AMMO = 100;
-	
+
 	private int treeCount;
-	
+
 	/**
 	 * The number of mines in the tank
 	 */
-	
+
 	public static final int TANK_MAX_TREE_INVENTORY = 100;
-	
+
 	private int mineCount;
-	
+
 	/**
 	 * The number of pillboxes in the tank
 	 */
-	
+
 	public static final int TANK_MAX_MINE_COUNT = 10;
-	
+
 	private int pillboxCount;
-	
+
 	/**
 	 * Constructor for the Tank object
 	 */
-	
+
 	public Tank()
 	{
 		this(UUID.randomUUID());
@@ -178,18 +177,17 @@ public class Tank extends Actor
 		this.speed = newSpeed.getSpeed();
 	}
 
-	// TODO: Add Tank functionality!
 	/**
 	 * Accelerates the tank.
 	 */
 	public void accelerate()
 	{
-		if(speed > modifiedMaxSpeed)
+		if (speed > modifiedMaxSpeed)
 		{
-			//this.decelerate();
+			// this.decelerate();
 			speed = modifiedMaxSpeed;
 		}
-		
+
 		else if (speed < modifiedMaxSpeed && !accelerated)
 		{
 			speed += accelerationRate;
@@ -261,19 +259,19 @@ public class Tank extends Actor
 	 */
 	public Bullet fireCannon(World world, float startX, float startY)
 	{
-		if( (ammoCount > 0) && (cannonFireTime - System.currentTimeMillis() < 0) )
+		if ((ammoCount > 0) && (cannonFireTime - System.currentTimeMillis() < 0))
 		{
 			cannonFireTime = System.currentTimeMillis();
-	
+
 			Bullet bullet = world.addEntity(Bullet.class);
-	
+
 			bullet.setX(startX).setY(startY);
 			bullet.setRotation(getRotation());
 			ammoCount--;
-				
+
 			return bullet;
 		}
-		
+
 		else
 		{
 			return null;
@@ -292,8 +290,7 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Checks to see whether this Tank is currently hidden (ex. by being in a clump of
-	 * trees)
+	 * Checks to see whether this Tank is currently hidden (ex. by being in a clump of trees)
 	 * 
 	 * @return true if the Tank is hidden, false otherwise.
 	 */
@@ -303,8 +300,8 @@ public class Tank extends Actor
 	}
 
 	/**
-	 * Returns a list of all Entities that would overlap with this Tank if it was where it
-	 * will be in one game tick, along its current trajectory.
+	 * Returns a list of all Entities that would overlap with this Tank if it was where it will be
+	 * in one game tick, along its current trajectory.
 	 */
 	private List<Entity> getLookaheadEntities(World w)
 	{
@@ -496,9 +493,6 @@ public class Tank extends Actor
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
-
-		// TODO (cdc - 3/14/2014): check for bullet collision? That is probably the
-		// responsibility of a bullet.
 	}
 
 	/**
@@ -512,11 +506,11 @@ public class Tank extends Actor
 	{
 
 		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
-		if(currentTerrain != null)
+		if (currentTerrain != null)
 		{
 			modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
 		}
-		
+
 		/**
 		 * Booleans used to record which, if any, bumpers were hit.
 		 */
@@ -672,146 +666,166 @@ public class Tank extends Actor
 		accelerated = false;
 		decelerated = false;
 	}
-	
+
 	/**
 	 * Returns the current health of the tank
+	 * 
 	 * @return current hit point count
 	 */
-	public int getHitPoints() 
+	public int getHitPoints()
 	{
 		return hitPoints;
 	}
 
 	/**
 	 * Returns the current ammo count of the tank
+	 * 
 	 * @return current ammo count
 	 */
-	public int getAmmoCount() 
+	public int getAmmoCount()
 	{
 		return ammoCount;
 	}
 
 	/**
 	 * Returns the current number of trees that the tank has gathered
+	 * 
 	 * @return the current tree resource count
 	 */
-	public int getTreeCount() 
+	public int getTreeCount()
 	{
 		return treeCount;
 	}
 
 	/**
 	 * Returns the number of mines the tank currently contains
+	 * 
 	 * @return the current mine count
 	 */
-	public int getMineCount() 
+	public int getMineCount()
 	{
 		return mineCount;
 	}
 
 	/**
-	 * Returns the number of pillboxes the tank has on board 
+	 * Returns the number of pillboxes the tank has on board
+	 * 
 	 * @return the pillbox count for the tank
 	 */
-	public int getPillboxCount() 
+	public int getPillboxCount()
 	{
 		return pillboxCount;
 	}
-	
+
 	/**
 	 * Changes the hit point count after taking damage
-	 * @param damagePoints how much damage the tank has taken
+	 * 
+	 * @param damagePoints
+	 *            how much damage the tank has taken
 	 */
 	public void takeHit(int damagePoints)
 	{
-		
+
 		hitPoints -= Math.abs(damagePoints);
-		//TODO: This method is the first opportunity to set off "death" chain of events
+		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
-	
+
 	/**
-	 * Increments the tanks health by a given amount 
-	 * @param healPoints - how many points the tank is given
+	 * Increments the tanks health by a given amount
+	 * 
+	 * @param healPoints
+	 *            - how many points the tank is given
 	 */
 	public void heal(int healPoints)
 	{
-		if(hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
+		if (hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
 		{
 			hitPoints += Math.abs(healPoints);
 		}
-		
-		else 
+
+		else
 		{
 			hitPoints = 100;
 		}
 	}
-	
+
 	/**
 	 * Supplies the tank ammo with given a set amount
-	 * @param newAmmo - amount of ammo being transfered to the tank
+	 * 
+	 * @param newAmmo
+	 *            - amount of ammo being transfered to the tank
 	 */
 	public void gatherAmmo(int newAmmo)
 	{
-		if(ammoCount + Math.abs(newAmmo) < TANK_MAX_AMMO)
+		if (ammoCount + Math.abs(newAmmo) < TANK_MAX_AMMO)
 		{
 			ammoCount += Math.abs(newAmmo);
 		}
-		
+
 		else
 		{
 			ammoCount = TANK_MAX_AMMO;
 		}
 	}
-	
+
 	/**
 	 * Used to increment the tree count upon gathering a tree
 	 */
 	public void gatherTree()
 	{
-		if(treeCount < TANK_MAX_TREE_INVENTORY)
+		if (treeCount < TANK_MAX_TREE_INVENTORY)
 		{
 			treeCount++;
 		}
 	}
+
 	/**
 	 * This method is used to consume trees
-	 * @param treesUsed - the number of trees consumed in the action 
+	 * 
+	 * @param treesUsed
+	 *            - the number of trees consumed in the action
 	 */
 	public void useTrees(int treesUsed)
 	{
-		if(treeCount - Math.abs(treesUsed) >= 0)
+		if (treeCount - Math.abs(treesUsed) >= 0)
 		{
 			treeCount -= Math.abs(treesUsed);
 		}
 	}
-	
 
 	/**
 	 * This method supplies the tank with mines
-	 * @param minesGathered - the number of mines to supply the tank with
+	 * 
+	 * @param minesGathered
+	 *            - the number of mines to supply the tank with
 	 */
 	public void gatherMine(int minesGathered)
 	{
-		if(mineCount + Math.abs(minesGathered) < TANK_MAX_MINE_COUNT)
+		if (mineCount + Math.abs(minesGathered) < TANK_MAX_MINE_COUNT)
 		{
 			mineCount += minesGathered;
 		}
-		else 
+		else
 		{
 			mineCount = TANK_MAX_MINE_COUNT;
 		}
 	}
-	
+
 	/**
 	 * This method creates the mine in world and passes it back to the caller
-	 * @param world - the world to create the mine in
-	 * @param startX - The integer X position of the mine in world coordinates
-	 * @param startY - The integer Y position of the mine in world coordinates
-	 * @return - the mine that is created is returned or null if there are none to place or invalid placement location
+	 * 
+	 * @param world
+	 *            - the world to create the mine in
+	 * @param startX
+	 *            - The integer X position of the mine in world coordinates
+	 * @param startY
+	 *            - The integer Y position of the mine in world coordinates
+	 * @return - the mine that is created is returned or null if there are none to place or invalid
+	 *         placement location
 	 */
 	public Mine dropMine(World world, int startX, int startY)
 	{
-		if((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
+		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
 		{
 			Mine mine = world.addEntity(Mine.class);
 			world.getMapTiles()[startX / 32][startY / 32].setElement(mine);
@@ -825,25 +839,31 @@ public class Tank extends Actor
 			return null;
 		}
 	}
-	
+
 	/**
-	 * This method increments the pillbox count of the tank. The caller should remove the pillbox from the world.
+	 * This method increments the pillbox count of the tank. The caller should remove the pillbox
+	 * from the world.
 	 */
 	public void gatherPillbox()
 	{
 		pillboxCount++;
 	}
-	
+
 	/**
 	 * This method creates a pillbox in the world from the tank's inventory
-	 * @param world - the world in which the pillbox is to be created
-	 * @param startX - the integer X position of the pillbox in world coordinates
-	 * @param startY - the integer Y position of the pillbox in world coordinates
-	 * @return - returns the created pillbox or null if there are none to place or invalid placement location
+	 * 
+	 * @param world
+	 *            - the world in which the pillbox is to be created
+	 * @param startX
+	 *            - the integer X position of the pillbox in world coordinates
+	 * @param startY
+	 *            - the integer Y position of the pillbox in world coordinates
+	 * @return - returns the created pillbox or null if there are none to place or invalid placement
+	 *         location
 	 */
 	public Pillbox dropPillbox(World world, int startX, int startY)
 	{
-		if((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
+		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
 		{
 			Pillbox pillbox = world.addEntity(Pillbox.class);
 			world.getMapTiles()[startX / 32][startY / 32].setElement(pillbox);
@@ -852,11 +872,10 @@ public class Tank extends Actor
 			pillboxCount--;
 			return pillbox;
 		}
-		
+
 		else
 		{
 			return null;
 		}
 	}
-	
 }

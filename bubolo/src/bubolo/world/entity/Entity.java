@@ -13,7 +13,7 @@ import bubolo.graphics.Drawable;
 import bubolo.world.World;
 
 /**
- * Base class for game objects. Anything that is part of the game logic should inherit from this
+ * Base class for game objects. Anything that is part of the game world should inherit from this
  * class.
  * 
  * @author BU CS673 - Clone Productions
@@ -22,12 +22,23 @@ public abstract class Entity implements Serializable, Drawable
 {
 	// Used when serializing and deserializing.
 	private static final long serialVersionUID = -7558368147503376322L;
+
 	private UUID myID;
-	private int height; // height of this Entity in pixels
-	private int width; // width of this Entity in pixels
+
+	// height of this Entity in pixels
+	private int height;
+	// width of this Entity in pixels
+	private int width;
+
+	// The entity's x position.
 	private float xPos;
+
+	// The entity's y position.
 	private float yPos;
-	private float rotation; // rotation of this Entity in radians
+
+	// rotation of this Entity in radians.
+	private float rotation;
+
 	private Polygon bounds = new Polygon();
 
 	private boolean solid = false;
@@ -92,7 +103,6 @@ public abstract class Entity implements Serializable, Drawable
 		}
 	}
 
-	
 	/**
 	 * Returns a list of all of the Entities that this Entity overlaps with. Currently checks all
 	 * Entities found in the given world, and could be optimized to check only Entities within a
@@ -103,25 +113,14 @@ public abstract class Entity implements Serializable, Drawable
 	 *            is the World object where this Entity is contained.
 	 * @return a list of all of the Entities which this Entity overlaps with.
 	 */
-	//TODO: Unit test and implement this method for generally getting collisions for an Entity.
-	//Currently unimplemented, needs unit tests and use cases!
+	// TODO: Unit test and implement this method for generally getting collisions for an Entity.
+	// Currently unimplemented, needs unit tests and use cases!
 	/*
-	protected List<Entity> getOverlappingEntities(World w)
-	{
-		ArrayList<Entity> intersects = new ArrayList<Entity>();
-		List<Entity> allEntities = w.getEntities();
-		for (int ii = 0; ii < allEntities.size(); ii++)
-		{
-
-			if (overlapsEntity(allEntities.get(ii)))
-			{
-				intersects.add(allEntities.get(ii));
-			}
-		}
-		return intersects;
-	}
-	*/
-	
+	 * protected List<Entity> getOverlappingEntities(World w) { ArrayList<Entity> intersects = new
+	 * ArrayList<Entity>(); List<Entity> allEntities = w.getEntities(); for (int ii = 0; ii <
+	 * allEntities.size(); ii++) { if (overlapsEntity(allEntities.get(ii))) {
+	 * intersects.add(allEntities.get(ii)); } } return intersects; }
+	 */
 
 	/**
 	 * The Entity's unique id.

@@ -30,7 +30,7 @@ public class Road extends Terrain implements Adaptable
 	/**
 	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
 	 */
-	private static float maxSpeedModifier = 1.25F;
+	private static final float MAX_SPEED_MODIFIER = 1.25F;
 
 	/**
 	 * Construct a new Road with a random UUID.
@@ -48,7 +48,7 @@ public class Road extends Terrain implements Adaptable
 	 */
 	public Road(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -85,16 +85,4 @@ public class Road extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	/**
-	 * Returns a percentage factor for capping an objects speed while traversing this terrain 
-	 * @return maxSpeedModifier
-	 */
-	@Override
-	public float getMaxSpeedModifier() 
-	{
-		return maxSpeedModifier;
-	}
-
-	// TODO: Add Road functionality!
 }

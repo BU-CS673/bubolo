@@ -101,8 +101,6 @@ public class Bullet extends Effect
 
 		// TODO: add collision detection, once the required interfaces into the
 		// world have been added.
-		// TODO (cdc - 2014-03-21): This could be made into a controller. However, it's so
-		// simple, what's the point?
 		move();
 	}
 

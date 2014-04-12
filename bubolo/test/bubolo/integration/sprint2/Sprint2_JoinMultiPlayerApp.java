@@ -39,7 +39,7 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 		InetAddress address = Inet4Address.getByName(addressString);
 
 		Network net = NetworkSystem.getInstance();
-		net.connect(address);
+		net.connect(address, "Client");
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Client Integration";

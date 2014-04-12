@@ -23,7 +23,9 @@ public class NetworkSystem implements Network
 	private NetworkSubsystem subsystem;
 
 	// Queue of commands that should be run in the game logic thread.
-	private Queue<NetworkCommand> postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
+	private final Queue<NetworkCommand> postedCommands;
+	
+	private final NetworkObserverNotifier observerNotifier;
 
 	// Specifies whether the network system is running in debug mode.
 	private boolean debug = false;
@@ -46,10 +48,12 @@ public class NetworkSystem implements Network
 
 	private NetworkSystem()
 	{
+		this.postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
+		this.observerNotifier = new NetworkObserverNotifier();
 	}
 
 	@Override
-	public void startServer() throws NetworkException, IllegalStateException
+	public void startServer(String serverName) throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
@@ -62,12 +66,13 @@ public class NetworkSystem implements Network
 		}
 
 		Server server = new Server(this);
-		server.startServer();
 		subsystem = server;
+		server.startServer(serverName);
 	}
 
 	@Override
-	public void connect(InetAddress serverIpAddress) throws NetworkException
+	public void connect(InetAddress serverIpAddress, String clientName) 
+			throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
@@ -80,8 +85,8 @@ public class NetworkSystem implements Network
 		}
 
 		Client client = new Client(this);
-		client.connect(serverIpAddress);
 		subsystem = client;
+		client.connect(serverIpAddress, clientName);
 	}
 
 	@Override
@@ -129,6 +134,25 @@ public class NetworkSystem implements Network
 		}
 	}
 
+	@Override
+	public void addObserver(NetworkObserver o)
+	{
+		observerNotifier.addObserver(o);
+	}
+
+	@Override
+	public void removeObserver(NetworkObserver o)
+	{
+		observerNotifier.removeObserver(o);
+	}
+	
+
+	@Override
+	public NetworkObserverNotifier getNotifier()
+	{
+		return observerNotifier;
+	}
+	
 	@Override
 	public void postToGameThread(NetworkCommand command)
 	{

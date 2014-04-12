@@ -49,7 +49,7 @@ public class WaterSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Water());
+					Sprite sprite = Sprites.getInstance().createSprite(new Water());
 					
 					passed = true;
 					isComplete = true;
@@ -75,9 +75,9 @@ public class WaterSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Water());
+				Sprite sprite = Sprites.getInstance().createSprite(new Water());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}
