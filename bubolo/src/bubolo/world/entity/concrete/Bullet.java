@@ -1,9 +1,16 @@
 package bubolo.world.entity.concrete;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+
+import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Effect;
+import bubolo.world.entity.Entity;
 import bubolo.audio.Audio;
 import bubolo.audio.Sfx;
 
@@ -37,6 +44,8 @@ public class Bullet extends Effect
 
 	// Specifies whether the bullet is initialized.
 	private boolean initialized;
+	
+	private Entity parent = null;
 
 	/**
 	 * Construct a new Bullet with a random UUID.
@@ -98,17 +107,35 @@ public class Bullet extends Effect
 		{
 			initialize();
 		}
+		// TODO (cdc - 2014-03-21): This could be made into a controller. However, it's so
+		// simple, what's the point?
+		move(world);
+	}
+	/**
+	 * return the Entity that spawned this bullet
+	 * @return
+	 * 		the entity that spawned this bullet
+	 */
+	public Entity getParent()
+	{
+		return this.parent;
+	}
+	/**
+	 *  sets the Parent field of this bullet
+	 * @param parent
+	 * 		the entity to set as the parent of this bullet
+	 */
+	public void setParent(Entity parent)
+	{
+		this.parent = parent;
 
-		// TODO: add collision detection, once the required interfaces into the
-		// world have been added.
-		move();
 	}
 
 	/**
 	 * Moves the bullet. Calls dispose() on this entity if the distance travelled has exceeded the
 	 * MAX_DISTANCE value.
 	 */
-	private void move()
+	private void move(World world)
 	{
 		if (distanceTraveled > MAX_DISTANCE)
 		{
@@ -120,6 +147,18 @@ public class Bullet extends Effect
 		setY(getY() + movementY);
 
 		distanceTraveled += (Math.abs(movementX) + Math.abs(movementY));
+
+		for(Entity collider:getLookaheadEntities(world))
+		{
+			if (collider.isSolid())
+			{
+				if (Intersector.overlapConvexPolygons(collider.getBounds(), this.getBounds()))
+				{
+					dispose();
+					return;
+				}
+			}
+		}
 	}
 
 	/**
@@ -132,5 +171,37 @@ public class Bullet extends Effect
 		movementY = (float)(Math.sin(getRotation()) * SPEED);
 
 		initialized = true;
+	}
+	/**
+	 * Returns a list of all Entities that would overlap with this Tank if it was where it
+	 * will be in one game tick, along its current trajectory.
+	 */
+	private List<Entity> getLookaheadEntities(World w)
+	{
+		ArrayList<Entity> intersects = new ArrayList<Entity>();
+
+		for (Entity localEntity: TileUtil.getLocalEntities(getX(),getY(), w))
+		{
+			if (localEntity!=this && localEntity!=this.parent)
+			{
+				if (overlapsEntity(localEntity)
+						||Intersector.overlapConvexPolygons(lookAheadBounds(), localEntity.getBounds()))
+				{
+					intersects.add(localEntity);	
+				}
+			}
+		}
+		return intersects;
+	}
+	
+	private Polygon lookAheadBounds()
+	{
+		Polygon lookAheadBounds = getBounds();
+
+		float newX = (float) (getX() + Math.cos(getRotation()) * SPEED);
+		float newY = (float) (getY() + Math.sin(getRotation()) * SPEED);
+
+		lookAheadBounds.setPosition(newX, newY);
+		return lookAheadBounds;
 	}
 }
