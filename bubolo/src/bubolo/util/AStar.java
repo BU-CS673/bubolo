@@ -29,11 +29,11 @@ public abstract class AStar
 	/**
 	 * Calculate terrain-agnostic distance between two tiles on the map.
 	 * @param from
-     *               starting point.
+	 *               starting point.
 	 * @param to
-     *               end point.
+	 *               end point.
 	 * @return
-     *               distance from start to end.
+	 *               distance from start to end.
 	 */
 	private static float calculateDistance(AStarNode from, AStarNode to)
 	{
@@ -47,15 +47,15 @@ public abstract class AStar
 	/**
 	 * Calculate the cross-product between two tile->tile vectors on the map.
 	 * @param fromA
-     *               starting point of vector A.
+	 *               starting point of vector A.
 	 * @param toA
-     *               end point of vector A.
+	 *               end point of vector A.
 	 * @param fromB
-     *               starting point of vector B.
+	 *               starting point of vector B.
 	 * @param toB
-     *               end point of vector B.
+	 *               end point of vector B.
 	 * @return
-     *               cross product of vectors A and B.
+	 *               cross product of vectors A and B.
 	 */
 	private static int crossProduct(AStarNode fromA, AStarNode toA, AStarNode fromB, AStarNode toB)
 	{
@@ -71,13 +71,13 @@ public abstract class AStar
 	/**
 	 * Heuristic to calculate approximate distance between two tiles on the map.
 	 * @param start
-     *               starting point.
+	 *               starting point.
 	 * @param current
-     *               current point.
+	 *               current point.
 	 * @param goal
-     *               end point.
+	 *               end point.
 	 * @return
-     *               heuristic distance from current to goal.
+	 *               heuristic distance from current to goal.
 	 */
 	private static float calculateH(AStarNode start, AStarNode current, AStarNode goal)
 	{
@@ -99,23 +99,23 @@ public abstract class AStar
 		
 	/**
 	 * Calculates a "shortest" path between any two tiles the map. Inputs and
-     * outputs are in terms of abstract Tile references. Since each tile object
-     * knows its own co-ordinates, this results in a cleanerm abstract
-     * interface (instead of passing co-ordinate values around). Computation is
-     * performed on Tile units, not on World units.
+	 * outputs are in terms of abstract Tile references. Since each tile object
+	 * knows its own co-ordinates, this results in a cleanerm abstract
+	 * interface (instead of passing co-ordinate values around). Computation is
+	 * performed on Tile units, not on World units.
 	 * @param world
-     *                      is a reference to the world map.
+	 *                      is a reference to the world map.
 	 * @param start
-     *                      is the tile representing the starting point.
+	 *                      is the tile representing the starting point.
 	 * @param goal
-     *                      is the tile representing the destination point.
+	 *                      is the tile representing the destination point.
 	 * @return
-     *                      a list of tiles that form the "shortest" path.
+	 *                      a list of tiles that form the "shortest" path.
 	 */
 	public static List<Tile> calculateShortestPath(World world, Tile start, Tile goal)
 	{
-        // The algorithm is based on the pseudocode in
-        // theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
+		// The algorithm is based on the pseudocode in
+		// theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
 		// Pseudocode from this algorithm will be annotated in comments using
 		// -- ... --
 
@@ -161,7 +161,7 @@ public abstract class AStar
         
         // -- OPEN = priority queue containing START --
         PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>(0);
-        open.add(new AStarNode(start));
+        open.add(start_node);
 
         // -- CLOSED = empty set --
         Set<AStarNode> closed = new HashSet<AStarNode>();
