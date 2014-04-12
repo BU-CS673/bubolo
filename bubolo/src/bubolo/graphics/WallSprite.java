@@ -44,7 +44,7 @@ class WallSprite extends AbstractEntitySprite<Wall>
 	 */
 	WallSprite(Wall wall)
 	{
-		super(DrawLayer.SECOND, wall);
+		super(DrawLayer.THIRD, wall);
 
 		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);

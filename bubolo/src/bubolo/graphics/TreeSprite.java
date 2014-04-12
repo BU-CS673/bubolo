@@ -27,7 +27,7 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 	 */
 	TreeSprite(Entity tree)
 	{
-		super(DrawLayer.SECOND, tree);
+		super(DrawLayer.THIRD, tree);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
