@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.badlogic.gdx.math.Intersector;
@@ -127,6 +128,7 @@ public class Tank extends Actor implements Damageable
 
 	private int pillboxCount;
 
+	private Random randomGenerator = new Random();
 	/**
 	 * Constructor for the Tank object
 	 */
@@ -910,7 +912,7 @@ public class Tank extends Actor implements Damageable
 		List<Entity> spawns = world.getSpawns();
 		if(spawns.size() > 0)
 		{
-			Entity spawn = spawns.get(0);
+			Entity spawn = spawns.get(randomGenerator.nextInt(spawns.size()));
 			this.setParams(spawn.getX(), spawn.getY(), 0);
 		}
 		this.hitPoints = TANK_MAX_HIT_POINTS;
