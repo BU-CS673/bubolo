@@ -10,8 +10,10 @@ import java.util.UUID;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Preconditions.checkArgument;
 
+import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
+import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
@@ -41,7 +43,10 @@ public class GameWorld implements World
 
 	// the list of Tanks that exist in the world
 	private List<Entity> tanks = new ArrayList<Entity>();
-
+	
+	//list of world controllers
+	private List<Controller> worldControllers  = new ArrayList<Controller>();
+	
 	// the list of all Effects that currently exist in the world
 	private List<Entity> effects = new ArrayList<Entity>();
 
@@ -63,6 +68,9 @@ public class GameWorld implements World
 	{
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+		
+		worldControllers.add(new AITreeController());
+
 	}
 
 	/**
@@ -239,6 +247,13 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+
+		// Update all world controllers
+		for (Controller c : worldControllers)
+		{
+			c.update(this);
+		}
+
 		checkState(worldMapWidth > 0,
 				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
 		checkState(worldMapHeight > 0,
