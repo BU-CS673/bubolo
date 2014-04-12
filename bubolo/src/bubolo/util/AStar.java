@@ -21,11 +21,53 @@ import bubolo.world.Tile;
 public abstract class AStar
 {
 	/**
-	 * Heuristic unit distances between adjacent tiles.
+	 * Unit distances between adjacent tiles.
 	 */
-	private static final int straightCost = 1;
-	private static final int diagonalCost = 1;
+	private static final float straightDist = 1;
+	private static final float diagonalDist = (float) Math.sqrt(2);
 	
+	/**
+	 * Calculate terrain-agnostic distance between two tiles on the map.
+	 * @param from
+     *               starting point.
+	 * @param to
+     *               end point.
+	 * @return
+     *               distance from start to end.
+	 */
+	private static float calculateDistance(AStarNode from, AStarNode to)
+	{
+		// Chebyshev distance, with diagonal movement allowed but with a
+		// different cost.
+		int dx = Math.abs(from.getX() - to.getX());
+		int dy = Math.abs(from.getY() - to.getY());
+		return straightDist * (dx + dy) + (diagonalDist - 2 * straightDist) * Math.min(dx, dy);
+	}
+	
+	/**
+	 * Calculate the cross-product between two tile->tile vectors on the map.
+	 * @param fromA
+     *               starting point of vector A.
+	 * @param toA
+     *               end point of vector A.
+	 * @param fromB
+     *               starting point of vector B.
+	 * @param toB
+     *               end point of vector B.
+	 * @return
+     *               cross product of vectors A and B.
+	 */
+	private static int crossProduct(AStarNode fromA, AStarNode toA, AStarNode fromB, AStarNode toB)
+	{
+		int dxA = toA.getX() - fromA.getX();
+		int dyA = toA.getY() - fromA.getY();
+		
+		int dxB = toB.getX() - fromB.getX();
+		int dyB = toB.getY() - fromB.getY();
+		
+		return Math.abs(dxA * dyB - dxB * dyA);
+	}
+		
 	/**
 	 * Heuristic to calculate approximate distance between two tiles on the map.
 	 * @param start
@@ -37,23 +79,20 @@ public abstract class AStar
 	 * @return
      *               heuristic distance from current to goal.
 	 */
-	public static float calculateH(AStarNode start, AStarNode current, AStarNode goal)
+	private static float calculateH(AStarNode start, AStarNode current, AStarNode goal)
 	{
-		// Chebyshev distance, with diagonal movement allowed but with a
-		// different cost.
-		int dx = Math.abs(current.getX() - goal.getX());
-		int dy = Math.abs(current.getY() - goal.getY());
-		float heuristic = straightCost * (dx + dy) + (diagonalCost - 2 * straightCost) * Math.min(dx, dy);
-
+		// Use raw Chebyshev distance between current and goal, but scale it
+		// with a movement cost. As a rough speed approximation, use the average
+		// of the speed factors of the current and goal tiles.
+		float speed = (current.getTile().getTerrain().getMaxSpeedModifier() +
+				       goal.getTile().getTerrain().getMaxSpeedModifier()) / 2;
+		float heuristic = calculateDistance(current, goal) / speed;
+		
 		// To avoid ties, perturb the heuristic by a little amount proportional
 		// to the cross product of the (current->goal) vector and the
 		// (start->goal) vector.
-		int dx1 = current.getX() - goal.getX();
-		int dy1 = current.getY() - goal.getY();
-		int dx2 = start.getX() - goal.getX();
-		int dy2 = start.getY() - goal.getY();
-		int cross = Math.abs(dx1*dy2 - dx2*dy1);
-		heuristic += cross*0.001;
+		float perturb = (float) 0.001;
+		heuristic += perturb * crossProduct(current, goal, start, goal);
 		
 		return heuristic;
 	}
@@ -169,6 +208,12 @@ public abstract class AStar
             // -- for neighbors of current: --
             for (Tile n: neighbors)
             {
+            	// Check the game world to see if this neighbor Tile has a
+            	// stationary element. If so, skip this tile since we cannot
+            	// have a path through a stationary element.
+            	if (n.hasElement())
+            		continue;
+            	
                 // We now need to search each neighbor node in the OPEN and
                 // CLOSED sets. For this we need the AStarNode owner of this tile.
                 // It's possible that an AStartNode for this tile hasn't been
@@ -184,7 +229,19 @@ public abstract class AStar
                 }
                 
                 // -- cost = g(current) + movementcost(current, neighbor) --
-                float cost = current.getG() + 1; // ignore terrain for now FIXME
+                // We now need to query the map Tile for its terrain information
+                // in order to determine the movement cost. We assume that each
+                // tile always has a Terrain, because the tile class does not
+                // give us a hasTerrain() method, but throws an exception if
+                // the terrain is NULL when getTerrain() is called.
+                //     We calculate movement cost as the average of the movement
+                // costs of the current and neighbor tiles. Because diagonal
+                // movement can incur an additional cost, we invoke the
+                // calculateDistance() method to get the un-scaled distance,
+                // and then multiply it by the terrain-specific movement cost.
+                float speed = (current.getTile().getTerrain().getMaxSpeedModifier() +
+                		       n_node.getTile().getTerrain().getMaxSpeedModifier()) / 2;
+                float cost = current.getG() + calculateDistance(current, n_node) / speed;
 
                 // -- if neighbor in OPEN and cost less than g(neighbor): --
                 if (open.contains(n_node) && cost < n_node.getG())
@@ -197,7 +254,7 @@ public abstract class AStar
                 if (closed.contains(n_node) && cost < n_node.getG())
                 {
                     // -- remove neighbor from CLOSED --
-                    closed.remove(n);
+                    closed.remove(n_node);
                 }
 
                 // -- if neighbor not in OPEN and neighbor not in CLOSED: --
@@ -206,14 +263,20 @@ public abstract class AStar
                     // -- set g(neighbor) to cost --
                     n_node.setG(cost);
 
-                    // -- add neighbor to OPEN --
-                    open.add(n_node);
-
                     // -- set priority queue rank to g(neighbor) + h(neighbor) --
                     // Note that if we hadn't pre-calculated the H function on
                     // creation of the node, we would have had to invoke the
                     // calculateH() funtion now instead of simply looking it up.
                     n_node.setF(n_node.getG() + n_node.getH());
+
+                    // -- add neighbor to OPEN --
+                    // With the priority queue rank F now defined for n, we can
+                    // add n to the OPEN set. The original pseudocode has this
+                    // step before the rank calculation, but that will not
+                    // work with our code because the PriorityQueue data
+                    // structure is probably going to invoke the compare()
+                    // function during insertion, which means F must be ready.
+                    open.add(n_node);
 
                     // -- set neighbor's parent to current --
                     n_node.setParent(current);
