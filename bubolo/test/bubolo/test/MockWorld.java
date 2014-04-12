@@ -152,7 +152,7 @@ public class MockWorld implements World
 
 	@Override
 	public List<Entity> getSpawns() {
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 }
