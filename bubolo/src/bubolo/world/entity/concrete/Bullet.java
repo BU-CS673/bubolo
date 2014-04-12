@@ -44,7 +44,7 @@ public class Bullet extends Effect
 	private static final float SPEED = 6.f;
 	
 	// The bullet's movement speed.
-	private static final int DAMAGEDONE = 1;
+	private static final int DAMAGEDONE = 10;
 
 	// Specifies whether the bullet is initialized.
 	private boolean initialized;
@@ -161,7 +161,6 @@ public class Bullet extends Effect
 					if(collider instanceof Damageable)
 					{
 						Damageable damageableCollider = (Damageable)collider;
-						System.out.println(damageableCollider.getHP());
 						damageableCollider.modifyHP(DAMAGEDONE);
 					}
 					dispose();

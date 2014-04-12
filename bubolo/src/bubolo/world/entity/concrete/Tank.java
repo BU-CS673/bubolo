@@ -99,7 +99,7 @@ public class Tank extends Actor implements Damageable
 	 * The amount of ammo of the tank
 	 */
 
-	public static final int TANK_MAX_HIT_POINTS = 10;
+	public static final int TANK_MAX_HIT_POINTS = 100;
 
 	private int ammoCount;
 
