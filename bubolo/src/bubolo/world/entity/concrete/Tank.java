@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -21,7 +22,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Tank extends Actor
+public class Tank extends Actor implements Damageable
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -672,9 +673,20 @@ public class Tank extends Actor
 	 * 
 	 * @return current hit point count
 	 */
+	@Override
 	public int getHitPoints()
 	{
 		return hitPoints;
+	}
+	
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return TANK_MAX_HIT_POINTS;
 	}
 
 	/**
@@ -723,6 +735,7 @@ public class Tank extends Actor
 	 * @param damagePoints
 	 *            how much damage the tank has taken
 	 */
+	@Override
 	public void takeHit(int damagePoints)
 	{
 
@@ -736,6 +749,7 @@ public class Tank extends Actor
 	 * @param healPoints
 	 *            - how many points the tank is given
 	 */
+	@Override
 	public void heal(int healPoints)
 	{
 		if (hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
