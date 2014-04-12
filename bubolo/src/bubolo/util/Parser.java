@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Random;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -105,6 +106,8 @@ public class Parser
 				{
 					dataString = tileData.get(i * mapWidth + j).toString();
 					int tileYIndex = mapHeight - i - 1;
+					Random rand = new Random();
+					int randomRotation = rand.nextInt(4);
 					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, (Terrain)world.addEntity(
 							layerOneSwitch(dataString)).setRotation((float)Math.PI / 2));
 				}
@@ -125,6 +128,12 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
 							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
+								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
+							}
+							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Water.class)
+							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(
