@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -21,7 +22,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Tank extends Actor
+public class Tank extends Actor implements Damageable
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -60,6 +61,10 @@ public class Tank extends Actor
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
 
+	
+	// Boolean for whether this tank is currently alive
+	private boolean isAlive = true;
+	
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
@@ -94,7 +99,7 @@ public class Tank extends Actor
 	 * The amount of ammo of the tank
 	 */
 
-	public static final int TANK_MAX_HIT_POINTS = 100;
+	public static final int TANK_MAX_HIT_POINTS = 10;
 
 	private int ammoCount;
 
@@ -490,6 +495,10 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
+		if(!isAlive)
+		{
+			reSpawn(world);
+		}
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
@@ -877,5 +886,55 @@ public class Tank extends Actor
 		{
 			return null;
 		}
+	}
+
+	@Override
+	public Damageable setHP(int i) 
+	{
+		this.hitPoints = i;
+		return this;
+	}
+
+	@Override
+	public int getHP() 
+	{
+		return this.hitPoints;
+	}
+
+	@Override
+	public int getMaxHP() 
+	{
+		return this.TANK_MAX_HIT_POINTS;
+	}
+
+	@Override
+	public Damageable modifyHP(int i) 
+	{
+		this.hitPoints = this.hitPoints - i;
+		if(this.hitPoints <=0)
+		{
+			this.isAlive = false;
+		}
+		return this;
+	}
+
+	@Override
+	public boolean isAlive()
+	{
+		// TODO Auto-generated method stub
+		return this.isAlive;
+	}
+	
+	private void reSpawn(World world)
+	{
+		
+		List<Entity> spawns = world.getSpawns();
+		if(spawns.size() > 0)
+		{
+			Entity spawn = spawns.get(0);
+			this.setParams(spawn.getX(), spawn.getY(), 0);
+		}
+		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.isAlive = true;
 	}
 }
