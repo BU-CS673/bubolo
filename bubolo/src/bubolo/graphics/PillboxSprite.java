@@ -46,7 +46,7 @@ class PillboxSprite extends AbstractEntitySprite<Pillbox>
 	 */
 	PillboxSprite(Pillbox pillbox)
 	{
-		super(DrawLayer.THIRD, pillbox);
+		super(DrawLayer.SECOND, pillbox);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);

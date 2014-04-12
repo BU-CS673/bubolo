@@ -59,7 +59,7 @@ class BaseSprite extends AbstractEntitySprite<Base>
 	 */
 	BaseSprite(Base base)
 	{
-		super(DrawLayer.THIRD, base);
+		super(DrawLayer.SECOND, base);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 32, 32);
