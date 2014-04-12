@@ -746,8 +746,11 @@ public class Tank extends Actor implements Damageable
 	@Override
 	public void takeHit(int damagePoints)
 	{
-
 		hitPoints -= Math.abs(damagePoints);
+		if(this.hitPoints <=0)
+		{
+			this.isAlive = false;
+		}
 		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
 
@@ -899,43 +902,6 @@ public class Tank extends Actor implements Damageable
 		{
 			return null;
 		}
-	}
-
-	@Override
-	public Damageable setHP(int i) 
-	{
-		this.hitPoints = i;
-		return this;
-	}
-
-	@Override
-	public int getHP() 
-	{
-		return this.hitPoints;
-	}
-
-	@Override
-	public int getMaxHP() 
-	{
-		return this.TANK_MAX_HIT_POINTS;
-	}
-
-	@Override
-	public Damageable modifyHP(int i) 
-	{
-		this.hitPoints = this.hitPoints - i;
-		if(this.hitPoints <=0)
-		{
-			this.isAlive = false;
-		}
-		return this;
-	}
-
-	@Override
-	public boolean isAlive()
-	{
-		// TODO Auto-generated method stub
-		return this.isAlive;
 	}
 	
 	private void reSpawn(World world)

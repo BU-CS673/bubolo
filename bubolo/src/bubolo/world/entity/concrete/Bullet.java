@@ -161,7 +161,7 @@ public class Bullet extends Effect
 					if(collider instanceof Damageable)
 					{
 						Damageable damageableCollider = (Damageable)collider;
-						damageableCollider.modifyHP(DAMAGEDONE);
+						damageableCollider.takeHit(DAMAGEDONE);
 					}
 					dispose();
 					return;
