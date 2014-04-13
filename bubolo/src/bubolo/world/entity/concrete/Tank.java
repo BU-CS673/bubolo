@@ -759,7 +759,7 @@ public class Tank extends Actor implements Damageable
 
 		else
 		{
-			hitPoints = 100;
+			hitPoints = TANK_MAX_HIT_POINTS;
 		}
 	}
 
