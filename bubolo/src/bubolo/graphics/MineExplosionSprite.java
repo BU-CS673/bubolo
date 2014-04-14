@@ -70,7 +70,15 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 			if (frameTimeRemaining < 0)
 			{
 				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == frames.length - 1) ? 0 : frameIndex + 1;
+				if(frameIndex == frames.length - 1)
+				{
+					((MineExplosion) this.getEntity()).setFinished(true);
+					this.getEntity().dispose();
+				}
+				else
+				{
+					frameIndex = frameIndex + 1;
+				}
 			}
 
 		}

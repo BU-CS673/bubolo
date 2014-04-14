@@ -7,11 +7,14 @@ package bubolo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Intersector;
+
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
+import bubolo.world.entity.concrete.MineExplosion;
 
 /**
  * This utility provides various functions for working with Tile objects based on their
@@ -71,6 +74,35 @@ public abstract class TileUtil
 		return (int) (y / 32);
 	}
 
+	/**
+	 * get a list of entities that are currently colliding with a given entity
+	 * 
+	 * @param entity
+	 * 			the entity to check for collisions
+	 * @param world
+	 * 			reference to the game world
+	 * @return
+	 * 			the list of entities that are colliding with the given entity
+	 */
+	public static List<Entity> getLocalCollisions(Entity entity, World world)
+	{
+		ArrayList<Entity> localCollisions = new ArrayList<Entity>();
+		getLocalEntities(entity.getX(),entity.getY(),world);
+		
+		for(Entity collider:TileUtil.getLocalEntities(entity.getX(),entity.getY(), world))
+		{
+			if (collider.isSolid() && collider != entity)
+			{
+				if (Intersector.overlapConvexPolygons(collider.getBounds(), entity.getBounds()))
+				{
+					localCollisions.add(collider);
+				}
+			}
+		}
+		
+		return localCollisions;
+	}
+	
 	/**
 	 * Get all entities are likely to overlap with Entities within the given grid
 	 * location.
