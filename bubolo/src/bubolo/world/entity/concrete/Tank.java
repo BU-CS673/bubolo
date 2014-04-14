@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.badlogic.gdx.math.Intersector;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -21,7 +23,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Tank extends Actor
+public class Tank extends Actor implements Damageable
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -60,6 +62,10 @@ public class Tank extends Actor
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
 
+	
+	// Boolean for whether this tank is currently alive
+	private boolean isAlive = true;
+	
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
@@ -122,6 +128,7 @@ public class Tank extends Actor
 
 	private int pillboxCount;
 
+	private Random randomGenerator = new Random();
 	/**
 	 * Constructor for the Tank object
 	 */
@@ -490,6 +497,10 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
+		if(!isAlive)
+		{
+			reSpawn(world);
+		}
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
@@ -672,9 +683,20 @@ public class Tank extends Actor
 	 * 
 	 * @return current hit point count
 	 */
+	@Override
 	public int getHitPoints()
 	{
 		return hitPoints;
+	}
+	
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return TANK_MAX_HIT_POINTS;
 	}
 
 	/**
@@ -723,10 +745,14 @@ public class Tank extends Actor
 	 * @param damagePoints
 	 *            how much damage the tank has taken
 	 */
+	@Override
 	public void takeHit(int damagePoints)
 	{
-
 		hitPoints -= Math.abs(damagePoints);
+		if(this.hitPoints <=0)
+		{
+			this.isAlive = false;
+		}
 		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
 
@@ -736,6 +762,7 @@ public class Tank extends Actor
 	 * @param healPoints
 	 *            - how many points the tank is given
 	 */
+	@Override
 	public void heal(int healPoints)
 	{
 		if (hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
@@ -877,5 +904,18 @@ public class Tank extends Actor
 		{
 			return null;
 		}
+	}
+	
+	private void reSpawn(World world)
+	{
+		
+		List<Entity> spawns = world.getSpawns();
+		if(spawns.size() > 0)
+		{
+			Entity spawn = spawns.get(randomGenerator.nextInt(spawns.size()));
+			this.setParams(spawn.getX(), spawn.getY(), 0);
+		}
+		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.isAlive = true;
 	}
 }

@@ -192,7 +192,7 @@ public class TankTest
 		tank.gatherMine(2);
 		world = new GameWorld(32, 32);
 		Tile[][] mapTile = new Tile[1][1];
-		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		mapTile[0][0] = new Tile(0, 0, new Grass());
 		world.setMapTiles(mapTile);
 		Mine mine = tank.dropMine(world, 0, 0);
 		assertNotNull(mine);
@@ -205,7 +205,7 @@ public class TankTest
 		tank.gatherPillbox();
 		world = new GameWorld(32, 32);
 		Tile[][] mapTile = new Tile[1][1];
-		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
+		mapTile[0][0] = new Tile(0, 0, new Grass());
 		world.setMapTiles(mapTile);
 		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
 		assertNotNull(pillbox);

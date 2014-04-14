@@ -37,6 +37,13 @@ public interface World
 	public List<Entity> getTanks();
 	
 	/**
+	 * Returns the list of all Spawn Locations in the world. Ordering should not be 
+	 * assumed, and may change between calls.
+	 * @return the list of Spawns.
+	 */
+	public List<Entity> getSpawns();
+	
+	/**
 	 * Returns the list of all actors in the world. Ordering should not be 
 	 * assumed, and may change between calls.
 	 * @return the list of actors.
