@@ -30,7 +30,7 @@ class BulletSprite extends AbstractEntitySprite<Entity>
 	 */
 	BulletSprite(Entity bullet)
 	{
-		super(DrawLayer.THIRD, bullet);
+		super(DrawLayer.FOURTH, bullet);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
