@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Random;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -106,8 +105,6 @@ public class Parser
 				{
 					dataString = tileData.get(i * mapWidth + j).toString();
 					int tileYIndex = mapHeight - i - 1;
-					Random rand = new Random();
-					int randomRotation = rand.nextInt(4);
 					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, (Terrain)world.addEntity(
 							layerOneSwitch(dataString)).setRotation((float)Math.PI / 2));
 				}

@@ -26,8 +26,8 @@ class SpawnSprite extends AbstractEntitySprite<Entity>
 	 * Constructor for the SpawnSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
 	 * 
-	 * @param grass
-	 *            Reference to the Grass that this GrassSprite represents.
+	 * @param spawn
+	 *            Reference to the spawn that this SpawnSprite represents.
 	 */
 	SpawnSprite(Entity spawn)
 	{

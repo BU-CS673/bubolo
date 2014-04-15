@@ -9,7 +9,8 @@ import bubolo.world.entity.StationaryEntity;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Spawn extends StationaryEntity{
+public class Spawn extends StationaryEntity
+{
 
 	/**
 	 * needed for serialization
