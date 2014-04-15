@@ -2,8 +2,6 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import com.badlogic.gdx.math.Intersector;
-
 import bubolo.util.TileUtil;
 import bubolo.world.Damageable;
 import bubolo.world.World;
@@ -65,15 +63,15 @@ public class MineExplosion extends Effect
 	}
 	
 	/**
-	 * returns whether or not the explosion animation has completed
+	 * sets whether or not the explosion animation has completed
 	 * 
-	 * @return
-	 * 		returns true if the animation has completed
+	 * @param finished
+	 * 		boolean whether or not the explosion animation has completed
 	 */
 	
-	public void setFinished(boolean f)
+	public void setFinished(boolean finished)
 	{
-		finished = f;
+		this.finished = finished;
 	}
 	
 	@Override
@@ -85,7 +83,10 @@ public class MineExplosion extends Effect
 			{
 				if (collider instanceof Damageable)
 				{
-					((Damageable) collider).modifyHP(DAMAGE_DONE);
+					//((Damageable) collider).takeHit(DAMAGE_DONE);
+					
+					Damageable damageableCollider = (Damageable)collider;
+					damageableCollider.takeHit(DAMAGE_DONE);
 				}
 			}
 		}

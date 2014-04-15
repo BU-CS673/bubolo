@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Intersector;
 
 import bubolo.controllers.Controller;
 import bubolo.util.TileUtil;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Mine;
@@ -40,7 +41,8 @@ public class AIMineController implements Controller
 			{
 				if (Intersector.overlapConvexPolygons(collider.getBounds(), mine.getBounds()))
 				{
-					world.addEntity(MineExplosion.class).setParams(mine.getX(), mine.getY(), 0);
+					MineExplosion mineExplosion = world.addEntity(MineExplosion.class);
+					mineExplosion.setParams(mine.getX(), mine.getY(), 0);
 					mine.dispose();
 					return;
 				}

@@ -25,6 +25,7 @@ import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.MineExplosion;
 import bubolo.world.entity.concrete.Pillbox;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -102,6 +103,8 @@ public class MineControllerTestApplication extends AbstractGameApplication
 		world.addEntity(Mine.class).setParams(32*18, 32*6, 0);
 		world.addEntity(Mine.class).setParams(32*18, 32*12, 0);
 		world.addEntity(Mine.class).setParams(32*9, 32*12, 0);
+		
+		world.addEntity(Spawn.class).setParams(100, 100, 0);
 		
 		setReady(true);
 	}
