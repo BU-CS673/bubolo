@@ -60,6 +60,7 @@ public class Engineer extends Actor implements Damageable
 		setWidth(14);
 		setHeight(9);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	/**

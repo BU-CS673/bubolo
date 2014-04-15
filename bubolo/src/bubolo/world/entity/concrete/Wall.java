@@ -59,6 +59,7 @@ public class Wall extends StationaryElement implements Adaptable, Damageable
 		setHeight(30);
 		updateBounds();
 		setSolid(true);
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override

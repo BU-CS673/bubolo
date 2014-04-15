@@ -81,6 +81,7 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 		setHeight(27);
 		updateBounds();
 		setSolid(true);
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override

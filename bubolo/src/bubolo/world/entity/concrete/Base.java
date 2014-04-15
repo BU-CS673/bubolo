@@ -62,6 +62,7 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override

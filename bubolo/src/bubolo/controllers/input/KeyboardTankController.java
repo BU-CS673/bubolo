@@ -99,7 +99,7 @@ public class KeyboardTankController implements Controller
 	 private static void processMineLaying(Tank tank, World world)
 	 {
 	// // TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
-		 if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT) && tank.getMineCount() > 0)
+		 if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT) && (tank.getMineCount() > 0))
 		 {
 				float tankCenterX = tank.getX();
 				float tankCenterY = tank.getY();

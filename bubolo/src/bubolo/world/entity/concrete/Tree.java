@@ -47,6 +47,7 @@ public class Tree extends StationaryElement implements Damageable
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	/**

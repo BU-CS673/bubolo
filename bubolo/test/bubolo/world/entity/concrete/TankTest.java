@@ -113,6 +113,12 @@ public class TankTest
 	}
 	
 	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, tank.getMaxHitPoints(), 0);
+	}
+	
+	@Test
 	public void getAmmoCount()
 	{
 		assertEquals(100, tank.getAmmoCount(), 0);
