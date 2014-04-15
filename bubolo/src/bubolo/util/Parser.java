@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -125,6 +124,12 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
 							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
+								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
+							}
+							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Water.class)
+							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(

@@ -10,6 +10,7 @@ import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Bullet;
@@ -86,13 +87,19 @@ public class GraphicsTestApplication extends AbstractGameApplication
 		
 		world = new GameWorld(50*32, 50*32);
 		
-		for (int i = 0; i < 50; i++)
+		Tile[][] mapTiles = new Tile[50][50];
+		
+		for (int row = 0; row < 50; row++)
 		{
-			for (int j = 0; j < 50; j++)
+			for (int column = 0; column < 50; column++)
 			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
+				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
+				mapTiles[column][row] = new Tile(column, row, grass);
+				
 			}
 		}
+		
+		world.setMapTiles(mapTiles);
 		
 		// TODO: Adjust as needed.
 		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);

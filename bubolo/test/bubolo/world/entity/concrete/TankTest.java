@@ -117,6 +117,12 @@ public class TankTest
 	}
 	
 	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, tank.getMaxHitPoints(), 0);
+	}
+	
+	@Test
 	public void getAmmoCount()
 	{
 		assertEquals(100, tank.getAmmoCount(), 0);
@@ -193,7 +199,6 @@ public class TankTest
 	@Test
 	public void dropMine()
 	{
-		Tile[][] mapTile = new Tile[1][1];
 		Mine mine = tank.dropMine(world, 0, 0);
 		assertNotNull(mine);
 		assertNotNull(world.getMapTiles()[0][0].getElement());
