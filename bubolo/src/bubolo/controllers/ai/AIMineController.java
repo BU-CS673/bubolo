@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Intersector;
 
 import bubolo.controllers.Controller;
 import bubolo.util.TileUtil;
-import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Mine;
