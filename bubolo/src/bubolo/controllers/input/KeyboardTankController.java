@@ -10,6 +10,7 @@ import bubolo.net.command.CreateEntity;
 import bubolo.net.command.MoveTank;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Bullet;
+import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -37,7 +38,7 @@ public class KeyboardTankController implements Controller
 	{
 		processMovement(tank);
 		processCannon(tank, world);
-		// processMineLaying(tank, world);
+		processMineLaying(tank, world);
 	}
 
 	private static void processMovement(Tank tank)
@@ -94,14 +95,24 @@ public class KeyboardTankController implements Controller
 		net.send(new MoveTank(tank));
 	}
 
-	// TODO (cdc - 3/15/2014): Uncomment this once it's ready to be implemented.
-	// private static void processMineLaying(Tank tank, World world)
-	// {
+
+	 private static void processMineLaying(Tank tank, World world)
+	 {
 	// // TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
-	// if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) ||
-	// Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT))
-	// {
-	// // TODO: lay a mine.
-	// }
-	// }
+		 if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT) && (tank.getMineCount() > 0))
+		 {
+				float tankCenterX = tank.getX();
+				float tankCenterY = tank.getY();
+
+				Mine mine = tank.dropMine(world,
+						tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
+						tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
+				if(mine != null)
+				{
+					Network net = NetworkSystem.getInstance();
+					net.send(new CreateEntity(Mine.class, mine.getId(), mine.getX(), mine.getY(),
+						mine.getRotation()));
+				}
+		 }
+	 }
 }

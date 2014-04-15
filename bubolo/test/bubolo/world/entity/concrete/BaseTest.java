@@ -41,4 +41,25 @@ public class BaseTest
 		base.setCharging(true);
 		assertEquals("Base charging state set correctly.", true, base.isCharging());
 	}
+	
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(100, base.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, base.getMaxHitPoints(), 0);
+	}
+	
+	@Test
+	public void healDamageTest()
+	{
+		base.takeHit(1);
+		assertEquals(99, base.getHitPoints(), 0);
+		base.heal(1);
+		assertEquals(100, base.getHitPoints(), 0);
+	}
 }

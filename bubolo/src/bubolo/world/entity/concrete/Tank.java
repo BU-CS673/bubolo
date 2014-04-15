@@ -61,14 +61,19 @@ public class Tank extends Actor implements Damageable
 
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
-
 	
 	// Boolean for whether this tank is currently alive
 	private boolean isAlive = true;
 	
+	//Minimum amount of time between laying mines.
+	private static final long mineReLoadSpeed = 500;
+	
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
+	
+	//The last time a mine was layed. Used to prevent multiple mines from being dropped.
+	private long mineLayingTime = 0;
 
 	private Polygon leftBumper = new Polygon();
 	private Polygon rightBumper = new Polygon();
@@ -772,7 +777,7 @@ public class Tank extends Actor implements Damageable
 
 		else
 		{
-			hitPoints = 100;
+			hitPoints = TANK_MAX_HIT_POINTS;
 		}
 	}
 
@@ -850,21 +855,31 @@ public class Tank extends Actor implements Damageable
 	 * @return - the mine that is created is returned or null if there are none to place or invalid
 	 *         placement location
 	 */
-	public Mine dropMine(World world, int startX, int startY)
+	public Mine dropMine(World world, float startX, float startY)
 	{
-		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
-		{
-			Mine mine = world.addEntity(Mine.class);
-			world.getMapTiles()[startX / 32][startY / 32].setElement(mine);
-			mine.setX(startX).setY(startY);
-			mine.setRotation(getRotation());
-			mineCount--;
-			return mine;
-		}
-		else
+		int XTileCoord = (int) startX / 32;
+		int YTileCoord = (int) startY / 32;
+		
+		if(System.currentTimeMillis() - mineLayingTime < mineReLoadSpeed)
 		{
 			return null;
 		}
+		
+		if(world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != Water.class &&
+				world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != DeepWater.class)
+		{
+			if ((!world.getMapTiles()[XTileCoord][YTileCoord].hasElement()) && (mineCount > 0))
+			{
+				mineLayingTime = System.currentTimeMillis();
+				Mine mine = world.addEntity(Mine.class);
+				world.getMapTiles()[XTileCoord][YTileCoord].setElement(mine);
+				mine.setX(startX).setY(startY);
+				mine.setRotation(getRotation());
+				mineCount--;
+				return mine;
+			}
+		}
+		return null;
 	}
 
 	/**
