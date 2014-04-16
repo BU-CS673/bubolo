@@ -1,5 +1,7 @@
 package bubolo.graphics;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +19,8 @@ class RubbleSprite extends AbstractEntitySprite<Entity>
 	
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "rubble.png";
+	
+	private float rotation;
 
 	/**
 	 * Constructor for the RubbleSprite. This is Package-private because sprites should not
@@ -30,6 +34,9 @@ class RubbleSprite extends AbstractEntitySprite<Entity>
 		super(DrawLayer.SECOND, rubble);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
+		
+		Random rand = new Random();
+		rotation = (float) (rand.nextInt(4) * (3.141/2));
 	}
 
 	@Override
@@ -45,5 +52,11 @@ class RubbleSprite extends AbstractEntitySprite<Entity>
 
 		}
 
+	}
+	
+	@Override
+	public float getRotation()
+	{
+		return rotation;
 	}
 }

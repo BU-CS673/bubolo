@@ -91,5 +91,12 @@ public class GrassSpriteTest
 		
 		assertTrue(passed);
 	}
+	
+	@Test
+	public void getRotation()
+	{
+		Sprite sprite = Sprites.getInstance().createSprite(new Grass());
+		assertNotNull(sprite.getRotation());
+	}
 
 }
