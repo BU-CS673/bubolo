@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
 import bubolo.util.TileUtil;
+import bubolo.world.Damageable;
 import bubolo.world.World;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.Entity;
@@ -41,6 +42,9 @@ public class Bullet extends Effect
 
 	// The bullet's movement speed.
 	private static final float SPEED = 6.f;
+	
+	// The bullet's movement speed.
+	private static final int DAMAGEDONE = 10;
 
 	// Specifies whether the bullet is initialized.
 	private boolean initialized;
@@ -154,6 +158,11 @@ public class Bullet extends Effect
 			{
 				if (Intersector.overlapConvexPolygons(collider.getBounds(), this.getBounds()))
 				{
+					if(collider instanceof Damageable)
+					{
+						Damageable damageableCollider = (Damageable)collider;
+						damageableCollider.takeHit(DAMAGEDONE);
+					}
 					dispose();
 					return;
 				}
