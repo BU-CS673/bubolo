@@ -14,7 +14,7 @@ import bubolo.world.entity.concrete.Engineer;
  * 
  * @author BU CS673 - Clone Productions
  */
-class EngineerSprite extends Sprite<Engineer>
+class EngineerSprite extends AbstractEntitySprite<Engineer>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
@@ -52,7 +52,7 @@ class EngineerSprite extends Sprite<Engineer>
 	private int lastAnimationState = 0;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "engineer.png";
+	private static final String TEXTURE_FILE = "engineer.png";
 
 	/**
 	 * Constructor for the EngineerSprite. This is Package-private because sprites should
@@ -63,7 +63,7 @@ class EngineerSprite extends Sprite<Engineer>
 	 */
 	EngineerSprite(Engineer engi)
 	{
-		super(DrawLayer.ACTORS, engi);
+		super(DrawLayer.THIRD, engi);
 
 		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		allFrames = TextureUtil.splitFrames(texture, 21, 21);
@@ -93,7 +93,7 @@ class EngineerSprite extends Sprite<Engineer>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

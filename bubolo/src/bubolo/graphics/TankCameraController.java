@@ -17,8 +17,8 @@ class TankCameraController implements CameraController
 	private Camera camera;
 
 	/**
-	 * Constructs a TankCameraController. Package-private because TankCameraController's are
-	 * internal to the Graphics system.
+	 * Constructs a TankCameraController. Package-private because TankCameraControllers are internal
+	 * to the Graphics system.
 	 * 
 	 * @param tank
 	 */
@@ -69,7 +69,7 @@ class TankCameraController implements CameraController
 		{
 			// Ensure that screen doesn't go negative if the world is smaller than the camera.
 			float newCameraX = world.getMapWidth() - camera.viewportWidth;
-			cameraX = (newCameraX >= 0) ? newCameraX : 0;			
+			cameraX = (newCameraX >= 0) ? newCameraX : 0;
 		}
 
 		return cameraX;

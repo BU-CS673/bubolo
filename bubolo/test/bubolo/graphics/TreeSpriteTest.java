@@ -50,7 +50,7 @@ public class TreeSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+					Sprite sprite = Sprites.getInstance().createSprite(new Tree());
 					
 					passed = true;
 					isComplete = true;
@@ -76,9 +76,9 @@ public class TreeSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tree());
+				Sprite sprite = Sprites.getInstance().createSprite(new Tree());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

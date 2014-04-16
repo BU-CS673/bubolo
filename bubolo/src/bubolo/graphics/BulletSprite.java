@@ -11,23 +11,26 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU673 - Clone Industries
  */
-class BulletSprite extends Sprite<Entity>
+class BulletSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
+	private int x;
+	private int y;
+
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "bullet.png";
+	private static final String TEXTURE_FILE = "bullet.png";
 
 	/**
-	 * Constructor for the BulletSprite. This is Package-private because sprites should
-	 * not be directly created outside of the graphics system.
+	 * Constructor for the BulletSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param bullet
 	 *            Reference to the Bullet that this BulletSprite represents.
 	 */
 	BulletSprite(Entity bullet)
 	{
-		super(DrawLayer.EFFECTS, bullet);
+		super(DrawLayer.THIRD, bullet);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
@@ -35,14 +38,18 @@ class BulletSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
-			Sprites.getInstance().removeSprite(this);
+			Sprites spriteSystem = Sprites.getInstance();
+			spriteSystem.addSprite(new BulletExplosionSprite(x, y));
+			spriteSystem.removeSprite(this);
 		}
 		else
 		{
 			drawTexture(batch, camera, layer, image);
-
+			
+			this.x = Math.round(getEntity().getX());
+			this.y = Math.round(getEntity().getY());
 		}
 	}
 }

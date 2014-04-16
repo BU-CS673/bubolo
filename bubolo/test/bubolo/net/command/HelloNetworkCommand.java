@@ -12,6 +12,7 @@ import bubolo.world.World;
 /**
  * @author BU CS673 - Clone Productions
  */
+@Deprecated
 public class HelloNetworkCommand implements NetworkCommand
 {
 	private final String message;

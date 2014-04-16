@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import javax.swing.JOptionPane;
+
 import org.json.simple.parser.ParseException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -45,7 +49,7 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	private Network network;
 
 	private long lastUpdate;
-
+	
 	private boolean ready;
 
 	/**
@@ -73,12 +77,6 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		this.windowHeight = windowHeight;
 	}
 
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
-
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
 	 * 
@@ -88,13 +86,8 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	@Override
 	public void create()
 	{
-		network = NetworkSystem.getInstance();
-		network.startServer();
-
-		network.send(new HelloNetworkCommand("Hello from the server."));
-
 		graphics = new Graphics(windowWidth, windowHeight);
-
+		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 		try
@@ -106,6 +99,22 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		network = NetworkSystem.getInstance();
+		network.startServer("Server");
+		
+		int response = JOptionPane.showConfirmDialog(null,
+				"Click OK to start the game.",
+				"Start Game",
+				JOptionPane.OK_CANCEL_OPTION);
+		
+		if (response == JOptionPane.CANCEL_OPTION)
+		{
+			Gdx.app.exit();
+		}
+		network.startGame(world);
+
+		network.send(new HelloNetworkCommand("Hello from the server."));
 
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1050, 100, 0);
@@ -163,5 +172,17 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public boolean isReady()
+	{
+		return ready;
+	}
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return world.getMapTiles() != null;
 	}
 }

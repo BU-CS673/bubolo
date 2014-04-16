@@ -1,15 +1,26 @@
 package bubolo.integration;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import org.json.simple.parser.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.StationaryEntity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
@@ -19,7 +30,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class PillboxControllerTestApplication implements GameApplication
+public class PillboxControllerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -35,11 +46,6 @@ public class PillboxControllerTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -62,12 +68,6 @@ public class PillboxControllerTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -80,26 +80,28 @@ public class PillboxControllerTestApplication implements GameApplication
 		net.startDebug();
 		
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/FieldOfDreams.json");
+		try
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
+			world = fileParser.parseMap(path);
+		}
+		catch (ParseException | IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
+		StationaryElement pillbox = (StationaryElement)world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
+		world.getMapTiles()[9-1][9-1].setElement(pillbox);
 		world.addEntity(Pillbox.class).setParams(32*18, 32*6, 0);
 		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 0);
 		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 0);
 
-		ready = true;
+		setReady(true);
 	}
 	
 	/**

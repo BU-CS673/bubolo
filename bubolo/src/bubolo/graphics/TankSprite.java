@@ -1,6 +1,7 @@
 package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,7 +15,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-class TankSprite extends Sprite<Tank>
+class TankSprite extends AbstractEntitySprite<Tank>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
@@ -26,10 +27,10 @@ class TankSprite extends Sprite<Tank>
 	// Why the y value first? Because the y value represents the color set to be used.
 	private TextureRegion[][] frames;
 
-	// An array of the frames to be used for the driving forwards animation.
+	// An array of the frames to be used for the driving backward animation.
 	private TextureRegion[][] backwardFrames;
 
-	// An array of the frames to be used for the driving backwards animation.
+	// An array of the frames to be used for the driving forward animation.
 	private TextureRegion[][] forwardFrames;
 
 	// Frame to be used for the standing (idle) animation
@@ -50,20 +51,20 @@ class TankSprite extends Sprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
-	
+
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "tank.png";
+	private static final String TEXTURE_FILE = "tank.png";
 
 	/**
-	 * Constructor for the TankSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system.
+	 * Constructor for the TankSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param tank
 	 *            Reference to the tank that this TankSprite represents.
 	 */
 	TankSprite(Tank tank)
 	{
-		super(DrawLayer.ACTORS, tank);
+		super(DrawLayer.FOURTH, tank);
 	}
 
 	private void updateColorSet()
@@ -81,7 +82,7 @@ class TankSprite extends Sprite<Tank>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 			return;
@@ -90,19 +91,14 @@ class TankSprite extends Sprite<Tank>
 		{
 			initialize(camera);
 		}
-
 		updateColorSet();
 
-		drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
-		if (this.getEntity().getSpeed() > 0.0f)
+		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN)
 		{
-			animationState = 1;
+			return;
 		}
-		else
-		{
-			animationState = 0;
-		}
-
+		
+		animationState = (getEntity().getSpeed() > 0.f) ? 1 : 0;
 		switch (animationState)
 		{
 		case 0:
@@ -122,15 +118,9 @@ class TankSprite extends Sprite<Tank>
 			}
 			drawTexture(batch, camera, layer, forwardFrames[frameIndex][colorId]);
 
-			// Progress the tank building animation.
-			// TODO: only change frames when the tank is actually building.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == forwardFrames.length - 1) ? 0 : frameIndex + 1;
-			}
+			// Progress the tank drive forward animation.
+			animate(forwardFrames);
+
 			break;
 
 		case 2:
@@ -141,15 +131,9 @@ class TankSprite extends Sprite<Tank>
 			}
 			drawTexture(batch, camera, layer, backwardFrames[frameIndex][colorId]);
 
-			// Progress the tank building animation.
-			// TODO: only change frames when the tank is actually building.
-			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
-			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
-			{
-				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == backwardFrames.length - 1) ? 0 : frameIndex + 1;
-			}
+			// Progress the tank drive backward animation.
+			animate(backwardFrames);
+			
 			break;
 
 		default:
@@ -157,9 +141,41 @@ class TankSprite extends Sprite<Tank>
 		}
 	}
 
+	private Visibility processVisibility()
+	{
+		if (getEntity().isHidden())
+		{
+			if (getEntity().isLocalPlayer())
+			{
+				setColor(new Color(Color.WHITE).mul(1.f, 1.f, 1.f, 0.6f));
+				return Visibility.HIDDEN;
+			}
+			else
+			{
+				return Visibility.NETWORK_TANK_HIDDEN;
+			}
+		}
+		else
+		{
+			setColor(Color.WHITE);
+			return Visibility.VISIBLE;
+		}
+	}
+	
+	private void animate(TextureRegion[][] animationFrames)
+	{
+		frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
+		lastFrameTime = System.currentTimeMillis();
+		if (frameTimeRemaining < 0)
+		{
+			frameTimeRemaining = millisPerFrame;
+			frameIndex = (frameIndex == animationFrames.length - 1) ? 0 : frameIndex + 1;
+		}
+	}
+	
 	/**
-	 * Initializes the tank. This is needed because the Tank entity may not know whether
-	 * it is local or not at construction time.
+	 * Initializes the tank. This is needed because the Tank entity may not know whether it is local
+	 * or not at construction time.
 	 * 
 	 * @param camera
 	 *            reference to the camera.
@@ -181,5 +197,10 @@ class TankSprite extends Sprite<Tank>
 			Graphics.getInstance().addCameraController(controller);
 			controller.setCamera(camera);
 		}
+	}
+	
+	private enum Visibility
+	{
+		VISIBLE, NETWORK_TANK_HIDDEN, HIDDEN
 	}
 }
