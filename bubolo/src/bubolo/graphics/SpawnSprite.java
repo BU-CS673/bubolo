@@ -27,7 +27,7 @@ class SpawnSprite extends AbstractEntitySprite<Entity>
 	 * be directly created outside of the graphics system.
 	 * 
 	 * @param spawn
-	 *            Reference to the Grass that this GrassSprite represents.
+	 *            Reference to the spawn that this SpawnSprite represents.
 	 */
 	SpawnSprite(Entity spawn)
 	{

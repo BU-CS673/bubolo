@@ -9,7 +9,8 @@ import bubolo.world.entity.StationaryEntity;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Spawn extends StationaryEntity{
+public class Spawn extends StationaryEntity
+{
 
 	/**
 	 * needed for serialization
@@ -17,7 +18,7 @@ public class Spawn extends StationaryEntity{
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Construct a new Tree with a random UUID.
+	 * Construct a new Spawn with a random UUID.
 	 */
 	public Spawn()
 	{
@@ -25,10 +26,10 @@ public class Spawn extends StationaryEntity{
 	}
 
 	/**
-	 * Construct a new Tree with the specified UUID.
+	 * Construct a new Spawn with the specified UUID.
 	 * 
 	 * @param id
-	 *            is the existing UUID to be applied to the new Tree.
+	 *            is the existing UUID to be applied to the new Spawn.
 	 */
 	public Spawn(UUID id)
 	{

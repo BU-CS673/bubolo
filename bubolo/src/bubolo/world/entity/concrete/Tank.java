@@ -64,7 +64,7 @@ public class Tank extends Actor implements Damageable
 
 	// Boolean for whether this tank is currently alive
 	private boolean isAlive = true;
-
+		
 	//Minimum amount of time between laying mines.
 	private static final long mineReLoadSpeed = 500;
 	
