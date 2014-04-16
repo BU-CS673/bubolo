@@ -62,4 +62,28 @@ public class BaseTest
 		base.heal(1);
 		assertEquals(100, base.getHitPoints(), 0);
 	}
+	
+	@Test
+	public void ammoTest()
+	{
+		assertEquals(base.getMaxAmmoCount(), base.getAmmoCount(), 0);
+		base.gatherAmmo();
+		assertEquals(base.getMaxAmmoCount(), base.getAmmoCount(), 0);
+		base.giveAmmo();
+		assertEquals(base.getMaxAmmoCount() - 10, base.getAmmoCount(), 0);
+		base.gatherAmmo();
+		assertEquals(base.getMaxAmmoCount(), base.getAmmoCount(), 0);		
+	}
+	
+	@Test
+	public void mineTest()
+	{
+		assertEquals(base.getMaxMineCount(), base.getMineCount(), 0);
+		base.gatherMines();
+		assertEquals(base.getMaxMineCount(), base.getMineCount(), 0);
+		base.giveMine();
+		assertEquals(base.getMaxMineCount() - 1, base.getMineCount(), 0);
+		base.gatherMines();
+		assertEquals(base.getMaxMineCount(), base.getMineCount(), 0);
+	}
 }

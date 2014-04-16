@@ -42,6 +42,18 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	
 	private static final int MAX_HIT_POINTS = 100;
 	
+	private int mineCount;
+	
+	private static final int MAX_MINE_COUNT = 10;
+	
+	private static final int MINE_REPLENISH_RATE = 1;
+	
+	private int ammoCount;
+
+	private static final int MAX_AMMO_COUNT = 100;
+	
+	private static final int AMMO_REPLENISH_RATE = 10;
+	
 	/**
 	 * Construct a new Base with a random UUID.
 	 */
@@ -63,6 +75,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		setHeight(32);
 		updateBounds();
 		hitPoints = MAX_HIT_POINTS;
+		ammoCount = MAX_AMMO_COUNT;
+		mineCount = MAX_MINE_COUNT;
 	}
 
 	@Override
@@ -164,5 +178,104 @@ public class Base extends StationaryElement implements Ownable, Damageable
 			hitPoints = MAX_HIT_POINTS;
 		}		
 		
+	}
+	
+	/**
+	 * The current amount of ammo at the base
+	 * @return the current amount of ammo
+	 */
+	public int getAmmoCount() {
+		return ammoCount;
+	}
+	
+
+	/**
+	 * The maximum amount of ammo a base can have
+	 * @return the maximum amount of ammo storage at a base
+	 */
+	public static int getMaxAmmoCount() {
+		return MAX_AMMO_COUNT;
+	}
+
+	/**
+	 * Replenishes the ammo for the base
+	 */
+	public void gatherAmmo()
+	{
+		if(ammoCount + AMMO_REPLENISH_RATE < MAX_AMMO_COUNT)
+		{
+			ammoCount += AMMO_REPLENISH_RATE;
+		}
+		else 
+		{
+			ammoCount = MAX_AMMO_COUNT;
+		}
+	}
+	
+	/**
+	 * Method that deducts ammo from supply to give to tank
+	 * @return - amount of ammo capable of being supplied at request
+	 */
+	public int giveAmmo()
+	{
+		if(ammoCount - AMMO_REPLENISH_RATE < 0)
+		{
+			ammoCount = 0;
+			return ammoCount;
+		}
+		else 
+		{
+			ammoCount -= AMMO_REPLENISH_RATE;
+			return AMMO_REPLENISH_RATE;
+		}
+	}
+	
+	/**
+	 * The current number of mines at a base
+	 * @return the current number of mines
+	 */
+	public int getMineCount() {
+		return mineCount;
+	}
+	
+	/**
+	 * The maximum number of mines a base can have
+	 * @return the maximum storage for mines at a base
+	 */
+	public static int getMaxMineCount() {
+		return MAX_MINE_COUNT;
+	}
+	
+	/**
+	 * Replenishes the mines for the base
+	 */
+	public void gatherMines()
+	{
+		if(mineCount + MINE_REPLENISH_RATE < MAX_MINE_COUNT)
+		{
+			mineCount += MINE_REPLENISH_RATE;
+		}
+		else
+		{
+			mineCount = MAX_MINE_COUNT;
+		}
+	}
+	
+	/**
+	 * Method that deducts mines from supply to give to tank
+	 * @return - amount of mines capable of being supplied at request
+	 */
+	public int giveMine()
+	{
+		if(mineCount - MINE_REPLENISH_RATE < 0)
+		{
+			mineCount = 0;
+			return mineCount;
+		}
+		else 
+		{
+			mineCount -= MINE_REPLENISH_RATE;
+			return MINE_REPLENISH_RATE;
+		}
 	}
 }
