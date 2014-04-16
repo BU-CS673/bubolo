@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Rubble;
 
 import com.badlogic.gdx.Gdx;
@@ -62,6 +63,13 @@ public class RubbleSpriteTest
 		}
 		
 		assertTrue(passed);
+	}
+	
+	@Test
+	public void getRotation()
+	{
+		Sprite sprite = Sprites.getInstance().createSprite(new Grass());
+		assertNotNull(sprite.getRotation());
 	}
 
 }

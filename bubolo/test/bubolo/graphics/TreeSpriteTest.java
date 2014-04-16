@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
@@ -92,4 +93,10 @@ public class TreeSpriteTest
 		assertTrue(passed);
 	}
 
+	@Test
+	public void getRotation()
+	{
+		Sprite sprite = Sprites.getInstance().createSprite(new Grass());
+		assertNotNull(sprite.getRotation());
+	}
 }

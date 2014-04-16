@@ -1,5 +1,7 @@
 package bubolo.graphics;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +21,8 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 	
 	private TextureRegion[][] frames;
 	
+	private float rotation;
+	
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "grass.png";
 
@@ -35,6 +39,8 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, 48, 48);
+		Random rand = new Random();
+		rotation = (float) (rand.nextInt(4) * (3.141/2));
 	}
 
 	@Override
@@ -49,5 +55,11 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 			drawTexture(batch, camera, layer, frames[0][0]);
 
 		}
+	}
+	
+	@Override
+	public float getRotation()
+	{
+		return rotation;
 	}
 }
