@@ -137,7 +137,25 @@ public class Parser
 						}
 					}
 				}
+				
+				if (layerArray.size() > 2)
+				{
+					layerObject = (JSONObject)layerArray.get(2);
+					tileData = (JSONArray)layerObject.get("data");
 
+					for (int i = 0; i < mapHeight; i++)
+					{
+						for (int j = 0; j < mapWidth; j++)
+						{
+							int tileYIndex = mapHeight - i - 1;
+							dataString = tileData.get(i * mapWidth + j).toString();
+							if (layerThreeSwitch(dataString) != null)
+							{
+								world.addEntity(layerThreeSwitch(dataString)).setRotation(((float)Math.PI / 2));
+							}
+						}
+					}
+				}
 			}
 
 			world.setMapTiles(mapTiles);
@@ -183,7 +201,7 @@ public class Parser
 			return Rubble.class;
 
 		default:
-			throw new InvalidMapException("Invalid terrain type within map file");
+			throw new InvalidMapException("Invalid or missing terrain tile within map file");
 		}
 	}
 
@@ -215,17 +233,33 @@ public class Parser
 
 		case "12":
 			return Base.class;
-
-		/*
-		 * case "13": 
-		 * return PlayerSpawn.class;
-		 */
+			
+		 case "13": 
+			 return Spawn.class;
 			
 		case "0":
 			return null;
 
 		default:
-			throw new InvalidMapException("Invalid terrain type within map file");
+			throw new InvalidMapException("Invalid Stationary Element type within map file");
 		}
+	}
+	
+	private static Class<Spawn> layerThreeSwitch(String input) throws InvalidMapException
+	{
+		
+		switch (input)
+		{
+		case "13":
+			return Spawn.class;
+					
+		case "0":
+			return null;
+			
+		default:
+			System.out.println(input);
+			throw new InvalidMapException("Invalid tile in Spawn Layer");
+		}
+				
 	}
 }
