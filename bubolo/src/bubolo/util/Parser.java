@@ -147,7 +147,6 @@ public class Parser
 					{
 						for (int j = 0; j < mapWidth; j++)
 						{
-							int tileYIndex = mapHeight - i - 1;
 							dataString = tileData.get(i * mapWidth + j).toString();
 							if (layerThreeSwitch(dataString) != null)
 							{
@@ -245,6 +244,12 @@ public class Parser
 		}
 	}
 	
+	/**
+	 * Switch case for spawn layer of the map
+	 * @param input a string to parse against
+	 * @return either a Spawn class or null 
+	 * @throws InvalidMapException thrown if the map contains an error in layer three
+	 */
 	private static Class<Spawn> layerThreeSwitch(String input) throws InvalidMapException
 	{
 		
