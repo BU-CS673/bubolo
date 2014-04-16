@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.badlogic.gdx.math.Intersector;
@@ -60,7 +61,10 @@ public class Tank extends Actor implements Damageable
 
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
-
+	
+	// Boolean for whether this tank is currently alive
+	private boolean isAlive = true;
+	
 	//Minimum amount of time between laying mines.
 	private static final long mineReLoadSpeed = 500;
 	
@@ -129,6 +133,7 @@ public class Tank extends Actor implements Damageable
 
 	private int pillboxCount;
 
+	private Random randomGenerator = new Random();
 	/**
 	 * Constructor for the Tank object
 	 */
@@ -497,6 +502,10 @@ public class Tank extends Actor implements Damageable
 	@Override
 	public void update(World world)
 	{
+		if(!isAlive)
+		{
+			reSpawn(world);
+		}
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
@@ -744,8 +753,11 @@ public class Tank extends Actor implements Damageable
 	@Override
 	public void takeHit(int damagePoints)
 	{
-
 		hitPoints -= Math.abs(damagePoints);
+		if(this.hitPoints <=0)
+		{
+			this.isAlive = false;
+		}
 		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
 
@@ -907,5 +919,18 @@ public class Tank extends Actor implements Damageable
 		{
 			return null;
 		}
+	}
+	
+	private void reSpawn(World world)
+	{
+		
+		List<Entity> spawns = world.getSpawns();
+		if(spawns.size() > 0)
+		{
+			Entity spawn = spawns.get(randomGenerator.nextInt(spawns.size()));
+			this.setParams(spawn.getX(), spawn.getY(), 0);
+		}
+		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.isAlive = true;
 	}
 }
