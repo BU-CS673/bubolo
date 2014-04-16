@@ -5,6 +5,7 @@ import java.util.Map;
 
 import bubolo.controllers.ai.AIPillboxController;
 import bubolo.controllers.input.KeyboardTankController;
+import bubolo.util.Nullable;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
@@ -52,7 +53,7 @@ public class Controllers
 	 * @param factory
 	 *            reference to a controller factory, or null if the default behavior should be used.
 	 */
-	public void createController(Entity entity, ControllerFactory factory)
+	public void createController(Entity entity, @Nullable ControllerFactory factory)
 	{
 		ControllerFactory controllerFactory = factory;
 		if (controllerFactory == null)

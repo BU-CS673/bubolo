@@ -11,28 +11,22 @@ import bubolo.world.World;
 
 /**
  * A tank controller for tanks controlled by network players.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class NetworkTankController implements Controller
 {
-	// TODO (cdc - 3/23/2014): Implementation is needed, and will be added in the future.
-	//	For now, this is used as a placeholder with the network system.
-	
-	//private final Tank tank;
-	
+
 	/**
 	 * Constructs a network tank controller.
 	 */
 	public NetworkTankController()
 	{
-		//this.tank = tank;
 	}
 
 	@Override
 	public void update(World world)
 	{
-		// TODO (cdc - 3/23/2014): Implement this:
-		//	- At a minimum, the tank should continue to move in the direction that it was
-		//		last moving.
+		// Do nothing. Dead reckoning is already handled by the tank's update method.
 	}
 }

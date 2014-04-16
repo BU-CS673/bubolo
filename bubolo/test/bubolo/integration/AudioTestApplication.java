@@ -4,23 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.audio.Sfx;
 import bubolo.graphics.Graphics;
-import bubolo.ui.LoadingScreen;
-import bubolo.ui.MenuScreen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
-import bubolo.world.entity.concrete.Tank;
 
 /**
  * For testing only.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class AudioTestApplication implements GameApplication
+public class AudioTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -36,24 +33,21 @@ public class AudioTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
 	
 	private long lastUpdate;
 	
-	private boolean ready;
-	
 	private int frame = 0;
-	private int MAX_FRAMES = TICKS_PER_SECOND * 15;
+	private long MAX_FRAMES = TICKS_PER_SECOND * 15;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -65,12 +59,6 @@ public class AudioTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -86,7 +74,7 @@ public class AudioTestApplication implements GameApplication
 		
 		Audio.startMusic();
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**

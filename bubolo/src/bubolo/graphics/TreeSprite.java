@@ -4,19 +4,19 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of a Tree.
  * 
  * @author BU673 - Clone Industries
  */
-class TreeSprite extends Sprite<Tree>
+class TreeSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "tree.png";
+	private static final String TEXTURE_FILE = "tree.png";
 	
 	/**
 	 * Constructor for the TreeSprite. This is Package-private because sprites should not
@@ -25,9 +25,9 @@ class TreeSprite extends Sprite<Tree>
 	 * @param tree
 	 *            Reference to the Tree that this TreeSprite represents.
 	 */
-	TreeSprite(Tree tree)
+	TreeSprite(Entity tree)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, tree);
+		super(DrawLayer.THIRD, tree);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
@@ -35,7 +35,7 @@ class TreeSprite extends Sprite<Tree>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

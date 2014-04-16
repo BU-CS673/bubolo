@@ -1,12 +1,15 @@
 package bubolo.integration;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -16,7 +19,7 @@ import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
-public class ParserTestApplication implements GameApplication
+public class ParserTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -29,24 +32,19 @@ public class ParserTestApplication implements GameApplication
 	}
 
 	private int windowWidth;
-	private int windowHeight;
+	private int windowHeight;	
 
 	private Graphics graphics;
-	private World world;
-
-	private long lastUpdate;
-
-	private boolean ready;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever
@@ -61,12 +59,6 @@ public class ParserTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -88,16 +80,18 @@ public class ParserTestApplication implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e)
 		{
 			e.printStackTrace();
+			// The test is cancelled if the map failed to load.
+			return;
 		}
 
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
 
-		ready = true;
+		setReady(true);
 	}
 
 	/**
@@ -112,13 +106,16 @@ public class ParserTestApplication implements GameApplication
 		graphics.draw(world);
 		world.update();
 
+		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
+		// the game is extremely jittery when this is used instead of calling update continuously.
+		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
+//		long currentMillis = System.currentTimeMillis();
+//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+//		{
+//			world.update();
+//			lastUpdate = currentMillis;
+//		}
 	}
 
 	/**
@@ -147,5 +144,4 @@ public class ParserTestApplication implements GameApplication
 	public void resume()
 	{
 	}
-
 }

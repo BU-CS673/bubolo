@@ -2,10 +2,10 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileUtil;
+import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
-import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.Terrain;
 
 /**
  * Craters are created when another Terrain type is blown up using a Mine. They reduce Tank movement
@@ -13,7 +13,7 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Crater extends StationaryElement implements Adaptable
+public class Crater extends Terrain implements Adaptable
 {
 	/**
 	 * Used in serialization/de-serialization.
@@ -23,10 +23,15 @@ public class Crater extends StationaryElement implements Adaptable
 	private int tilingState = 0;
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static final float MAX_SPEED_MODIFIER = 0.3F;
+	
+	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
-	private Class<?>[] matchingTypes = new Class[] { Road.class, Water.class };
+	private Class<?>[] matchingTypes = new Class[] { Crater.class, Water.class };
 
 	/**
 	 * Construct a new Crater with a random UUID.
@@ -44,7 +49,7 @@ public class Crater extends StationaryElement implements Adaptable
 	 */
 	public Crater(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -55,7 +60,7 @@ public class Crater extends StationaryElement implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			setTilingState(TileUtil.getTilingState(this.getTile(), w, matchingTypes));
 		}
 		else
 		{
@@ -80,6 +85,4 @@ public class Crater extends StationaryElement implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Crater functionality!
 }

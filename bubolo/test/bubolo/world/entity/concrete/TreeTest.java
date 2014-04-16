@@ -26,5 +26,24 @@ public class TreeTest
 	{
 		assertTrue(true);
 	}
-
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(1, tree.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(1, tree.getMaxHitPoints(), 0);
+	}
+	
+	@Test
+	public void healDamageTest()
+	{
+		tree.takeHit(1);
+		assertEquals(0, tree.getHitPoints(), 0);
+		tree.heal(1);
+		assertEquals(1, tree.getHitPoints(), 0);
+	}
 }

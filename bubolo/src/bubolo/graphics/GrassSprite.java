@@ -6,21 +6,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import bubolo.util.TextureUtil;
-import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.Entity;
 
 /**
  * The graphical representation of grass entity.
  * 
  * @author BU673 - Clone Industries
  */
-class GrassSprite extends Sprite<Grass>
+class GrassSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
 	private TextureRegion[][] frames;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "grass.png";
+	private static final String TEXTURE_FILE = "grass.png";
 
 	/**
 	 * Constructor for the GrassSprite. This is Package-private because sprites should not
@@ -29,9 +29,9 @@ class GrassSprite extends Sprite<Grass>
 	 * @param grass
 	 *            Reference to the Grass that this GrassSprite represents.
 	 */
-	GrassSprite(Grass grass)
+	GrassSprite(Entity grass)
 	{
-		super(DrawLayer.BASE_TERRAIN, grass);
+		super(DrawLayer.FIRST, grass);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, 48, 48);
@@ -40,7 +40,7 @@ class GrassSprite extends Sprite<Grass>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

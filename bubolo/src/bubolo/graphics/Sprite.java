@@ -1,51 +1,46 @@
+/**
+ * Copyright (c) 2014 BU MET CS673 Game Engineering Team
+ *
+ * See the file license.txt for copying permission.
+ */
+
 package bubolo.graphics;
 
+import bubolo.util.Coordinates;
+
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import bubolo.util.Coordinates;
-import bubolo.world.entity.Entity;
-
 /**
- * Abstract base class for sprites, which draw textures to a quad at a specific x,y location.
- * 
- * @param <T>
- *            the least derived <code>Entity</code> type that this <code>Sprite</code> needs to draw
- *            itself. For example, a very simple <code>Sprite</code>, such as
- *            <code>GrassSprite</code>, can derive from <code>Sprite{@literal <Entity>}</code>,
- *            while a more complex <code>Sprite</code>, such as <code>PillboxSprite</code>, will
- *            likely need to derive from <code>Sprite{@literal <Pillbox>}</code>.
- * 
  * @author BU CS673 - Clone Productions
  */
-abstract class Sprite<T extends Entity> implements Drawable
+abstract class Sprite implements Drawable
 {
 	// The layer that this sprite is drawn to.
 	private DrawLayer drawLayer;
 
-	// Reference to the entity that this sprite represents.
-	private T entity;
+	// The sprite's color. White draws the texture as it appears in the file.
+	private Color color;
 
 	// Ideally, these probably should not be placed into Sprite<T>.
 	private static final float SCALE_X = 1.f;
 	private static final float SCALE_Y = 1.f;
 
 	/**
-	 * Constructor for the base Sprite class.
+	 * Constructs a sprite.
 	 * 
 	 * @param layer
-	 *            the layer that the sprite is drawn to.
-	 * @param entity
-	 *            reference to the Entity that this sprite represents.
+	 *            the sprite's draw layer.
 	 */
-	Sprite(DrawLayer layer, T entity)
+	protected Sprite(DrawLayer layer)
 	{
 		this.drawLayer = layer;
-		this.entity = entity;
+		this.color = new Color(Color.WHITE);
 	}
 
 	/**
@@ -53,60 +48,39 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * 
 	 * @return the sprite's draw layer.
 	 */
-	protected DrawLayer getDrawLayer()
+	protected final DrawLayer getDrawLayer()
 	{
 		return drawLayer;
 	}
 
 	/**
-	 * Returns the entity that this sprite represents.
+	 * Gets the sprite's color. Sprites are white by default, which means that they draw the texture
+	 * without changes.
 	 * 
-	 * @return the entity that this sprite represents.
+	 * @return the sprite's color.
 	 */
-	protected T getEntity()
+	protected final Color getColor()
 	{
-		return entity;
+		return color;
 	}
 
 	/**
-	 * Returns true if the underlying entity is destroyed, or false otherwise.
+	 * Sets the sprite's color. The color can be used to tint the texture image. White causes the
+	 * texture image to be drawn without changes.
 	 * 
-	 * @return true if the underlying entity is destroyed, or false otherwise.
+	 * @param color the sprite's new color.
 	 */
-	protected boolean isEntityDisposed()
+	protected final void setColor(Color color)
 	{
-		return entity.isDisposed();
+		this.color = new Color(color);
 	}
 
-	@Override
-	public float getX()
-	{
-		return entity.getX();
-	}
-
-	@Override
-	public float getY()
-	{
-		return entity.getY();
-	}
-
-	@Override
-	public int getWidth()
-	{
-		return entity.getWidth();
-	}
-
-	@Override
-	public int getHeight()
-	{
-		return entity.getHeight();
-	}
-
-	@Override
-	public float getRotation()
-	{
-		return entity.getRotation();
-	}
+	/**
+	 * Returns true if the sprite should be removed, or false otherwise.
+	 * 
+	 * @return true if the sprite should be removed, or false otherwise.
+	 */
+	protected abstract boolean isDisposed();
 
 	/**
 	 * Draws the sprite to the screen.
@@ -136,16 +110,17 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * @param texture
 	 *            The texture to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
+	protected final void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer, Texture texture)
 	{
 		if (layer == getDrawLayer())
 		{
-			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera, new Vector2(getEntity()
-					.getX() - (texture.getWidth() / 2), getEntity().getY()
-					- (texture.getHeight() / 2)));
+			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
+					new Vector2(getX() - (texture.getWidth() / 2),
+							getY() - (texture.getHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getWidth(), texture.getHeight());
 
+			batch.setColor(color);
 			batch.draw(
 					texture,
 					cameraCoordinates.x,
@@ -156,7 +131,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)),
+					(float)(MathUtils.radiansToDegrees * (getRotation() - Math.PI / 2.f)),
 					0, 0, texture.getWidth(), texture.getHeight(), false, false);
 		}
 	}
@@ -175,17 +150,18 @@ abstract class Sprite<T extends Entity> implements Drawable
 	 * @param texture
 	 *            The texture region to draw.
 	 */
-	protected void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
+	protected final void drawTexture(SpriteBatch batch, Camera camera, DrawLayer layer,
 			TextureRegion texture)
 	{
 		if (layer == getDrawLayer())
 		{
 			Vector2 cameraCoordinates = Coordinates.worldToCamera(camera,
-					new Vector2(getEntity().getX() - (texture.getRegionWidth() / 2), getEntity()
-							.getY() - (texture.getRegionHeight() / 2)));
+					new Vector2(getX() - (texture.getRegionWidth() / 2),
+							getY() - (texture.getRegionHeight() / 2)));
 
 			Vector2 origin = getOrigin(texture.getRegionWidth(), texture.getRegionHeight());
 
+			batch.setColor(color);
 			batch.draw(
 					texture,
 					cameraCoordinates.x,
@@ -196,7 +172,7 @@ abstract class Sprite<T extends Entity> implements Drawable
 					texture.getRegionHeight(),
 					SCALE_X,
 					SCALE_Y,
-					(float)(MathUtils.radiansToDegrees * (getEntity().getRotation() - Math.PI / 2.f)));
+					(float)(MathUtils.radiansToDegrees * (getRotation() - Math.PI / 2.f)));
 		}
 
 	}

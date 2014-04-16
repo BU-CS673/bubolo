@@ -12,13 +12,13 @@ import bubolo.world.entity.concrete.DeepWater;
  * 
  * @author BU673 - Clone Industries
  */
-class DeepWaterSprite extends Sprite<DeepWater>
+class DeepWaterSprite extends AbstractEntitySprite<DeepWater>
 {
 	// list of texture regions, used for different tiling states
 	private TextureRegion[] frames;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "deepwater.png";
+	private static final String TEXTURE_FILE = "deepwater.png";
 
 	/**
 	 * Constructor for the DeepWaterSprite. This is Package-private because sprites should not be
@@ -29,7 +29,7 @@ class DeepWaterSprite extends Sprite<DeepWater>
 	 */
 	DeepWaterSprite(DeepWater deepWater)
 	{
-		super(DrawLayer.TERRAIN, deepWater);
+		super(DrawLayer.SECOND, deepWater);
 		frames = TextureUtil.adaptiveSplit_water((Graphics.getTexture(Graphics.TEXTURE_PATH
 				+ TEXTURE_FILE)));
 	}
@@ -40,7 +40,7 @@ class DeepWaterSprite extends Sprite<DeepWater>
 
 		int currentState = this.getEntity().getTilingState();
 
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
@@ -99,8 +99,6 @@ class DeepWaterSprite extends Sprite<DeepWater>
 			{
 				drawTexture(batch, camera, layer, frames[19]);
 			}
-
 		}
-
 	}
 }

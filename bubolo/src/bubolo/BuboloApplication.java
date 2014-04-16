@@ -1,35 +1,30 @@
 package bubolo;
 
+import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.world.GameWorld;
-import bubolo.world.World;
 
 /**
  * The Game: this is where the subsystems are initialized, as well as where
  * the main game loop is. 
  * @author BU CS673 - Clone Productions
  */
-public class BuboloApplication implements GameApplication
+public class BuboloApplication extends AbstractGameApplication
 {
 	private int windowWidth;
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -41,12 +36,6 @@ public class BuboloApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -63,8 +52,7 @@ public class BuboloApplication implements GameApplication
 		world = new GameWorld(500, 500);
 		
 		// TODO: add other systems here.
-		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -74,30 +62,8 @@ public class BuboloApplication implements GameApplication
 	@Override
 	public void render()
 	{
-		long startMillis = System.currentTimeMillis();
-		
 		graphics.draw(world);
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
-		
-		long millisUntilNextUpdate = System.currentTimeMillis() - startMillis - Graphics.MILLIS_PER_TICK;
-		if (millisUntilNextUpdate > 0)
-		{
-			try
-			{
-				Thread.sleep(millisUntilNextUpdate);
-			}
-			catch (InterruptedException e)
-			{
-				// TODO: does this need to be handled?
-			}
-		}
+		world.update();
 	}
 	
 	/**
@@ -107,20 +73,6 @@ public class BuboloApplication implements GameApplication
 	@Override
 	public void dispose()
 	{
-	}
-
-	@Override
-	public void pause()
-	{
-	}
-
-	@Override
-	public void resize(int width, int height)
-	{
-	}
-
-	@Override
-	public void resume()
-	{
+		Audio.dispose();
 	}
 }

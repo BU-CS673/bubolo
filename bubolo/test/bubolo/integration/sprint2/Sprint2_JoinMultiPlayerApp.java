@@ -1,14 +1,14 @@
 package bubolo.integration.sprint2;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -18,13 +18,10 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
 import bubolo.util.Parser;
-import bubolo.world.GameWorld;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -42,14 +39,14 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 		InetAddress address = Inet4Address.getByName(addressString);
 
 		Network net = NetworkSystem.getInstance();
-		net.connect(address);
+		net.connect(address, "Client");
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Client Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600, address), cfg);
+		new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600), cfg);
 	}
 
 	private int windowWidth;
@@ -62,8 +59,7 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	private long lastUpdate;
 
 	private boolean ready;
-
-	private InetAddress serverAddress;
+	
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -83,15 +79,11 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	 *            the width of the window.
 	 * @param windowHeight
 	 *            the height of the window.
-	 * @param serverAddress
-	 *            the server's ip address.
 	 */
-	public Sprint2_JoinMultiPlayerApp(int windowWidth, int windowHeight, InetAddress serverAddress)
+	public Sprint2_JoinMultiPlayerApp(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-
-		this.serverAddress = serverAddress;
 	}
 
 	@Override
@@ -120,12 +112,17 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		while (!isGameStarted())
+		{
+			network.update(world);
+		}
+		
 		Tank tank = world.addEntity(Tank.class);
 		tank.setParams(1250, 100, 0);
 		tank.setLocalPlayer(true);
@@ -182,5 +179,11 @@ public class Sprint2_JoinMultiPlayerApp implements GameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return world.getMapTiles() != null;
 	}
 }
