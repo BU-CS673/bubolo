@@ -14,7 +14,6 @@ import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 import bubolo.world.entity.Terrain;
-import bubolo.world.entity.concrete.MineExplosion;
 
 /**
  * This utility provides various functions for working with Tile objects based on their

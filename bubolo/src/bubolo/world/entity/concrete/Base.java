@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.entity.StationaryElement;
 
@@ -11,7 +12,7 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Base extends StationaryElement implements Ownable
+public class Base extends StationaryElement implements Ownable, Damageable
 {
 	/**
 	 * Used in serialization/de-serialization.
@@ -35,6 +36,13 @@ public class Base extends StationaryElement implements Ownable
 	private boolean isCharging = false;
 
 	/**
+	 * The current number of hit points of the base.
+	 */
+	private int hitPoints;
+	
+	private static final int MAX_HIT_POINTS = 100;
+	
+	/**
 	 * Construct a new Base with a random UUID.
 	 */
 	public Base()
@@ -54,6 +62,7 @@ public class Base extends StationaryElement implements Ownable
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override
@@ -100,5 +109,60 @@ public class Base extends StationaryElement implements Ownable
 	public void setCharging(boolean charge)
 	{
 		isCharging = charge;
+	}
+
+	/**
+	 * Returns the current health of the base
+	 * 
+	 * @return current hit point count
+	 */
+	@Override
+	public int getHitPoints() 
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return MAX_HIT_POINTS;
+	}
+	
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the base has taken
+	 */
+	@Override
+	public void takeHit(int damagePoints) 
+	{
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events
+		
+	}
+
+	/**
+	 * Increments the base's health by a given amount
+	 * 
+	 * @param healPoints - how many points the base is given
+	 */
+	@Override
+	public void heal(int healPoints) 
+	{
+		if (hitPoints + Math.abs(healPoints) < MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = MAX_HIT_POINTS;
+		}		
+		
 	}
 }

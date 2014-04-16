@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Damageable;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -9,12 +10,22 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Tree extends StationaryElement
+public class Tree extends StationaryElement implements Damageable
 {
 	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = 4072369464678115753L;
+	
+	/**
+	 * The health of the tree
+	 */
+	private int hitPoints;
+
+	/**
+	 * The maximum amount of hit points of the tree
+	 */
+	public static final int MAX_HIT_POINTS = 1;
 
 	/**
 	 * Construct a new Tree with a random UUID.
@@ -36,5 +47,59 @@ public class Tree extends StationaryElement
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
+	}
+
+	/**
+	 * Returns the current health of the tree
+	 * 
+	 * @return current hit point count
+	 */
+	@Override
+	public int getHitPoints() 
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return MAX_HIT_POINTS;
+	}
+
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the tree has taken
+	 */
+	@Override
+	public void takeHit(int damagePoints) 
+	{
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events		
+	}
+
+	/**
+	 * Increments the pillbox's health by a given amount
+	 * 
+	 * @param healPoints - how many points the tree is given
+	 */
+	@Override
+	public void heal(int healPoints) 
+	{
+		if (hitPoints + Math.abs(healPoints) < MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = MAX_HIT_POINTS;
+		}		
 	}
 }

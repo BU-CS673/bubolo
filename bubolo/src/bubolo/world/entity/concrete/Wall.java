@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
+import bubolo.world.Damageable;
 import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
 
@@ -12,7 +13,7 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Wall extends StationaryElement implements Adaptable
+public class Wall extends StationaryElement implements Adaptable, Damageable
 {
 	/**
 	 * Used in serialization/de-serialization.
@@ -20,6 +21,16 @@ public class Wall extends StationaryElement implements Adaptable
 	private static final long serialVersionUID = -4591161497141031916L;
 
 	private int tilingState = 0;
+	
+	/**
+	 * The health of the tree
+	 */
+	private int hitPoints;
+
+	/**
+	 * The maximum amount of hit points of the tree
+	 */
+	public static final int MAX_HIT_POINTS = 100;
 
 	/**
 	 * Intended to be generic -- this is a list of all of the StationaryEntities classes that should
@@ -48,6 +59,7 @@ public class Wall extends StationaryElement implements Adaptable
 		setHeight(30);
 		updateBounds();
 		setSolid(true);
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override
@@ -80,5 +92,58 @@ public class Wall extends StationaryElement implements Adaptable
 	public void setTilingState(int newState)
 	{
 		tilingState = newState;
+	}
+
+	/**
+	 * Returns the current health of the wall
+	 * 
+	 * @return current hit point count
+	 */
+	@Override
+	public int getHitPoints() 
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return MAX_HIT_POINTS;
+	}
+
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the wall has taken
+	 */
+	@Override
+	public void takeHit(int damagePoints) 
+	{
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events		
+	}
+
+	/**
+	 * Increments the pillbox's health by a given amount
+	 * 
+	 * @param healPoints - how many points the wall is given
+	 */
+	@Override
+	public void heal(int healPoints) 
+	{
+		if (hitPoints + Math.abs(healPoints) < MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = MAX_HIT_POINTS;
+		}		
 	}
 }
