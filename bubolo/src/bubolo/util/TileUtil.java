@@ -360,4 +360,23 @@ public abstract class TileUtil
 			return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
 		}
 	}
+	
+	/**
+	 * returns the closest tile to an entity
+	 * 
+	 * @param entity
+	 * 		the entity to check for tile
+	 * @param world
+	 * 		reference to the game world
+	 * @return Tile
+	 * 		the tile that is closest to given entity
+	 * 		
+	 */
+	public static Tile getEntityTile(Entity entity, World world)
+	{
+		Tile[][] tiles = world.getMapTiles();
+		int tileX = TileUtil.getClosestTileX(entity.getX());
+		int tileY = TileUtil.getClosestTileY(entity.getY());
+		return tiles[tileX][tileY];
+	}
 }

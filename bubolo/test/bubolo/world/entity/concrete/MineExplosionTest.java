@@ -31,20 +31,6 @@ public class MineExplosionTest
 	}
 	
 	@Test
-	public void isFinnished()
-	{
-		exp.setFinished(true);
-		assertEquals(true, exp.isFinished());
-	}
-	
-	@Test
-	public void setFinnished()
-	{
-		exp.setFinished(true);
-		assertEquals(true, exp.isFinished());
-	}
-	
-	@Test
 	public void update()
 	{
 		exp.update(mock(World.class));

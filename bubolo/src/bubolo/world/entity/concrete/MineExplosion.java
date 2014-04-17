@@ -26,9 +26,16 @@ public class MineExplosion extends Effect
 	 */
 	private static final int DAMAGE_DONE = 10;
 	
-	//set to true when animation complete
-	private boolean finished = false;
-
+	/**
+	 * length of explosion in milliseconds
+	 */
+	private static final long EXPLOSION_LENGTH = 500;
+	
+	/**
+	 * time the explosion started
+	 */
+	private long explosionStart;
+	
 	/**
 	 * Construct a new MineExplosion with a random UUID.
 	 */
@@ -48,47 +55,39 @@ public class MineExplosion extends Effect
 		super(id);
 		setWidth(60);
 		setHeight(60);
+		explosionStart = System.currentTimeMillis();
 		updateBounds();
 	}
 	/**
-	 * returns whether or not the explosion animation has completed
+	 * returns the length of the explosion in millisends
 	 * 
 	 * @return
 	 * 		returns true if the animation has completed
 	 */
 	
-	public boolean isFinished()
+	public long getExplosionLength()
 	{
-		return finished;
+		return this.EXPLOSION_LENGTH;
 	}
 	
-	/**
-	 * sets whether or not the explosion animation has completed
-	 * 
-	 * @param finished
-	 * 		boolean whether or not the explosion animation has completed
-	 */
-	
-	public void setFinished(boolean finished)
-	{
-		this.finished = finished;
-	}
 	
 	@Override
 	public void update(World world)
 	{
-		if(!this.finished)
+		if((this.EXPLOSION_LENGTH + this.explosionStart) > System.currentTimeMillis())
 		{
 			for(Entity collider:TileUtil.getLocalCollisions(this, world))
 			{
 				if (collider instanceof Damageable)
 				{
-					//((Damageable) collider).takeHit(DAMAGE_DONE);
-					
 					Damageable damageableCollider = (Damageable)collider;
 					damageableCollider.takeHit(DAMAGE_DONE);
 				}
 			}
+		}
+		else
+		{
+			this.dispose();
 		}
 	}
 }

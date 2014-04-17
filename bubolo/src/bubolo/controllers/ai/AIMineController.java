@@ -40,10 +40,15 @@ public class AIMineController implements Controller
 			{
 				if (Intersector.overlapConvexPolygons(collider.getBounds(), mine.getBounds()))
 				{
-					MineExplosion mineExplosion = world.addEntity(MineExplosion.class);
-					mineExplosion.setParams(mine.getX(), mine.getY(), 0);
-					mine.dispose();
-					return;
+					if(mine.isActive())
+					{
+						MineExplosion mineExplosion = world.addEntity(MineExplosion.class);
+						mineExplosion.setParams(mine.getX(), mine.getY(), 0);
+						
+						TileUtil.getEntityTile(mine, world).clearElement();
+						mine.dispose();
+						return;	
+					}
 				}
 			}
 		}
