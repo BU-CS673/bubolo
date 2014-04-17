@@ -40,7 +40,7 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.splitFrames(image, 48, 48);
 		Random rand = new Random();
-		rotation = (float) (rand.nextInt(4) * (3.141/2));
+		rotation = (float) (rand.nextInt(4) * (Math.PI/2));
 	}
 
 	@Override

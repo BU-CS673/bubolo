@@ -184,7 +184,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	 * The current amount of ammo at the base
 	 * @return the current amount of ammo
 	 */
-	public int getAmmoCount() {
+	public int getAmmoCount() 
+	{
 		return ammoCount;
 	}
 	
@@ -193,7 +194,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	 * The maximum amount of ammo a base can have
 	 * @return the maximum amount of ammo storage at a base
 	 */
-	public static int getMaxAmmoCount() {
+	public static int getMaxAmmoCount() 
+	{
 		return MAX_AMMO_COUNT;
 	}
 
@@ -234,7 +236,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	 * The current number of mines at a base
 	 * @return the current number of mines
 	 */
-	public int getMineCount() {
+	public int getMineCount() 
+	{
 		return mineCount;
 	}
 	
@@ -242,7 +245,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	 * The maximum number of mines a base can have
 	 * @return the maximum storage for mines at a base
 	 */
-	public static int getMaxMineCount() {
+	public static int getMaxMineCount() 
+	{
 		return MAX_MINE_COUNT;
 	}
 	
