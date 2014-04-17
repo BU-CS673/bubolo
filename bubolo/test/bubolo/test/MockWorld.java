@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.MockEntity;
 
 /**
  * Mock class used for testing components that need a world implementation
- * (Which is not available at the time that this was implemented).
+ * (Which was not available at the time that this was implemented).
  * @author BU CS673 - Clone Productions
  */
 public class MockWorld implements World
@@ -23,6 +23,10 @@ public class MockWorld implements World
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
 	
+	/**
+	 * Adds the entity to the MockWorld.
+	 * @param e the entity to add.
+	 */
 	public void add(Entity e)
 	{
 		entities.add(e);
@@ -111,8 +115,7 @@ public class MockWorld implements World
 	@Override
 	public void setMapTiles(Tile[][] mapTiles)
 	{
-		// do nothing
-		
+		// do nothing	
 	}
 	
 	@Override
@@ -139,20 +142,26 @@ public class MockWorld implements World
 	@Override
 	public void setMapHeight(int height)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setMapWidth(int width)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public List<Entity> getSpawns() {
 		// do nothing
 		return null;
+	}
+
+	@Override
+	public void addController(Class<? extends Controller> controllerType)
+	{	
+	}
+
+	@Override
+	public void removeController(Class<? extends Controller> controllerType)
+	{
 	}
 }

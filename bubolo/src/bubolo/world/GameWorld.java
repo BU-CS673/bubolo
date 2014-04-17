@@ -37,16 +37,17 @@ public class GameWorld implements World
 	// The list of entities to remove. The entities array can't be modified while it
 	// is being iterated over.
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
+
 	// The list of entities to add. The entities array can't be modified while it is
 	// being iterated over.
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
 
 	// the list of Tanks that exist in the world
 	private List<Entity> tanks = new ArrayList<Entity>();
-	
-	//list of world controllers
-	private List<Controller> worldControllers  = new ArrayList<Controller>();
-	
+
+	// list of world controllers
+	private List<Controller> worldControllers = new ArrayList<Controller>();
+
 	// the list of all Effects that currently exist in the world
 	private List<Entity> effects = new ArrayList<Entity>();
 
@@ -55,7 +56,7 @@ public class GameWorld implements World
 
 	// the list of all Spawn Locations currently in the world
 	private List<Entity> spawns = new ArrayList<Entity>();
-	
+
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -71,9 +72,8 @@ public class GameWorld implements World
 	{
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
-		
-		worldControllers.add(new AITreeController());
 
+		addController(AITreeController.class);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class GameWorld implements World
 		{
 			actors.add(entity);
 		}
-		
+
 		if (entity instanceof Spawn)
 		{
 			spawns.add(entity);
@@ -208,7 +208,7 @@ public class GameWorld implements World
 		{
 			effects.remove(e);
 		}
-		
+
 		if (e instanceof Spawn)
 		{
 			spawns.remove(e);
@@ -260,7 +260,6 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
-
 		// Update all world controllers
 		for (Controller c : worldControllers)
 		{
@@ -295,11 +294,45 @@ public class GameWorld implements World
 		List<Entity> copyOfTanks = Collections.unmodifiableList(tanks);
 		return copyOfTanks;
 	}
-	
+
 	@Override
 	public List<Entity> getSpawns()
 	{
 		List<Entity> copyOfSpawns = Collections.unmodifiableList(spawns);
 		return copyOfSpawns;
+	}
+	
+	@Override
+	public void addController(Class<? extends Controller> controllerType)
+	{
+		for (Controller c : worldControllers)
+		{
+			if (c.getClass() == controllerType)
+			{
+				return;
+			}
+		}
+		
+		try
+		{
+			worldControllers.add(controllerType.newInstance());
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			throw new GameLogicException(e);
+		}
+	}
+	
+	@Override
+	public void removeController(Class<? extends Controller> controllerType)
+	{
+		for (Controller c : worldControllers)
+		{
+			if (c.getClass() == controllerType)
+			{
+				worldControllers.remove(c);
+				return;
+			}
+		}
 	}
 }

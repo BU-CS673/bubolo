@@ -114,7 +114,7 @@ class Server implements NetworkSubsystem
 		gameStarted.set(true);
 		clientAcceptor.interrupt();
 
-		StartGame startGameCommand = new StartGame(new SendMap(world));
+		StartGame startGameCommand = new StartGame(3, new SendMap(world));
 		send(startGameCommand);
 	}
 
