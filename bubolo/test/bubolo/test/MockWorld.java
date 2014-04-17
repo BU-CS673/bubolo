@@ -22,6 +22,7 @@ public class MockWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	private Tile[][] mapTiles;
 	
 	public void add(Entity e)
 	{
@@ -109,16 +110,15 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public void setMapTiles(Tile[][] mapTiles)
+	public void setMapTiles(Tile[][] givenTiles)
 	{
-		// do nothing
-		
+		// do nothing		
 	}
 	
 	@Override
 	public Tile[][] getMapTiles()
 	{
-		// do nothing
+		//do nothing
 		return null;
 	}
 
@@ -151,8 +151,10 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public List<Entity> getSpawns() {
+	public List<Entity> getSpawns() 
+	{
 		// do nothing
 		return null;
 	}
+	
 }

@@ -66,7 +66,7 @@ public class Tank extends Actor implements Damageable
 	private boolean isAlive = true;
 	
 	//Minimum amount of time between laying mines.
-	private static final long mineReLoadSpeed = 500;
+	private static final long MINE_RELOAD_SPEED = 500;
 	
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
@@ -860,7 +860,7 @@ public class Tank extends Actor implements Damageable
 		int XTileCoord = (int) startX / 32;
 		int YTileCoord = (int) startY / 32;
 		
-		if(System.currentTimeMillis() - mineLayingTime < mineReLoadSpeed)
+		if(System.currentTimeMillis() - mineLayingTime < MINE_RELOAD_SPEED)
 		{
 			return null;
 		}
@@ -905,6 +905,9 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Pillbox dropPillbox(World world, int startX, int startY)
 	{
+		
+		//TODO: Once Engineer functionality is created this code will need to be moved to the engineer
+		//and replaced with sending the engineer out to drop the Pillbox 
 		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
 		{
 			Pillbox pillbox = world.addEntity(Pillbox.class);
