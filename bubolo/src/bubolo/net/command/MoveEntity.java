@@ -51,10 +51,7 @@ public class MoveEntity implements NetworkCommand
 		try
 		{
 			Entity entity = world.getEntity(id);
-			if (entity != null)
-			{
-				entity.setX(x).setY(y).setRotation(rotation);
-			}
+			entity.setX(x).setY(y).setRotation(rotation);
 		}
 		catch (GameLogicException e)
 		{

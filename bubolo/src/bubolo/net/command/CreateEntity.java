@@ -100,10 +100,7 @@ public class CreateEntity implements NetworkCommand
 				entity = world.addEntity(type, id, factory);
 			}
 			
-			if (entity != null)
-			{
-				entity.setX(x).setY(y).setRotation(rotation);
-			}
+			entity.setX(x).setY(y).setRotation(rotation);
 		}
 		catch (GameLogicException e)
 		{

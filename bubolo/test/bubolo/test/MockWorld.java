@@ -71,71 +71,72 @@ public class MockWorld implements World
 	@Override
 	public void update()
 	{
-		// do nothing...
+		// do nothing.
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, null, null);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, id, null);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, null, controllerFactory);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// do nothing
-		return null;
+		T entity = null;
+		try
+		{
+			entity = c.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			throw new GameLogicException(e);
+		}
+		entity.setId(id);
+		return entity;
 	}
 
 	@Override
 
 	public List<Entity> getTanks() 
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
 	public void setMapTiles(Tile[][] mapTiles)
 	{
-		// do nothing	
 	}
 	
 	@Override
 	public Tile[][] getMapTiles()
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
 	public List<Entity> getActors()
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
 	public List<Entity> getEffects()
 	{
-		// do nothing
 		return null;
 	}
 
