@@ -1,9 +1,10 @@
-package bubolo.controllers;
+package bubolo.controllers.ai;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import bubolo.controllers.Controller;
 import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.GameWorld;

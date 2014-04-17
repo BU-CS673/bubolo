@@ -10,7 +10,10 @@ import org.junit.Test;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.concrete.Wall;
 import bubolo.world.entity.concrete.Water;
 
 /**
@@ -20,6 +23,7 @@ public class TileUtilTest
 {
 	static GameWorld world;
 	static Tile[][] tiles;
+	static Tank tank;
 
 	@BeforeClass
 	public static void setup()
@@ -31,6 +35,9 @@ public class TileUtilTest
 		tiles[1][0] = new Tile(1, 0, new Grass());
 		tiles[1][1] = new Tile(0, 1, new Water());
 		world.setMapTiles(tiles);
+		tank = world.addEntity(Tank.class);
+		tank.setParams(16, 16, 0);
+		tiles[0][0].setElement(new Wall());
 	}
 	
 	@Test
@@ -79,6 +86,18 @@ public class TileUtilTest
 		assertEquals("Returned incorrect tile index for x float value.", 0, i);
 		assertEquals("Returned incorrect tile index for x float value.", 1, j);
 
+	}
+	
+	@Test
+	public void getLocalCollisions(){
+		List l = TileUtil.getLocalEntities(0, 0, world);
+		assertEquals("List of local Entities does not contain correct objects!", true,  l.contains(tiles[0][0].getTerrain()));
+		l = TileUtil.getLocalEntities(3*32f + 16f, 3*32f + 16f, world);
+		assertEquals("List of local Entities does not contain correct objects!", true,  l.contains(tiles[1][1].getTerrain()));
+		assertEquals("List of local Entities contains incorrect objects!", false,  l.contains(tiles[0][0].getTerrain()));
+		
+		List c = TileUtil.getLocalCollisions(tank, world);
+		assertEquals("List of local collisions does not contain correct objects", true, c.contains(tiles[0][0].getElement()));
 	}
 
 }
