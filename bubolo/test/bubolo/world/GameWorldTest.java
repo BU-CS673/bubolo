@@ -23,6 +23,7 @@ import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
@@ -70,6 +71,18 @@ public class GameWorldTest
 		w.removeEntity(t);
 		l = w.getTanks();
 		assertEquals("List contains the target tank after it was removed!", false, l.contains(t));
+	}
+	
+	@Test
+	public void getSpawns()
+	{
+		World w= new GameWorld(500, 500);
+		Spawn s = w.addEntity(Spawn.class);
+		List l = w.getSpawns();
+		assertEquals("List does not contain the target Spawn!", true, l.contains(s));
+		w.removeEntity(s);
+		l = w.getSpawns();
+		assertEquals("List contains the target tank after it was removed!", false, l.contains(s));
 	}
 
 	@Test

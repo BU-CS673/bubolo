@@ -17,6 +17,7 @@ import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
@@ -269,8 +270,16 @@ public class Sprites
 			{
 				return new WaterSprite((Water) e);
 			}
+			
 		});
 
+		factories.put(Spawn.class, new SpriteFactory() {
+			@Override
+			public Sprite create(Entity e)
+			{
+				return new SpawnSprite(e);
+			}
+		});
 		return factories;
 	}
 }

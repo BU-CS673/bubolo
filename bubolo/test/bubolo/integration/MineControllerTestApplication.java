@@ -1,5 +1,11 @@
 package bubolo.integration;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import org.json.simple.parser.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -9,41 +15,34 @@ import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
-import bubolo.world.Tile;
 import bubolo.world.World;
-import bubolo.world.entity.concrete.Base;
-import bubolo.world.entity.concrete.Bullet;
-import bubolo.world.entity.concrete.Crater;
-import bubolo.world.entity.concrete.DeepWater;
-import bubolo.world.entity.concrete.Engineer;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryElement;
+import bubolo.world.entity.StationaryEntity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.MineExplosion;
 import bubolo.world.entity.concrete.Pillbox;
-import bubolo.world.entity.concrete.Road;
-import bubolo.world.entity.concrete.Rubble;
-import bubolo.world.entity.concrete.Swamp;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
-import bubolo.world.entity.concrete.Tree;
-import bubolo.world.entity.concrete.Wall;
-import bubolo.world.entity.concrete.Water;
 
 /**
  * For testing only.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class GraphicsTestApplication extends AbstractGameApplication
+public class MineControllerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Tank Controller Integration";
+		cfg.title = "BUBOLO Mine Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
 		cfg.useGL20 = true;
-		new LwjglApplication(new GraphicsTestApplication(1067, 600), cfg);
+		new LwjglApplication(new MineControllerTestApplication(1067, 600), cfg);
 	}
 	
 	private int windowWidth;
@@ -67,7 +66,7 @@ public class GraphicsTestApplication extends AbstractGameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public GraphicsTestApplication(int windowWidth, int windowHeight)
+	public MineControllerTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
@@ -84,44 +83,28 @@ public class GraphicsTestApplication extends AbstractGameApplication
 		net.startDebug();
 		
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(50*32, 50*32);
-		
-		Tile[][] mapTiles = new Tile[50][50];
-		
-		for (int row = 0; row < 50; row++)
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/TankSpeedTest.json");
+		try
 		{
-			for (int column = 0; column < 50; column++)
-			{
-				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
-				mapTiles[column][row] = new Tile(column, row, grass);
-				
-			}
+			world = fileParser.parseMap(path);
+		}
+		catch (ParseException | IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		world.setMapTiles(mapTiles);
+		Tank tank = world.addEntity(Tank.class);
+		tank.setParams(100, 100, 0);
+		tank.setLocalPlayer(true);
+		//StationaryElement pillbox = (StationaryElement)world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
+		//world.getMapTiles()[9-1][9-1].setElement(pillbox);
+		world.addEntity(Mine.class).setParams(32*18, 32*6, 0);
+		world.addEntity(Mine.class).setParams(32*18, 32*12, 0);
+		world.addEntity(Mine.class).setParams(32*9, 32*12, 0);
 		
-		// TODO: Adjust as needed.
-		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);
-		t.setLocalPlayer(true);
-		world.addEntity(Base.class).setParams(32*6, 32*4, 0);
-		world.addEntity(Bullet.class).setParams(32*7, 32*4, 90);
-		world.addEntity(Crater.class).setParams(32*8, 32*5, 0);
-		world.addEntity(DeepWater.class).setParams(32*7, 32*6, 0);
-		world.addEntity(Engineer.class).setParams(32*8, 32*6, 0);
-		world.addEntity(Mine.class).setParams(32*8, 32*7, 0);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
-		world.addEntity(MineExplosion.class).setParams(32*11, 32*11, 0);
-		
-		// 2 roads
-		world.addEntity(Road.class).setParams(32*10, 32*10, 0);
-		world.addEntity(Road.class).setParams(32*10, 32*11, 0);
-		
-		world.addEntity(Rubble.class).setParams(32*11, 32*6, 0);
-		world.addEntity(Swamp.class).setParams(32*12, 32*11, 0);
-		world.addEntity(Tree.class).setParams(32*12, 32*12, 0);
-		world.addEntity(Wall.class).setParams(32*13, 32*12, 0);
-		world.addEntity(Water.class).setParams(32*14, 32*12, 0);
+		world.addEntity(Spawn.class).setParams(100, 100, 0);
 		
 		setReady(true);
 	}
@@ -135,17 +118,6 @@ public class GraphicsTestApplication extends AbstractGameApplication
 	{
 		graphics.draw(world);
 		world.update();
-		
-		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
-		// the game is extremely jittery when this is used instead of calling update continuously.
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-//		long currentMillis = System.currentTimeMillis();
-//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-//		{
-//			world.update();
-//			lastUpdate = currentMillis;
-//		}
 	}
 	
 	/**

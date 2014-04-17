@@ -1,7 +1,5 @@
 package bubolo.graphics;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,36 +9,32 @@ import bubolo.util.TextureUtil;
 import bubolo.world.entity.Entity;
 
 /**
- * The graphical representation of grass entity.
+ * The graphical representation of Spawn entity.
  * 
  * @author BU673 - Clone Industries
  */
-class GrassSprite extends AbstractEntitySprite<Entity>
+class SpawnSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
 	private TextureRegion[][] frames;
 	
-	private float rotation;
-	
 	/** The file name of the texture. */
-	private static final String TEXTURE_FILE = "grass.png";
+	private static final String TEXTURE_FILE = "spawn.png";
 
 	/**
-	 * Constructor for the GrassSprite. This is Package-private because sprites should not
+	 * Constructor for the SpawnSprite. This is Package-private because sprites should not
 	 * be directly created outside of the graphics system.
 	 * 
-	 * @param grass
-	 *            Reference to the Grass that this GrassSprite represents.
+	 * @param spawn
+	 *            Reference to the spawn that this SpawnSprite represents.
 	 */
-	GrassSprite(Entity grass)
+	SpawnSprite(Entity spawn)
 	{
-		super(DrawLayer.FIRST, grass);
+		super(DrawLayer.SECOND, spawn);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
-		frames = TextureUtil.splitFrames(image, 48, 48);
-		Random rand = new Random();
-		rotation = (float) (rand.nextInt(4) * (Math.PI/2));
+		frames = TextureUtil.splitFrames(image, 32, 32);
 	}
 
 	@Override
@@ -55,11 +49,5 @@ class GrassSprite extends AbstractEntitySprite<Entity>
 			drawTexture(batch, camera, layer, frames[0][0]);
 
 		}
-	}
-	
-	@Override
-	public float getRotation()
-	{
-		return rotation;
 	}
 }
