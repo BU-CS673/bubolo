@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.net.NetworkCommand;
+import bubolo.util.GameLogicException;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
@@ -87,21 +88,20 @@ public class CreateEntity implements NetworkCommand
 	@Override
 	public void execute(World world)
 	{
-		Entity entity = null;
-		if (factory == null)
+		try
 		{
-			entity = world.addEntity(type, id);
-		}
-		else
-		{
-			entity = world.addEntity(type, id, factory);
-		}
-
-		if (entity != null)
-		{
+			Entity entity = null;
+			if (factory == null)
+			{
+				entity = world.addEntity(type, id);
+			}
+			else
+			{
+				entity = world.addEntity(type, id, factory);
+			}
 			entity.setX(x).setY(y).setRotation(rotation);
 		}
-		else
+		catch (GameLogicException e)
 		{
 			Logger.getGlobal().severe("CreateEntity: Entity was not created. ID: " + id);
 		}
