@@ -151,8 +151,8 @@ public class MockWorld implements World
 	}
 
 	@Override
-	public List<Entity> getSpawns() {
-		// do nothing
+	public List<Entity> getSpawns() 
+	{
 		return null;
 	}
 
@@ -164,5 +164,11 @@ public class MockWorld implements World
 	@Override
 	public void removeController(Class<? extends Controller> controllerType)
 	{
+	}
+
+	@Override
+	public int getControllerCount()
+	{
+		return 0;
 	}
 }

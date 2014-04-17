@@ -222,4 +222,10 @@ public interface World
 	 *            the type of the controller to remove.
 	 */
 	public void removeController(Class<? extends Controller> controllerType);
+	
+	/**
+	 * Returns the world controller count.
+	 * @return the world controller count.
+	 */
+	public int getControllerCount();
 }

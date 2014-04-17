@@ -335,4 +335,10 @@ public class GameWorld implements World
 			}
 		}
 	}
+	
+	@Override
+	public int getControllerCount()
+	{
+		return worldControllers.size();
+	}
 }
