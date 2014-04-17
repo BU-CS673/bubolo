@@ -834,22 +834,24 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Mine dropMine(World world, float startX, float startY)
 	{
-		int XTileCoord = (int)startX / 32;
-		int YTileCoord = (int)startY / 32;
-
-		if (System.currentTimeMillis() - mineLayingTime < mineReLoadSpeed)
+		if (System.currentTimeMillis() - mineLayingTime < mineReLoadSpeed ||
+				startX < 0 || startX > world.getMapWidth() || 
+				startY < 0 || startY > world.getMapHeight())
 		{
 			return null;
 		}
 
-		if (world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != Water.class &&
-				world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != DeepWater.class)
+		int xTileCoord = (int)startX / 32;
+		int yTileCoord = (int)startY / 32;
+		
+		if (world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != Water.class &&
+				world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != DeepWater.class)
 		{
-			if ((!world.getMapTiles()[XTileCoord][YTileCoord].hasElement()) && (mineCount > 0))
+			if ((!world.getMapTiles()[xTileCoord][yTileCoord].hasElement()) && (mineCount > 0))
 			{
 				mineLayingTime = System.currentTimeMillis();
 				Mine mine = world.addEntity(Mine.class);
-				world.getMapTiles()[XTileCoord][YTileCoord].setElement(mine);
+				world.getMapTiles()[xTileCoord][yTileCoord].setElement(mine);
 				mine.setX(startX).setY(startY);
 				mine.setRotation(getRotation());
 				mineCount--;
