@@ -50,7 +50,7 @@ public class ClientTest
 	{
 		try
 		{
-			client.connect(InetAddress.getByName("127.0.0.1"));
+			client.connect(InetAddress.getByName("127.0.0.1"), "Player 1");
 		}
 		catch (NetworkException e)
 		{

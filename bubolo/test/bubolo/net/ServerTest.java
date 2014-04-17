@@ -46,7 +46,7 @@ public class ServerTest
 	@Test
 	public void startServer()
 	{
-		server.startServer();
+		server.startServer("Server player");
 	}
 	
 	@Test

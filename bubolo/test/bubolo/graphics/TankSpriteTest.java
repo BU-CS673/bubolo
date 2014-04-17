@@ -46,7 +46,7 @@ public class TankSpriteTest
 			public void run()
 			{
 				// Fails if the constructor throws an exception.
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
+				Sprite sprite = Sprites.getInstance().createSprite(new Tank());
 				
 				passed = true;
 				isComplete = true;
@@ -72,9 +72,9 @@ public class TankSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Tank());
+				Sprite sprite = Sprites.getInstance().createSprite(new Tank());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.ACTORS);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

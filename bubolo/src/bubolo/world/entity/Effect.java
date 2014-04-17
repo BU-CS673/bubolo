@@ -43,7 +43,4 @@ public abstract class Effect extends Entity
 	{
 		// TODO Establish updating logic for Effects.
 	}
-
-	// TODO: Add Effect functionality!
-
 }

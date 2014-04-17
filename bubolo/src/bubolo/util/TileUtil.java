@@ -7,6 +7,8 @@ package bubolo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Intersector;
+
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -19,7 +21,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TileUtil
+public abstract class TileUtil
 {
 	private static final int LOCAL_TILE_DISTANCE = 2;
 
@@ -65,11 +67,41 @@ public class TileUtil
 	 * @return The y component of the grid index of the tile closest to the y coordinate
 	 *         given.
 	 */
+
 	public static int getClosestTileY(float y)
 	{
 		return (int) (y / 32);
 	}
 
+	/**
+	 * get a list of entities that are currently colliding with a given entity
+	 * 
+	 * @param entity
+	 * 			the entity to check for collisions
+	 * @param world
+	 * 			reference to the game world
+	 * @return
+	 * 			the list of entities that are colliding with the given entity
+	 */
+	public static List<Entity> getLocalCollisions(Entity entity, World world)
+	{
+		ArrayList<Entity> localCollisions = new ArrayList<Entity>();
+		getLocalEntities(entity.getX(),entity.getY(),world);
+		
+		for(Entity collider:TileUtil.getLocalEntities(entity.getX(),entity.getY(), world))
+		{
+			if (collider.isSolid() && collider != entity)
+			{
+				if (Intersector.overlapConvexPolygons(collider.getBounds(), entity.getBounds()))
+				{
+					localCollisions.add(collider);
+				}
+			}
+		}
+		
+		return localCollisions;
+	}
+	
 	/**
 	 * Get all entities are likely to overlap with Entities within the given grid
 	 * location.
@@ -181,15 +213,8 @@ public class TileUtil
 
 		Tile targetTile = w.getMapTiles()[gridX][gridY];
 
-		if (containsTargetTerrain(targetTile, targetClasses)
-				|| containsTargetElement(targetTile, targetClasses))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return (containsTargetTerrain(targetTile, targetClasses)
+				|| containsTargetElement(targetTile, targetClasses));
 	}
 
 	/**
@@ -267,44 +292,12 @@ public class TileUtil
 		int y = t.getGridY();
 		boolean[] edges = new boolean[4];
 
-		if (matchesType(x, y + 1, w, targetClasses))
-		{
-			edges[0] = true;
-		}
-		else
-		{
-			edges[0] = false;
-		}
-
-		if (matchesType(x, y - 1, w, targetClasses))
-		{
-			edges[1] = true;
-		}
-		else
-		{
-			edges[1] = false;
-		}
-
-		if (matchesType(x - 1, y, w, targetClasses))
-		{
-			edges[2] = true;
-		}
-		else
-		{
-			edges[2] = false;
-		}
-
-		if (matchesType(x + 1, y, w, targetClasses))
-		{
-			edges[3] = true;
-		}
-		else
-		{
-			edges[3] = false;
-		}
+		edges[0] = matchesType(x, y + 1, w, targetClasses);
+		edges[1] = matchesType(x, y - 1, w, targetClasses);
+		edges[2] = matchesType(x - 1, y, w, targetClasses);
+		edges[3] = matchesType(x + 1, y, w, targetClasses);
 
 		return edges;
-
 	}
 
 	/**
@@ -331,43 +324,59 @@ public class TileUtil
 		int y = t.getGridY();
 		boolean[] corners = new boolean[4];
 
-		if (matchesType(x - 1, y + 1, w, targetClasses))
-		{
-			corners[0] = true;
-		}
-		else
-		{
-			corners[0] = false;
-		}
-
-		if (matchesType(x + 1, y + 1, w, targetClasses))
-		{
-			corners[1] = true;
-		}
-		else
-		{
-			corners[1] = false;
-		}
-
-		if (matchesType(x - 1, y - 1, w, targetClasses))
-		{
-			corners[2] = true;
-		}
-		else
-		{
-			corners[2] = false;
-		}
-
-		if (matchesType(x + 1, y - 1, w, targetClasses))
-		{
-			corners[3] = true;
-		}
-		else
-		{
-			corners[3] = false;
-		}
+		corners[0] = matchesType(x - 1, y + 1, w, targetClasses);
+		corners[1] = matchesType(x + 1, y + 1, w, targetClasses);
+		corners[2] = matchesType(x - 1, y - 1, w, targetClasses);
+		corners[3] = matchesType(x + 1, y - 1, w, targetClasses);
 
 		return corners;
-
+	}
+	
+	/**
+	 * This function is intended to return a single tile to the requester
+	 * 
+	 * @param x the x of the requested tile in world coordinates
+	 * @param y the y of the requested tile in world coordinates 
+	 * @param w the world that the entity wants the tile from
+	 * @return a tile from the world
+	 */
+	public static Terrain getTileTerrain(float x, float y, World w)
+	{
+		Tile[][] mapTiles = w.getMapTiles();
+		if(mapTiles == null)
+		{
+			return null;
+		}
+		else if(getClosestTileX(x) > mapTiles.length - 1 || x < 0)
+		{
+			return null;
+		}
+		else if (getClosestTileY(y) > mapTiles[0].length - 1 || y < 0)
+		{
+			return null;
+		}
+		else
+		{
+			return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
+		}
+	}
+	
+	/**
+	 * returns the closest tile to an entity
+	 * 
+	 * @param entity
+	 * 		the entity to check for tile
+	 * @param world
+	 * 		reference to the game world
+	 * @return Tile
+	 * 		the tile that is closest to given entity
+	 * 		
+	 */
+	public static Tile getEntityTile(Entity entity, World world)
+	{
+		Tile[][] tiles = world.getMapTiles();
+		int tileX = TileUtil.getClosestTileX(entity.getX());
+		int tileY = TileUtil.getClosestTileY(entity.getY());
+		return tiles[tileX][tileY];
 	}
 }

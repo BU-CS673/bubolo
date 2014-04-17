@@ -10,7 +10,9 @@ import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
+import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
@@ -72,16 +74,21 @@ public class TankControllerTestApplication extends AbstractGameApplication
 		
 		world = new GameWorld(32*94, 32*94);
 		
+		Tile[][] mapTiles = new Tile[94][94];
+		
 		for (int row = 0; row < 94; row++)
 		{
 			for (int column = 0; column < 94; column++)
 			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
+				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
+				mapTiles[column][row] = new Tile(column, row, grass);
+				
 			}
 		}
 		
+		world.setMapTiles(mapTiles);
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1200, 100, 0);
 		tank.setLocalPlayer(true);
 
 		setReady(true);

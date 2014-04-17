@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Base;
@@ -23,6 +24,7 @@ import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tank;
 import bubolo.world.entity.concrete.Tree;
@@ -70,6 +72,18 @@ public class GameWorldTest
 		w.removeEntity(t);
 		l = w.getTanks();
 		assertEquals("List contains the target tank after it was removed!", false, l.contains(t));
+	}
+	
+	@Test
+	public void getSpawns()
+	{
+		World w= new GameWorld(500, 500);
+		Spawn s = w.addEntity(Spawn.class);
+		List l = w.getSpawns();
+		assertEquals("List does not contain the target Spawn!", true, l.contains(s));
+		w.removeEntity(s);
+		l = w.getSpawns();
+		assertEquals("List contains the target tank after it was removed!", false, l.contains(s));
 	}
 
 	@Test
@@ -496,6 +510,20 @@ public class GameWorldTest
 		World w = new GameWorld(10, 50);
 		assertEquals(50, w.getMapHeight());
 	}
+	@Test
+	public void testGetMapTiles()
+	{
+		World w = new GameWorld(10, 50);
+		Tile[][] tiles = new Tile[10][50];
+		w.setMapTiles(tiles);
+		assertEquals(tiles, w.getMapTiles());
+	}
+	@Test
+	public void testSetMapTiles()
+	{
+		World w = new GameWorld(10, 50);
+		assertEquals(50, w.getMapHeight());
+	}
 	
 	@Test
 	public void testSetMapHeight()
@@ -511,6 +539,17 @@ public class GameWorldTest
 		World w = new GameWorld(0, 0);
 		w.setMapWidth(75);
 		assertEquals(75, w.getMapWidth());
+	}
+	
+	@Test
+	public void addRemoveController()
+	{
+		World w = new GameWorld(0, 0);
+		w.addController(AITreeController.class);
+		assertEquals(1, w.getControllerCount());
+		
+		w.removeController(AITreeController.class);
+		assertEquals(0, w.getControllerCount());
 	}
 	
 	private class AddEntityRunnable implements Runnable

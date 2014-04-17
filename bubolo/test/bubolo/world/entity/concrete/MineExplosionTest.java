@@ -5,7 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
+
+import static org.mockito.Mockito.mock;
 
 public class MineExplosionTest
 {
@@ -25,5 +28,11 @@ public class MineExplosionTest
 	public void MineExplosion()
 	{
 		assertTrue(true);
+	}
+	
+	@Test
+	public void update()
+	{
+		exp.update(mock(World.class));
 	}
 }

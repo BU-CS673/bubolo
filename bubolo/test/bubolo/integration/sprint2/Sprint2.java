@@ -170,7 +170,7 @@ public class Sprint2
 				{
 					address = Inet4Address.getByName(addressString);
 					Network net = NetworkSystem.getInstance();
-					net.connect(address);
+					net.connect(address, "Client");
 					LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 					cfg.title = "BUBOLO v0.2.0, Multiplayer Client";
 					cfg.width = 1067;

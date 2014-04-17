@@ -102,6 +102,4 @@ public abstract class StationaryEntity extends Entity
 	{
 		updateControllers(world);
 	}
-
-	// TODO: Add StationaryEntity functionality!
 }

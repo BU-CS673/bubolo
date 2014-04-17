@@ -87,5 +87,24 @@ public class PillboxTest
 		pillbox.setRange(Range);
 		assertEquals("Pillbox range set correctly", true, pillbox.getRange() == Range);
 	}
-
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(100, pillbox.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, pillbox.getMaxHitPoints(), 0);
+	}
+	
+	@Test
+	public void healDamageTest()
+	{
+		pillbox.takeHit(1);
+		assertEquals(99, pillbox.getHitPoints(), 0);
+		pillbox.heal(1);
+		assertEquals(100, pillbox.getHitPoints(), 0);
+	}
 }

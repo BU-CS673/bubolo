@@ -32,7 +32,7 @@ public class ParserTestApplication extends AbstractGameApplication
 	}
 
 	private int windowWidth;
-	private int windowHeight;
+	private int windowHeight;	
 
 	private Graphics graphics;
 

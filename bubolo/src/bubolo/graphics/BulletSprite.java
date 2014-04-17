@@ -11,7 +11,7 @@ import bubolo.world.entity.Entity;
  * 
  * @author BU673 - Clone Industries
  */
-class BulletSprite extends Sprite<Entity>
+class BulletSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
@@ -30,7 +30,7 @@ class BulletSprite extends Sprite<Entity>
 	 */
 	BulletSprite(Entity bullet)
 	{
-		super(DrawLayer.EFFECTS, bullet);
+		super(DrawLayer.FOURTH, bullet);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 	}
@@ -38,7 +38,7 @@ class BulletSprite extends Sprite<Entity>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites spriteSystem = Sprites.getInstance();
 			spriteSystem.addSprite(new BulletExplosionSprite(x, y));
