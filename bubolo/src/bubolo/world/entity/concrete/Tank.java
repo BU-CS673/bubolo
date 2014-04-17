@@ -61,10 +61,10 @@ public class Tank extends Actor implements Damageable
 
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
-	
+
 	// Boolean for whether this tank is currently alive
 	private boolean isAlive = true;
-	
+		
 	//Minimum amount of time between laying mines.
 	private static final long MINE_RELOAD_SPEED = 500;
 	

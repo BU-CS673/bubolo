@@ -26,7 +26,7 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 	private TextureRegion[][] frames;
 
 	// The number of milliseconds per frame.
-	private static final long millisPerFrame = 50;
+	private long millisPerFrame;
 
 	// The amount of time remaining for the current frame.
 	private long frameTimeRemaining;
@@ -50,6 +50,8 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 
 		frames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 60, 60);
+		
+		millisPerFrame = (((MineExplosion)this.getEntity()).getExplosionLength())/frames.length;
 	}
 
 	@Override
@@ -63,14 +65,12 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 		{
 			drawTexture(batch, camera, layer, frames[frameIndex][0]);
 
-			// Progress the Engineer running animation.
-			// TODO: only change frames when the Engineer is actually running.
 			frameTimeRemaining -= (System.currentTimeMillis() - lastFrameTime);
 			lastFrameTime = System.currentTimeMillis();
-			if (frameTimeRemaining < 0)
+			if (frameTimeRemaining < 0 && frameIndex < frames.length-1)
 			{
 				frameTimeRemaining = millisPerFrame;
-				frameIndex = (frameIndex == frames.length - 1) ? 0 : frameIndex + 1;
+				frameIndex = frameIndex + 1;
 			}
 
 		}
