@@ -356,12 +356,10 @@ public class Tank extends Actor implements Damageable
 		float newY = (float)(getY() + Math.sin(getRotation()) * (speed));
 		float w = getWidth();
 		float h = getHeight();
+
 		// Defines the corners of the left bumper as a 4x4 pixel box, placed at the
-		// top-left edge of
-		// the tank, with
-		// its left edge along the left edge of the tank and its topmost edge aligned with
-		// the front
-		// edge of the tank.
+		// top-left edge of the tank, with its left edge along the left edge of the
+		// tank and its topmost edge aligned with the front edge of the tank.
 		float[] corners = new float[] { -w / 2f, h / 2f, -w / 2f + 4, h / 2f, -w / 2f, h / 2f - 4,
 				-w / 2f + 4, h / 2f - 4 };
 		leftBumper = new Polygon();
@@ -382,7 +380,7 @@ public class Tank extends Actor implements Damageable
 		float h = getHeight();
 
 		// Defines the corners of the right bumper as a 4x4 pixel box, placed at the
-		// top-right edge of the tank, with its left edge along the left edge of the 
+		// top-right edge of the tank, with its left edge along the left edge of the
 		// tank and its topmost edge aligned with the front edge of the tank.
 		float[] corners = new float[] { w / 2f, h / 2f, w / 2f - bumperWidth, h / 2f, w / 2f,
 				h / 2f - bumperHeight, w / 2f - bumperWidth, h / 2f - bumperHeight };
@@ -501,7 +499,6 @@ public class Tank extends Actor implements Damageable
 	 */
 	private void moveTank(World world)
 	{
-
 		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
 		if (currentTerrain != null)
 		{
