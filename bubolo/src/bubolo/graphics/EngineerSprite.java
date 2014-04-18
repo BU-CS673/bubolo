@@ -63,7 +63,7 @@ class EngineerSprite extends AbstractEntitySprite<Engineer>
 	 */
 	EngineerSprite(Engineer engi)
 	{
-		super(DrawLayer.THIRD, engi);
+		super(DrawLayer.FOURTH, engi);
 
 		Texture texture = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		allFrames = TextureUtil.splitFrames(texture, 21, 21);

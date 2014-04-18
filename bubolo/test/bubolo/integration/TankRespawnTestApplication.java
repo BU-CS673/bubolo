@@ -1,52 +1,61 @@
 package bubolo.integration;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import org.json.simple.parser.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.world.GameWorld;
-import bubolo.world.Tile;
+import bubolo.util.Parser;
 import bubolo.world.World;
-import bubolo.world.entity.Terrain;
-import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
+
 
 /**
  * For testing only.
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TankControllerTestApplication extends AbstractGameApplication
+public class TankRespawnTestApplication implements GameApplication
 {
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "BUBOLO Tank Controller Integration";
-		cfg.width = 1067;
-		cfg.height = 600;
+		cfg.title = "BUBOLO Tree Controller Integration";
+		cfg.width = 640;
+		cfg.height = 640;
 		cfg.useGL20 = true;
-		new LwjglApplication(new TankControllerTestApplication(1067, 600), cfg);
+	new LwjglApplication(new TankRespawnTestApplication(640, 640), cfg);
 	}
 	
 	private int windowWidth;
 	private int windowHeight;
 	
 	private Graphics graphics;
+	private World world;
+	
+	private long lastUpdate;
+	
+	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final long TICKS_PER_SECOND = 30;
+	public static final int TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -54,10 +63,16 @@ public class TankControllerTestApplication extends AbstractGameApplication
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
 	 */
-	public TankControllerTestApplication(int windowWidth, int windowHeight)
+	public TankRespawnTestApplication(int windowWidth, int windowHeight)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+	}
+	
+	@Override
+	public boolean isReady()
+	{
+		return ready;
 	}
 
 	/**
@@ -72,26 +87,24 @@ public class TankControllerTestApplication extends AbstractGameApplication
 		
 		graphics = new Graphics(windowWidth, windowHeight);
 		
-		world = new GameWorld(32*94, 32*94);
+		//world = new GameWorld(32*94, 32*94);
 		
-		Tile[][] mapTiles = new Tile[94][94];
-		
-		for (int row = 0; row < 94; row++)
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+		try
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
-				mapTiles[column][row] = new Tile(column, row, grass);
-				
-			}
+			world = fileParser.parseMap(path);
 		}
-		
-		world.setMapTiles(mapTiles);
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(1200, 100, 0);
+		catch (ParseException | IOException e )
+		{
+			e.printStackTrace();
+		}
+		world.addEntity(Spawn.class).setParams(100, 100, 0);
+		Tank tank = world.addEntity(Tank.class);			
+		tank.setParams(10, 10, 0);
 		tank.setLocalPlayer(true);
 
-		setReady(true);
+		ready = true;
 	}
 	
 	/**
@@ -104,16 +117,6 @@ public class TankControllerTestApplication extends AbstractGameApplication
 		graphics.draw(world);
 		world.update();
 		
-		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
-		// the game is extremely jittery when this is used instead of calling update continuously.
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-//		long currentMillis = System.currentTimeMillis();
-//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-//		{
-//			world.update();
-//			lastUpdate = currentMillis;
-//		}
 	}
 	
 	/**
@@ -139,5 +142,11 @@ public class TankControllerTestApplication extends AbstractGameApplication
 	@Override
 	public void resume()
 	{
+	}
+
+	@Override
+	public boolean isGameStarted() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
