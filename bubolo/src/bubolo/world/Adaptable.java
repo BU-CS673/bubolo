@@ -10,7 +10,7 @@ public interface Adaptable
 {
 	/**
 	 * Updates the current adaptive tiling state of this Entity.
-	 * @param w TODO
+	 * @param w reference to the world.
 	 */
 	public void updateTilingState(World w);
 

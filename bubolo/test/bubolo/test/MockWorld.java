@@ -1,7 +1,9 @@
 package bubolo.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
@@ -18,17 +20,25 @@ import bubolo.world.entity.MockEntity;
  */
 public class MockWorld implements World
 {
+	private List<Entity> entities = new ArrayList<Entity>();
+	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	
+	public void add(Entity e)
+	{
+		entities.add(e);
+		entityMap.put(e.getId(), e);
+	}
 
 	@Override
 	public Entity getEntity(UUID id) throws GameLogicException
 	{
-		return null;
+		return entityMap.get(id);
 	}
 
 	@Override
 	public List<Entity> getEntities()
 	{
-		return new ArrayList<Entity>();
+		return entities;
 	}
 
 	@Override
@@ -63,14 +73,14 @@ public class MockWorld implements World
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -78,7 +88,7 @@ public class MockWorld implements World
 	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -86,7 +96,7 @@ public class MockWorld implements World
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// TODO Auto-generated method stub
+		// do nothing
 		return null;
 	}
 
@@ -94,18 +104,55 @@ public class MockWorld implements World
 
 	public List<Entity> getTanks() 
 	{
+		// do nothing
 		return null;
 	}
 
 	@Override
 	public void setMapTiles(Tile[][] mapTiles)
 	{
+		// do nothing
+		
+	}
+	
+	@Override
+	public Tile[][] getMapTiles()
+	{
+		// do nothing
+		return null;
+	}
+
+	@Override
+	public List<Entity> getActors()
+	{
+		// do nothing
+		return null;
+	}
+
+	@Override
+	public List<Entity> getEffects()
+	{
+		// do nothing
+		return null;
+	}
+
+	@Override
+	public void setMapHeight(int height)
+	{
 		// TODO Auto-generated method stub
 		
 	}
-	public Tile[][] getMapTiles()
+
+	@Override
+	public void setMapWidth(int width)
 	{
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Entity> getSpawns() {
+		// do nothing
 		return null;
 	}
 }

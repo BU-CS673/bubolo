@@ -9,63 +9,57 @@ import bubolo.world.entity.Terrain;
  * Tiles represent one 'unit square' on a game map. They must contain one Terrain, and can have
  * either 1 or 0 StationaryElements which sit on top of that Terrain.
  * 
- * 
  * @author BU CS673 - Clone Productions
  */
 public class Tile
 {
-	/**
-	 * The WORLD_SCALE represents the number of World units that each Tile represents. 32 is
-	 * selected here because it is current size of a Sprite in pixels.
-	 * 
-	 * TODO: Move this constant out to a global Bubolo Preferences class.
-	 */
-	private static final float TILE_SIZE = Coordinates.TILE_TO_WORLD_SCALE;
+	// The tile's x position, in grid coordinates.
 	private int gridX;
+	// The tile's y position, in grid coordinates.
 	private int gridY;
+
 	private Terrain myTerrain;
 	private StationaryElement myElement = null;
 
 	/**
 	 * Create a new Tile with the specified Terrain at the given map unit coordinates.
 	 * 
-	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, it is
-	 * strongly advised that they be constructed using World.AddEntity(), which ensures proper
-	 * Sprite handling and Entity indexing.
+	 * NOTE: When creating Terrain or StationaryElement objects to be stored in Tiles, they must be
+	 * constructed using World.addEntity(), or they won't be fully added to the game world.
 	 * 
-	 * @param x
-	 *            is the x coordinate of this Tile in map/grid units.
-	 * @param y
-	 *            is the y coordinate of this Tile in map/grid units.
+	 * @param gridX
+	 *            is the x coordinate of this Tile in grid units.
+	 * @param gridY
+	 *            is the y coordinate of this Tile in grid units.
 	 * @param t
 	 *            is the Terrain that should be applied to this Tile.
 	 */
-	public Tile(int x, int y, Terrain t)
+	public Tile(int gridX, int gridY, Terrain t)
 	{
 		myTerrain = t;
 		t.setTile(this);
-		gridX = x;
-		gridY = y;
+		this.gridX = gridX;
+		this.gridY = gridY;
 	}
 
 	/**
-	 * Uses Tile.WORLD_SCALE to return this Tile's x position in World coordinates.
+	 * Returns this Tile's center x position in World coordinates.
 	 * 
-	 * @return a float representing this Tile's world x position..
+	 * @return a float representing this Tile's world x position.
 	 */
 	public float getX()
 	{
-		return gridX * TILE_SIZE + TILE_SIZE / 2;
+		return gridX * Coordinates.TILE_TO_WORLD_SCALE + Coordinates.TILE_TO_WORLD_SCALE / 2;
 	}
 
 	/**
-	 * Uses Tile.WORLD_SCALE to return this Tile's y position in World coordinates.
+	 * Returns this Tile's center y position in World coordinates.
 	 * 
-	 * @return a float representing this Tile's world y position..
+	 * @return a float representing this Tile's world y position.
 	 */
 	public float getY()
 	{
-		return gridY * TILE_SIZE + TILE_SIZE / 2;
+		return gridY * Coordinates.TILE_TO_WORLD_SCALE + Coordinates.TILE_TO_WORLD_SCALE / 2;
 	}
 
 	/**
@@ -136,7 +130,7 @@ public class Tile
 	}
 
 	/**
-	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does ont exist in
+	 * Removes this Tile's StationaryElement. Does nothing if a StationaryElement does not exist in
 	 * this Tile.
 	 * 
 	 * @return a reference to this Tile.
@@ -147,7 +141,7 @@ public class Tile
 		{
 			myElement.dispose();
 		}
-		
+
 		myElement = null;
 		return this;
 	}
@@ -169,7 +163,7 @@ public class Tile
 		{
 			myElement.dispose();
 		}
-		
+
 		myElement = e;
 		e.setTile(this);
 		e.updateBounds();
@@ -195,7 +189,7 @@ public class Tile
 			{
 				myTerrain.dispose();
 			}
-			
+
 			myTerrain = t;
 			t.setTile(this);
 			t.updateBounds();

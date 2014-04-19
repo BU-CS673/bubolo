@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
@@ -18,7 +19,7 @@ import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 
-public class ParserTestApplication implements GameApplication
+public class ParserTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -31,14 +32,9 @@ public class ParserTestApplication implements GameApplication
 	}
 
 	private int windowWidth;
-	private int windowHeight;
+	private int windowHeight;	
 
 	private Graphics graphics;
-	private World world;
-
-	private long lastUpdate;
-
-	private boolean ready;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -63,12 +59,6 @@ public class ParserTestApplication implements GameApplication
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-
-	@Override
-	public boolean isReady()
-	{
-		return ready;
 	}
 
 	/**
@@ -101,7 +91,7 @@ public class ParserTestApplication implements GameApplication
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
 
-		ready = true;
+		setReady(true);
 	}
 
 	/**
@@ -154,5 +144,4 @@ public class ParserTestApplication implements GameApplication
 	public void resume()
 	{
 	}
-
 }

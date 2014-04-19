@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileUtil;
+import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
 import bubolo.world.entity.Terrain;
@@ -30,6 +30,11 @@ public class Water extends Terrain implements Adaptable
 	private Class<?>[] matchingTypes = new Class[] { Water.class, DeepWater.class, Crater.class };
 
 	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static final float MAX_SPEED_MODIFIER = 0.4f;
+
+	/**
 	 * Construct a new Water with a random UUID.
 	 */
 	public Water()
@@ -45,7 +50,7 @@ public class Water extends Terrain implements Adaptable
 	 */
 	public Water(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -63,8 +68,8 @@ public class Water extends Terrain implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
-			cornerMatches = AdaptiveTileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
+			setTilingState(TileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			cornerMatches = TileUtil.getCornerMatches(this.getTile(), w, matchingTypes);
 		}
 		else
 		{
@@ -73,11 +78,11 @@ public class Water extends Terrain implements Adaptable
 	}
 
 	/**
-	 * Return an array of booleans representing whether the tiles along the corners of this
-	 * DeepWater's tile contain a matching object for the adaptive tiling procedure.
+	 * Return an array of booleans representing whether the tiles along the corners of this Water's
+	 * tile contain a matching object for the adaptive tiling procedure.
 	 * 
 	 * @return an array of booleans, where the elements represent whether a matching object was
-	 *         found to the top left, top right, bottom left, and bottom right of this obect, in
+	 *         found to the top left, top right, bottom left, and bottom right of this object, in
 	 *         order.
 	 */
 	public boolean[] getCornerMatches()
@@ -96,6 +101,4 @@ public class Water extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Water functionality!
 }

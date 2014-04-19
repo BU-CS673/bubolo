@@ -26,4 +26,12 @@ public class SwampTest
 	{
 		assertTrue(true);
 	}
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		swamp = new Swamp();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = swamp.getMaxSpeedModifier();
+		assertEquals(swamp.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }

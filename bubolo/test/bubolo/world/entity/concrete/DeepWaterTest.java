@@ -33,4 +33,13 @@ public class DeepWaterTest
 	{
 		deepWater.updateTilingState(null);
 	}
+	
+	@Test
+	public void maxSpeedModifierTest()
+	{
+		deepWater = new DeepWater();
+		float maxSpeedModifier = 0;
+		maxSpeedModifier = deepWater.getMaxSpeedModifier();
+		assertEquals(deepWater.getMaxSpeedModifier(), maxSpeedModifier, 0);
+	}
 }

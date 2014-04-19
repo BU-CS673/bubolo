@@ -32,7 +32,17 @@ public class Mine extends StationaryElement implements Ownable
 	 * Boolean representing whether this Mine is exploding! OH NO!
 	 */
 	private boolean isExploding = false;
-
+	
+	/**
+	 *  amount of time before mine becomes active in milliseconds
+	 */
+	private static int FUSE_TIME = 5000;
+	
+	/**
+	 * time the mine was created in milliseconds 
+	 */
+	private long createdTime;
+	
 	/**
 	 * Construct a new Mine with a random UUID.
 	 */
@@ -52,6 +62,7 @@ public class Mine extends StationaryElement implements Ownable
 		super(id);
 		setWidth(25);
 		setHeight(25);
+		this.createdTime = System.currentTimeMillis();
 		updateBounds();
 	}
 
@@ -99,6 +110,20 @@ public class Mine extends StationaryElement implements Ownable
 	{
 		this.isExploding = explode;
 	}
-
-	// TODO: Add Mine functionality!
+	
+	/**
+	 * get the status of this mine. will be inactive until the fuse time has elapsed since the mine was created
+	 * @return int
+	 * 		whether or not this mine is active
+	 */
+	public boolean isActive()
+	{
+		boolean active = false;
+		if ((this.createdTime+this.FUSE_TIME) < System.currentTimeMillis())
+		{
+			active = true;
+		}
+		return active;
+	}
+	
 }
