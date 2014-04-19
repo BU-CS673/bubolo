@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import bubolo.net.NetworkCommand;
+import bubolo.util.GameLogicException;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
@@ -47,12 +48,12 @@ public class MoveEntity implements NetworkCommand
 	@Override
 	public void execute(World world)
 	{
-		Entity entity = world.getEntity(id);
-		if (entity != null)
+		try
 		{
+			Entity entity = world.getEntity(id);
 			entity.setX(x).setY(y).setRotation(rotation);
 		}
-		else
+		catch (GameLogicException e)
 		{
 			Logger.getGlobal().log(Level.WARNING, "MoveEntity: Unable to find entity " + id);
 		}

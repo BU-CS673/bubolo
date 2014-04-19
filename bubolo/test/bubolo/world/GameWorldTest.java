@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.badlogic.gdx.Gdx;
 
 import bubolo.controllers.Controllers;
+import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Base;
@@ -558,6 +559,16 @@ public class GameWorldTest
 		mapTiles[0][0] = new Tile(0, 0, w.addEntity(Grass.class));
 		w.setMapTiles(mapTiles);
 		assertEquals(Grass.class, w.getMapTiles().getClass());
+	}
+		
+	public void addRemoveController()
+	{
+		World w = new GameWorld(0, 0);
+		w.addController(AITreeController.class);
+		assertEquals(1, w.getControllerCount());
+		
+		w.removeController(AITreeController.class);
+		assertEquals(0, w.getControllerCount());
 	}
 	
 	private class AddEntityRunnable implements Runnable
