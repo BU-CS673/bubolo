@@ -28,6 +28,7 @@ public class TankTest
 {
 	private Tank tank;
 	private World world;
+	private Grass grass;
 
 	/**
 	 * Constructs a Tank object and sets the default parameters.
@@ -37,7 +38,10 @@ public class TankTest
 	{
 		world = new GameWorld(32, 32);
 		tank = (Tank) world.addEntity(Tank.class).setParams(16, 16, 0);
-		world.addEntity(Grass.class).setParams(16, 16, 0);
+		grass = new Grass();
+		Tile[][] grassTile = new Tile[1][1];
+		grassTile[0][0] = new Tile(0,0,grass);
+		world.setMapTiles(grassTile);
 		EntityTestCase.setTestParams(tank);
 	}
 
@@ -110,6 +114,12 @@ public class TankTest
 	public void  getHitPoints()
 	{
 		assertEquals(100, tank.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, tank.getMaxHitPoints(), 0);
 	}
 	
 	@Test
@@ -189,11 +199,6 @@ public class TankTest
 	@Test
 	public void dropMine()
 	{
-		tank.gatherMine(2);
-		world = new GameWorld(32, 32);
-		Tile[][] mapTile = new Tile[1][1];
-		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
-		world.setMapTiles(mapTile);
 		Mine mine = tank.dropMine(world, 0, 0);
 		assertNotNull(mine);
 		assertNotNull(world.getMapTiles()[0][0].getElement());
@@ -203,10 +208,6 @@ public class TankTest
 	public void dropPillbox()
 	{
 		tank.gatherPillbox();
-		world = new GameWorld(32, 32);
-		Tile[][] mapTile = new Tile[1][1];
-		mapTile[0][0] = new Tile(0, 0, world.addEntity(Grass.class));
-		world.setMapTiles(mapTile);
 		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
 		assertNotNull(pillbox);
 		assertNotNull(world.getMapTiles()[0][0].getElement());

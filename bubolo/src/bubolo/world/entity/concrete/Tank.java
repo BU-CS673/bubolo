@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.badlogic.gdx.math.Intersector;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
@@ -21,7 +23,7 @@ import bubolo.world.entity.Terrain;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Tank extends Actor
+public class Tank extends Actor implements Damageable
 {
 	/**
 	 * Used when serializing and de-serializing.
@@ -60,9 +62,18 @@ public class Tank extends Actor
 	// The reload speed of the tank's cannon, in milliseconds.
 	private static final long cannonReloadSpeed = 500;
 
+	// Boolean for whether this tank is currently alive
+	private boolean isAlive = true;
+		
+	//Minimum amount of time between laying mines.
+	private static final long mineReLoadSpeed = 500;
+	
 	// The last time that the cannon was fired. Populate this with
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
+	
+	//The last time a mine was layed. Used to prevent multiple mines from being dropped.
+	private long mineLayingTime = 0;
 
 	private Polygon leftBumper = new Polygon();
 	private Polygon rightBumper = new Polygon();
@@ -122,6 +133,7 @@ public class Tank extends Actor
 
 	private int pillboxCount;
 
+	private Random randomGenerator = new Random();
 	/**
 	 * Constructor for the Tank object
 	 */
@@ -264,7 +276,7 @@ public class Tank extends Actor
 			cannonFireTime = System.currentTimeMillis();
 
 			Bullet bullet = world.addEntity(Bullet.class);
-
+			bullet.setParent(this);
 			bullet.setX(startX).setY(startY);
 			bullet.setRotation(getRotation());
 			ammoCount--;
@@ -490,6 +502,10 @@ public class Tank extends Actor
 	@Override
 	public void update(World world)
 	{
+		if(!isAlive)
+		{
+			reSpawn(world);
+		}
 		updateControllers(world);
 		moveTank(world);
 		checkTrees(world);
@@ -672,9 +688,20 @@ public class Tank extends Actor
 	 * 
 	 * @return current hit point count
 	 */
+	@Override
 	public int getHitPoints()
 	{
 		return hitPoints;
+	}
+	
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return TANK_MAX_HIT_POINTS;
 	}
 
 	/**
@@ -723,10 +750,14 @@ public class Tank extends Actor
 	 * @param damagePoints
 	 *            how much damage the tank has taken
 	 */
+	@Override
 	public void takeHit(int damagePoints)
 	{
-
 		hitPoints -= Math.abs(damagePoints);
+		if(this.hitPoints <=0)
+		{
+			this.isAlive = false;
+		}
 		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
 
@@ -736,6 +767,7 @@ public class Tank extends Actor
 	 * @param healPoints
 	 *            - how many points the tank is given
 	 */
+	@Override
 	public void heal(int healPoints)
 	{
 		if (hitPoints + Math.abs(healPoints) < TANK_MAX_HIT_POINTS)
@@ -745,7 +777,7 @@ public class Tank extends Actor
 
 		else
 		{
-			hitPoints = 100;
+			hitPoints = TANK_MAX_HIT_POINTS;
 		}
 	}
 
@@ -823,21 +855,31 @@ public class Tank extends Actor
 	 * @return - the mine that is created is returned or null if there are none to place or invalid
 	 *         placement location
 	 */
-	public Mine dropMine(World world, int startX, int startY)
+	public Mine dropMine(World world, float startX, float startY)
 	{
-		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (mineCount > 0))
-		{
-			Mine mine = world.addEntity(Mine.class);
-			world.getMapTiles()[startX / 32][startY / 32].setElement(mine);
-			mine.setX(startX).setY(startY);
-			mine.setRotation(getRotation());
-			mineCount--;
-			return mine;
-		}
-		else
+		int XTileCoord = (int) startX / 32;
+		int YTileCoord = (int) startY / 32;
+		
+		if(System.currentTimeMillis() - mineLayingTime < mineReLoadSpeed)
 		{
 			return null;
 		}
+		
+		if(world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != Water.class &&
+				world.getMapTiles()[XTileCoord][YTileCoord].getTerrain().getClass() != DeepWater.class)
+		{
+			if ((!world.getMapTiles()[XTileCoord][YTileCoord].hasElement()) && (mineCount > 0))
+			{
+				mineLayingTime = System.currentTimeMillis();
+				Mine mine = world.addEntity(Mine.class);
+				world.getMapTiles()[XTileCoord][YTileCoord].setElement(mine);
+				mine.setX(startX).setY(startY);
+				mine.setRotation(getRotation());
+				mineCount--;
+				return mine;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -877,5 +919,18 @@ public class Tank extends Actor
 		{
 			return null;
 		}
+	}
+	
+	private void reSpawn(World world)
+	{
+		
+		List<Entity> spawns = world.getSpawns();
+		if(spawns.size() > 0)
+		{
+			Entity spawn = spawns.get(randomGenerator.nextInt(spawns.size()));
+			this.setParams(spawn.getX(), spawn.getY(), 0);
+		}
+		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.isAlive = true;
 	}
 }

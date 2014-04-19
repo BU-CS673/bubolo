@@ -7,6 +7,8 @@ package bubolo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Intersector;
+
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -71,6 +73,35 @@ public abstract class TileUtil
 		return (int) (y / 32);
 	}
 
+	/**
+	 * get a list of entities that are currently colliding with a given entity
+	 * 
+	 * @param entity
+	 * 			the entity to check for collisions
+	 * @param world
+	 * 			reference to the game world
+	 * @return
+	 * 			the list of entities that are colliding with the given entity
+	 */
+	public static List<Entity> getLocalCollisions(Entity entity, World world)
+	{
+		ArrayList<Entity> localCollisions = new ArrayList<Entity>();
+		getLocalEntities(entity.getX(),entity.getY(),world);
+		
+		for(Entity collider:TileUtil.getLocalEntities(entity.getX(),entity.getY(), world))
+		{
+			if (collider.isSolid() && collider != entity)
+			{
+				if (Intersector.overlapConvexPolygons(collider.getBounds(), entity.getBounds()))
+				{
+					localCollisions.add(collider);
+				}
+			}
+		}
+		
+		return localCollisions;
+	}
+	
 	/**
 	 * Get all entities are likely to overlap with Entities within the given grid
 	 * location.
@@ -328,5 +359,24 @@ public abstract class TileUtil
 		{
 			return mapTiles[getClosestTileX(x)][getClosestTileY(y)].getTerrain();
 		}
+	}
+	
+	/**
+	 * returns the closest tile to an entity
+	 * 
+	 * @param entity
+	 * 		the entity to check for tile
+	 * @param world
+	 * 		reference to the game world
+	 * @return Tile
+	 * 		the tile that is closest to given entity
+	 * 		
+	 */
+	public static Tile getEntityTile(Entity entity, World world)
+	{
+		Tile[][] tiles = world.getMapTiles();
+		int tileX = TileUtil.getClosestTileX(entity.getX());
+		int tileY = TileUtil.getClosestTileY(entity.getY());
+		return tiles[tileX][tileY];
 	}
 }

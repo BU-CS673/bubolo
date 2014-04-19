@@ -9,14 +9,16 @@ import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Preconditions.checkArgument;
-
+import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
+import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.Sprites;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -41,13 +43,19 @@ public class GameWorld implements World
 
 	// the list of Tanks that exist in the world
 	private List<Entity> tanks = new ArrayList<Entity>();
-
+	
+	//list of world controllers
+	private List<Controller> worldControllers  = new ArrayList<Controller>();
+	
 	// the list of all Effects that currently exist in the world
 	private List<Entity> effects = new ArrayList<Entity>();
 
 	// the list of all Actors which currently exist in the world
 	private List<Entity> actors = new ArrayList<Entity>();
 
+	// the list of all Spawn Locations currently in the world
+	private List<Entity> spawns = new ArrayList<Entity>();
+	
 	private int worldMapWidth;
 	private int worldMapHeight;
 
@@ -63,6 +71,9 @@ public class GameWorld implements World
 	{
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
+		
+		worldControllers.add(new AITreeController());
+
 	}
 
 	/**
@@ -165,6 +176,11 @@ public class GameWorld implements World
 		{
 			actors.add(entity);
 		}
+		
+		if (entity instanceof Spawn)
+		{
+			spawns.add(entity);
+		}
 
 		entitiesToAdd.add(entity);
 		entityMap.put(entity.getId(), entity);
@@ -191,6 +207,11 @@ public class GameWorld implements World
 		if (e instanceof Effect)
 		{
 			effects.remove(e);
+		}
+		
+		if (e instanceof Spawn)
+		{
+			spawns.remove(e);
 		}
 	}
 
@@ -239,6 +260,13 @@ public class GameWorld implements World
 	@Override
 	public void update()
 	{
+
+		// Update all world controllers
+		for (Controller c : worldControllers)
+		{
+			c.update(this);
+		}
+
 		checkState(worldMapWidth > 0,
 				"worldMapWidth must be greater than 0. worldMapWidth: %s", worldMapWidth);
 		checkState(worldMapHeight > 0,
@@ -266,5 +294,12 @@ public class GameWorld implements World
 	{
 		List<Entity> copyOfTanks = Collections.unmodifiableList(tanks);
 		return copyOfTanks;
+	}
+	
+	@Override
+	public List<Entity> getSpawns()
+	{
+		List<Entity> copyOfSpawns = Collections.unmodifiableList(spawns);
+		return copyOfSpawns;
 	}
 }
