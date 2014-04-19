@@ -1,9 +1,13 @@
 package bubolo.world.entity.concrete;
 
+import java.util.List;
 import java.util.UUID;
 
+import bubolo.util.TileUtil;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
+import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -163,6 +167,30 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
-		
+	}
+	
+	@Override
+	public void update(World world)
+	{
+		if (this.hitPoints <= 0)
+		{
+			this.setOwned(false);
+			List<Entity> entities = TileUtil.getLocalCollisions(this, world);
+			for(Entity entity:entities)
+			{
+				if (entity instanceof Tank)
+				{
+					this.setOwned(true);
+					if (((Tank) entity).isLocalPlayer())
+					{
+						this.setLocalPlayer(true);	
+					}
+					else
+					{
+						this.setLocalPlayer(false);
+					}
+				}
+			}
+		}
 	}
 }

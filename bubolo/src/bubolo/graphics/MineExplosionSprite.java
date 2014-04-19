@@ -72,7 +72,6 @@ class MineExplosionSprite extends AbstractEntitySprite<Entity>
 				frameTimeRemaining = millisPerFrame;
 				frameIndex = frameIndex + 1;
 			}
-
 		}
 	}
 }
