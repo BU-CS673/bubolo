@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JOptionPane;
@@ -55,6 +56,8 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	
 	private Graphics graphics;
 	private Network network;
+	
+	private AtomicBoolean startGame = new AtomicBoolean(false);
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -205,6 +208,27 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	public void onGameStart(int timeUntilStart)
 	{
 		System.out.println("Game is starting.");
+		
+		long currentTime = System.currentTimeMillis();
+		final long startTime = currentTime + (timeUntilStart * 1000);
+		
+		long secondsRemaining = Math.round((startTime - currentTime) / 1000);
+		System.out.println(secondsRemaining);
+		
+		long lastSecondsRemaining = secondsRemaining;
+		
+		while (currentTime < startTime)
+		{
+			currentTime = System.currentTimeMillis();
+			secondsRemaining = Math.round((startTime - currentTime) / 1000);
+			if (secondsRemaining < lastSecondsRemaining)
+			{
+				System.out.println(secondsRemaining);
+				lastSecondsRemaining = secondsRemaining;
+			}
+		}
+		
+		startGame.set(true);
 	}
 
 	@Override

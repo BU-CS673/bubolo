@@ -47,10 +47,10 @@ public interface NetworkObserver
 	/**
 	 * Called when a networked game starts.
 	 * 
-	 * @param timeUntilStart
+	 * @param secondsUntilStart
 	 *            the number of seconds until the game starts.
 	 */
-	void onGameStart(int timeUntilStart);
+	void onGameStart(int secondsUntilStart);
 
 	/**
 	 * Called when a message is received through the network.

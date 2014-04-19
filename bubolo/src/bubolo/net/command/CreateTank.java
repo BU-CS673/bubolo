@@ -46,12 +46,12 @@ public class CreateTank extends CreateEntity
 	{
 		super.execute(world);
 
-		Tank tank = (Tank)world.getEntity(getId());
-		if (tank != null)
+		try
 		{
+			Tank tank = (Tank)world.getEntity(getId());
 			tank.setLocalPlayer(false);
 		}
-		else
+		catch (Exception e)
 		{
 			Logger.getGlobal().severe("CreateTank: The tank was not created. ID: " + getId());
 		}
