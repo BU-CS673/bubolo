@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.controllers.Controllers;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Base;
@@ -540,6 +541,25 @@ public class GameWorldTest
 		assertEquals(75, w.getMapWidth());
 	}
 	
+	@Test
+	public void testAddEntity()
+	{
+		World w = new GameWorld(0,0);
+		Entity e = new Grass();
+		w.addEntity(e.getClass(), e.getId());
+				
+	}
+	
+	@Test
+	public void testTileFunctions()
+	{
+		World w = new GameWorld(0,0);
+		Tile[][] mapTiles = new Tile[1][1];
+		mapTiles[0][0] = new Tile(0, 0, w.addEntity(Grass.class));
+		w.setMapTiles(mapTiles);
+		assertEquals(Grass.class, w.getMapTiles().getClass());
+	}
+	
 	private class AddEntityRunnable implements Runnable
 	{
 		private Class<? extends Entity> c;
@@ -568,4 +588,5 @@ public class GameWorldTest
 			}
 		}
 	};
+
 }
