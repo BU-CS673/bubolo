@@ -107,14 +107,14 @@ public class NetworkObserverNotifier
 	/**
 	 * Notifies observers that the game is starting.
 	 * 
-	 * @param timeUntilStart
-	 *            countdown until the game begins.
+	 * @param secondsUntilStart
+	 *            the number of seconds until the game begins.
 	 */
-	public void notifyGameStart(int timeUntilStart)
+	public void notifyGameStart(int secondsUntilStart)
 	{
 		for (final NetworkObserver o : observers)
 		{
-			o.onGameStart(timeUntilStart);
+			o.onGameStart(secondsUntilStart);
 		}
 	}
 
