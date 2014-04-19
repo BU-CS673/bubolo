@@ -13,6 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.test.MockWorld;
+
 /**
  * @author BU CS673 - Clone Productions
  */
@@ -40,18 +42,19 @@ public class ServerTest
 	{
 		server.send(mock(NetworkCommand.class));
 	}
-
-	/**
-	 * Test method for {@link bubolo.net.Server#run()}.
-	 */
+	
 	@Test
-	public void testRun()
+	public void startServer()
+	{
+		server.startServer("Server player");
+	}
+	
+	@Test
+	public void startGameNoClients()
 	{
 		try {
-			server.run();
-			fail("Expected IllegalStateException, but none encountered");
-		} catch (IllegalStateException e) {
-		}
+			server.startGame(new MockWorld());
+			fail("Exception expected, but none encountered.");
+		} catch (IllegalStateException e) { }
 	}
-
 }

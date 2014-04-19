@@ -3,12 +3,14 @@ package bubolo.integration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Bullet;
@@ -32,7 +34,7 @@ import bubolo.world.entity.concrete.Water;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class GraphicsTestApplication implements GameApplication
+public class GraphicsTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -48,11 +50,6 @@ public class GraphicsTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -75,12 +72,6 @@ public class GraphicsTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -96,13 +87,19 @@ public class GraphicsTestApplication implements GameApplication
 		
 		world = new GameWorld(50*32, 50*32);
 		
-		for (int i = 0; i < 50; i++)
+		Tile[][] mapTiles = new Tile[50][50];
+		
+		for (int row = 0; row < 50; row++)
 		{
-			for (int j = 0; j < 50; j++)
+			for (int column = 0; column < 50; column++)
 			{
-				world.addEntity(Grass.class).setParams(i * 32, j * 32, 0);
+				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
+				mapTiles[column][row] = new Tile(column, row, grass);
+				
 			}
 		}
+		
+		world.setMapTiles(mapTiles);
 		
 		// TODO: Adjust as needed.
 		Tank t = (Tank) world.addEntity(Tank.class).setParams(100, 100, 0);
@@ -126,7 +123,7 @@ public class GraphicsTestApplication implements GameApplication
 		world.addEntity(Wall.class).setParams(32*13, 32*12, 0);
 		world.addEntity(Water.class).setParams(32*14, 32*12, 0);
 		
-		ready = true;
+		setReady(true);
 	}
 	
 	/**

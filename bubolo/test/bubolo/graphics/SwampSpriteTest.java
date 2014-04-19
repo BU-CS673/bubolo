@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Swamp;
 
 import com.badlogic.gdx.Gdx;
@@ -47,7 +48,7 @@ public class SwampSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
+					Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
 					
 					passed = true;
 					isComplete = true;
@@ -73,9 +74,9 @@ public class SwampSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Swamp());
+				Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}
@@ -89,4 +90,13 @@ public class SwampSpriteTest
 		assertTrue(passed);
 	}
 
+	@Test
+	public void getRotation()
+	{
+		Sprite sprite = Sprites.getInstance().createSprite(new Swamp());
+		boolean check;
+		check = (sprite.getRotation() == 0 || sprite.getRotation() == (float) (Math.PI/2) || sprite.getRotation() == (float) (Math.PI) ||
+				sprite.getRotation() == (float) (3 * Math.PI / 2));
+		assertTrue(check);
+	}
 }

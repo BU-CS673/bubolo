@@ -13,12 +13,12 @@ import bubolo.world.entity.concrete.Crater;
  * 
  * @author BU673 - Clone Industries
  */
-class CraterSprite extends Sprite<Crater>
+class CraterSprite extends AbstractEntitySprite<Crater>
 {
 	private TextureRegion[] frames;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "crater.png";
+	private static final String TEXTURE_FILE = "crater.png";
 
 	/**
 	 * Constructor for the CraterSprite. This is Package-private because sprites should
@@ -29,7 +29,7 @@ class CraterSprite extends Sprite<Crater>
 	 */
 	CraterSprite(Crater crater)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, crater);
+		super(DrawLayer.SECOND, crater);
 
 		Texture tex = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
 		frames = TextureUtil.adaptiveSplit_16(tex);
@@ -39,7 +39,7 @@ class CraterSprite extends Sprite<Crater>
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}

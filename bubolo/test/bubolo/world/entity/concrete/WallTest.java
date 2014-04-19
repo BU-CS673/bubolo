@@ -33,4 +33,25 @@ public class WallTest
 	{
 		wall.updateTilingState(null);
 	}
+	
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(100, wall.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(100, wall.getMaxHitPoints(), 0);
+	}
+	
+	@Test
+	public void healDamageTest()
+	{
+		wall.takeHit(1);
+		assertEquals(99, wall.getHitPoints(), 0);
+		wall.heal(1);
+		assertEquals(100, wall.getHitPoints(), 0);
+	}
 }

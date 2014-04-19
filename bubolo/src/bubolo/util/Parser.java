@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -125,6 +124,12 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
 							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
+								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
+							}
+							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Water.class)
+							{
+								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(
@@ -132,7 +137,24 @@ public class Parser
 						}
 					}
 				}
+				
+				if (layerArray.size() > 2)
+				{
+					layerObject = (JSONObject)layerArray.get(2);
+					tileData = (JSONArray)layerObject.get("data");
 
+					for (int i = 0; i < mapHeight; i++)
+					{
+						for (int j = 0; j < mapWidth; j++)
+						{
+							dataString = tileData.get(i * mapWidth + j).toString();
+							if (layerThreeSwitch(dataString) != null)
+							{
+								world.addEntity(layerThreeSwitch(dataString)).setRotation(((float)Math.PI / 2));
+							}
+						}
+					}
+				}
 			}
 
 			world.setMapTiles(mapTiles);
@@ -170,9 +192,15 @@ public class Parser
 
 		case "5":
 			return Road.class;
+			
+		case "6":
+			return Crater.class;
+
+		case "7":
+			return Rubble.class;
 
 		default:
-			throw new InvalidMapException("Invalid terrain type within map file");
+			throw new InvalidMapException("Invalid or missing terrain tile within map file");
 		}
 	}
 
@@ -190,34 +218,53 @@ public class Parser
 	{
 		switch (input)
 		{
-		case "6":
+		case "8":
 			return Pillbox.class;
 
-		case "7":
+		case "9":
 			return Tree.class;
 
-		case "8":
+		case "10":
 			return Mine.class;
 
-		case "9":
+		case "11":
 			return Wall.class;
 
-		case "10":
-			return Base.class;
-
-		case "11":
-			return Crater.class;
-
 		case "12":
-			return Rubble.class;
-			/*
-			 * case "13": return PlayerSpawn.class;
-			 */
+			return Base.class;
+			
+		 case "13": 
+			 return Spawn.class;
+			
 		case "0":
 			return null;
 
 		default:
-			throw new InvalidMapException("Invalid terrain type within map file");
+			throw new InvalidMapException("Invalid Stationary Element type within map file");
 		}
+	}
+	
+	/**
+	 * Switch case for spawn layer of the map
+	 * @param input a string to parse against
+	 * @return either a Spawn class or null 
+	 * @throws InvalidMapException thrown if the map contains an error in layer three
+	 */
+	private static Class<Spawn> layerThreeSwitch(String input) throws InvalidMapException
+	{
+		
+		switch (input)
+		{
+		case "13":
+			return Spawn.class;
+					
+		case "0":
+			return null;
+			
+		default:
+			System.out.println(input);
+			throw new InvalidMapException("Invalid tile in Spawn Layer");
+		}
+				
 	}
 }
