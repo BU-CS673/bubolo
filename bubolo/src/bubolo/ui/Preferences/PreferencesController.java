@@ -59,7 +59,7 @@ public class PreferencesController
 		this.pv.sfxSliderListener(new SfxSliderListener());
 		this.pv.screenSizeListener(new ScreenSizeListener());
 		this.pv.saveListener(new SaveListener());
-		this.pv.cancelListener(new CancelListener());
+		this.pv.closeListener(new CancelListener());
 		this.pv.sfxTestListener(new SfxTestListener());
 		this.pv.mfxTestListener(new MfxTestListener());
 		
@@ -98,6 +98,10 @@ public class PreferencesController
 			// Send our PreferencesModel to be Saved by the PreferencesManager
 			pmgr.SavePreference(pm);
 
+			// Hide the Preferences Window
+			// Fixes Issue #238
+			pv.setVisible(false);
+			
 			// Debug Output to Console
 			if (DEBUG)
 			{
