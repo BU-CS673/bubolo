@@ -2,7 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.AdaptiveTileUtil;
+import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.World;
 import bubolo.world.entity.Terrain;
@@ -26,6 +26,11 @@ public class Road extends Terrain implements Adaptable
 	 * result in a valid match when checking surrounding tiles to determine adaptive tiling state.
 	 */
 	private Class<?>[] matchingTypes = new Class[] { Road.class };
+	
+	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static final float MAX_SPEED_MODIFIER = 1.25F;
 
 	/**
 	 * Construct a new Road with a random UUID.
@@ -43,7 +48,7 @@ public class Road extends Terrain implements Adaptable
 	 */
 	public Road(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
@@ -61,7 +66,7 @@ public class Road extends Terrain implements Adaptable
 	{
 		if (this.getTile() != null)
 		{
-			setTilingState(AdaptiveTileUtil.getTilingState(this.getTile(), w, matchingTypes));
+			setTilingState(TileUtil.getTilingState(this.getTile(), w, matchingTypes));
 		}
 		else
 		{
@@ -80,6 +85,4 @@ public class Road extends Terrain implements Adaptable
 	{
 		tilingState = newState;
 	}
-
-	// TODO: Add Road functionality!
 }

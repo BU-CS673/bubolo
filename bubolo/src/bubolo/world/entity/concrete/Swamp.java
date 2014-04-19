@@ -15,7 +15,12 @@ public class Swamp extends Terrain
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -4507866752457694356L;
-
+	
+	/**
+	 * Modifier field used to reset an objects cap speed while traversing this terrain type.
+	 */
+	private static final float MAX_SPEED_MODIFIER = 0.75F;
+	
 	/**
 	 * Construct a new Swamp with a random UUID.
 	 */
@@ -32,11 +37,9 @@ public class Swamp extends Terrain
 	 */
 	public Swamp(UUID id)
 	{
-		super(id);
+		super(id, MAX_SPEED_MODIFIER);
 		setWidth(32);
 		setHeight(32);
 		updateBounds();
 	}
-
-	// TODO: Add Swamp functionality!
 }

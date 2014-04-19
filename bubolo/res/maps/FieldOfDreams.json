@@ -20,11 +20,11 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/textures\/default.png",
+         "image":"..\/..\/..\/tools\/bubolo_tilset_terrain.png",
          "imageheight":32,
-         "imagewidth":32,
+         "imagewidth":160,
          "margin":0,
-         "name":"default",
+         "name":"bubolo_tilset_terrain",
          "properties":
             {
 

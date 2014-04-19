@@ -50,7 +50,7 @@ public class GrassSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
+					Sprite sprite = Sprites.getInstance().createSprite(new Grass());
 					
 					passed = true;
 					isComplete = true;
@@ -76,9 +76,9 @@ public class GrassSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Grass());
+				Sprite sprite = Sprites.getInstance().createSprite(new Grass());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.STATIONARY_ELEMENTS);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}
@@ -90,6 +90,16 @@ public class GrassSpriteTest
 		}
 		
 		assertTrue(passed);
+	}
+	
+	@Test
+	public void getRotation()
+	{
+		Sprite sprite = Sprites.getInstance().createSprite(new Grass());
+		boolean check;
+		check = (sprite.getRotation() == 0 || sprite.getRotation() == (float) (Math.PI/2) || sprite.getRotation() == (float) (Math.PI) ||
+					sprite.getRotation() == (float) (3 * Math.PI / 2));
+		assertTrue(check);
 	}
 
 }

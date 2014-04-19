@@ -20,7 +20,7 @@ public class BulletTest
 	@BeforeClass
 	public static void setup()
 	{
-		bullet = new Bullet();
+		bullet = new Bullet(true);
 		EntityTestCase.setTestParams(bullet);
 	}
 	
@@ -28,5 +28,19 @@ public class BulletTest
 	public void update()
 	{
 		bullet.update(mock(World.class));
+	}
+	@Test
+	public void getParent()
+	{
+		Tank tank = mock(Tank.class);
+		bullet.setParent(tank);
+		assertEquals(tank, bullet.getParent());
+	}
+	@Test
+	public void setParent()
+	{
+		Tank tank = mock(Tank.class);
+		bullet.setParent(tank);
+		assertEquals(tank, bullet.getParent());
 	}
 }

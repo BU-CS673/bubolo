@@ -170,13 +170,13 @@ public class Sprint2
 				{
 					address = Inet4Address.getByName(addressString);
 					Network net = NetworkSystem.getInstance();
-					net.connect(address);
+					net.connect(address, "Client");
 					LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 					cfg.title = "BUBOLO v0.2.0, Multiplayer Client";
 					cfg.width = 1067;
 					cfg.height = 600;
 					cfg.useGL20 = true;
-					new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600, address), cfg);
+					new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600), cfg);
 					IP_popup.setVisible(false);
 					fp.setVisible(false);
 				}

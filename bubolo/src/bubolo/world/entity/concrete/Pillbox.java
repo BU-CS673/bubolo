@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.World;
 import bubolo.world.entity.StationaryElement;
@@ -12,24 +13,28 @@ import bubolo.world.entity.StationaryElement;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Pillbox extends StationaryElement implements Ownable
+public class Pillbox extends StationaryElement implements Ownable, Damageable
 {
 	/*
 	 * time at witch cannon was last fired
 	 */
 	private long cannonFireTime = 0;
+	
 	/*
 	 * time required to reload cannon
 	 */
 	private static final long cannonReloadSpeed = 500;
+	
 	/*
 	 * current direction pillbox is going to fire
 	 */
 	private float cannonRotation = 0;
+	
 	/*
 	 * Max range to locate a target. Pillbox will not fire unless there is a tank within this range
 	 */
 	private double range = 300;
+	
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -44,7 +49,17 @@ public class Pillbox extends StationaryElement implements Ownable
 	 * Boolean representing whether this Pillbox is owned by a player.
 	 */
 	private boolean isOwned = true;
+	
+	/**
+	 * The health of the pillbox
+	 */
+	private int hitPoints;
 
+	/**
+	 * The maximum amount of hit points of the pillbox
+	 */
+	public static final int MAX_HIT_POINTS = 100;
+	
 	/**
 	 * Construct a new Pillbox with a random UUID.
 	 */
@@ -66,6 +81,7 @@ public class Pillbox extends StationaryElement implements Ownable
 		setHeight(27);
 		updateBounds();
 		setSolid(true);
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	@Override
@@ -134,7 +150,8 @@ public class Pillbox extends StationaryElement implements Ownable
 		cannonFireTime = System.currentTimeMillis();
 
 		Bullet bullet = world.addEntity(Bullet.class);
-
+		bullet.setParent(this);
+		
 		bullet.setX(this.getX()).setY(this.getY());
 		bullet.setRotation(getCannonRotation());
 	}
@@ -158,5 +175,58 @@ public class Pillbox extends StationaryElement implements Ownable
 	public void setRange(double range)
 	{
 		this.range = range;
+	}
+
+	/**
+	 * Returns the current health of the pillbox
+	 * 
+	 * @return current hit point count
+	 */
+	@Override
+	public int getHitPoints() 
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints()
+	{
+		return MAX_HIT_POINTS;
+	}
+
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the pillbox has taken
+	 */
+	@Override
+	public void takeHit(int damagePoints) 
+	{
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events		
+	}
+
+	/**
+	 * Increments the pillbox's health by a given amount
+	 * 
+	 * @param healPoints - how many points the pillbox is given
+	 */
+	@Override
+	public void heal(int healPoints) 
+	{
+		if (hitPoints + Math.abs(healPoints) < MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = MAX_HIT_POINTS;
+		}		
 	}
 }

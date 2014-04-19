@@ -3,13 +3,16 @@ package bubolo.integration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
+import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
@@ -18,7 +21,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TankControllerTestApplication implements GameApplication
+public class TankControllerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -34,11 +37,6 @@ public class TankControllerTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
@@ -61,12 +59,6 @@ public class TankControllerTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -82,19 +74,24 @@ public class TankControllerTestApplication implements GameApplication
 		
 		world = new GameWorld(32*94, 32*94);
 		
+		Tile[][] mapTiles = new Tile[94][94];
+		
 		for (int row = 0; row < 94; row++)
 		{
 			for (int column = 0; column < 94; column++)
 			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
+				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
+				mapTiles[column][row] = new Tile(column, row, grass);
+				
 			}
 		}
 		
+		world.setMapTiles(mapTiles);
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1200, 100, 0);
 		tank.setLocalPlayer(true);
 
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
