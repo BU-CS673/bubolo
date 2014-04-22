@@ -2,9 +2,11 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.TileUtil;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -43,7 +45,7 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Pillbox belongs to the local player.
 	 */
-	private boolean isLocalPlayer = true;
+	private boolean isLocalPlayer = false;
 
 	/**
 	 * Boolean representing whether this Pillbox is owned by a player.
@@ -208,7 +210,11 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events		
+		if (hitPoints <= 0)
+		{
+			this.isOwned = false;
+			this.isLocalPlayer = false;
+		}
 	}
 
 	/**

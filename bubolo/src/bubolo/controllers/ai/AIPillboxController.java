@@ -1,6 +1,7 @@
 package bubolo.controllers.ai;
 
 import bubolo.controllers.Controller;
+import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Pillbox;
@@ -32,15 +33,40 @@ public class AIPillboxController implements Controller
 	{
 		if (pillbox.isCannonReady())
 		{
-			Entity target = getTarget(world);
+			Tank target = (Tank)getTarget(world);
 			if (target != null)
 			{
-				if (targetInRange(target))
-				{
-					fire(getTargetDirection(target), world);
+			
+				if(target.isLocalPlayer() != this.pillbox.isLocalPlayer())
+				{				
+					if (targetInRange(target))
+					{
+						fire(getTargetDirection(target), world);
+					}					
 				}
 			}
 		}
+		
+		if(!this.pillbox.isOwned())
+		{
+			for(Entity entity:TileUtil.getLocalCollisions(this.pillbox, world))
+			{
+				if (entity instanceof Tank)
+				{
+					Tank tank = (Tank)entity;
+					this.pillbox.setOwned(true);
+					if(tank.isLocalPlayer())
+					{
+						this.pillbox.setLocalPlayer(true);
+					}
+					else
+					{
+						this.pillbox.setLocalPlayer(false);
+					}
+				}
+			}
+		}
+
 	}
 
 	/**

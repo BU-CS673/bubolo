@@ -18,6 +18,7 @@ import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.StationaryEntity;
 import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 

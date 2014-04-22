@@ -26,7 +26,7 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Base belongs to the local player.
 	 */
-	private boolean isLocalPlayer = true;
+	private boolean isLocalPlayer = false;
 
 	/**
 	 * Boolean representing whether this Base is owned by a player.
@@ -181,6 +181,7 @@ public class Base extends StationaryElement implements Ownable, Damageable
 				if (entity instanceof Tank)
 				{
 					this.setOwned(true);
+					this.heal(MAX_HIT_POINTS);
 					if (((Tank) entity).isLocalPlayer())
 					{
 						this.setLocalPlayer(true);	
