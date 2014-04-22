@@ -3,6 +3,9 @@ package bubolo.controllers.ai;
 import java.util.Random;
 
 import bubolo.controllers.Controller;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateEntity;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Terrain;
@@ -12,7 +15,7 @@ import bubolo.world.entity.concrete.Rubble;
 import bubolo.world.entity.concrete.Tree;
 
 /**
- * controls the growth rate of trees
+ * Controls the growth rate of trees
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -44,17 +47,17 @@ public class AITreeController implements Controller
 	 */
 	private int ticksSinceReset = 0;
 	private int ticksPerGrowth = 300;
+	
 	/**
 	 * random number generator used to decide a random tile to grow on
 	 */
 	Random randomGenerator = new Random();
 	
 	/**
-	 * default constructor
+	 * Constructs a new AITreeController.
 	 */
 	public AITreeController()
 	{
-		
 	}
 
 	@Override
@@ -75,11 +78,21 @@ public class AITreeController implements Controller
 				if ((ticksSinceReset >= ticksPerGrowth) && tileScore >0)
 				{
 					Tree tree = world.addEntity(Tree.class);
-					Grass grass = world.addEntity(Grass.class);
-					Tile tile = world.getMapTiles()[createAtX-1][createAtY-1];
 					
+					Tile tile = world.getMapTiles()[createAtX-1][createAtY-1];
 					tile.setElement(tree);					
-					tile.setTerrain(grass);
+					
+					Network net = NetworkSystem.getInstance();
+					net.send(new CreateEntity(tree.getClass(), tree.getId(), 
+							tree.getX(), tree.getY(), tree.getRotation()));
+					
+					if (!(tile.getTerrain() instanceof Grass))
+					{
+						Grass grass = world.addEntity(Grass.class);
+						tile.setTerrain(grass);
+						net.send(new CreateEntity(grass.getClass(), grass.getId(),
+								grass.getX(), grass.getY(), grass.getRotation()));
+					}
 							
 					ticksSinceReset = 0;
 					tileScore = 0;				
@@ -91,12 +104,13 @@ public class AITreeController implements Controller
 			}
 		}
 	}
+	
 	private boolean pickATile(World world)
 	{
 		//get map size in tiles
-		
 		int mapHeight = world.getMapHeight()/32;
 		int mapWidth = world.getMapWidth()/32;
+		
 		boolean tileFound = false;
 		
 		//get a random tile that is not on the border
@@ -113,13 +127,14 @@ public class AITreeController implements Controller
 		}
 		return tileFound;
 	}
+	
 	/**
-	 * sums up the score of a tile based on all its neighbors
-	 * @param world
+	 * Sums the score of a tile based on its neighbors.
+	 * @param world reference to the game world.
 	 */
 	private void getTempTileScore(World world)
 	{
-		 boolean unbuildable = false;
+		boolean unbuildable = false;
 		tempScore = 0;
 		Tile[][] tiles = world.getMapTiles();
 		Tile tile = null;
@@ -136,7 +151,8 @@ public class AITreeController implements Controller
 		else
 		{
 			Terrain terrain = tile.getTerrain();
-			//trees will grow on grass or craters or rubble nothing else
+			
+			//trees will grow on grass, craters or rubble.
 			if (!tile.hasElement())
 			{
 				if (terrain.getClass() == Grass.class)
@@ -178,15 +194,15 @@ public class AITreeController implements Controller
 			}
 		}
 	}
+	
 	/**
-	 * returns the score of a specific tile
+	 * Returns the score of a specific tile.
 	 * 
 	 * @param tile
 	 * 		the tile to be inspected
 	 * @return
 	 * 		the score of the tile
 	 */
-	
 	private int getNeighborTileScore(Tile tile)
 	{
 		int score = 0;

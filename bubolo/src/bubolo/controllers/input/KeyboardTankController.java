@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import bubolo.controllers.Controller;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateBullet;
 import bubolo.net.command.CreateEntity;
 import bubolo.net.command.MoveTank;
 import bubolo.world.World;
@@ -44,7 +45,6 @@ public class KeyboardTankController implements Controller
 	private static void processMovement(Tank tank)
 	{
 		// TODO (cdc - 3/14/2014): allow the key mappings to be changed.
-		// TODO (cdc - 3/14/2014): test this.
 
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
 		{
@@ -82,8 +82,8 @@ public class KeyboardTankController implements Controller
 			if(bullet != null)
 			{
 				Network net = NetworkSystem.getInstance();
-				net.send(new CreateEntity(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
-					bullet.getRotation()));
+				net.send(new CreateBullet(Bullet.class, bullet.getId(), bullet.getX(), bullet.getY(),
+					bullet.getRotation(), tank.getId()));
 			}
 
 		}
@@ -98,7 +98,6 @@ public class KeyboardTankController implements Controller
 
 	 private static void processMineLaying(Tank tank, World world)
 	 {
-	// // TODO (cdc - 3/14/2014): Change these to the correct lay mine keys:
 		 if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT) && (tank.getMineCount() > 0))
 		 {
 				float tankCenterX = tank.getX();

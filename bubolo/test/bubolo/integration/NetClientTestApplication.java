@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -57,6 +58,8 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	private Graphics graphics;
 	private Network network;
 	
+	private AtomicBoolean startGame = new AtomicBoolean(false);
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -93,7 +96,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		
 		world = new GameWorld();
 		
-		while (world.getMapTiles() == null)
+		while (world.getMapTiles() == null || !startGame.get())
 		{
 			network.update(world);
 		}
@@ -165,6 +168,27 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	public void onGameStart(int timeUntilStart)
 	{
 		System.out.println("Game is starting.");
+		
+		long currentTime = System.currentTimeMillis();
+		final long startTime = currentTime + (timeUntilStart * 1000);
+		
+		long secondsRemaining = Math.round((startTime - currentTime) / 1000);
+		System.out.println(secondsRemaining);
+		
+		long lastSecondsRemaining = secondsRemaining;
+		
+		while (currentTime < startTime)
+		{
+			currentTime = System.currentTimeMillis();
+			secondsRemaining = Math.round((startTime - currentTime) / 1000);
+			if (secondsRemaining < lastSecondsRemaining)
+			{
+				System.out.println(secondsRemaining);
+				lastSecondsRemaining = secondsRemaining;
+			}
+		}
+		
+		startGame.set(true);
 	}
 
 	@Override
