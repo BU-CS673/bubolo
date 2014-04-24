@@ -6,6 +6,8 @@ package bubolo.ui;
 
 import javax.swing.ImageIcon;
 
+import bubolo.audio.Audio;
+
 
 /**
  * Top level class for User Interface
@@ -27,12 +29,12 @@ public class UserInterface
 	/**
 	 * Sound Effects Volume Default
 	 */
-	public static final int SFXVOL_DEFAULT = 35;
+	public static final int SFXVOL_DEFAULT = Audio.getSoundEffectVolume();
 	
 	/**
 	 * Music Volume Default
 	 */
-	public static final int MFXVOL_DEFAULT = 35;
+	public static final int MFXVOL_DEFAULT = Audio.getMusicVolume();
 	
 	/**
 	 * Screen Size Default
