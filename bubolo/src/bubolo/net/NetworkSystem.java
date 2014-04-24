@@ -51,6 +51,12 @@ public class NetworkSystem implements Network
 		this.postedCommands = new ConcurrentLinkedQueue<NetworkCommand>();
 		this.observerNotifier = new NetworkObserverNotifier();
 	}
+	
+	@Override
+	public boolean isServer()
+	{
+		
+	}
 
 	@Override
 	public void startServer(String serverName) throws NetworkException, IllegalStateException

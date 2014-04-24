@@ -19,7 +19,7 @@ public abstract class Screen
 	protected final Stage stage;
 	
 	/** The base table for the screen. **/
-	protected final Table layout;
+	protected final Table table;
 	
 	/**
 	 * Default constructor.
@@ -27,11 +27,11 @@ public abstract class Screen
 	protected Screen()
 	{
 		stage = new Stage();
-		layout = new Table();
+		table = new Table();
 
-		layout.setFillParent(true);
-	    layout.top();
-	    stage.addActor(layout);
+		table.setFillParent(true);
+		table.top();
+	    stage.addActor(table);
 		
 		Gdx.input.setInputProcessor(stage);
 	}
@@ -52,7 +52,7 @@ public abstract class Screen
 	{
 		if (debug)
 		{
-			layout.debug();
+			table.debug();
 		}
 		
 		stage.act();
