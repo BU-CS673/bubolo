@@ -2,11 +2,12 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
-import bubolo.util.TileUtil;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.World;
-import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -17,6 +18,10 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Pillbox extends StationaryElement implements Ownable, Damageable
 {
+	/**
+	 * UID of tank that owns this Pillbox
+	 */
+	private UUID ownerUID;
 	/*
 	 * time at witch cannon was last fired
 	 */
@@ -214,6 +219,9 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 		{
 			this.isOwned = false;
 			this.isLocalPlayer = false;
+			this.setOwnerUID(null);
+			Network net = NetworkSystem.getInstance();
+			net.send(new UpdateOwnable(this));
 		}
 	}
 
@@ -234,5 +242,15 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
+	}
+
+	@Override
+	public UUID getOwnerUID() {
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) {
+		this.ownerUID = ownerUID;
 	}
 }

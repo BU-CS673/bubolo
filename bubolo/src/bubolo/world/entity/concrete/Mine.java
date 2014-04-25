@@ -14,6 +14,10 @@ import bubolo.world.entity.StationaryElement;
 public class Mine extends StationaryElement implements Ownable
 {
 	/**
+	 * the UID of the Tank that owns this Mine
+	 */
+	private UUID ownerUID;
+	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = -4956203172414751370L;
@@ -124,6 +128,16 @@ public class Mine extends StationaryElement implements Ownable
 			active = true;
 		}
 		return active;
+	}
+
+	@Override
+	public UUID getOwnerUID() {
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) {
+		this.ownerUID = ownerUID;
 	}
 	
 }

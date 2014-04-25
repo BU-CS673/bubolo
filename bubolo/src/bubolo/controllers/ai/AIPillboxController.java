@@ -1,6 +1,9 @@
 package bubolo.controllers.ai;
 
 import bubolo.controllers.Controller;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
 import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -37,7 +40,7 @@ public class AIPillboxController implements Controller
 			if (target != null)
 			{
 			
-				if(target.isLocalPlayer() != this.pillbox.isLocalPlayer())
+				if(target.getId() != this.pillbox.getOwnerUID() && this.pillbox.isOwned())
 				{				
 					if (targetInRange(target))
 					{
@@ -55,6 +58,7 @@ public class AIPillboxController implements Controller
 				{
 					Tank tank = (Tank)entity;
 					this.pillbox.setOwned(true);
+					this.pillbox.setOwnerUID(tank.getId());
 					if(tank.isLocalPlayer())
 					{
 						this.pillbox.setLocalPlayer(true);
@@ -64,6 +68,7 @@ public class AIPillboxController implements Controller
 						this.pillbox.setLocalPlayer(false);
 					}
 				}
+				sendNetUpdate(this.pillbox);
 			}
 		}
 
@@ -166,5 +171,9 @@ public class AIPillboxController implements Controller
 		pillbox.aimCannon(rotation);
 		pillbox.fireCannon(world);
 	}
-
+	private static void sendNetUpdate(Pillbox pillbox)
+	{
+		Network net = NetworkSystem.getInstance();
+		net.send(new UpdateOwnable(pillbox));
+	}
 }

@@ -1,5 +1,7 @@
 package bubolo.world;
 
+import java.util.UUID;
+
 /**
  * Interface for Entities that are owned by a specific player. Used to determine object
  * color, friendly/enemy units, etc.
@@ -8,6 +10,20 @@ package bubolo.world;
  */
 public interface Ownable
 {
+	/**
+	 * Returns the UID of the tank that owns this entity.  If not owned returns null
+	 * 
+	 * @return the UID of the tank that owns this entity.
+	 */
+	public UUID getOwnerUID();
+
+	/**
+	 * Sets the UID of the tank that owns this entity.
+	 * @param ownerUID 
+	 * 		the UID to of the tank that now owns this entity
+	 */
+	public void setOwnerUID(UUID ownerUID);
+	
 	/**
 	 * Returns whether this Entity belongs to the local player.
 	 * 

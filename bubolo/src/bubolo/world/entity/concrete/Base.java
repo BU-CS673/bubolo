@@ -1,13 +1,12 @@
 package bubolo.world.entity.concrete;
 
-import java.util.List;
 import java.util.UUID;
 
-import bubolo.util.TileUtil;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
-import bubolo.world.World;
-import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
 
 /**
@@ -18,6 +17,10 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Base extends StationaryElement implements Ownable, Damageable
 {
+	/**
+	 * the uid of the tank that owns this Base
+	 */
+	private UUID ownerUID;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -160,8 +163,13 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events
-		
+		if (this.hitPoints <= 0)
+		{
+			this.setOwned(false);
+			this.ownerUID = null;
+			Network net = NetworkSystem.getInstance();
+			net.send(new UpdateOwnable(this));
+		}
 	}
 
 	/**
@@ -181,32 +189,6 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
-	}
-	
-	@Override
-	public void update(World world)
-	{
-		if (this.hitPoints <= 0)
-		{
-			this.setOwned(false);
-			List<Entity> entities = TileUtil.getLocalCollisions(this, world);
-			for(Entity entity:entities)
-			{
-				if (entity instanceof Tank)
-				{
-					this.setOwned(true);
-					this.heal(MAX_HIT_POINTS);
-					if (((Tank) entity).isLocalPlayer())
-					{
-						this.setLocalPlayer(true);	
-					}
-					else
-					{
-						this.setLocalPlayer(false);
-					}
-				}
-			}
-		}
 	}
 	
 	/**
@@ -311,4 +293,15 @@ public class Base extends StationaryElement implements Ownable, Damageable
 			return MINE_REPLENISH_RATE;
 		}
 	}
+
+	@Override
+	public UUID getOwnerUID() {
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) {
+		this.ownerUID = ownerUID;
+	}
+
 }
