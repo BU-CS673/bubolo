@@ -20,6 +20,9 @@ public abstract class AbstractGameApplication implements GameApplication
 	
 	private State state;
 	
+	/**
+	 * Constructs an AbstractGameApplication;
+	 */
 	protected AbstractGameApplication()
 	{
 		this.state = State.MAIN_MENU;
@@ -48,6 +51,10 @@ public abstract class AbstractGameApplication implements GameApplication
 		this.state = state;
 	}
 	
+	/**
+	 * Sets the application's state.
+	 * @return the application's state.
+	 */
 	protected State getState()
 	{
 		return state;

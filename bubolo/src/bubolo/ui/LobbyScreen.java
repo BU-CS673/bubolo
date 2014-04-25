@@ -38,6 +38,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 
 	/**
 	 * Constructs the network game lobby.
+	 * @param app reference to the Game Application.
 	 */
 	public LobbyScreen(GameApplication app)
 	{

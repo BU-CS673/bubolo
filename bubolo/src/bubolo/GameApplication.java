@@ -8,12 +8,19 @@ import com.badlogic.gdx.ApplicationListener;
  */
 public interface GameApplication extends ApplicationListener
 {
+	/**
+	 * The application's state.
+	 * @author BU CS673 - Clone Productions
+	 */
 	public enum State
 	{
+		/** The main menu state. **/
 		MAIN_MENU,
 		
+		/** The game lobby state. **/
 		GAME_LOBBY,
 		
+		/** The game state. **/
 		GAME
 	}
 	
@@ -29,5 +36,9 @@ public interface GameApplication extends ApplicationListener
 	 */
 	boolean isGameStarted();
 	
+	/**
+	 * Sets the application's state.
+	 * @param state the application's state.
+	 */
 	void setState(State state);
 }
