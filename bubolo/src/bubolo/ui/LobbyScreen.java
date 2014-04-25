@@ -4,6 +4,8 @@
 
 package bubolo.ui;
 
+import bubolo.GameApplication;
+import bubolo.GameApplication.State;
 import bubolo.net.Network;
 import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
@@ -31,12 +33,16 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	private TextButton sendMessageButton;
 	private TextField sendMessageField;
 	private TextButton startGameButton;
+	
+	private final GameApplication app;
 
 	/**
 	 * Constructs the network game lobby.
 	 */
-	public LobbyScreen()
+	public LobbyScreen(GameApplication app)
 	{
+		this.app = app;
+		
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
 		Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
@@ -92,6 +98,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 				public void clicked(InputEvent event, float x, float y)
 				{
 					System.out.println("Start Game Clicked");
+//					app.setState(State.GAME);
 				}
 			});
 		}

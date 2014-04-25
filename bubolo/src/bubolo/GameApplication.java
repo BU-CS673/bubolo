@@ -8,15 +8,26 @@ import com.badlogic.gdx.ApplicationListener;
  */
 public interface GameApplication extends ApplicationListener
 {
+	public enum State
+	{
+		MAIN_MENU,
+		
+		GAME_LOBBY,
+		
+		GAME
+	}
+	
 	/**
 	 * Returns true if the game's subsystems have been set up, or false otherwise.
 	 * @return true if the game's subsystems have been set up.
 	 */
-	public boolean isReady();
+	boolean isReady();
 	
 	/**
 	 * Specifies whether the game has started.
 	 * @return true if the game has started.
 	 */
-	public boolean isGameStarted();
+	boolean isGameStarted();
+	
+	void setState(State state);
 }
