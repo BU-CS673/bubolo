@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.math.Vector2;
 
 import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
@@ -133,7 +135,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 			gameLobby.dispose();
 			
 			Tank tank = world.addEntity(Tank.class);
-			tank.setParams(1250, 100, 0);
+			tank.setParams(getRandomX(), 200, 0);
 			tank.setLocalPlayer(true);
 			network.send(new CreateTank(tank));
 			
@@ -143,6 +145,12 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		{
 			gameLobby = new LobbyScreen(this, world);
 		}
+	}
+	
+	private static int getRandomX()
+	{
+		int val = (new Random()).nextInt(10);
+		return (1250 + (100 * val));
 	}
 	
 	/**

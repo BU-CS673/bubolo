@@ -60,7 +60,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 
 		createMessageHistoryBox(skin);
 		createSendMessageRow(skin);
-		
+
 		Network net = NetworkSystem.getInstance();
 		net.addObserver(this);
 	}
@@ -103,15 +103,17 @@ public class LobbyScreen extends Screen implements NetworkObserver
 		table.add(sendMessageField).expandX().width(width);
 
 		stage.addListener(new InputListener() {
-            @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.ENTER) {
-                    sendMessage();
-                }
-                return false;
-            }
-        });
-		
+			@Override
+			public boolean keyUp(InputEvent event, int keycode)
+			{
+				if (keycode == Input.Keys.ENTER)
+				{
+					sendMessage();
+				}
+				return false;
+			}
+		});
+
 		if (net.isServer())
 		{
 			startGameButton = new TextButton("Start", skin);
@@ -126,14 +128,14 @@ public class LobbyScreen extends Screen implements NetworkObserver
 			});
 		}
 	}
-	
+
 	private void sendMessage()
 	{
 		if (!sendMessageField.getText().isEmpty())
 		{
 			Network net = NetworkSystem.getInstance();
 			net.send(new SendMessage(sendMessageField.getText()));
-			appendToMessageHistory(messageHistory, net.getPlayerName() + ": " + 
+			appendToMessageHistory(messageHistory, net.getPlayerName() + ": " +
 					sendMessageField.getText());
 			sendMessageField.setText("");
 		}
