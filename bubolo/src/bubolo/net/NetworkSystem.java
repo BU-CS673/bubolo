@@ -55,7 +55,7 @@ public class NetworkSystem implements Network
 	@Override
 	public boolean isServer()
 	{
-		
+		return (subsystem != null && subsystem instanceof Server);
 	}
 
 	@Override

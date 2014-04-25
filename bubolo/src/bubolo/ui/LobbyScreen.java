@@ -5,6 +5,7 @@
 package bubolo.ui;
 
 import bubolo.net.Network;
+import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -24,8 +26,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Lobby extends Screen
+public class LobbyScreen extends Screen implements NetworkObserver
 {
+	private Label messageHistory;
 	private TextButton sendMessageButton;
 	private TextField sendMessageField;
 	private TextButton startGameButton;
@@ -33,26 +36,28 @@ public class Lobby extends Screen
 	/**
 	 * Constructs the network game lobby.
 	 */
-	public Lobby()
+	public LobbyScreen()
 	{
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
 		Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
 
-		createMessageHistoryBox(table, skin);
+		createMessageHistoryBox(skin);
 		createSendMessageRow(skin);
 	}
 
-	private static void createMessageHistoryBox(Table table, Skin skin)
+	private void createMessageHistoryBox(Skin skin)
 	{
 		table.row().height(500.f);
-
+		
 		BitmapFont font = new BitmapFont(Gdx.files.internal("arial_26_white.fnt"));
 		LabelStyle messageBoxStyle = new LabelStyle();
 		messageBoxStyle.font = font;
 
-		Label title = new Label("", messageBoxStyle);
-		title.setWrap(true);
-		table.add(title).colspan(3).expandX();
+		messageHistory = new Label("", messageBoxStyle);
+		messageHistory.setWrap(true);
+		
+		ScrollPane scrollpane = new ScrollPane(messageHistory, skin);
+		table.add(scrollpane).colspan(3).expand();
 	}
 
 	private void createSendMessageRow(Skin skin)
@@ -78,17 +83,57 @@ public class Lobby extends Screen
 		table.add(sendMessageField).expandX().width(Gdx.graphics.getWidth() - 250.f);
 
 		Network net = NetworkSystem.getInstance();
-		net.is
+		if (net.isServer())
+		{
+			startGameButton = new TextButton("Start", skin);
+			table.add(startGameButton).expandX().width(100.f);
+			
+			startGameButton.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y)
+				{
+					System.out.println("Start Game Clicked");
+				}
+			});
+		}
+	}
+
+	@Override
+	public void onConnect(String clientName, String serverName)
+	{
+	}
+
+	@Override
+	public void onClientConnected(String clientName)
+	{
+		appendToMessageHistory(messageHistory, clientName + " joined the game.");
+	}
+
+	@Override
+	public void onClientDisconnected(String clientName)
+	{
+		appendToMessageHistory(messageHistory, clientName + " left the game.");
+	}
+
+	@Override
+	public void onGameStart(int secondsUntilStart)
+	{
 		
-		startGameButton = new TextButton("Start", skin);
-		table.add(startGameButton).expandX().width(100.f);
+	}
+
+	@Override
+	public void onMessageReceived(String message)
+	{
+		appendToMessageHistory(messageHistory, message);
+	}
+	
+	private static void appendToMessageHistory(Label messageHistory, String message)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(messageHistory.getText());
+		sb.append("\n");
+		sb.append(message);
 		
-		startGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y)
-			{
-				System.out.println("Start Game Clicked");
-			}
-		});
+		messageHistory.setText(sb.toString());
 	}
 }
