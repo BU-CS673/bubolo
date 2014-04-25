@@ -9,15 +9,15 @@ import bubolo.GameApplication.State;
 import bubolo.net.Network;
 import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.SendMap;
-import bubolo.net.command.StartGame;
 import bubolo.net.command.SendMessage;
 import bubolo.world.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -91,13 +91,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
-				if (!sendMessageField.getText().isEmpty())
-				{
-					net.send(new SendMessage(sendMessageField.getText()));
-					appendToMessageHistory(messageHistory, net.getPlayerName() + ": " + 
-							sendMessageField.getText());
-					sendMessageField.setText("");
-				}
+				sendMessage();
 			}
 		});
 
@@ -108,6 +102,16 @@ public class LobbyScreen extends Screen implements NetworkObserver
 				Gdx.graphics.getWidth() - 150.f;
 		table.add(sendMessageField).expandX().width(width);
 
+		stage.addListener(new InputListener() {
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.ENTER) {
+                    sendMessage();
+                }
+                return false;
+            }
+        });
+		
 		if (net.isServer())
 		{
 			startGameButton = new TextButton("Start", skin);
@@ -117,10 +121,21 @@ public class LobbyScreen extends Screen implements NetworkObserver
 				@Override
 				public void clicked(InputEvent event, float x, float y)
 				{
-					net.send(new StartGame(4, new SendMap(world)));
-					app.setState(State.GAME);
+					net.startGame(world);
 				}
 			});
+		}
+	}
+	
+	private void sendMessage()
+	{
+		if (!sendMessageField.getText().isEmpty())
+		{
+			Network net = NetworkSystem.getInstance();
+			net.send(new SendMessage(sendMessageField.getText()));
+			appendToMessageHistory(messageHistory, net.getPlayerName() + ": " + 
+					sendMessageField.getText());
+			sendMessageField.setText("");
 		}
 	}
 
@@ -146,7 +161,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	@Override
 	public void onGameStart(int secondsUntilStart)
 	{
-
+		app.setState(State.GAME);
 	}
 
 	@Override
