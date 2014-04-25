@@ -40,6 +40,9 @@ public class LobbyScreen extends Screen implements NetworkObserver
 
 	private final GameApplication app;
 	private final World world;
+	
+	private long startTime;
+	private long lastSecondsRemaining;
 
 	/**
 	 * Constructs the network game lobby.
@@ -128,6 +131,30 @@ public class LobbyScreen extends Screen implements NetworkObserver
 			});
 		}
 	}
+	
+	@Override
+	protected void onUpdate()
+	{
+		if (app.getState() == State.GAME_STARTING)
+		{
+			final long currentTime = System.currentTimeMillis();
+			final long secondsRemaining = (startTime - currentTime) / 1000L;
+			
+			if (currentTime < startTime)
+			{
+				if (secondsRemaining < lastSecondsRemaining)
+				{
+					System.out.println(secondsRemaining);
+					appendToMessageHistory(messageHistory, secondsRemaining + "...");
+					lastSecondsRemaining = secondsRemaining;
+				}
+			}
+			else
+			{
+				app.setState(State.GAME);
+			}
+		}
+	}
 
 	private void sendMessage()
 	{
@@ -163,7 +190,13 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	@Override
 	public void onGameStart(int secondsUntilStart)
 	{
-		app.setState(State.GAME);
+		appendToMessageHistory(messageHistory, "*** Get ready: The game is starting! ***\n\n");
+		
+		long currentTime = System.currentTimeMillis();
+		startTime = currentTime + (secondsUntilStart * 1000);
+		lastSecondsRemaining = secondsUntilStart;
+		
+		app.setState(State.GAME_STARTING);
 	}
 
 	@Override

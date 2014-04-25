@@ -56,12 +56,20 @@ public abstract class Screen
 		}
 		
 		stage.act();
+		onUpdate();
 		stage.draw();
 		
 		if (debug)
 		{
 			Table.drawDebug(stage);
 		}
+	}
+	
+	/**
+	 * Called once per tick. Child classes can override this if necessary.
+	 */
+	protected void onUpdate()
+	{
 	}
 	
 	/**

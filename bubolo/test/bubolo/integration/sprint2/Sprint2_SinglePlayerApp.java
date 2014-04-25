@@ -163,4 +163,11 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -158,4 +158,11 @@ public class TreeControllerTestApplication implements GameApplication
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -20,6 +20,9 @@ public interface GameApplication extends ApplicationListener
 		/** The game lobby state. **/
 		GAME_LOBBY,
 		
+		/** The game is starting. **/
+		GAME_STARTING,
+		
 		/** The game state. **/
 		GAME
 	}
@@ -41,4 +44,10 @@ public interface GameApplication extends ApplicationListener
 	 * @param state the application's state.
 	 */
 	void setState(State state);
+	
+	/**
+	 * Gets the application's state.
+	 * @return the application's state.
+	 */
+	State getState();
 }

@@ -52,11 +52,8 @@ public abstract class AbstractGameApplication implements GameApplication
 		onStateChanged();
 	}
 	
-	/**
-	 * Gets the application's state.
-	 * @return the application's state.
-	 */
-	protected State getState()
+	@Override
+	public State getState()
 	{
 		return state;
 	}
