@@ -6,13 +6,8 @@ import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.JOptionPane;
-
 import org.json.simple.parser.ParseException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -26,7 +21,6 @@ import bubolo.net.command.CreateTank;
 import bubolo.ui.LobbyScreen;
 import bubolo.ui.Screen;
 import bubolo.util.Parser;
-import bubolo.world.GameWorld;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -109,40 +103,6 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		network.addObserver(this);
 		network.startServer(playerName);
 		
-//		final AtomicInteger response = new AtomicInteger(-99);
-//		
-//		class StartGameDialog implements Runnable 
-//		{
-//			private final AtomicInteger response;
-//			
-//			StartGameDialog(AtomicInteger response)
-//			{
-//				this.response = response;
-//			}
-//			
-//			@Override
-//			public void run()
-//			{
-//				int userResponse = JOptionPane.showConfirmDialog(null,
-//						"Click OK to start the game.",
-//						"Start Game",
-//						JOptionPane.OK_CANCEL_OPTION);
-//				this.response.set(userResponse);
-//			}
-//		}
-//		
-//		new Thread(new StartGameDialog(response)).start();
-		
-//		while (response.get() == -99)
-//		{
-//			network.update(world);
-//		}
-//		
-//		if (response.get() == JOptionPane.CANCEL_OPTION)
-//		{
-//			Gdx.app.exit();
-//		}
-		
 		setState(State.GAME_LOBBY);
 	}
 	
@@ -184,7 +144,7 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		}
 		else if (getState() == State.GAME_LOBBY)
 		{
-			gameLobby = new LobbyScreen(this);
+			gameLobby = new LobbyScreen(this, world);
 		}
 	}
 	

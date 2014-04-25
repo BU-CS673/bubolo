@@ -12,6 +12,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
+import bubolo.GameApplication.State;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
@@ -19,6 +20,8 @@ import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
+import bubolo.ui.LobbyScreen;
+import bubolo.ui.Screen;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
@@ -59,6 +62,8 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	
 	private AtomicBoolean startGame = new AtomicBoolean(false);
 	
+	Screen gameLobby;
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -95,17 +100,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		
 		world = new GameWorld();
 		
-		while (world.getMapTiles() == null || !startGame.get())
-		{
-			network.update(world);
-		}
-		
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(1250, 100, 0);
-		tank.setLocalPlayer(true);
-		network.send(new CreateTank(tank));
-		
-		setReady(true);
+		setState(State.GAME_LOBBY);
 	}
 	
 	/**
@@ -115,9 +110,39 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	@Override
 	public void render()
 	{
-		graphics.draw(world);
-		world.update();
-		network.update(world);
+		if (getState() == State.GAME)
+		{
+			gameLobby.dispose();
+			
+			graphics.draw(world);
+			world.update();
+			network.update(world);
+		}
+		else if (getState() == State.GAME_LOBBY)
+		{
+			graphics.draw(gameLobby);
+			network.update(world);
+		}
+	}
+	
+	@Override
+	protected void onStateChanged()
+	{
+		if (getState() == State.GAME)
+		{
+			gameLobby.dispose();
+			
+			Tank tank = world.addEntity(Tank.class);
+			tank.setParams(1250, 100, 0);
+			tank.setLocalPlayer(true);
+			network.send(new CreateTank(tank));
+			
+			setReady(true);
+		}
+		else if (getState() == State.GAME_LOBBY)
+		{
+			gameLobby = new LobbyScreen(this, world);
+		}
 	}
 	
 	/**
@@ -193,7 +218,5 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	@Override
 	public void onMessageReceived(String message)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 }

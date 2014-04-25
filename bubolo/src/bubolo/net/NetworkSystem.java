@@ -29,6 +29,9 @@ public class NetworkSystem implements Network
 
 	// Specifies whether the network system is running in debug mode.
 	private boolean debug = false;
+	
+	// The name of the player, which is used when sending messages.
+	private String name;
 
 	private static volatile Network instance;
 
@@ -59,11 +62,19 @@ public class NetworkSystem implements Network
 	}
 
 	@Override
+	public String getPlayerName()
+	{
+		return name;
+	}
+	
+	@Override
 	public void startServer(String serverName) throws NetworkException, IllegalStateException
 	{
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
 
+		name = serverName;
+		
 		// Don't allow the server to run in debug mode, since it requires external resources.
 		// Instead, test this properly in an integration test.
 		if (debug)
@@ -83,6 +94,8 @@ public class NetworkSystem implements Network
 		checkState(subsystem == null, "The network system has already been started. " +
 				"Do not call startServer or connect more than once.");
 
+		name = clientName;
+		
 		// Don't allow the client to run in debug mode, since it requires external resources.
 		// Instead, test this properly in an integration test.
 		if (debug)

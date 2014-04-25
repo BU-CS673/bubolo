@@ -24,6 +24,12 @@ public interface Network
 	boolean isServer();
 	
 	/**
+	 * Returns the name of the player.
+	 * @return the name of the player.
+	 */
+	String getPlayerName();
+	
+	/**
 	 * Identifies this player as the game server, and begins accepting connections from other
 	 * players. There should only be one game server per game.
 	 * 
