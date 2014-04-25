@@ -26,7 +26,6 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_SinglePlayerApp(1067, 600), cfg);
 	}
 

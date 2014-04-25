@@ -37,7 +37,6 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_HostMultiPlayerApp(1067, 600), cfg);
 	}
 

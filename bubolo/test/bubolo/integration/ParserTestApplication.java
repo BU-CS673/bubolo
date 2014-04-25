@@ -27,7 +27,6 @@ public class ParserTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new ParserTestApplication(1067, 600), cfg);
 	}
 

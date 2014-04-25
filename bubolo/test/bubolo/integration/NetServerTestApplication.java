@@ -47,7 +47,6 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new NetServerTestApplication(1067, 600, name), cfg);
 	}
 	

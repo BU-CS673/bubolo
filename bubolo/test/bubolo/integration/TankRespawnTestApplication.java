@@ -33,7 +33,6 @@ public class TankRespawnTestApplication implements GameApplication
 		cfg.title = "BUBOLO Tree Controller Integration";
 		cfg.width = 640;
 		cfg.height = 640;
-		cfg.useGL20 = true;
 	new LwjglApplication(new TankRespawnTestApplication(640, 640), cfg);
 	}
 	

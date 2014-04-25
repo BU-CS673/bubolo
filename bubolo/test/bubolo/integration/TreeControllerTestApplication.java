@@ -31,7 +31,6 @@ public class TreeControllerTestApplication implements GameApplication
 		cfg.title = "BUBOLO Tree Controller Integration";
 		cfg.width = 640;
 		cfg.height = 640;
-		cfg.useGL20 = true;
 	new LwjglApplication(new TreeControllerTestApplication(640, 640), cfg);
 	}
 	

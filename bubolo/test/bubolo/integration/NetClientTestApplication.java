@@ -48,7 +48,6 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 		cfg.title = "BUBOLO Net Client Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new NetClientTestApplication(1067, 600), cfg);
 	}
 	
