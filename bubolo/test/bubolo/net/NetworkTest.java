@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.test.MockWorld;
+import bubolo.mock.MockWorld;
 
 /**
  * @author BU CS673 - Clone Productions

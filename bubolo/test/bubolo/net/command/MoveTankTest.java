@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import org.junit.Test;
 
+import bubolo.mock.MockTank;
+import bubolo.mock.MockWorld;
 import bubolo.net.NetworkCommand;
-import bubolo.test.MockTank;
-import bubolo.test.MockWorld;
 import bubolo.world.entity.concrete.Tank;
 
 /**

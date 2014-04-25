@@ -15,8 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockBulletCreator;
+import bubolo.mock.MockWorld;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;

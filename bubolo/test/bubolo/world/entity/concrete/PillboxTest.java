@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.mockito.Mockito.mock;
 
+import static org.mockito.Mockito.mock;
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
+import bubolo.mock.MockBulletCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.entity.EntityTestCase;
 
