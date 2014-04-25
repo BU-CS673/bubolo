@@ -23,6 +23,8 @@ import bubolo.net.Network;
 import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
+import bubolo.ui.LobbyScreen;
+import bubolo.ui.Screen;
 import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.entity.concrete.Tank;
@@ -59,6 +61,8 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	
 	private AtomicBoolean startGame = new AtomicBoolean(false);
 	
+	private Screen gameLobby;
+	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
@@ -90,7 +94,6 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-		world = new GameWorld(32*94, 32*94);
 		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
@@ -107,47 +110,41 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 		network.addObserver(this);
 		network.startServer(playerName);
 		
-		final AtomicInteger response = new AtomicInteger(-99);
+//		final AtomicInteger response = new AtomicInteger(-99);
+//		
+//		class StartGameDialog implements Runnable 
+//		{
+//			private final AtomicInteger response;
+//			
+//			StartGameDialog(AtomicInteger response)
+//			{
+//				this.response = response;
+//			}
+//			
+//			@Override
+//			public void run()
+//			{
+//				int userResponse = JOptionPane.showConfirmDialog(null,
+//						"Click OK to start the game.",
+//						"Start Game",
+//						JOptionPane.OK_CANCEL_OPTION);
+//				this.response.set(userResponse);
+//			}
+//		}
+//		
+//		new Thread(new StartGameDialog(response)).start();
 		
-		class StartGameDialog implements Runnable 
-		{
-			private final AtomicInteger response;
-			
-			StartGameDialog(AtomicInteger response)
-			{
-				this.response = response;
-			}
-			
-			@Override
-			public void run()
-			{
-				int userResponse = JOptionPane.showConfirmDialog(null,
-						"Click OK to start the game.",
-						"Start Game",
-						JOptionPane.OK_CANCEL_OPTION);
-				this.response.set(userResponse);
-			}
-		}
+//		while (response.get() == -99)
+//		{
+//			network.update(world);
+//		}
+//		
+//		if (response.get() == JOptionPane.CANCEL_OPTION)
+//		{
+//			Gdx.app.exit();
+//		}
 		
-		new Thread(new StartGameDialog(response)).start();
-		
-		while (response.get() == -99)
-		{
-			network.update(world);
-		}
-		
-		if (response.get() == JOptionPane.CANCEL_OPTION)
-		{
-			Gdx.app.exit();
-		}
-		network.startGame(world);
-		
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(1100, 100, 0);
-		tank.setLocalPlayer(true);
-		network.send(new CreateTank(tank));
-		
-		setReady(true);
+		setState(State.GAME_LOBBY);
 	}
 	
 	/**
@@ -157,9 +154,37 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	@Override
 	public void render()
 	{
-		graphics.draw(world);
-		world.update();
-		network.update(world);
+		if (getState() == State.GAME)
+		{
+			graphics.draw(world);
+			world.update();
+			network.update(world);
+		}
+		else if (getState() == State.GAME_LOBBY)
+		{
+			graphics.draw(gameLobby);
+			network.update(world);
+		}
+	}
+	
+	@Override
+	protected void onStateChanged()
+	{
+		if (getState() == State.GAME)
+		{
+			network.startGame(world);
+			
+			Tank tank = world.addEntity(Tank.class);
+			tank.setParams(1100, 100, 0);
+			tank.setLocalPlayer(true);
+			network.send(new CreateTank(tank));
+			
+			setReady(true);
+		}
+		else if (getState() == State.GAME_LOBBY)
+		{
+			gameLobby = new LobbyScreen(this);
+		}
 	}
 	
 	/**

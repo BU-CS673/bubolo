@@ -11,6 +11,7 @@ import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -44,8 +45,9 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	{
 		this.app = app;
 		
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
-		Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas);
+		TextureAtlas atlas = new TextureAtlas(
+				new FileHandle(UserInterface.UI_PATH + "uiskin.atlas"));
+		Skin skin = new Skin(new FileHandle(UserInterface.UI_PATH + "uiskin.json"), atlas);
 
 		createMessageHistoryBox(skin);
 		createSendMessageRow(skin);
@@ -55,7 +57,8 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	{
 		table.row().height(500.f);
 		
-		BitmapFont font = new BitmapFont(Gdx.files.internal("arial_26_white.fnt"));
+		BitmapFont font = new BitmapFont(
+				new FileHandle(UserInterface.UI_PATH + "arial_26_white.fnt"));
 		LabelStyle messageBoxStyle = new LabelStyle();
 		messageBoxStyle.font = font;
 

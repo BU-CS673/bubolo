@@ -22,9 +22,14 @@ public class UserInterface
 	public static final String FILENAME = "Prefs.bolo";
 	
 	/**
-	 * File path were UI icons are stored
+	 * Path where UI icons are stored.
 	 */
 	public static final String ICONS_PATH = "res/icons/";
+	
+	/**
+	 * Path where the user interface files are located.
+	 */
+	public static final String UI_PATH = "res/ui/";
 	
 	/**
 	 * Sound Effects Volume Default

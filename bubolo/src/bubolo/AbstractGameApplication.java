@@ -49,15 +49,23 @@ public abstract class AbstractGameApplication implements GameApplication
 	public void setState(State state)
 	{
 		this.state = state;
+		onStateChanged();
 	}
 	
 	/**
-	 * Sets the application's state.
+	 * Gets the application's state.
 	 * @return the application's state.
 	 */
 	protected State getState()
 	{
 		return state;
+	}
+	
+	/**
+	 * Called when the application's state is changed.
+	 */
+	protected void onStateChanged()
+	{
 	}
 
 	@Override
