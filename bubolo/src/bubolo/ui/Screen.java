@@ -63,4 +63,9 @@ public abstract class Screen
 			Table.drawDebug(stage);
 		}
 	}
+	
+	/**
+	 * Releases all heavy-weight resources.
+	 */
+	public abstract void dispose();
 }

@@ -171,6 +171,8 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	{
 		if (getState() == State.GAME)
 		{
+			gameLobby.dispose();
+			
 			network.startGame(world);
 			
 			Tank tank = world.addEntity(Tank.class);

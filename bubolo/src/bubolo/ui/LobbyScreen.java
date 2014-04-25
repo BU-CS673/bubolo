@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
@@ -48,33 +50,31 @@ public class LobbyScreen extends Screen implements NetworkObserver
 		TextureAtlas atlas = new TextureAtlas(
 				new FileHandle(UserInterface.UI_PATH + "uiskin.atlas"));
 		Skin skin = new Skin(new FileHandle(UserInterface.UI_PATH + "uiskin.json"), atlas);
-
+		
 		createMessageHistoryBox(skin);
 		createSendMessageRow(skin);
 	}
 
 	private void createMessageHistoryBox(Skin skin)
 	{
-		table.row().height(500.f);
-		
-		BitmapFont font = new BitmapFont(
-				new FileHandle(UserInterface.UI_PATH + "arial_26_white.fnt"));
-		LabelStyle messageBoxStyle = new LabelStyle();
-		messageBoxStyle.font = font;
+		table.row().colspan(3)
+			.width(Gdx.graphics.getWidth() - 20.f)
+			.height(Gdx.graphics.getHeight() - 100.f);
 
-		messageHistory = new Label("", messageBoxStyle);
+		messageHistory = new Label("", skin);
 		messageHistory.setWrap(true);
+		messageHistory.setAlignment(Align.top + Align.left);
 		
 		ScrollPane scrollpane = new ScrollPane(messageHistory, skin);
-		table.add(scrollpane).colspan(3).expand();
+		table.add(scrollpane).expand();
 	}
 
 	private void createSendMessageRow(Skin skin)
 	{
-		table.row();
+		table.row().padBottom(15.f);
 
 		sendMessageButton = new TextButton("Send", skin);
-		table.add(sendMessageButton).expandX().height(35.f).width(100.f);
+		table.add(sendMessageButton).expandX().width(100.f);
 
 		sendMessageButton.addListener(new ClickListener() {
 			@Override
@@ -82,8 +82,8 @@ public class LobbyScreen extends Screen implements NetworkObserver
 			{
 				if (!sendMessageField.getText().isEmpty())
 				{
-					System.out.println(sendMessageField.getText());
-					sendMessageField.setText(null);
+					appendToMessageHistory(messageHistory, sendMessageField.getText());
+					sendMessageField.setText("");
 				}
 			}
 		});
@@ -101,8 +101,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 				@Override
 				public void clicked(InputEvent event, float x, float y)
 				{
-					System.out.println("Start Game Clicked");
-//					app.setState(State.GAME);
+					app.setState(State.GAME);
 				}
 			});
 		}
@@ -140,10 +139,15 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	private static void appendToMessageHistory(Label messageHistory, String message)
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append(messageHistory.getText());
-		sb.append("\n");
 		sb.append(message);
+		sb.append("\n");
+		sb.append(messageHistory.getText());
 		
 		messageHistory.setText(sb.toString());
+	}
+
+	@Override
+	public void dispose()
+	{
 	}
 }
