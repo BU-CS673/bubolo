@@ -164,4 +164,11 @@ public class TankTerrainSpeedTest implements GameApplication
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

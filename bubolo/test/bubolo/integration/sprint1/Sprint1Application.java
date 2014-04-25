@@ -130,4 +130,11 @@ public class Sprint1Application implements GameApplication
 	{
 		return true;
 	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -185,4 +185,11 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	{
 		return world.getMapTiles() != null;
 	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
