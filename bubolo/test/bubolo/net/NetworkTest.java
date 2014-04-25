@@ -110,6 +110,16 @@ public class NetworkTest
 	{
 		net.startGame(new MockWorld());
 	}
+	
+	@Test
+	public void setGetPlayerName()
+	{
+		net.startDebug();
+		final String name = "Test";
+		net.startServer(name);
+		
+		assertEquals(name, net.getPlayerName());
+	}
 
 	@Test
 	public void addRemoveObserver()
