@@ -10,24 +10,24 @@ import bubolo.audio.Audio;
 
 
 /**
- * Top level class for User Interface
+ * User interface constants.
  * @author BU CS673 - Clone Productions
  */
-public class UserInterface
+public abstract class UserInterface
 {
 
 	/**
-	 * 
+	 * The preferences file name.
 	 */
-	public static final String FILENAME = "Prefs.bolo";
+	public static final String PREFERENCES_FILENAME = "Prefs.bolo";
 	
 	/**
-	 * Path where UI icons are stored.
+	 * File path where UI icons are stored.
 	 */
 	public static final String ICONS_PATH = "res/icons/";
 	
 	/**
-	 * Path where the user interface files are located.
+	 * File path where the user interface files are located.
 	 */
 	public static final String UI_PATH = "res/ui/";
 	

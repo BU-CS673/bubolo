@@ -174,12 +174,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 
 	private static void appendToMessageHistory(Label messageHistory, String message)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append(message);
-		sb.append("\n");
-		sb.append(messageHistory.getText());
-
-		messageHistory.setText(sb.toString());
+		messageHistory.setText(message + "\n" + messageHistory.getText());
 	}
 
 	@Override
