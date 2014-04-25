@@ -10,18 +10,12 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import bubolo.AbstractGameApplication;
-import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.util.Parser;
-import bubolo.world.GameWorld;
-import bubolo.world.World;
-import bubolo.world.entity.Entity;
 import bubolo.world.entity.StationaryElement;
-import bubolo.world.entity.StationaryEntity;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
 
@@ -96,11 +90,13 @@ public class PillboxControllerTestApplication extends AbstractGameApplication
 		tank.setParams(100, 100, 0);
 		tank.setLocalPlayer(true);
 		StationaryElement pillbox = (StationaryElement)world.addEntity(Pillbox.class).setParams(32*9, 32*6, 0);
-		world.getMapTiles()[9-1][9-1].setElement(pillbox);
-		world.addEntity(Pillbox.class).setParams(32*18, 32*6, 0);
-		world.addEntity(Pillbox.class).setParams(32*18, 32*12, 0);
-		world.addEntity(Pillbox.class).setParams(32*9, 32*12, 0);
-
+		world.getMapTiles()[9][6].setElement(pillbox);
+		pillbox = (StationaryElement) world.addEntity(Pillbox.class).setParams(32*18, 32*6, 0);
+		world.getMapTiles()[18][6].setElement(pillbox);
+		pillbox = (StationaryElement) world.addEntity(Pillbox.class).setParams(32*18, 32*12, 0);
+		world.getMapTiles()[18][12].setElement(pillbox);
+		pillbox = (StationaryElement) world.addEntity(Pillbox.class).setParams(32*9, 32*12, 0);
+		world.getMapTiles()[9][12].setElement(pillbox);
 		setReady(true);
 	}
 	

@@ -1,5 +1,7 @@
 package bubolo.graphics;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +17,8 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 
+	private float rotation;
+	
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "tree.png";
 	
@@ -30,6 +34,8 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 		super(DrawLayer.THIRD, tree);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
+		Random rand = new Random();
+		rotation = (float) (rand.nextInt(4) * (Math.PI/2));
 	}
 
 	@Override
@@ -43,5 +49,11 @@ class TreeSprite extends AbstractEntitySprite<Entity>
 		{
 			drawTexture(batch, camera, layer, image);
 		}
+	}
+	
+	@Override
+	public float getRotation()
+	{
+		return rotation;
 	}
 }
