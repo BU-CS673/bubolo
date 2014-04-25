@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import bubolo.test.MockTank;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockTank;
+import bubolo.mock.MockWorld;
 import bubolo.world.World;
 
 import com.badlogic.gdx.graphics.Camera;

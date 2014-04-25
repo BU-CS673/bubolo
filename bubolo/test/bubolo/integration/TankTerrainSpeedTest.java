@@ -34,7 +34,6 @@ public class TankTerrainSpeedTest implements GameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new TankTerrainSpeedTest(1067, 600), cfg);
 	}
 
@@ -163,5 +162,19 @@ public class TankTerrainSpeedTest implements GameApplication
 	public boolean isGameStarted() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

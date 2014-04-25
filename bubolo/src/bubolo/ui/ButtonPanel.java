@@ -29,7 +29,7 @@ public class ButtonPanel extends JPanel
 	/**
 	 * Preference View used by the game
 	 */
-	public final PreferencesView pv = new PreferencesView(pm);
+	private PreferencesView pv = new PreferencesView(pm);
 
 	/**
 	 * Preferences Controller used by the game

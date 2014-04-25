@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import bubolo.mock.MockWorld;
 import bubolo.net.NetworkCommand;
-import bubolo.test.MockWorld;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Tank;

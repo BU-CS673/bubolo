@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.test.MockWorld;
+import bubolo.mock.MockWorld;
 
 /**
  * @author BU CS673 - Clone Productions
@@ -109,6 +109,16 @@ public class NetworkTest
 	public void startGame()
 	{
 		net.startGame(new MockWorld());
+	}
+	
+	@Test
+	public void setGetPlayerName()
+	{
+		net.startDebug();
+		final String name = "Test";
+		net.startServer(name);
+		
+		assertEquals(name, net.getPlayerName());
 	}
 
 	@Test

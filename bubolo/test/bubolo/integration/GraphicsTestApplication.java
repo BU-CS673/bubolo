@@ -42,7 +42,6 @@ public class GraphicsTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new GraphicsTestApplication(1067, 600), cfg);
 	}
 	

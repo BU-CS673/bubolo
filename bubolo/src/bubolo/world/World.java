@@ -6,6 +6,7 @@ import java.util.UUID;
 import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
+import bubolo.util.Nullable;
 import bubolo.world.entity.Entity;
 
 /**
@@ -98,7 +99,7 @@ public interface World
 	 *             if the entity cannot be instantiated, or if the UUID already belongs to an
 	 *             entity.
 	 */
-	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException;
+	public <T extends Entity> T addEntity(Class<T> c, @Nullable UUID id) throws GameLogicException;
 
 	/**
 	 * @see World#addEntity(Class)
@@ -115,7 +116,7 @@ public interface World
 	 *             if the entity cannot be instantiated, or if the UUID already belongs to an
 	 *             entity.
 	 */
-	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
+	public <T extends Entity> T addEntity(Class<T> c, @Nullable ControllerFactory controllerFactory)
 			throws GameLogicException;
 
 	/**
@@ -134,7 +135,8 @@ public interface World
 	 *             if the entity cannot be instantiated, or if the UUID already belongs to an
 	 *             entity.
 	 */
-	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
+	public <T extends Entity> T addEntity(Class<T> c, @Nullable UUID id, 
+			@Nullable ControllerFactory controllerFactory)
 			throws GameLogicException;
 
 	/**

@@ -37,7 +37,6 @@ public class LibGdxAppTester extends ApplicationAdapter
 			cfg.title = "test";
 			cfg.width = 400;
 			cfg.height = 400;
-			cfg.useGL20 = true;
 			app = new LwjglApplication(new LibGdxAppTester(), cfg);
 		}
 		
