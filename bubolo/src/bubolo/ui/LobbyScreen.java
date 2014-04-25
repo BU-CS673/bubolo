@@ -213,5 +213,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	@Override
 	public void dispose()
 	{
+		Network net = NetworkSystem.getInstance();
+		net.removeObserver(this);
 	}
 }
