@@ -36,11 +36,11 @@ public class UpdateOwnable implements NetworkCommand
 	 * 		the ownable entity to update
 	 */
 	
-	public UpdateOwnable(Entity ownable)
+	public UpdateOwnable(Ownable ownable)
 	{
 		this.id = ownable.getId();
-		this.isOwned = ((Ownable)ownable).isOwned();
-		this.ownerUID = ((Ownable)ownable).getOwnerUID();
+		this.isOwned = ownable.isOwned();
+		this.ownerUID = ownable.getOwnerUID();
 	}
 
 	@Override

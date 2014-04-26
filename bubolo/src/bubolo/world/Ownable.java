@@ -11,6 +11,12 @@ import java.util.UUID;
 public interface Ownable
 {
 	/**
+	 * returns the UID of the Ownable
+	 * @return the UID of this Ownable
+	 */
+	public UUID getId();
+	
+	/**
 	 * Returns the UID of the tank that owns this entity.  If not owned returns null
 	 * 
 	 * @return the UID of the tank that owns this entity.
