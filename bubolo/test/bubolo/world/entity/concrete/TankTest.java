@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.peer.LightweightPeer;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -211,5 +212,18 @@ public class TankTest
 		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
 		assertNotNull(pillbox);
 		assertNotNull(world.getMapTiles()[0][0].getElement());
+	}
+	
+	@Test
+	public void setOwner()
+	{
+		tank.setOwnerUID(tank.getId());
+		assertEquals(tank.getId(), tank.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		tank.setOwnerUID(tank.getId());
+		assertEquals(tank.getId(), tank.getOwnerUID());
 	}
 }

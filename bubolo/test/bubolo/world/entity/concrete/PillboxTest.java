@@ -107,4 +107,17 @@ public class PillboxTest
 		pillbox.heal(1);
 		assertEquals(100, pillbox.getHitPoints(), 0);
 	}
+	
+	@Test
+	public void setOwner()
+	{
+		pillbox.setOwnerUID(pillbox.getId());
+		assertEquals(pillbox.getId(), pillbox.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		pillbox.setOwnerUID(pillbox.getId());
+		assertEquals(pillbox.getId(), pillbox.getOwnerUID());
+	}
 }

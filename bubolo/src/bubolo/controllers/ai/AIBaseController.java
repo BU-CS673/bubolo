@@ -56,6 +56,7 @@ public class AIBaseController implements Controller
 				{
 					this.base.setOwned(true);
 					this.base.setOwnerUID(tank.getId());
+					this.base.heal(100);
 					if(tank.isLocalPlayer())
 					{
 						this.base.setLocalPlayer(true);
