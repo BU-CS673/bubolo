@@ -56,6 +56,18 @@ public class MockMineCreator extends MockWorld
 	{
 		return mapTiles;
 	}
+	
+	@Override
+	public int getMapWidth()
+	{
+		return 32;
+	}
+	
+	@Override
+	public int getMapHeight()
+	{
+		return 32;
+	}
 }
 
 

@@ -76,7 +76,7 @@ public class Tank extends Actor implements Damageable
 	// System.currentTimeMillis().
 	private long cannonFireTime = 0;
 
-	// The last time a mine was layed. Used to prevent multiple mines from being dropped.
+	// The last time a mine was laid. Used to prevent multiple mines from being dropped.
 	private long mineLayingTime = 0;
 
 	private Polygon leftBumper = new Polygon();
@@ -844,12 +844,13 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Mine dropMine(World world, float startX, float startY)
 	{
-		if (System.currentTimeMillis() - mineLayingTime < MINE_RELOAD_SPEED || startX < 0
-				|| startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
+		
+		if ((System.currentTimeMillis() - mineLayingTime < MINE_RELOAD_SPEED && mineLayingTime != 0)
+				||startX < 0 || startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
+			
 		{
 			return null;
 		}
-
 		int xTileCoord = (int) startX / 32;
 		int yTileCoord = (int) startY / 32;
 

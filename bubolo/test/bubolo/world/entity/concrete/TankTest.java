@@ -207,8 +207,11 @@ public class TankTest
 	@Test
 	public void dropMine()
 	{
-		Mine mine = tank.dropMine(new MockMineCreator(), 16, 16);
+		MockMineCreator m = new MockMineCreator();
+		Mine mine = tank.dropMine(m, 16, 16);
 		assertNotNull(mine);
+		mine = tank.dropMine(m, 16, 16);
+		assertNull(mine);
 	}
 	
 	@Test
