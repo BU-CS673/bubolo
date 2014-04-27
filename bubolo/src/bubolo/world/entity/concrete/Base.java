@@ -34,7 +34,7 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Base is owned by a player.
 	 */
-	private boolean isOwned = true;
+	private boolean isOwned = false;
 
 	/**
 	 * Boolean representing whether this Base is currently charging a Tank.

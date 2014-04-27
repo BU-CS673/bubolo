@@ -55,7 +55,7 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Pillbox is owned by a player.
 	 */
-	private boolean isOwned = true;
+	private boolean isOwned = false;
 	
 	/**
 	 * The health of the pillbox

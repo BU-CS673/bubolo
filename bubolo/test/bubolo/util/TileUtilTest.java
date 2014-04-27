@@ -99,5 +99,9 @@ public class TileUtilTest
 		List c = TileUtil.getLocalCollisions(tank, world);
 		assertEquals("List of local collisions does not contain correct objects", true, c.contains(tiles[0][0].getElement()));
 	}
-
+	@Test
+	public void getEntityTile()
+	{
+		
+	}
 }
