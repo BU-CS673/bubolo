@@ -10,7 +10,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import bubolo.controllers.Controller;
+import bubolo.controllers.ControllerFactory;
+import bubolo.controllers.Controllers;
+import bubolo.graphics.Graphics;
 import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.LibGdxAppTester;
 import bubolo.world.entity.Entity;
@@ -33,6 +40,9 @@ import bubolo.world.entity.concrete.Water;
 
 public class GameWorldTest
 {
+	private static SpriteBatch batch;
+	private static Camera camera;
+	
 	boolean isComplete = false;
 	boolean passed = false;
 
@@ -40,6 +50,14 @@ public class GameWorldTest
 	public static void setupClass()
 	{
 		LibGdxAppTester.createApp();
+		
+		Gdx.app.postRunnable(new Runnable() {
+			@Override public void run() {
+				batch = new SpriteBatch();
+				camera = new OrthographicCamera(100, 100);
+				Graphics g = new Graphics(50, 500);
+			}
+		});
 	}
 
 	@Test
@@ -542,6 +560,26 @@ public class GameWorldTest
 	}
 	
 	@Test
+	public void testAddEntity()
+	{
+		World w = new GameWorld(0,0);
+		Entity e = new Grass();
+		ControllerFactory c;
+		c = null;
+		w.addEntity(e.getClass(), e.getId());
+		w.addEntity(e.getClass(), c);				
+	}
+	
+	@Test
+	public void testTileFunctions()
+	{
+		World w = new GameWorld(0,0);
+		Tile[][] mapTiles = new Tile[1][1];
+		mapTiles[0][0] = new Tile(0, 0, w.addEntity(Grass.class));
+		w.setMapTiles(mapTiles);
+		assertEquals(Grass.class, w.getMapTiles()[0][0].getTerrain().getClass());
+	}
+		
 	public void addRemoveController()
 	{
 		World w = new GameWorld(0, 0);
@@ -580,4 +618,5 @@ public class GameWorldTest
 			}
 		}
 	};
+
 }
