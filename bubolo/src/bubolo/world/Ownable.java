@@ -47,17 +47,17 @@ public interface Ownable
 	public void setLocalPlayer(boolean local);
 
 	/**
-	 * Returns whether this Entity belongs to the local player.
+	 * Returns whether this Entity belongs to any player
 	 * 
-	 * @return true if this tank belongs to the local player, false otherwise.
+	 * @return true if this tank belongs to any player, false otherwise.
 	 */
 	public boolean isOwned();
 
 	/**
-	 * Sets whether this Entity belongs to the local player or not.
+	 * Sets whether this Entity belongs to any player or not.
 	 * 
 	 * @param owned
-	 *            represents whether this tank should belong to the local player. Pass
+	 *            represents whether this tank should belong to a player. Pass
 	 *            false if not.
 	 */
 	public void setOwned(boolean owned);

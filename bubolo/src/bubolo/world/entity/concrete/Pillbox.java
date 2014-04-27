@@ -217,11 +217,14 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 		hitPoints -= Math.abs(damagePoints);
 		if (hitPoints <= 0)
 		{
-			this.isOwned = false;
-			this.isLocalPlayer = false;
-			this.setOwnerUID(null);
-			Network net = NetworkSystem.getInstance();
-			net.send(new UpdateOwnable(this));
+			if (this.isLocalPlayer())
+			{
+				this.setLocalPlayer(false);
+				this.setOwned(false);
+				this.ownerUID = null;
+				Network net = NetworkSystem.getInstance();
+				net.send(new UpdateOwnable(this));
+			}
 		}
 	}
 

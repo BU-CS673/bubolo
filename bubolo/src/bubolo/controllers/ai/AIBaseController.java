@@ -60,13 +60,13 @@ public class AIBaseController implements Controller
 					if(tank.isLocalPlayer())
 					{
 						this.base.setLocalPlayer(true);
+						Network net = NetworkSystem.getInstance();
+						net.send(new UpdateOwnable(this.base));
 					}
 					else
 					{
 						this.base.setLocalPlayer(false);
 					}
-					Network net = NetworkSystem.getInstance();
-					net.send(new UpdateOwnable(this.base));
 				}
 				else
 				{

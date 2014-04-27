@@ -38,15 +38,11 @@ public class AIPillboxController implements Controller
 		{
 			Tank target = (Tank)getTarget(world);
 			if (target != null)
-			{
-			
-				if(target.getId() != this.pillbox.getOwnerUID() && this.pillbox.isOwned())
-				{				
-					if (targetInRange(target))
-					{
-						fire(getTargetDirection(target), world);
-					}					
-				}
+			{	
+				if (targetInRange(target))
+				{
+					fire(getTargetDirection(target), world);
+				}						
 			}
 		}
 		
@@ -62,13 +58,13 @@ public class AIPillboxController implements Controller
 					if(tank.isLocalPlayer())
 					{
 						this.pillbox.setLocalPlayer(true);
+						sendNetUpdate(this.pillbox);
 					}
 					else
 					{
 						this.pillbox.setLocalPlayer(false);
 					}
 				}
-				sendNetUpdate(this.pillbox);
 			}
 		}
 
@@ -92,24 +88,28 @@ public class AIPillboxController implements Controller
 
 		for (Entity entity : world.getTanks())
 		{
-			xdistance = Math.abs(pillbox.getX() - entity.getX());
-			ydistance = Math.abs(pillbox.getY() - entity.getY());
-			distance = Math.sqrt((xdistance * xdistance) + (ydistance * ydistance));
-
-			if (targetdistance > -1)
+			if(entity.getId() != this.pillbox.getOwnerUID())
 			{
-				if (distance < targetdistance)
+				xdistance = Math.abs(pillbox.getX() - entity.getX());
+				ydistance = Math.abs(pillbox.getY() - entity.getY());
+				distance = Math.sqrt((xdistance * xdistance) + (ydistance * ydistance));
+	
+				if (targetdistance > -1)
+				{
+					if (distance < targetdistance)
+					{
+						targetdistance = distance;
+						target = entity;
+					}
+				}
+				else
 				{
 					targetdistance = distance;
 					target = entity;
 				}
 			}
-			else
-			{
-				targetdistance = distance;
-				target = entity;
-			}
 		}
+
 		if (target == null || ((Tank) target).isHidden())
 		{
 			return null;
