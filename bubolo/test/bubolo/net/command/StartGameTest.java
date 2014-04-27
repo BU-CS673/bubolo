@@ -65,7 +65,7 @@ public class StartGameTest
 				net.startDebug();
 				try
 				{
-					StartGame startGameCommand = new StartGame(new SendMap(world));
+					StartGame startGameCommand = new StartGame(1, new SendMap(world));
 					startGameCommand.execute(new GameWorld(32 * 4, 32 * 4));
 					passed = true;
 				}

@@ -61,8 +61,12 @@ public class NetworkCommandTest
 	@Test
 	public void testMoveEntity()
 	{
-		NetworkCommand c = new MoveEntity(mock(Grass.class));
-		c.execute(new MockWorld());
+		Grass grass = new Grass();
+		MockWorld world = new MockWorld();
+		world.add(grass);
+		
+		NetworkCommand c = new MoveEntity(grass);
+		c.execute(world);
 	}
 
 }

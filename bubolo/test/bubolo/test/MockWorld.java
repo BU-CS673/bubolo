@@ -6,23 +6,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.Tile;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.MockEntity;
 
 /**
  * Mock class used for testing components that need a world implementation
- * (Which is not available at the time that this was implemented).
+ * (Which was not available at the time that this was implemented).
  * @author BU CS673 - Clone Productions
  */
 public class MockWorld implements World
 {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private Map<UUID, Entity> entityMap = new HashMap<UUID, Entity>();
+	private Tile[][] mapTiles;
 	
+	/**
+	 * Adds the entity to the MockWorld.
+	 * @param e the entity to add.
+	 */
 	public void add(Entity e)
 	{
 		entities.add(e);
@@ -67,92 +72,107 @@ public class MockWorld implements World
 	@Override
 	public void update()
 	{
-		// do nothing...
+		// do nothing.
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, null, null);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, id, null);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// do nothing
-		return null;
+		return addEntity(c, null, controllerFactory);
 	}
 
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException
 	{
-		// do nothing
-		return null;
+		T entity = null;
+		try
+		{
+			entity = c.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			throw new GameLogicException(e);
+		}
+		entity.setId(id);
+		return entity;
 	}
 
 	@Override
 
 	public List<Entity> getTanks() 
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
-	public void setMapTiles(Tile[][] mapTiles)
+	public void setMapTiles(Tile[][] givenTiles)
 	{
-		// do nothing
-		
+		// do nothing		
 	}
 	
 	@Override
 	public Tile[][] getMapTiles()
 	{
-		// do nothing
+		//do nothing
 		return null;
 	}
 
 	@Override
 	public List<Entity> getActors()
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
 	public List<Entity> getEffects()
 	{
-		// do nothing
 		return null;
 	}
 
 	@Override
 	public void setMapHeight(int height)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setMapWidth(int width)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public List<Entity> getSpawns() {
+	public List<Entity> getSpawns() 
+	{
 		// do nothing
 		return null;
+	}
+
+	@Override
+	public void addController(Class<? extends Controller> controllerType)
+	{	
+	}
+
+	@Override
+	public void removeController(Class<? extends Controller> controllerType)
+	{
+	}
+
+	@Override
+	public int getControllerCount()
+	{
+		return 0;
 	}
 }
