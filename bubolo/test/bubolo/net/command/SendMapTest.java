@@ -13,9 +13,9 @@ import com.badlogic.gdx.Gdx;
 
 import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
+import bubolo.mock.MockWorld;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.test.MockWorld;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;

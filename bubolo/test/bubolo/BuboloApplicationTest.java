@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+import bubolo.GameApplication.State;
 import bubolo.graphics.LibGdxAppTester;
 
 public class BuboloApplicationTest
@@ -115,6 +116,57 @@ public class BuboloApplicationTest
 	public void isGameStarted()
 	{
 		assertFalse(ga.isGameStarted());
+	}
+	
+	@Test
+	public void getSetState()
+	{
+		assertEquals(State.MAIN_MENU, ga.getState());
+		
+		ga.setState(State.GAME_LOBBY);
+		assertEquals(State.GAME_LOBBY, ga.getState());
+	}
+	
+	@Test
+	public void onStateChanged()
+	{
+		class StateChangedTest extends AbstractGameApplication
+		{
+			private boolean stateChangedCalled = false;
+			
+			@Override
+			protected void onStateChanged()
+			{
+				stateChangedCalled = true;
+			}
+			
+			public boolean getStateChangedCalled()
+			{
+				return stateChangedCalled;
+			}
+			
+			@Override
+			public void create()
+			{
+			}
+
+			@Override
+			public void dispose()
+			{
+			}
+
+			@Override
+			public void render()
+			{
+			}
+		}
+		
+		AbstractGameApplication app = new StateChangedTest();
+		assertFalse(((StateChangedTest)app).getStateChangedCalled());
+		
+		app.onStateChanged();
+		
+		assertTrue(((StateChangedTest)app).getStateChangedCalled());
 	}
 	
 	@Test

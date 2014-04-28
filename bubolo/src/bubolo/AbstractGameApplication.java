@@ -17,6 +17,16 @@ public abstract class AbstractGameApplication implements GameApplication
 
 	/** The game world. **/
 	protected World world;
+	
+	private State state;
+	
+	/**
+	 * Constructs an AbstractGameApplication;
+	 */
+	protected AbstractGameApplication()
+	{
+		this.state = State.MAIN_MENU;
+	}
 
 	@Override
 	public final boolean isReady()
@@ -33,6 +43,26 @@ public abstract class AbstractGameApplication implements GameApplication
 	protected void setReady(boolean value)
 	{
 		ready = value;
+	}
+	
+	@Override
+	public void setState(State state)
+	{
+		this.state = state;
+		onStateChanged();
+	}
+	
+	@Override
+	public State getState()
+	{
+		return state;
+	}
+	
+	/**
+	 * Called when the application's state is changed.
+	 */
+	protected void onStateChanged()
+	{
 	}
 
 	@Override

@@ -25,7 +25,6 @@ public class AudioTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Audio Integration";
 		cfg.width = 600;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new AudioTestApplication(600, 600), cfg);
 	}
 	

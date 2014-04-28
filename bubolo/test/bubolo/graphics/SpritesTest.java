@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
-import bubolo.test.MockTank;
+import bubolo.mock.MockTank;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Road;
