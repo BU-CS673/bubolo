@@ -27,6 +27,7 @@ public class NetworkTest
 	public void setup()
 	{
 		net = NetworkSystem.getInstance();
+		net.dispose();
 		// Non-debug tests are performed in the integration tests, since these can only
 		// be fully tested by connecting to the network.
 		net.startDebug();
@@ -36,6 +37,8 @@ public class NetworkTest
 	public void teardown()
 	{
 		net.dispose();
+		assertFalse(net.isServer());
+		assertNull(net.getPlayerName());
 	}
 
 	/**
@@ -124,11 +127,22 @@ public class NetworkTest
 	@Test
 	public void addRemoveObserver()
 	{
+		
+		
 		NetworkObserver o = mock(NetworkObserver.class);
 		net.addObserver(o);
 		assertEquals(1, net.getNotifier().getObserverCount());
 
 		net.removeObserver(o);
 		assertEquals(0, net.getNotifier().getObserverCount());
+	}
+	
+	@Test
+	public void isServer()
+	{
+		assertFalse(net.isServer());
+		
+		net.startServer("Test");
+		assertTrue(net.isServer());
 	}
 }
