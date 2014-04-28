@@ -579,7 +579,8 @@ public class GameWorldTest
 		w.setMapTiles(mapTiles);
 		assertEquals(Grass.class, w.getMapTiles()[0][0].getTerrain().getClass());
 	}
-		
+	
+	@Test
 	public void addRemoveController()
 	{
 		World w = new GameWorld(0, 0);

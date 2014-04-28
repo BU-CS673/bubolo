@@ -11,7 +11,6 @@ import bubolo.world.entity.StationaryEntity;
  */
 public class Spawn extends StationaryEntity
 {
-
 	/**
 	 * needed for serialization
 	 */
@@ -38,5 +37,4 @@ public class Spawn extends StationaryEntity
 		setHeight(32);
 		updateBounds();
 	}
-
 }

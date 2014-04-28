@@ -21,10 +21,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
-import bubolo.test.MockMineCreator;
-import bubolo.test.MockPillboxCreator;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockBulletCreator;
+import bubolo.mock.MockMineCreator;
+import bubolo.mock.MockPillboxCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
