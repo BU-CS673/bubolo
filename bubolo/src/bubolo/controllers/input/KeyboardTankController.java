@@ -13,6 +13,7 @@ import bubolo.world.World;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Engineer;
 
 /**
  * A controller for the local tank. This controller maps keyboard inputs to tank commands.
@@ -40,6 +41,7 @@ public class KeyboardTankController implements Controller
 		processMovement(tank);
 		processCannon(tank, world);
 		processMineLaying(tank, world);
+		processEngineerEviction(tank, world);
 	}
 
 	private static void processMovement(Tank tank)
@@ -114,4 +116,24 @@ public class KeyboardTankController implements Controller
 				}
 		 }
 	 }
+
+	private static void processEngineerEviction(Tank tank, World world)
+	{
+		if (Gdx.input.isKeyPressed(Keys.E) && (tank.isEngineerInside()))
+		{
+			float tankCenterX = tank.getX();
+			float tankCenterY = tank.getY();
+
+			Engineer engineer = tank.evictEngineer(world,
+					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
+					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
+			
+			if (engineer != null)
+			{
+				Network net = NetworkSystem.getInstance();
+				net.send(new CreateEntity(Engineer.class, engineer.getId(), engineer.getX(), engineer.getY(),
+					engineer.getRotation()));
+			}
+		}
+	}
 }

@@ -78,6 +78,9 @@ public class Tank extends Actor implements Damageable
 	// The last time a mine was layed. Used to prevent multiple mines from being dropped.
 	private long mineLayingTime = 0;
 
+	// Is an engineer seated inside the tank?
+	private boolean isEngineerInside = true;
+
 	private Polygon leftBumper = new Polygon();
 	private Polygon rightBumper = new Polygon();
 	private float bumperWidth = 4.0f;
@@ -912,5 +915,49 @@ public class Tank extends Actor implements Damageable
 		}
 		this.hitPoints = TANK_MAX_HIT_POINTS;
 		this.isAlive = true;
+	}
+
+	/**
+	 * @return is an Engineer inside the tank?
+	 */
+	public boolean isEngineerInside()
+	{
+		return isEngineerInside;
+	}
+
+	/**
+	 * This method ejects the engineer from the tank and creates an engineer
+	 * entity in the world.
+	 * 
+	 * @param world
+	 *            - the world in which the engineer is created
+	 * @param startX
+	 *            - the integer X position of the engineer in world coordinates
+	 * @param startY
+	 *            - the integer Y position of the engineer in world coordinates
+	 * @return - returns the created engineer or null if there are none to place or invalid placement
+	 *         location
+	 */
+	public Engineer evictEngineer(World world, float startX, float startY)
+	{
+		int xTileCoord = (int)startX / 32;
+		int yTileCoord = (int)startY / 32;
+		
+		if (world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != Water.class &&
+			world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != DeepWater.class &&
+		   !world.getMapTiles()[xTileCoord][yTileCoord].hasElement() &&
+		    isEngineerInside)
+		{
+			Engineer engineer = world.addEntity(Engineer.class);
+			engineer.setTank(this);
+			engineer.setX(startX).setY(startY);
+			isEngineerInside = false;
+			System.out.println("Evicting engineer");
+			return engineer;
+		}
+		else
+		{
+			return null;
+		}			
 	}
 }

@@ -160,7 +160,7 @@ public abstract class AStar
         goal_node.setH(0);
         
         // -- OPEN = priority queue containing START --
-        PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>(0);
+        PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>();
         open.add(start_node);
 
         // -- CLOSED = empty set --
