@@ -8,8 +8,8 @@ package bubolo.net.command;
 
 import org.junit.Test;
 
+import bubolo.mock.MockWorld;
 import bubolo.net.NetworkCommand;
-import bubolo.test.MockWorld;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
