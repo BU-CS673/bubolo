@@ -54,9 +54,4 @@ public class WallTest
 		wall.heal(1);
 		assertEquals(100, wall.getHitPoints(), 0);
 	}
-	@Test
-	public void update()
-	{
-		
-	}
 }

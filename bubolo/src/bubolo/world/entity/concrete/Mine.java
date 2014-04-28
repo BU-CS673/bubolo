@@ -131,12 +131,14 @@ public class Mine extends StationaryElement implements Ownable
 	}
 
 	@Override
-	public UUID getOwnerUID() {
+	public UUID getOwnerUID() 
+	{
 		return this.ownerUID;
 	}
 
 	@Override
-	public void setOwnerUID(UUID ownerUID) {
+	public void setOwnerUID(UUID ownerUID) 
+	{
 		this.ownerUID = ownerUID;
 	}
 	

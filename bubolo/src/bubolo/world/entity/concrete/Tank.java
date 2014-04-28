@@ -933,12 +933,14 @@ public class Tank extends Actor implements Damageable
 	}
 
 	@Override
-	public UUID getOwnerUID() {	
+	public UUID getOwnerUID() 
+	{	
 		return this.ownerUID;
 	}
 
 	@Override
-	public void setOwnerUID(UUID ownerUID) {
+	public void setOwnerUID(UUID ownerUID) 
+	{
 		this.ownerUID = ownerUID;
 	}
 }
