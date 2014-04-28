@@ -1,7 +1,6 @@
 package bubolo.util;
 
 import java.lang.Math;
-
 import java.util.List;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -13,6 +12,8 @@ import java.util.Collections;
 
 import bubolo.world.World;
 import bubolo.world.Tile;
+import bubolo.world.entity.concrete.DeepWater;
+import bubolo.util.Coordinates;
 
 /**
  * Implementation of the A-star pathfinding algorithm.
@@ -120,8 +121,8 @@ public abstract class AStar
 		// -- ... --
 
         // Extract some useful variables from the world.
-        int mapWidth = world.getMapWidth();
-        int mapHeight = world.getMapHeight();
+        int mapWidth = world.getMapWidth() / Coordinates.TILE_TO_WORLD_SCALE;
+        int mapHeight = world.getMapHeight() / Coordinates.TILE_TO_WORLD_SCALE;
         Tile[][] mapTiles = world.getMapTiles();
         
         // We will maintain all per-tile meta-data (f, g, parent etc.) in a
@@ -167,7 +168,7 @@ public abstract class AStar
         Set<AStarNode> closed = new HashSet<AStarNode>();
 
         // -- while lowest rank in OPEN is not the GOAL: --
-        while (open.peek() != goal_node)
+        while (!open.isEmpty() && open.peek() != goal_node)
         {
             // -- current = remove lowest rank item from OPEN --
             AStarNode current = open.poll();
@@ -189,45 +190,43 @@ public abstract class AStar
 
             if (x != 0 && y != 0)
             {
-                neighbors.add(mapTiles[x-1][y-1]);
+                neighbors.add(mapTiles[x-1][y-1]);    // diagonal
             }
             if (x != 0)
             {
-                neighbors.add(mapTiles[x-1][y]);
+                neighbors.add(mapTiles[x-1][y]);      // straight
             }
             if (x != 0 && y != mapHeight-1)
             {
-                neighbors.add(mapTiles[x-1][y+1]);
+                neighbors.add(mapTiles[x-1][y+1]);    // diagonal
             }
             if (y != mapHeight-1)
             {
-                neighbors.add(mapTiles[x][y+1]);
+                neighbors.add(mapTiles[x][y+1]);      // straight
             }
             if (x != mapWidth-1 && y != mapHeight-1)
             {
-                neighbors.add(mapTiles[x+1][y+1]);
+                neighbors.add(mapTiles[x+1][y+1]);    // diagonal
             }
             if (x != mapWidth-1)
             {
-                neighbors.add(mapTiles[x+1][y]);
+                neighbors.add(mapTiles[x+1][y]);      // straight
             }
             if (x != mapWidth-1 && y != 0)
             {
-                neighbors.add(mapTiles[x+1][y-1]);
+                neighbors.add(mapTiles[x+1][y-1]);    // diagonal
             }
             if (y != 0)
             {
-                neighbors.add(mapTiles[x][y-1]);
+                neighbors.add(mapTiles[x][y-1]);      // straight
             }
 
             // The neighbor list is ready. We are now ready to run the loop:
             // -- for neighbors of current: --
             for (Tile n: neighbors)
             {
-            	// Check the game world to see if this neighbor Tile has a
-            	// stationary element. If so, skip this tile since we cannot
-            	// have a path through a stationary element.
-            	if (n.hasElement())
+            	// Make sure the neighbor tile is traversable
+            	if (!isTileTraversable(n))
             	{
             		continue;
             	}
@@ -302,6 +301,13 @@ public abstract class AStar
             }
         }
         
+        // If we exited the loop because the OPEN set was empty, the
+        // destination is unreachable.
+        if (open.isEmpty())
+        {
+        	return null;
+        }
+        
         // -- reconstruct reverse path from goal to start --
         // -- by following parent pointers --
         // Algorithm over, we have reached the Goal. Now, create a list
@@ -320,5 +326,29 @@ public abstract class AStar
         
         // All done!
         return(path);
+	}
+	
+	// Is a tile traversable?
+	private static boolean isTileTraversable(Tile t)
+	{
+    	// Check the game world to see if this tile has a solid
+    	// stationary element. If so, skip this tile since we cannot
+    	// have a path through a stationary element.
+    	if (t.hasElement())
+    	{
+    		if (t.getElement().isSolid())
+    		{
+    			return false;
+    		}
+    	}
+    	
+    	// Check to see if the terrain is too dangerous.
+    	if (t.getTerrain().getClass() == DeepWater.class)
+    	{
+    		return false;
+    	}
+    	
+    	// All okay.
+    	return true;
 	}
 }

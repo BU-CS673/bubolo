@@ -10,13 +10,12 @@ import bubolo.controllers.Controller;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
+import bubolo.net.command.MoveEntity;
 import bubolo.util.AStar;
 import bubolo.util.Coordinates;
 import bubolo.world.World;
 import bubolo.world.Tile;
 import bubolo.world.entity.concrete.Engineer;
-import bubolo.world.entity.concrete.Tank;
 
 /**
  * A controller for Engineers. This controller checks if the engineer is at a
@@ -50,31 +49,36 @@ public class AIEngineerController implements Controller
 	public void update(World world)
 	{
 		processDestinationUpdate(world);
-		
-		if (haveDestination)
+		processMovement(world);
+	}
+	
+	private void processMovement(World world)
+	{
+		// Has the engineer reached the next tile (waypoint)?
+		// Note: at the beginning of time the engineer is already
+		// at a "waypoint".
+		if (engineer.isAtWaypoint())
 		{
-			// Have I reached the next tile (waypoint)?
-			// Note: at the beginning of time the engineer is already
-			// at a "waypoint".
-			if (engineer.isAtWaypoint())
+			if (haveDestination)
 			{
 				nextWaypoint = pathToDestination.get(waypointIndex);
 				waypointIndex++;
 				
-				System.out.println("Setting waypoint: " + nextWaypoint.getX() + ", " + nextWaypoint.getY());
 				engineer.setWaypoint(nextWaypoint.getX(), nextWaypoint.getY());
 
-				// Have I reached the final destination?
+				// Was this the final waypoint (== destination)?
 				if (waypointIndex == pathToDestination.size())
 				{
 					haveDestination = false;
 				}
 			}
-			else
-			{
-				// Engineer is not at waypoint, let it handle the movement
-				// to the next waypoint.
-			}
+		}
+		else
+		{
+			// Engineer is not at waypoint, let it handle the movement
+			// to the next waypoint. Just send a network move command.
+			Network net = NetworkSystem.getInstance();
+			net.send(new MoveEntity(engineer));
 		}
 	}
 	
@@ -95,36 +99,24 @@ public class AIEngineerController implements Controller
 			int screenDestX = (int)(worldCoordinates.x);
 			int screenDestY = (int)(worldCoordinates.y);
 
-			int destX = screenDestX / 32;
-			int destY = screenDestY / 32;
-			
-			assert(destX < world.getMapWidth());
-			assert(destY < world.getMapHeight());
+			int destX = screenDestX / Coordinates.TILE_TO_WORLD_SCALE;
+			int destY = screenDestY / Coordinates.TILE_TO_WORLD_SCALE;
 			
 			Tile destTile = world.getMapTiles()[destX][destY];
 
 			// Get current position
-			int curX = (int)(engineer.getX() / 32);
-			int curY = (int)(engineer.getY() / 32);
-			
-			assert(curX < world.getMapWidth());
-			assert(curY < world.getMapHeight());
+			int curX = (int)(engineer.getX() / Coordinates.TILE_TO_WORLD_SCALE);
+			int curY = (int)(engineer.getY() / Coordinates.TILE_TO_WORLD_SCALE);
 			
 			Tile curTile = world.getMapTiles()[curX][curY];
 
 			// Compute new path to destination
 			pathToDestination = AStar.calculateShortestPath(world, curTile, destTile);
-			haveDestination = true;
-			waypointIndex = 0;
-			
-			System.out.println("Start: " + curTile.getGridX() + ", " + curTile.getGridY());
-			System.out.println("Goal: " + destTile.getGridX() + ", " + destTile.getGridY());
-			System.out.println("Path:");
-			for (Tile t: pathToDestination)
+			if (pathToDestination != null)
 			{
-				System.out.println("    " + t.getGridX() + " (" + t.getX() + "), " + t.getGridY() + " (" + t.getY() + ")");			
+				haveDestination = true;
+				waypointIndex = 0;
 			}
 		}
 	}
-
 }

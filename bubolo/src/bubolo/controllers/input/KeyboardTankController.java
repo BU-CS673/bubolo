@@ -9,6 +9,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateBullet;
 import bubolo.net.command.CreateEntity;
 import bubolo.net.command.MoveTank;
+import bubolo.util.Coordinates;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Mine;
@@ -125,8 +126,8 @@ public class KeyboardTankController implements Controller
 			float tankCenterY = tank.getY();
 
 			Engineer engineer = tank.evictEngineer(world,
-					tankCenterX + 18 * (float)Math.cos(tank.getRotation()),
-					tankCenterY + 18 * (float)Math.sin(tank.getRotation()));
+					tankCenterX + (Coordinates.TILE_TO_WORLD_SCALE/2 + 2) * (float)Math.cos(tank.getRotation()),
+					tankCenterY + (Coordinates.TILE_TO_WORLD_SCALE/2 + 2) * (float)Math.sin(tank.getRotation()));
 			
 			if (engineer != null)
 			{

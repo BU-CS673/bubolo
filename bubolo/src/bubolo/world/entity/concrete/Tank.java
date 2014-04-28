@@ -13,6 +13,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.net.command.MoveTank;
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.util.Coordinates;
 import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -940,19 +941,16 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Engineer evictEngineer(World world, float startX, float startY)
 	{
-		int xTileCoord = (int)startX / 32;
-		int yTileCoord = (int)startY / 32;
+		int xTileCoord = (int)startX / Coordinates.TILE_TO_WORLD_SCALE;
+		int yTileCoord = (int)startY / Coordinates.TILE_TO_WORLD_SCALE;
 		
-		if (world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != Water.class &&
-			world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != DeepWater.class &&
-		   !world.getMapTiles()[xTileCoord][yTileCoord].hasElement() &&
+		if (world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != DeepWater.class &&
 		    isEngineerInside)
 		{
 			Engineer engineer = world.addEntity(Engineer.class);
 			engineer.setTank(this);
 			engineer.setX(startX).setY(startY);
 			isEngineerInside = false;
-			System.out.println("Evicting engineer");
 			return engineer;
 		}
 		else
