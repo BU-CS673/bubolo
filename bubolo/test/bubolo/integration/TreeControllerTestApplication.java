@@ -31,7 +31,6 @@ public class TreeControllerTestApplication implements GameApplication
 		cfg.title = "BUBOLO Tree Controller Integration";
 		cfg.width = 640;
 		cfg.height = 640;
-		cfg.useGL20 = true;
 	new LwjglApplication(new TreeControllerTestApplication(640, 640), cfg);
 	}
 	
@@ -151,5 +150,19 @@ public class TreeControllerTestApplication implements GameApplication
 	public boolean isGameStarted() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

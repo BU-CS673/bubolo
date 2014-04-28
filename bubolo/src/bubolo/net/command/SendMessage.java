@@ -29,7 +29,8 @@ public class SendMessage implements NetworkCommand
 	 */
 	public SendMessage(String message)
 	{
-		this.message = message;
+		Network net = NetworkSystem.getInstance();
+		this.message = net.getPlayerName() + ": " + message;
 	}
 
 	@Override

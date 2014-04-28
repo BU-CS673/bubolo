@@ -15,15 +15,13 @@ public class LoadingScreen extends JFrame
 {
 	private static final long serialVersionUID = 4414221517373441452L;
 	
-	// TODO: Find a better way to represent this directory -- should there be a UI class,
-	// like Graphics, that handles these static settings?
 	private static String SPLASH_PATH = "res/splash/";
 	private JLabel imglabel;
 	private ImageIcon img;
 	private static JProgressBar pbar;
 
 	/**
-	 * Creates the LoadingScreen object and shoots off a thread to interate the progress
+	 * Creates the LoadingScreen object and shoots off a thread to integrate the progress
 	 * bar.
 	 */
 	public LoadingScreen()

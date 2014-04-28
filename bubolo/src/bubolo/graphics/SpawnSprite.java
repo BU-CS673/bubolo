@@ -47,7 +47,6 @@ class SpawnSprite extends AbstractEntitySprite<Entity>
 		else
 		{
 			drawTexture(batch, camera, layer, frames[0][0]);
-
 		}
 	}
 }

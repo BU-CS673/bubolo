@@ -46,7 +46,7 @@ public class PreferencesManager implements Serializable
 	{
 		PreferencesModel pm = new PreferencesModel();
 		try(
-			InputStream file = new FileInputStream(UserInterface.FILENAME);
+			InputStream file = new FileInputStream(UserInterface.PREFERENCES_FILENAME);
 			InputStream buffer = new BufferedInputStream(file);
 			ObjectInput input = new ObjectInputStream(buffer);)
 		{
@@ -71,7 +71,7 @@ public class PreferencesManager implements Serializable
 	public void SavePreference(PreferencesModel pm)
 	{
 		try(
-			OutputStream file = new FileOutputStream(UserInterface.FILENAME);
+			OutputStream file = new FileOutputStream(UserInterface.PREFERENCES_FILENAME);
 			OutputStream buffer = new BufferedOutputStream(file);
 			ObjectOutput output = new ObjectOutputStream(buffer);)
 		{

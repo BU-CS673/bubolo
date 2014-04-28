@@ -15,9 +15,16 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockBulletCreator;
+import bubolo.mock.MockMineCreator;
+import bubolo.mock.MockPillboxCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -200,18 +207,19 @@ public class TankTest
 	@Test
 	public void dropMine()
 	{
-		Mine mine = tank.dropMine(world, 0, 0);
+		MockMineCreator m = new MockMineCreator();
+		Mine mine = tank.dropMine(m, 16, 16);
 		assertNotNull(mine);
-		assertNotNull(world.getMapTiles()[0][0].getElement());
+		mine = tank.dropMine(m, 16, 16);
+		assertNull(mine);
 	}
 	
 	@Test
 	public void dropPillbox()
 	{
 		tank.gatherPillbox();
-		Pillbox pillbox = tank.dropPillbox(world, 0, 0);
+		Pillbox pillbox = tank.dropPillbox(new MockPillboxCreator(), 16, 16);
 		assertNotNull(pillbox);
-		assertNotNull(world.getMapTiles()[0][0].getElement());
 	}
 	
 	@Test

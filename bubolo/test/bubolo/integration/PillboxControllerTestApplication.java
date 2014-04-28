@@ -32,7 +32,6 @@ public class PillboxControllerTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Pillbox Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new PillboxControllerTestApplication(1067, 600), cfg);
 	}
 	
