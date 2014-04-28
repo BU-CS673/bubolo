@@ -30,7 +30,7 @@ public class AStarNode implements Comparable<AStarNode>
 
 	/**
 	 * Constructs the AStarNode object.
-	 * @param tile
+	 * @param t
      *               is a reference to the underlying map tile.
 	 */
     public AStarNode(Tile t)
@@ -50,6 +50,7 @@ public class AStarNode implements Comparable<AStarNode>
      *          the other node to compare this node against.
 	 * @return an integer with the comparison result.
 	 */
+    @Override
     public int compareTo(AStarNode node)
     {
         return Float.compare(this.f, node.f);
@@ -58,84 +59,96 @@ public class AStarNode implements Comparable<AStarNode>
 	/**
 	 * @return the x
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public int getY() {
+	public int getY()
+	{
 		return y;
 	}
 
 	/**
 	 * @return the tile
 	 */
-	public Tile getTile() {
+	public Tile getTile()
+	{
 		return tile;
 	}
 
 	/**
 	 * @param tile the tile to set
 	 */
-	public void setTile(Tile tile) {
+	public void setTile(Tile tile)
+	{
 		this.tile = tile;
 	}
 
 	/**
 	 * @return the f
 	 */
-	public float getF() {
+	public float getF()
+	{
 		return f;
 	}
 
 	/**
 	 * @param f the f to set
 	 */
-	public void setF(float f) {
+	public void setF(float f)
+	{
 		this.f = f;
 	}
 
 	/**
 	 * @return the g
 	 */
-	public float getG() {
+	public float getG()
+	{
 		return g;
 	}
 
 	/**
 	 * @param g the g to set
 	 */
-	public void setG(float g) {
+	public void setG(float g)
+	{
 		this.g = g;
 	}
 
 	/**
 	 * @return the h
 	 */
-	public float getH() {
+	public float getH()
+	{
 		return h;
 	}
 
 	/**
 	 * @param h the h to set
 	 */
-	public void setH(float h) {
+	public void setH(float h)
+	{
 		this.h = h;
 	}
 
 	/**
 	 * @return the parent
 	 */
-	public AStarNode getParent() {
+	public AStarNode getParent()
+	{
 		return parent;
 	}
 
 	/**
 	 * @param parent the parent to set
 	 */
-	public void setParent(AStarNode parent) {
+	public void setParent(AStarNode parent)
+	{
 		this.parent = parent;
 	}
 }

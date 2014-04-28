@@ -188,21 +188,37 @@ public abstract class AStar
             int y = current.getY();
 
             if (x != 0 && y != 0)
+            {
                 neighbors.add(mapTiles[x-1][y-1]);
+            }
             if (x != 0)
+            {
                 neighbors.add(mapTiles[x-1][y]);
+            }
             if (x != 0 && y != mapHeight-1)
+            {
                 neighbors.add(mapTiles[x-1][y+1]);
+            }
             if (y != mapHeight-1)
+            {
                 neighbors.add(mapTiles[x][y+1]);
+            }
             if (x != mapWidth-1 && y != mapHeight-1)
+            {
                 neighbors.add(mapTiles[x+1][y+1]);
+            }
             if (x != mapWidth-1)
+            {
                 neighbors.add(mapTiles[x+1][y]);
+            }
             if (x != mapWidth-1 && y != 0)
+            {
                 neighbors.add(mapTiles[x+1][y-1]);
+            }
             if (y != 0)
+            {
                 neighbors.add(mapTiles[x][y-1]);
+            }
 
             // The neighbor list is ready. We are now ready to run the loop:
             // -- for neighbors of current: --
@@ -212,7 +228,9 @@ public abstract class AStar
             	// stationary element. If so, skip this tile since we cannot
             	// have a path through a stationary element.
             	if (n.hasElement())
+            	{
             		continue;
+            	}
             	
                 // We now need to search each neighbor node in the OPEN and
                 // CLOSED sets. For this we need the AStarNode owner of this tile.
