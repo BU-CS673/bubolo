@@ -24,7 +24,7 @@ public class MineExplosion extends Effect
 	/**
 	 * Damage done on explosion
 	 */
-	private static final int DAMAGE_PER_TICK = 1;
+	private static final int DAMAGE_PER_TICK = 2;
 	
 	/**
 	 * length of explosion in milliseconds
