@@ -878,13 +878,12 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Mine dropMine(World world, float startX, float startY)
 	{
-		
 		if ((System.currentTimeMillis() - mineLayingTime < MINE_RELOAD_SPEED && mineLayingTime != 0)
 				||startX < 0 || startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
-			
 		{
 			return null;
 		}
+		
 		int xTileCoord = (int) startX / 32;
 		int yTileCoord = (int) startY / 32;
 

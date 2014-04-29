@@ -69,6 +69,7 @@ public class Mine extends StationaryElement implements Ownable
 		setWidth(25);
 		setHeight(25);
 		this.createdTime = System.currentTimeMillis();
+		setLocalPlayer(true);
 		updateBounds();
 	}
 
