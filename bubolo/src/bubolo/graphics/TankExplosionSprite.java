@@ -7,16 +7,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import bubolo.util.TextureUtil;
 
 /**
- * A graphical bullet explosion.
+ * A tank explosion.
  * 
  * @author BU673 - Clone Industries
  */
-class BulletExplosionSprite extends Sprite
+class TankExplosionSprite extends Sprite
 {
 	private TextureRegion[][] frames;
 
 	// The number of milliseconds per frame.
-	private static final long millisPerFrame = 50;
+	private static final long millisPerFrame = 85;
 
 	// The amount of time remaining for the current frame.
 	private long frameTimeRemaining;
@@ -35,10 +35,10 @@ class BulletExplosionSprite extends Sprite
 	private static final int WIDTH = 32;
 
 	/** The file name of the texture. */
-	private static final String TEXTURE_FILE = "explosion.png";
+	private static final String TEXTURE_FILE = "tank_explosion.png";
 
 	/**
-	 * Constructs a BulletExplosionSprite. This is Package-private because sprites should not be
+	 * Constructs a TankExplosionSprite. This is Package-private because sprites should not be
 	 * directly created outside of the graphics system.
 	 * 
 	 * @param x
@@ -46,7 +46,7 @@ class BulletExplosionSprite extends Sprite
 	 * @param y
 	 *            the y position of the explosion.
 	 */
-	BulletExplosionSprite(int x, int y)
+	TankExplosionSprite(int x, int y)
 	{
 		super(DrawLayer.TOP);
 

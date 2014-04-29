@@ -51,6 +51,9 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	// Ensures that only one tank explosion is created per death.
+	private boolean explosionCreated;
 
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "tank.png";
@@ -79,7 +82,18 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-
+		else if (!getEntity().isAlive())
+		{
+			if(!explosionCreated)
+			{
+				Sprites spriteSystem = Sprites.getInstance();
+				spriteSystem.addSprite(
+						new TankExplosionSprite((int)getEntity().getX(), (int)getEntity().getY()));
+			}
+			return;
+		}
+		explosionCreated = false;
+		
 		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN ||
 				getDrawLayer() != layer)
 		{

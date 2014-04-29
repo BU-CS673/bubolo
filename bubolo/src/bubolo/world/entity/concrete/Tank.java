@@ -265,6 +265,16 @@ public class Tank extends Actor implements Damageable
 	{
 		return (System.currentTimeMillis() - cannonFireTime > cannonReloadSpeed);
 	}
+	
+	/**
+	 * Returns true if the tank is alive. This is needed since the tank is reused on death, rather 
+	 * than disposed.
+	 * @return true if the tank is alive, or false otherwise.
+	 */
+	public boolean isAlive()
+	{
+		return isAlive;
+	}
 
 	/**
 	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
@@ -751,7 +761,6 @@ public class Tank extends Actor implements Damageable
 		{
 			this.isAlive = false;
 		}
-		// TODO: This method is the first opportunity to set off "death" chain of events
 	}
 
 	/**
