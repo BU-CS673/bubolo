@@ -44,7 +44,11 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	private long startTime;
 	private long lastSecondsRemaining;
 	
+	// The number of clients who are connected.
 	private int clientCount;
+	
+	// True if the game is starting.
+	private boolean startingGame;
 
 	/**
 	 * Constructs the network game lobby.
@@ -130,8 +134,11 @@ public class LobbyScreen extends Screen implements NetworkObserver
 				{
 					if (clientCount > 0)
 					{
-						startGameButton.setDisabled(true);
-						net.startGame(world);
+						if (!startingGame)
+						{
+							startingGame = true;
+							net.startGame(world);
+						}
 					}
 					else
 					{
@@ -194,12 +201,14 @@ public class LobbyScreen extends Screen implements NetworkObserver
 	@Override
 	public void onClientDisconnected(String clientName)
 	{
+		--clientCount;
 		appendToMessageHistory(messageHistory, clientName + " left the game.");
 	}
 
 	@Override
 	public void onGameStart(int secondsUntilStart)
 	{
+		startingGame = true;
 		appendToMessageHistory(messageHistory, "Get ready: The game is starting!\n\n");
 		
 		long currentTime = System.currentTimeMillis();
