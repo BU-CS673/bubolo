@@ -87,22 +87,25 @@ public class AIBaseController implements Controller
 				}
 				else
 				{
-					if(tank.getId() == this.base.getOwnerUID() &&
-							(System.currentTimeMillis() - lastSupplyTime > resupplyDelayTime))
+					if(tank.getId() == this.base.getOwnerUID())
 					{
 						this.base.setCharging(true);
-						lastSupplyTime = System.currentTimeMillis();
-						if (tank.getHitPoints() < tank.getMaxHitPoints())
+						
+						if((System.currentTimeMillis() - lastSupplyTime > resupplyDelayTime))
 						{
-							tank.heal(base.giveHitPoints());
-						}
-						if(tank.getAmmoCount() < tank.getTankMaxAmmo())
-						{
-							tank.gatherAmmo(base.giveAmmo());
-						}
-						if(tank.getMineCount() < tank.getTankMaxMineCount())
-						{
-							tank.gatherMine(base.giveMine());
+							lastSupplyTime = System.currentTimeMillis();
+							if (tank.getHitPoints() < tank.getMaxHitPoints())
+							{
+								tank.heal(base.giveHitPoints());
+							}
+							if(tank.getAmmoCount() < tank.getTankMaxAmmo())
+							{
+								tank.gatherAmmo(base.giveAmmo());
+							}
+							if(tank.getMineCount() < tank.getTankMaxMineCount())
+							{
+								tank.gatherMine(base.giveMine());
+							}
 						}
 					}
 				}
