@@ -50,9 +50,9 @@ class BaseSprite extends AbstractEntitySprite<Base>
 	private static final String TEXTURE_FILE = "base.png";
 
 	/**
-	 * Constructor for the BaseSprite. This is Package-private because sprites should not be
-	 * directly created outside of the graphics system (instead, call the Sprite.create(entity)
-	 * static method).
+	 * Constructor for the BaseSprite. This is Package-private because sprites should not
+	 * be directly created outside of the graphics system (instead, call the
+	 * Sprite.create(entity) static method).
 	 * 
 	 * @param base
 	 *            Reference to the Base that this BaseSprite represents.
@@ -96,7 +96,7 @@ class BaseSprite extends AbstractEntitySprite<Base>
 		{
 			updateColorSet();
 
-			animationState = (this.getEntity().isCharging()) ? 1 : animationState;
+			animationState = (this.getEntity().isCharging()) ? 1 : 0;
 
 			switch (animationState)
 			{

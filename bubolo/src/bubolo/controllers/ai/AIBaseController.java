@@ -11,8 +11,8 @@ import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Tank;
 
 /**
- * A controller for bases. This controller checks for contact with its owner 
- * and heals and reloads the owner accordingly.
+ * A controller for bases. This controller checks for contact with its owner and heals and
+ * reloads the owner accordingly.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -22,17 +22,17 @@ public class AIBaseController implements Controller
 	 * the base this controller is controlling
 	 */
 	private Base base;
-	
+
 	/**
 	 * hitpoints to heal per game tick
 	 */
 	private int healPointsPerTick = 1;
-	
+
 	/**
 	 * ammo to add to tank per game tick
 	 */
 	private int ammoPerTick = 1;
-	
+
 	/**
 	 * constructs an AI Base controller
 	 * 
@@ -46,18 +46,19 @@ public class AIBaseController implements Controller
 
 	@Override
 	public void update(World world)
-	{	
-		for(Entity entity:TileUtil.getLocalCollisions(this.base, world))
+	{
+		this.base.setCharging(false);
+		for (Entity entity : TileUtil.getLocalCollisions(this.base, world))
 		{
 			if (entity instanceof Tank)
 			{
-				Tank tank = (Tank)entity;
-				if(!this.base.isOwned())
+				Tank tank = (Tank) entity;
+				if (!this.base.isOwned())
 				{
 					this.base.setOwned(true);
 					this.base.setOwnerUID(tank.getId());
 					this.base.heal(100);
-					if(tank.isLocalPlayer())
+					if (tank.isLocalPlayer())
 					{
 						this.base.setLocalPlayer(true);
 						Network net = NetworkSystem.getInstance();
@@ -70,8 +71,9 @@ public class AIBaseController implements Controller
 				}
 				else
 				{
-					if(tank.getId() == this.base.getOwnerUID())
+					if (tank.getId() == this.base.getOwnerUID())
 					{
+						this.base.setCharging(true);
 						tank.heal(healPointsPerTick);
 						tank.gatherAmmo(ammoPerTick);
 					}
