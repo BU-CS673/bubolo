@@ -11,8 +11,8 @@ import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Tank;
 
 /**
- * A controller for bases. This controller checks for contact with its owner 
- * and heals and reloads the owner accordingly.
+ * A controller for bases. This controller checks for contact with its owner and heals and
+ * reloads the owner accordingly.
  * 
  * @author BU CS673 - Clone Productions
  */
@@ -23,24 +23,32 @@ public class AIBaseController implements Controller
 	 */
 	private Base base;
 
+
 	/**
 	 * Time allowed between supply orders
 	 */
 	private static final long resupplyDelayTime = 500;
-	
+
 	/**
 	 * Time since last supply order
 	 */
 	private long lastSupplyTime = 0;
-	
+
 	/**
 	 * Time allowed for base to gain supplies
 	 */
 	private static final long replinishTime = 750;
 	
+	/**
+	 * How many Hit Points the base can heal per update
+	 */
 	private static final int HIT_POINTS_PER_HEAL = 10;
 	
+	/**
+	 * Time since the last replinishment
+	 */
 	private long lastReplinishment = 0;
+
 	/**
 	 * constructs an AI Base controller
 	 * 
@@ -54,18 +62,19 @@ public class AIBaseController implements Controller
 
 	@Override
 	public void update(World world)
-	{	
-		for(Entity entity:TileUtil.getLocalCollisions(this.base, world))
+	{
+		this.base.setCharging(false);
+		for (Entity entity : TileUtil.getLocalCollisions(this.base, world))
 		{
 			if (entity instanceof Tank)
 			{
-				Tank tank = (Tank)entity;
-				if(!this.base.isOwned())
+				Tank tank = (Tank) entity;
+				if (!this.base.isOwned())
 				{
 					this.base.setOwned(true);
 					this.base.setOwnerUID(tank.getId());
 					this.base.heal(100);
-					if(tank.isLocalPlayer())
+					if (tank.isLocalPlayer())
 					{
 						this.base.setLocalPlayer(true);
 						Network net = NetworkSystem.getInstance();
@@ -81,6 +90,7 @@ public class AIBaseController implements Controller
 					if(tank.getId() == this.base.getOwnerUID() &&
 							(System.currentTimeMillis() - lastSupplyTime > resupplyDelayTime))
 					{
+						this.base.setCharging(true);
 						lastSupplyTime = System.currentTimeMillis();
 						if (tank.getHitPoints() < tank.getMaxHitPoints())
 						{
