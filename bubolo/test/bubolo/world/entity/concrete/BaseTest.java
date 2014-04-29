@@ -70,7 +70,7 @@ public class BaseTest
 		base.gatherAmmo();
 		assertEquals(base.getMaxAmmoCount(), base.getAmmoCount(), 0);
 		base.giveAmmo();
-		assertEquals(base.getMaxAmmoCount() - 10, base.getAmmoCount(), 0);
+		assertEquals(base.getMaxAmmoCount() - 5, base.getAmmoCount(), 0);
 		base.gatherAmmo();
 		assertEquals(base.getMaxAmmoCount(), base.getAmmoCount(), 0);		
 	}
@@ -97,5 +97,12 @@ public class BaseTest
 	{
 		base.setOwnerUID(base.getId());
 		assertEquals(base.getId(), base.getOwnerUID());
+	}
+	
+	@Test
+	public void giveHitPoints()
+	{
+		assertEquals(5, base.giveHitPoints(), 0);
+		base.heal(5);
 	}
 }

@@ -23,15 +23,31 @@ public class AIBaseController implements Controller
 	 */
 	private Base base;
 
-	/**
-	 * hitpoints to heal per game tick
-	 */
-	private int healPointsPerTick = 1;
 
 	/**
-	 * ammo to add to tank per game tick
+	 * Time allowed between supply orders
 	 */
-	private int ammoPerTick = 1;
+	private static final long resupplyDelayTime = 500;
+
+	/**
+	 * Time since last supply order
+	 */
+	private long lastSupplyTime = 0;
+
+	/**
+	 * Time allowed for base to gain supplies
+	 */
+	private static final long replinishTime = 750;
+	
+	/**
+	 * How many Hit Points the base can heal per update
+	 */
+	private static final int HIT_POINTS_PER_HEAL = 10;
+	
+	/**
+	 * Time since the last replinishment
+	 */
+	private long lastReplinishment = 0;
 
 	/**
 	 * constructs an AI Base controller
@@ -71,14 +87,35 @@ public class AIBaseController implements Controller
 				}
 				else
 				{
-					if (tank.getId() == this.base.getOwnerUID())
+					if(tank.getId() == this.base.getOwnerUID())
 					{
 						this.base.setCharging(true);
-						tank.heal(healPointsPerTick);
-						tank.gatherAmmo(ammoPerTick);
+						
+						if((System.currentTimeMillis() - lastSupplyTime > resupplyDelayTime))
+						{
+							lastSupplyTime = System.currentTimeMillis();
+							if (tank.getHitPoints() < tank.getMaxHitPoints())
+							{
+								tank.heal(base.giveHitPoints());
+							}
+							if(tank.getAmmoCount() < tank.getTankMaxAmmo())
+							{
+								tank.gatherAmmo(base.giveAmmo());
+							}
+							if(tank.getMineCount() < tank.getTankMaxMineCount())
+							{
+								tank.gatherMine(base.giveMine());
+							}
+						}
 					}
 				}
 			}
+		}
+		if(System.currentTimeMillis() - lastReplinishment < replinishTime)
+		{
+			base.heal(HIT_POINTS_PER_HEAL);
+			base.gatherAmmo();
+			base.gatherMines();
 		}
 	}
 }

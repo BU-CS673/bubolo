@@ -146,6 +146,8 @@ public class Tank extends Actor implements Damageable
 
 	public static final int TANK_MAX_MINE_COUNT = 10;
 
+
+
 	private int pillboxCount;
 
 	private Random randomGenerator = new Random();
@@ -980,5 +982,23 @@ public class Tank extends Actor implements Damageable
 	public void setOwnerUID(UUID ownerUID) 
 	{
 		this.ownerUID = ownerUID;
+	}
+	
+	/**
+	 * Maximum amount of ammo for tank
+	 * @return maximum ammo count of tank
+	 */
+	public static int getTankMaxAmmo() 
+	{
+		return TANK_MAX_AMMO;
+	}
+	
+	/**
+	 * Maximum amount of mines for tank
+	 * @return maximum amount of mines a tank can carry
+	 */
+	public static int getTankMaxMineCount() 
+	{
+		return TANK_MAX_MINE_COUNT;
 	}
 }
