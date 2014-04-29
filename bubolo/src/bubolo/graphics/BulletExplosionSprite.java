@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import bubolo.util.TextureUtil;
 
 /**
- * The graphical representation of a GenericExplosion entity.
+ * A graphical bullet explosion.
  * 
  * @author BU673 - Clone Industries
  */
@@ -30,7 +30,7 @@ class BulletExplosionSprite extends Sprite
 
 	private final int x;
 	private final int y;
-	
+
 	private static final int HEIGHT = 32;
 	private static final int WIDTH = 32;
 
@@ -38,8 +38,8 @@ class BulletExplosionSprite extends Sprite
 	private static final String TEXTURE_FILE = "explosion.png";
 
 	/**
-	 * Constructor for the GenericExplosionSprite. This is Package-private because sprites should
-	 * not be directly created outside of the graphics system.
+	 * Constructs a BulletExplosionSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param x
 	 *            the x position of the explosion.
@@ -98,7 +98,7 @@ class BulletExplosionSprite extends Sprite
 	{
 		return disposed;
 	}
-	
+
 	@Override
 	public float getX()
 	{

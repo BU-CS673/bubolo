@@ -154,15 +154,12 @@ public class Bullet extends Effect
 
 		for(Entity collider:getLookaheadEntities(world))
 		{
-			if (collider.isSolid())
+			if (collider instanceof Damageable)
 			{
 				if (Intersector.overlapConvexPolygons(collider.getBounds(), this.getBounds()))
 				{
-					if(collider instanceof Damageable)
-					{
-						Damageable damageableCollider = (Damageable)collider;
-						damageableCollider.takeHit(DAMAGEDONE);
-					}
+					Damageable damageableCollider = (Damageable)collider;
+					damageableCollider.takeHit(DAMAGEDONE);
 					dispose();
 					return;
 				}

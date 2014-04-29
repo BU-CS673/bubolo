@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.util.TileUtil;
 import bubolo.world.Adaptable;
 import bubolo.world.Damageable;
@@ -124,8 +126,14 @@ public class Wall extends StationaryElement implements Adaptable, Damageable
 	@Override
 	public void takeHit(int damagePoints) 
 	{
+		Audio.play(Sfx.WALL_HIT);
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events		
+		
+		if(hitPoints <= 0)
+		{
+			this.getTile().clearElement();
+			dispose();
+		}	
 	}
 
 	/**

@@ -84,4 +84,18 @@ public class MockNetwork implements Network
 	{
 		return null;
 	}
+
+	@Override
+	public boolean isServer()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getPlayerName()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

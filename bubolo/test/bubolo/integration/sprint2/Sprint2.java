@@ -121,7 +121,6 @@ public class Sprint2
 		cfg.title = "BUBOLO v0.2.0";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_SinglePlayerApp(1067, 600), cfg);
 	}
 
@@ -135,7 +134,6 @@ public class Sprint2
 		cfg.title = "BUBOLO v0.2.0, Multiplayer Server";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_HostMultiPlayerApp(1067, 600), cfg);
 	}
 
@@ -175,7 +173,6 @@ public class Sprint2
 					cfg.title = "BUBOLO v0.2.0, Multiplayer Client";
 					cfg.width = 1067;
 					cfg.height = 600;
-					cfg.useGL20 = true;
 					new LwjglApplication(new Sprint2_JoinMultiPlayerApp(1067, 600), cfg);
 					IP_popup.setVisible(false);
 					fp.setVisible(false);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bubolo.ui.Screen;
 import bubolo.world.World;
 
 import com.badlogic.gdx.Gdx;
@@ -140,6 +141,19 @@ public class Graphics
 	}
 
 	/**
+	 * Draws the specified screen.
+	 * 
+	 * @param screen the ui screen to update.
+	 */
+	public void draw(Screen screen)
+	{
+		Gdx.gl20.glClearColor(0.6f, 0.6f, 0.6f, 1);
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		
+		screen.update();
+	}
+
+	/**
 	 * Draws the entities that are within the camera's clipping boundary.
 	 * 
 	 * @param world
@@ -186,14 +200,14 @@ public class Graphics
 		drawEntities(spritesInView, DrawLayer.THIRD);
 		drawEntities(spritesInView, DrawLayer.FOURTH);
 		drawEntities(spritesInView, DrawLayer.TOP);
-		
+
 		// Render the user interface.
 		if (ui != null)
 		{
 			ui.act(Gdx.graphics.getDeltaTime());
 			ui.draw();
 		}
-		
+
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
 		{

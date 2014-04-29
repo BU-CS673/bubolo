@@ -46,9 +46,6 @@ public class BuboloApplication extends AbstractGameApplication
 	public void create()
 	{
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
-		// and then the map loader or creator could set the size.
 		world = new GameWorld(500, 500);
 		
 		// TODO: add other systems here.

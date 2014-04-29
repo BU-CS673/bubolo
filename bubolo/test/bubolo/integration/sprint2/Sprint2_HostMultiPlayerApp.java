@@ -37,7 +37,6 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_HostMultiPlayerApp(1067, 600), cfg);
 	}
 
@@ -184,5 +183,19 @@ public class Sprint2_HostMultiPlayerApp implements GameApplication
 	public boolean isGameStarted()
 	{
 		return world.getMapTiles() != null;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

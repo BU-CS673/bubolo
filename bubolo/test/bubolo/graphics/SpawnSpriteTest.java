@@ -93,4 +93,16 @@ public class SpawnSpriteTest
 		assertTrue(passed);
 	}
 
+	@Test
+	public void getSetVisible()
+	{
+		SpawnSprite sprite = new SpawnSprite(null);
+		assertFalse(sprite.getVisible());
+		
+		sprite.setVisible(true);
+		assertTrue(sprite.getVisible());
+		
+		sprite.setVisible(false);
+		assertFalse(sprite.getVisible());
+	}
 }

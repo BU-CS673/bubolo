@@ -1,4 +1,4 @@
-package bubolo.test;
+package bubolo.mock;
 
 import bubolo.world.Damageable;
 import bubolo.world.entity.concrete.Tank;

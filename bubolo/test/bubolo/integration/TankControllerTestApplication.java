@@ -29,7 +29,6 @@ public class TankControllerTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new TankControllerTestApplication(1067, 600), cfg);
 	}
 	
@@ -67,6 +66,8 @@ public class TankControllerTestApplication extends AbstractGameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		

@@ -1,19 +1,13 @@
-package bubolo.test;
+package bubolo.mock;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
 import bubolo.util.GameLogicException;
 import bubolo.world.Tile;
-import bubolo.world.World;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.MockEntity;
-import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Pillbox;
-import static org.mockito.Mockito.mock;
 
 /**
  * Mock class used for testing components that need a world implementation

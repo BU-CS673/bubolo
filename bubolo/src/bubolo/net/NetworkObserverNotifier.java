@@ -110,7 +110,7 @@ public class NetworkObserverNotifier
 	 * @param secondsUntilStart
 	 *            the number of seconds until the game begins.
 	 */
-	public void notifyGameStart(int secondsUntilStart)
+	public void notifyGameStart(final int secondsUntilStart)
 	{
 		for (final NetworkObserver o : observers)
 		{

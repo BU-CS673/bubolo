@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import bubolo.controllers.Controller;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockWorld;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
@@ -150,5 +150,11 @@ public class EntityTest
 	{
 		ent.dispose();
 		assertTrue(ent.isDisposed());
+	}
+	
+	@Test
+	public void onDispose()
+	{
+		ent.onDispose();
 	}
 }

@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.peer.LightweightPeer;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +22,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import bubolo.graphics.Graphics;
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
-import bubolo.test.MockMineCreator;
-import bubolo.test.MockPillboxCreator;
-import bubolo.test.MockWorld;
+import bubolo.mock.MockBulletCreator;
+import bubolo.mock.MockMineCreator;
+import bubolo.mock.MockPillboxCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -154,6 +154,14 @@ public class TankTest
 		assertEquals(0, tank.getPillboxCount(), 0);
 	}
 	
+	@Test 
+	public void isAlive()
+	{
+		assertTrue(tank.isAlive());
+		tank.takeHit(200);
+		assertFalse(tank.isAlive());
+	}
+	
 	@Test
 	public void takeHit()
 	{
@@ -220,5 +228,18 @@ public class TankTest
 		tank.gatherPillbox();
 		Pillbox pillbox = tank.dropPillbox(new MockPillboxCreator(), 16, 16);
 		assertNotNull(pillbox);
+	}
+	
+	@Test
+	public void setOwner()
+	{
+		tank.setOwnerUID(tank.getId());
+		assertEquals(tank.getId(), tank.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		tank.setOwnerUID(tank.getId());
+		assertEquals(tank.getId(), tank.getOwnerUID());
 	}
 }

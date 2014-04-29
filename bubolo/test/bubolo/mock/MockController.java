@@ -1,4 +1,4 @@
-package bubolo.test;
+package bubolo.mock;
 
 import bubolo.controllers.Controller;
 import bubolo.world.World;

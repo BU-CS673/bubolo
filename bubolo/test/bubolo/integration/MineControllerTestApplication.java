@@ -41,7 +41,6 @@ public class MineControllerTestApplication extends AbstractGameApplication
 		cfg.title = "BUBOLO Mine Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new MineControllerTestApplication(1067, 600), cfg);
 	}
 	
@@ -79,6 +78,8 @@ public class MineControllerTestApplication extends AbstractGameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		

@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.world.Damageable;
 import bubolo.world.entity.StationaryElement;
 
@@ -81,7 +83,11 @@ public class Tree extends StationaryElement implements Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events		
+		if(hitPoints <= 0)
+		{
+			this.getTile().clearElement();
+			this.dispose();
+		}
 	}
 
 	/**
@@ -96,10 +102,15 @@ public class Tree extends StationaryElement implements Damageable
 		{
 			hitPoints += Math.abs(healPoints);
 		}
-
 		else
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
+	}
+	
+	@Override
+	protected void onDispose()
+	{
+		Audio.play(Sfx.TREE_HIT);
 	}
 }

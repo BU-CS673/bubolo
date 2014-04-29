@@ -150,7 +150,11 @@ public class Parser
 							dataString = tileData.get(i * mapWidth + j).toString();
 							if (layerThreeSwitch(dataString) != null)
 							{
-								world.addEntity(layerThreeSwitch(dataString)).setRotation(((float)Math.PI / 2));
+								Entity entity = world.addEntity(layerThreeSwitch(dataString));
+								int tileYIndex = mapHeight - i - 1;
+								entity.setParams(j * Coordinates.TILE_TO_WORLD_SCALE, 
+										tileYIndex * Coordinates.TILE_TO_WORLD_SCALE, 
+										((float)Math.PI / 2.f));
 							}
 						}
 					}
@@ -232,9 +236,6 @@ public class Parser
 
 		case "12":
 			return Base.class;
-			
-		 case "13": 
-			 return Spawn.class;
 			
 		case "0":
 			return null;

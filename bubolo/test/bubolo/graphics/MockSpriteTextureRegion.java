@@ -2,7 +2,8 @@ package bubolo.graphics;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import bubolo.test.MockTank;
+
+import bubolo.mock.MockTank;
 
 /**
  * A mock Sprite class used for testing calls to drawTexture(batch, camera, layer, TextureRegion)

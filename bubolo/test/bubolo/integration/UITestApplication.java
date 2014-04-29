@@ -80,7 +80,6 @@ public class UITestApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new CollisionTestApplication(1067, 600), cfg);
 	}
 

@@ -15,11 +15,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import bubolo.graphics.LibGdxAppTester;
+import bubolo.mock.MockTank;
+import bubolo.mock.MockWorld;
 import bubolo.net.Network;
 import bubolo.net.NetworkCommand;
 import bubolo.net.NetworkSystem;
-import bubolo.test.MockTank;
-import bubolo.test.MockWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;

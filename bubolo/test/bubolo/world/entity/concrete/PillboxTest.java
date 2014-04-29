@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.mockito.Mockito.mock;
 
+import static org.mockito.Mockito.mock;
 import bubolo.graphics.LibGdxAppTester;
-import bubolo.test.MockBulletCreator;
+import bubolo.mock.MockBulletCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.entity.EntityTestCase;
 
@@ -106,5 +106,18 @@ public class PillboxTest
 		assertEquals(99, pillbox.getHitPoints(), 0);
 		pillbox.heal(1);
 		assertEquals(100, pillbox.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void setOwner()
+	{
+		pillbox.setOwnerUID(pillbox.getId());
+		assertEquals(pillbox.getId(), pillbox.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		pillbox.setOwnerUID(pillbox.getId());
+		assertEquals(pillbox.getId(), pillbox.getOwnerUID());
 	}
 }

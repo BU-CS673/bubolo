@@ -31,7 +31,6 @@ public class TreeControllerTestApplication implements GameApplication
 		cfg.title = "BUBOLO Tree Controller Integration";
 		cfg.width = 640;
 		cfg.height = 640;
-		cfg.useGL20 = true;
 	new LwjglApplication(new TreeControllerTestApplication(640, 640), cfg);
 	}
 	
@@ -83,9 +82,8 @@ public class TreeControllerTestApplication implements GameApplication
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		//world = new GameWorld(32*94, 32*94);
 		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");
@@ -151,5 +149,19 @@ public class TreeControllerTestApplication implements GameApplication
 	public boolean isGameStarted() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
