@@ -24,7 +24,7 @@ public class MineExplosion extends Effect
 	/**
 	 * Damage done on explosion
 	 */
-	private static final int DAMAGE_DONE = 10;
+	private static final int DAMAGE_PER_TICK = 1;
 	
 	/**
 	 * length of explosion in milliseconds
@@ -81,7 +81,7 @@ public class MineExplosion extends Effect
 				if (collider instanceof Damageable)
 				{
 					Damageable damageableCollider = (Damageable)collider;
-					damageableCollider.takeHit(DAMAGE_DONE);
+					damageableCollider.takeHit(DAMAGE_PER_TICK);
 				}
 			}
 		}
