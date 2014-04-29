@@ -372,6 +372,15 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public final void dispose()
 	{
+		onDispose();
 		disposed = true;
+	}
+	
+	/**
+	 * Called when dispose is called. Entities can override this to perform additional processing 
+	 * on dispose. 
+	 */
+	protected void onDispose()
+	{
 	}
 }

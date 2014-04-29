@@ -8,6 +8,8 @@ import java.util.UUID;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.MoveTank;
@@ -762,6 +764,7 @@ public class Tank extends Actor implements Damageable
 	public void takeHit(int damagePoints)
 	{
 		hitPoints -= Math.abs(damagePoints);
+		Audio.play(Sfx.TANK_HIT);
 		if (this.hitPoints <= 0)
 		{
 			onDeath();
@@ -775,6 +778,7 @@ public class Tank extends Actor implements Damageable
 	{
 		if (isAlive)
 		{
+			Audio.play(Sfx.TANK_EXPLOSION);
 			isAlive = false;
 			respawnTime = System.currentTimeMillis() + TANK_RESPAWN_TIME;
 		}

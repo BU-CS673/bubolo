@@ -54,6 +54,18 @@ public class AudioTest
 	}
 	
 	@Test
+	public void playSoundEffectTankExplosion()
+	{
+		Audio.play(Sfx.TANK_EXPLOSION);
+	}
+
+	@Test
+	public void playSoundEffectMineExplosion()
+	{
+		Audio.play(Sfx.MINE_EXPLOSION);
+	}
+	
+	@Test
 	public void playSoundEffectPillboxBuilt()
 	{
 		Audio.play(Sfx.PILLBOX_BUILT);
@@ -119,6 +131,10 @@ public class AudioTest
 	// either OpenAL isn't initialized in time for the test, or multiple OpenAL contexts are
 	// attempted to be created since multiple threads are running concurrently. 
 	// (Christopher D. Canfield: 3/14/2014)
+	//
+	// This is almost certainly because of the disposeAudioSystem test. Removing that seems to allow
+	// this to run all without issues.
+	// (Christopher D. Canfield: 4/29/2014)
 	@Test
 	public void startStopMusic()
 	{

@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.world.Ownable;
 import bubolo.world.entity.StationaryElement;
 
@@ -117,7 +119,7 @@ public class Mine extends StationaryElement implements Ownable
 	
 	/**
 	 * get the status of this mine. will be inactive until the fuse time has elapsed since the mine was created
-	 * @return int
+	 * @return 
 	 * 		whether or not this mine is active
 	 */
 	public boolean isActive()
@@ -142,4 +144,9 @@ public class Mine extends StationaryElement implements Ownable
 		this.ownerUID = ownerUID;
 	}
 	
+	@Override
+	protected void onDispose()
+	{
+		Audio.play(Sfx.MINE_EXPLOSION);
+	}
 }

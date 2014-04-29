@@ -86,6 +86,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			if(!explosionCreated)
 			{
+				explosionCreated = true;
 				Sprites spriteSystem = Sprites.getInstance();
 				spriteSystem.addSprite(
 						new TankExplosionSprite((int)getEntity().getX(), (int)getEntity().getY()));
