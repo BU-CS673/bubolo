@@ -85,7 +85,9 @@ public class TankTerrainSpeedTest implements GameApplication
 	 */
 	public void create()
 	{
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		

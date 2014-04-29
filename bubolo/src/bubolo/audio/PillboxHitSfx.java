@@ -21,7 +21,7 @@ public class PillboxHitSfx extends SoundEffect
 	{
 		try
 		{
-			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "pillbox_hit.ogg"));
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "pillbox_hit.wav"));
 			Sound sound = Gdx.audio.newSound(soundFile);
 			setSound(sound);
 		}

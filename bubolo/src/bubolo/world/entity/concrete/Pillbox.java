@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.UpdateOwnable;
@@ -214,6 +216,7 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	@Override
 	public void takeHit(int damagePoints) 
 	{
+		Audio.play(Sfx.PILLBOX_HIT);
 		hitPoints -= Math.abs(damagePoints);
 		if (hitPoints <= 0)
 		{

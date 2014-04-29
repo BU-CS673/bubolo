@@ -54,4 +54,10 @@ public class TreeTest
 		tree.heal(1);
 		assertEquals(1, tree.getHitPoints(), 0);
 	}
+	
+	@Test
+	public void onDispose()
+	{
+		tree.onDispose();
+	}
 }

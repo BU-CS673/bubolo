@@ -16,15 +16,18 @@ import bubolo.world.entity.Entity;
 class SpawnSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
-	
+
 	private TextureRegion[][] frames;
-	
+
+	// Whether the sprite should be drawn.
+	private boolean visible;
+
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "spawn.png";
 
 	/**
-	 * Constructor for the SpawnSprite. This is Package-private because sprites should not
-	 * be directly created outside of the graphics system.
+	 * Constructor for the SpawnSprite. This is Package-private because sprites should not be
+	 * directly created outside of the graphics system.
 	 * 
 	 * @param spawn
 	 *            Reference to the spawn that this SpawnSprite represents.
@@ -44,9 +47,29 @@ class SpawnSprite extends AbstractEntitySprite<Entity>
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
-		else
+		else if (visible)
 		{
 			drawTexture(batch, camera, layer, frames[0][0]);
 		}
+	}
+
+	/**
+	 * Specifies whether the spawn sprite should be visible. The default is false.
+	 * 
+	 * @param visible
+	 *            true if the spawn sprite should be visible, or false otherwise.
+	 */
+	void setVisible(boolean visible)
+	{
+		this.visible = visible;
+	}
+	
+	/**
+	 * Specifies whether the spawn sprite is visible.
+	 * @return true if the spawn sprite is visible, or false otherwise.
+	 */
+	boolean getVisible()
+	{
+		return visible;
 	}
 }

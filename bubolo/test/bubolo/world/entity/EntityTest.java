@@ -151,4 +151,10 @@ public class EntityTest
 		ent.dispose();
 		assertTrue(ent.isDisposed());
 	}
+	
+	@Test
+	public void onDispose()
+	{
+		ent.onDispose();
+	}
 }
