@@ -209,7 +209,19 @@ public class Audio implements Music.OnCompletionListener
 	{
 		Sfx.CANNON_FIRED.dispose();
 		Sfx.EXPLOSION.dispose();
+		Sfx.ENGINEER_KILLED.dispose();
+		Sfx.MINE_EXPLOSION.dispose();
+		Sfx.PILLBOX_BUILT.dispose();
+		Sfx.PILLBOX_HIT.dispose();
+		Sfx.ROAD_BUILT.dispose();
+		Sfx.TANK_DROWNED.dispose();
+		Sfx.TANK_EXPLOSION.dispose();
 		Sfx.TANK_HIT.dispose();
+		Sfx.TANK_IN_SHALLOW_WATER.dispose();
+		Sfx.TREE_GATHERED.dispose();
+		Sfx.TREE_HIT.dispose();
+		Sfx.WALL_BUILT.dispose();
+		Sfx.WALL_HIT.dispose();
 		
 		if (music != null)
 		{
