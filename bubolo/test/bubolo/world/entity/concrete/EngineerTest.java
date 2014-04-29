@@ -60,4 +60,16 @@ public class EngineerTest
 		engi.heal(1);
 		assertEquals(1, engi.getHitPoints(), 0);
 	}
+	@Test
+	public void setOwner()
+	{
+		engi.setOwnerUID(engi.getId());
+		assertEquals(engi.getId(), engi.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		engi.setOwnerUID(engi.getId());
+		assertEquals(engi.getId(), engi.getOwnerUID());
+	}
 }

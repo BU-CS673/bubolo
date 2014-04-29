@@ -86,4 +86,16 @@ public class BaseTest
 		base.gatherMines();
 		assertEquals(base.getMaxMineCount(), base.getMineCount(), 0);
 	}
+	@Test
+	public void setOwner()
+	{
+		base.setOwnerUID(base.getId());
+		assertEquals(base.getId(), base.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		base.setOwnerUID(base.getId());
+		assertEquals(base.getId(), base.getOwnerUID());
+	}
 }

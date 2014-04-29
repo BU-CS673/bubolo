@@ -2,6 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.World;
@@ -15,6 +18,10 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Pillbox extends StationaryElement implements Ownable, Damageable
 {
+	/**
+	 * UID of tank that owns this Pillbox
+	 */
+	private UUID ownerUID;
 	/*
 	 * time at witch cannon was last fired
 	 */
@@ -43,12 +50,12 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Pillbox belongs to the local player.
 	 */
-	private boolean isLocalPlayer = true;
+	private boolean isLocalPlayer = false;
 
 	/**
 	 * Boolean representing whether this Pillbox is owned by a player.
 	 */
-	private boolean isOwned = true;
+	private boolean isOwned = false;
 	
 	/**
 	 * The health of the pillbox
@@ -208,7 +215,17 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events		
+		if (hitPoints <= 0)
+		{
+			if (this.isLocalPlayer())
+			{
+				this.setLocalPlayer(false);
+				this.setOwned(false);
+				this.ownerUID = null;
+				Network net = NetworkSystem.getInstance();
+				net.send(new UpdateOwnable(this));
+			}
+		}
 	}
 
 	/**
@@ -228,5 +245,17 @@ public class Pillbox extends StationaryElement implements Ownable, Damageable
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
+	}
+
+	@Override
+	public UUID getOwnerUID() 
+	{
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) 
+	{
+		this.ownerUID = ownerUID;
 	}
 }
