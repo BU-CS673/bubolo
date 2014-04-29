@@ -82,9 +82,8 @@ public class TreeControllerTestApplication implements GameApplication
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		//world = new GameWorld(32*94, 32*94);
 		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/ParserTestMap.json");

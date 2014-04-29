@@ -49,6 +49,15 @@ public class Audio implements Music.OnCompletionListener
 	private static Music.OnCompletionListener musicOnCompletionListener = new Audio();
 	
 	/**
+	 * Loads all sounds files. Calling this isn't necessary, but there will be a slight pause when
+	 * the first sound is played if this isn't called.
+	 */
+	public static void initialize()
+	{
+		Sfx.initialize();
+	}
+	
+	/**
 	 * Plays a sound effect. This should be called in the following way:<br><br>
 	 * <code>Audio.play(Sfx.EXPLOSION);<br>
 	 * Audio.play(Sfx.TANK_HIT);</code>

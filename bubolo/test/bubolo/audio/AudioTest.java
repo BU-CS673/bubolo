@@ -21,6 +21,17 @@ public class AudioTest
 		LibGdxAppTester.createApp();
 	}
 	
+	@Test
+	public void initialize()
+	{
+		Audio.initialize();
+	}
+	
+	@Test
+	public void initializeSfx()
+	{
+		Sfx.initialize();
+	}
 
 	@Test
 	public void checkDefaultSoundEffectVolume()

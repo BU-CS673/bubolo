@@ -69,6 +69,8 @@ public class PillboxControllerTestApplication extends AbstractGameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		

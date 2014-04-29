@@ -85,4 +85,11 @@ public abstract class Sfx
 	 * A wall hit sound effect.
 	 */
 	public static final SoundEffect WALL_HIT = new WallHitSfx();
+	
+	/**
+	 * Forces all sounds files to be loaded.
+	 */
+	static void initialize()
+	{
+	}
 }

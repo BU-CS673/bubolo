@@ -85,6 +85,8 @@ public class TankRespawnTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		
