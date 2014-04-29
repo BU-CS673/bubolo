@@ -46,7 +46,7 @@ public class AIPillboxController implements Controller
 			}
 		}
 		
-		if(!this.pillbox.isOwned())
+		if(!this.pillbox.isOwned() && this.pillbox.getHitPoints() <= 0)
 		{
 			for(Entity entity:TileUtil.getLocalCollisions(this.pillbox, world))
 			{
