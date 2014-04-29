@@ -68,25 +68,6 @@ class MineSprite extends AbstractEntitySprite<Mine>
 		idleFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2], allFrames[1] };
 	}
 
-	// TODO (cdc - 2014-03-20): Uncomment this when it is needed, or delete it if it is no longer needed.
-//	private void updateColorSet()
-//	{
-//		{
-//			if (!this.getEntity().isOwned())
-//			{
-//				colorId = ColorSets.NEUTRAL;
-//			}
-//			else if (this.getEntity().isLocalPlayer())
-//			{
-//				colorId = ColorSets.BLUE;
-//			}
-//			else
-//			{
-//				colorId = ColorSets.RED;
-//			}
-//		}
-//	}
-
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -94,18 +75,27 @@ class MineSprite extends AbstractEntitySprite<Mine>
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
+		else if (!getEntity().isLocalPlayer() && getEntity().isActive())
+		{
+			// Hide other people's mines, but give other players a chance to see it while the mine
+			// is arming.
+			return;
+		}
 		else
 		{
-
 			if (this.getEntity().isExploding())
+			{
 				animationState = 1;
+			}
 			else
+			{
 				animationState = 0;
+			}
 
 			switch (animationState)
 			{
 			case 0:
-				if (lastAnimationState != 0)
+				if (lastAnimationState != 0 || !getEntity().isActive())
 				{
 					lastAnimationState = 0;
 					frameIndex = 0;

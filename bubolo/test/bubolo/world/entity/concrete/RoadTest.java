@@ -1,21 +1,23 @@
 package bubolo.world.entity.concrete;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
 
 public class RoadTest
 {
-	static Road road;
+	private Road road;
 
 	/**
 	 * Constructs a Road object and sets the default parameters.
 	 */
-	@BeforeClass
-	public static void setup()
+	@Before
+	public void setup()
 	{
 		road = new Road();
 		EntityTestCase.setTestParams(road);
@@ -27,7 +29,12 @@ public class RoadTest
 		assertEquals("Road's state does not match what it was set to!", 7, road.getTilingState());
 	}
 	
-	// Will fail until updateState is implemented.
+	@Test
+	public void update()
+	{
+		road.update(mock(World.class));
+	}
+	
 	@Test
 	public void updateState()
 	{

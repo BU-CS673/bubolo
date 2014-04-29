@@ -89,6 +89,7 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	@Override
 	public void create()
 	{
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
 
 		Parser fileParser = Parser.getInstance();

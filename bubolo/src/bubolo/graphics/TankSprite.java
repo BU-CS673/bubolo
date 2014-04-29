@@ -51,6 +51,9 @@ class TankSprite extends AbstractEntitySprite<Tank>
 	// The last animation state that the tank was in, used to determine when to reset
 	// the starting frame.
 	private int lastAnimationState = 0;
+	
+	// Ensures that only one tank explosion is created per death.
+	private boolean explosionCreated;
 
 	/** The file name of the texture. */
 	private static final String TEXTURE_FILE = "tank.png";
@@ -67,18 +70,6 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		super(DrawLayer.FOURTH, tank);
 	}
 
-	private void updateColorSet()
-	{
-		if (this.getEntity().isLocalPlayer())
-		{
-			colorId = ColorSets.BLUE;
-		}
-		else
-		{
-			colorId = ColorSets.RED;
-		}
-	}
-
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -91,13 +82,30 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-		updateColorSet();
-
-		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN)
+		else if (!getEntity().isAlive())
+		{
+			if(!explosionCreated)
+			{
+				explosionCreated = true;
+				Sprites spriteSystem = Sprites.getInstance();
+				spriteSystem.addSprite(
+						new TankExplosionSprite((int)getEntity().getX(), (int)getEntity().getY()));
+			}
+			return;
+		}
+		explosionCreated = false;
+		
+		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN ||
+				getDrawLayer() != layer)
 		{
 			return;
 		}
 		
+		animate(batch, camera, layer);
+	}
+	
+	private void animate(SpriteBatch batch, Camera camera, DrawLayer layer)
+	{
 		animationState = (getEntity().getSpeed() > 0.f) ? 1 : 0;
 		switch (animationState)
 		{
@@ -138,6 +146,18 @@ class TankSprite extends AbstractEntitySprite<Tank>
 
 		default:
 			throw new GameLogicException("Programming error in tankSprite: default case reached.");
+		}
+	}
+	
+	private void updateColorSet()
+	{
+		if (this.getEntity().isLocalPlayer())
+		{
+			colorId = ColorSets.BLUE;
+		}
+		else
+		{
+			colorId = ColorSets.RED;
 		}
 	}
 
@@ -197,6 +217,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			Graphics.getInstance().addCameraController(controller);
 			controller.setCamera(camera);
 		}
+		updateColorSet();
 	}
 	
 	private enum Visibility

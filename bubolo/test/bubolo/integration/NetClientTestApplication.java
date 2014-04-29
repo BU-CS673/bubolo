@@ -89,6 +89,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	@Override
 	public void create()
 	{
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
 
 		network = NetworkSystem.getInstance();

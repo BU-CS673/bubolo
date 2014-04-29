@@ -69,6 +69,8 @@ public class CollisionTestApplication extends AbstractGameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		network = NetworkSystem.getInstance();
 		network.startDebug();
 

@@ -8,6 +8,8 @@ import java.util.UUID;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.MoveTank;
@@ -73,6 +75,11 @@ public class Tank extends Actor implements Damageable
 
 	// Boolean for whether this tank is currently alive
 	private boolean isAlive = true;
+	
+	// The time that the tank will respawn.
+	private long respawnTime;
+	
+	private static final long TANK_RESPAWN_TIME = 1000L;
 
 	// Minimum amount of time between laying mines.
 	private static final long MINE_RELOAD_SPEED = 500;
@@ -269,6 +276,16 @@ public class Tank extends Actor implements Damageable
 	{
 		return (System.currentTimeMillis() - cannonFireTime > cannonReloadSpeed);
 	}
+	
+	/**
+	 * Returns true if the tank is alive. This is needed since the tank is reused on death, rather 
+	 * than disposed.
+	 * @return true if the tank is alive, or false otherwise.
+	 */
+	public boolean isAlive()
+	{
+		return isAlive;
+	}
 
 	/**
 	 * Fires the tank's cannon, which adds a bullet to the world and initiates a cannon
@@ -323,7 +340,7 @@ public class Tank extends Actor implements Damageable
 	 */
 	public boolean isHidden()
 	{
-		return hidden;
+		return hidden || !isAlive;
 	}
 
 	/**
@@ -496,7 +513,7 @@ public class Tank extends Actor implements Damageable
 	{
 		if (!isAlive)
 		{
-			reSpawn(world);
+			respawn(world);
 		}
 		updateControllers(world);
 		moveTank(world);
@@ -751,11 +768,24 @@ public class Tank extends Actor implements Damageable
 	public void takeHit(int damagePoints)
 	{
 		hitPoints -= Math.abs(damagePoints);
+		Audio.play(Sfx.TANK_HIT);
 		if (this.hitPoints <= 0)
 		{
-			this.isAlive = false;
+			onDeath();
 		}
-		// TODO: This method is the first opportunity to set off "death" chain of events
+	}
+	
+	/**
+	 * Called when the tank dies.
+	 */
+	private void onDeath()
+	{
+		if (isAlive)
+		{
+			Audio.play(Sfx.TANK_EXPLOSION);
+			isAlive = false;
+			respawnTime = System.currentTimeMillis() + TANK_RESPAWN_TIME;
+		}
 	}
 
 	/**
@@ -852,13 +882,12 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Mine dropMine(World world, float startX, float startY)
 	{
-		
 		if ((System.currentTimeMillis() - mineLayingTime < MINE_RELOAD_SPEED && mineLayingTime != 0)
 				||startX < 0 || startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
-			
 		{
 			return null;
 		}
+		
 		int xTileCoord = (int) startX / 32;
 		int yTileCoord = (int) startY / 32;
 
@@ -904,8 +933,7 @@ public class Tank extends Actor implements Damageable
 	{
 
 		// TODO: Once Engineer functionality is created this code will need to be moved to
-		// the engineer
-		// and replaced with sending the engineer out to drop the Pillbox
+		// the engineer and replaced with sending the engineer out to drop the Pillbox
 		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
 		{
 			Pillbox pillbox = world.addEntity(Pillbox.class);
@@ -921,8 +949,14 @@ public class Tank extends Actor implements Damageable
 		}
 	}
 
-	private void reSpawn(World world)
+	private void respawn(World world)
 	{
+		// Don't allow the tank to respawn until its respawn timer has expired.
+		if (respawnTime > System.currentTimeMillis())
+		{
+			return;
+		}
+		
 		List<Entity> spawns = world.getSpawns();
 		if (spawns.size() > 0)
 		{
@@ -932,7 +966,11 @@ public class Tank extends Actor implements Damageable
 			Network net = NetworkSystem.getInstance();
 			net.send(new MoveTank(this));
 		}
+		
 		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.ammoCount = TANK_MAX_AMMO;
+		this.mineCount = TANK_MAX_MINE_COUNT;
+		this.treeCount = 0;
 		this.isAlive = true;
 	}
 
