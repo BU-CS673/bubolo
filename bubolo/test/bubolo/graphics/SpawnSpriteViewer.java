@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class SpawnSpriteViewer
 {
+	/**
+	 * Makes spawn points visible. For use in debugging.
+	 */
 	public void setSpawnsVisible()
 	{
 		Sprites spriteSystem = Sprites.getInstance();
