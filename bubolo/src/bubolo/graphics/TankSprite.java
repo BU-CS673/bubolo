@@ -67,18 +67,6 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		super(DrawLayer.FOURTH, tank);
 	}
 
-	private void updateColorSet()
-	{
-		if (this.getEntity().isLocalPlayer())
-		{
-			colorId = ColorSets.BLUE;
-		}
-		else
-		{
-			colorId = ColorSets.RED;
-		}
-	}
-
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
@@ -91,13 +79,18 @@ class TankSprite extends AbstractEntitySprite<Tank>
 		{
 			initialize(camera);
 		}
-		updateColorSet();
 
-		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN)
+		if (processVisibility() == Visibility.NETWORK_TANK_HIDDEN ||
+				getDrawLayer() != layer)
 		{
 			return;
 		}
 		
+		animate(batch, camera, layer);
+	}
+	
+	private void animate(SpriteBatch batch, Camera camera, DrawLayer layer)
+	{
 		animationState = (getEntity().getSpeed() > 0.f) ? 1 : 0;
 		switch (animationState)
 		{
@@ -138,6 +131,18 @@ class TankSprite extends AbstractEntitySprite<Tank>
 
 		default:
 			throw new GameLogicException("Programming error in tankSprite: default case reached.");
+		}
+	}
+	
+	private void updateColorSet()
+	{
+		if (this.getEntity().isLocalPlayer())
+		{
+			colorId = ColorSets.BLUE;
+		}
+		else
+		{
+			colorId = ColorSets.RED;
 		}
 	}
 
@@ -197,6 +202,7 @@ class TankSprite extends AbstractEntitySprite<Tank>
 			Graphics.getInstance().addCameraController(controller);
 			controller.setCamera(camera);
 		}
+		updateColorSet();
 	}
 	
 	private enum Visibility
