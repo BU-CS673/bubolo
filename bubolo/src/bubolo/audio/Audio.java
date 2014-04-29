@@ -48,6 +48,10 @@ public class Audio implements Music.OnCompletionListener
 	// The music on completion listener. This is used when a song has finished playing.
 	private static Music.OnCompletionListener musicOnCompletionListener = new Audio();
 	
+	private static SoundEffect lastSoundPlayed;
+	private static long nextPlayTime;
+	private static final long soundDelay = 60L;
+	
 	/**
 	 * Loads all sounds files. Calling this isn't necessary, but there will be a slight pause when
 	 * the first sound is played if this isn't called.
@@ -65,7 +69,14 @@ public class Audio implements Music.OnCompletionListener
 	 */
 	public static void play(SoundEffect soundEffect)
 	{
-		soundEffect.play(soundEffectVolume);
+		// Prevent the same sound from playing once per tick. This occurred because the mine explosion
+		// lasts for multiple ticks in the world.
+		if (lastSoundPlayed != soundEffect || nextPlayTime < System.currentTimeMillis())
+		{
+			nextPlayTime = System.currentTimeMillis() + soundDelay;
+			lastSoundPlayed = soundEffect;
+			soundEffect.play(soundEffectVolume);
+		}
 	}
 	
 	/**
