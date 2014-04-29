@@ -154,6 +154,14 @@ public class TankTest
 		assertEquals(0, tank.getPillboxCount(), 0);
 	}
 	
+	@Test 
+	public void isAlive()
+	{
+		assertTrue(tank.isAlive());
+		tank.takeHit(200);
+		assertFalse(tank.isAlive());
+	}
+	
 	@Test
 	public void takeHit()
 	{

@@ -21,7 +21,7 @@ public class TreeHitSfx extends SoundEffect
 	{
 		try
 		{
-			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tree_hit.ogg"));
+			FileHandle soundFile = new FileHandle(new File(Audio.SFX_PATH + "tree_hit.wav"));
 			Sound sound = Gdx.audio.newSound(soundFile);
 			setSound(sound);
 		}

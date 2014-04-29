@@ -3,6 +3,7 @@ package bubolo.integration;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.json.simple.parser.ParseException;
 
@@ -12,10 +13,13 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.graphics.SpawnSpriteViewer;
+import bubolo.graphics.Sprites;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.util.Parser;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 
@@ -81,12 +85,12 @@ public class TankRespawnTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		//world = new GameWorld(32*94, 32*94);
 		
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
@@ -99,6 +103,10 @@ public class TankRespawnTestApplication implements GameApplication
 			e.printStackTrace();
 		}
 		world.addEntity(Spawn.class).setParams(100, 100, 0);
+		
+		SpawnSpriteViewer spawnViewer = new SpawnSpriteViewer();
+		spawnViewer.setSpawnsVisible();
+		
 		Tank tank = world.addEntity(Tank.class);			
 		tank.setParams(10, 10, 0);
 		tank.setLocalPlayer(true);

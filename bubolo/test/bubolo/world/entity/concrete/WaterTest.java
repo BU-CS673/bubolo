@@ -1,21 +1,23 @@
 package bubolo.world.entity.concrete;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
+import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
 
 public class WaterTest
 {
-	static Water water;
+	private Water water;
 
 	/**
 	 * Constructs a Water object and sets the default parameters.
 	 */
-	@BeforeClass
-	public static void setup()
+	@Before
+	public void setup()
 	{
 		water = new Water();
 		EntityTestCase.setTestParams(water);
@@ -27,7 +29,12 @@ public class WaterTest
 		assertEquals("Water's state does not match what it was set to!", 7, water.getTilingState());
 	}
 	
-	// Will fail until updateState is implemented.
+	@Test
+	public void update()
+	{
+		water.update(mock(World.class));
+	}
+	
 	@Test
 	public void updateState()
 	{

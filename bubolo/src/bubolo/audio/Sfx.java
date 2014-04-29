@@ -27,6 +27,11 @@ public abstract class Sfx
 	public static final SoundEffect EXPLOSION = new ExplosionSfx();
 	
 	/**
+	 * A mine explosion sound effect.
+	 */
+	public static final SoundEffect MINE_EXPLOSION = new MineExplosionSfx();
+	
+	/**
 	 * A pillbox built sound effect.
 	 */
 	public static final SoundEffect PILLBOX_BUILT = new PillboxBuiltSfx();
@@ -45,6 +50,11 @@ public abstract class Sfx
 	 * A tank drowned sound effect.
 	 */
 	public static final SoundEffect TANK_DROWNED = new TankDrownedSfx();
+	
+	/**
+	 * A tank explosion sound effect.
+	 */
+	public static final SoundEffect TANK_EXPLOSION = new TankExplosionSfx();
 	
 	/**
 	 * A tank hit sound effect.
@@ -75,4 +85,11 @@ public abstract class Sfx
 	 * A wall hit sound effect.
 	 */
 	public static final SoundEffect WALL_HIT = new WallHitSfx();
+	
+	/**
+	 * Forces all sounds files to be loaded.
+	 */
+	static void initialize()
+	{
+	}
 }

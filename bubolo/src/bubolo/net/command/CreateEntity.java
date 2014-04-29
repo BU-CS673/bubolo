@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import bubolo.controllers.ControllerFactory;
 import bubolo.net.NetworkCommand;
 import bubolo.util.GameLogicException;
+import bubolo.world.Ownable;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 
@@ -101,6 +102,11 @@ public class CreateEntity implements NetworkCommand
 			}
 			
 			entity.setX(x).setY(y).setRotation(rotation);
+			
+			if (entity instanceof Ownable)
+			{
+				((Ownable)entity).setLocalPlayer(false);
+			}
 		}
 		catch (GameLogicException e)
 		{

@@ -53,4 +53,10 @@ public class MineTest
 		mine.setOwnerUID(mine.getId());
 		assertEquals(mine.getId(), mine.getOwnerUID());
 	}
+	
+	@Test
+	public void onDispose()
+	{
+		mine.onDispose();
+	}
 }
