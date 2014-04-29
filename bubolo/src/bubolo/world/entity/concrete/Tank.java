@@ -492,7 +492,7 @@ public class Tank extends Actor implements Damageable
 	{
 		if (!isAlive)
 		{
-			reSpawn(world);
+			respawn(world);
 		}
 		updateControllers(world);
 		moveTank(world);
@@ -900,8 +900,7 @@ public class Tank extends Actor implements Damageable
 	{
 
 		// TODO: Once Engineer functionality is created this code will need to be moved to
-		// the engineer
-		// and replaced with sending the engineer out to drop the Pillbox
+		// the engineer and replaced with sending the engineer out to drop the Pillbox
 		if ((!world.getMapTiles()[startX / 32][startY / 32].hasElement()) && (pillboxCount > 0))
 		{
 			Pillbox pillbox = world.addEntity(Pillbox.class);
@@ -917,7 +916,7 @@ public class Tank extends Actor implements Damageable
 		}
 	}
 
-	private void reSpawn(World world)
+	private void respawn(World world)
 	{
 		List<Entity> spawns = world.getSpawns();
 		if (spawns.size() > 0)
@@ -928,7 +927,11 @@ public class Tank extends Actor implements Damageable
 			Network net = NetworkSystem.getInstance();
 			net.send(new MoveTank(this));
 		}
+		
 		this.hitPoints = TANK_MAX_HIT_POINTS;
+		this.ammoCount = TANK_MAX_AMMO;
+		this.mineCount = TANK_MAX_MINE_COUNT;
+		this.treeCount = 0;
 		this.isAlive = true;
 	}
 
