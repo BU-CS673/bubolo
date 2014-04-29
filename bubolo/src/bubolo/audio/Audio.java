@@ -97,6 +97,7 @@ public class Audio implements Music.OnCompletionListener
 		}
 		catch (Exception e)
 		{
+			
 			System.out.println(e);
 			e.printStackTrace();
 			throw e;

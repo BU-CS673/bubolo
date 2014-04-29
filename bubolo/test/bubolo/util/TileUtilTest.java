@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
+import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Tank;
@@ -99,5 +100,12 @@ public class TileUtilTest
 		List c = TileUtil.getLocalCollisions(tank, world);
 		assertEquals("List of local collisions does not contain correct objects", true, c.contains(tiles[0][0].getElement()));
 	}
-
+	@Test
+	public void getEntityTile()
+	{
+		Entity entity = new Tank().setParams(31, 42, 0);
+		Tile tile = TileUtil.getEntityTile(entity, world);
+		assertEquals("returned incorrect tile", 0, tile.getGridX());
+		assertEquals("returned incorrect tile", 1, tile.getGridY());
+	}
 }
