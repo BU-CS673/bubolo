@@ -96,6 +96,8 @@ public class AudioTestApplication extends AbstractGameApplication
 		if (frame == 150) Audio.play(Sfx.TREE_HIT);
 		if (frame == 165) Audio.play(Sfx.WALL_BUILT);
 		if (frame == 180) Audio.play(Sfx.WALL_HIT);
+		if (frame == 210) Audio.play(Sfx.TANK_EXPLOSION);
+		if (frame == 230) Audio.play(Sfx.MINE_EXPLOSION);
 		
 		graphics.draw(world);
 		
