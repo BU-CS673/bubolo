@@ -223,6 +223,9 @@ public class TankTest
 		assertNotNull(pillbox);
 	}
 
+	/**
+	 * Tests evictEngineer()
+	 */
 	@Test
 	public void evictEngineer()
 	{

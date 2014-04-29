@@ -14,6 +14,9 @@ import static org.mockito.Mockito.mock;
  */
 public class AIEngineerControllerTest
 {
+	/**
+	 * Tests the AIEngineerController()
+	 */
 	@Test
 	public void test()
 	{

@@ -1,6 +1,7 @@
 package bubolo.util;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import bubolo.world.Tile;
 import bubolo.world.entity.concrete.Grass;
@@ -11,27 +12,35 @@ import bubolo.util.AStarNode;
  */
 public class AStarNodeTest
 {
+	/**
+	 * Tests all getters and setters.
+	 */
 	@Test
 	public void testAccessors()
 	{
 		Tile tile = new Tile(0, 0, new Grass());
 		AStarNode node = new AStarNode(tile);
 		
-		float x = 42;
+		float f = 42;
+		float g = 43;
+		float h = 44;
 	
-		node.setF(x);
-		node.setG(x);
-		node.setH(x);
+		node.setF(f);
+		node.setG(g);
+		node.setH(h);
 		node.setTile(tile);
 		node.setParent(null);
 		
-		assert(x == node.getF());
-		assert(x == node.getG());
-		assert(x == node.getH());
-		assert(tile == node.getTile());
-		assert(null == node.getParent());
+		assertTrue(f == node.getF());
+		assertTrue(g == node.getG());
+		assertTrue(h == node.getH());
+		assertTrue(tile == node.getTile());
+		assertTrue(null == node.getParent());
 	}
 
+	/**
+	 * Tests the compareTo() function.
+	 */
 	@Test
 	public void testCompareFunction()
 	{
@@ -46,6 +55,6 @@ public class AStarNodeTest
 		nodeA.setF(a);
 		nodeB.setF(b);
 		
-		assert(Float.compare(a, b) == nodeA.compareTo(nodeB));
+		assertTrue(Float.compare(a, b) == nodeA.compareTo(nodeB));
 	}
 }

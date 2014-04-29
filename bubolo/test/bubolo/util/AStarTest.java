@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
@@ -17,13 +18,34 @@ import bubolo.util.AStar;
  */
 public class AStarTest
 {
+	/**
+	 * The game world to run our test on.
+	 */
 	static GameWorld world;
+	
+	/**
+	 * Tile grid for the test game world.
+	 */
 	static Tile[][] tiles;
+	
+	/**
+	 * Tank for the test game world.
+	 */
 	static Tank tank;
 
+	/**
+	 * Width of the test game world.
+	 */
 	static final int width = 8;
+	
+	/**
+	 * Height of the test game world.
+	 */
 	static final int height = 8;
 	
+	/**
+	 * Setup the game world for the tests.
+	 */
 	@BeforeClass
 	public static void setup()
 	{
@@ -48,6 +70,9 @@ public class AStarTest
 		tiles[width/2][height/2].setElement(new Wall());
 	}
 	
+	/**
+	 * Tests calculateShortestPath()
+	 */
 	@Test
 	public void calculateShortestPath()
 	{
@@ -59,7 +84,7 @@ public class AStarTest
 		// We have created a world in which there is at least one path from
 		// the start to the goal. Therefore, the algorithm should not return
 		// null.
-		assert(path != null);
+		assertTrue(path != null);
 		
 		// Make sure the path is contiguous.
 		Tile prev = start;
@@ -70,12 +95,12 @@ public class AStarTest
 			int prevY = prev.getGridY();
 			int curX = t.getGridX();
 			int curY = t.getGridY();
-			assert(Math.abs(curX - prevX) <= 1);
-			assert(Math.abs(curY - prevY) <= 1);
+			assertTrue(Math.abs(curX - prevX) <= 1);
+			assertTrue(Math.abs(curY - prevY) <= 1);
 			prev = t;
 		}
 		
 		// We should now be at the goal
-		assert(prev == goal);
+		assertTrue(prev == goal);
 	}
 }

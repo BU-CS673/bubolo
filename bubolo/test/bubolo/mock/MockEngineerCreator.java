@@ -18,27 +18,27 @@ public class MockEngineerCreator extends MockWorld
 {
 	private Tile mapTiles[][];
 	
+	/**
+	 * Constructor
+	 */
 	public MockEngineerCreator()
 	{
 		mapTiles = new Tile[1][1];
 		mapTiles[0][0] = new Tile(0 ,0 ,new Grass());
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c) throws GameLogicException
 	{
 		return (T) new Engineer();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id) throws GameLogicException
 	{
 		return (T) new Engineer();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, ControllerFactory controllerFactory)
 			throws GameLogicException
@@ -46,7 +46,6 @@ public class MockEngineerCreator extends MockWorld
 		return (T) new Engineer();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Entity> T addEntity(Class<T> c, UUID id, ControllerFactory controllerFactory)
 			throws GameLogicException

@@ -49,10 +49,10 @@ public class AIEngineerController implements Controller
 	public void update(World world)
 	{
 		processDestinationUpdate(world);
-		processMovement(world);
+		processMovement();
 	}
 	
-	private void processMovement(World world)
+	private void processMovement()
 	{
 		// Has the engineer reached the next tile (waypoint)?
 		// Note: at the beginning of time the engineer is already
@@ -86,8 +86,8 @@ public class AIEngineerController implements Controller
 	{
 		if (Gdx.input.justTouched())
 		{
-			float mouseX = (float)Gdx.input.getX();
-			float mouseY = (float)Gdx.input.getY();
+			float mouseX = Gdx.input.getX();
+			float mouseY = Gdx.input.getY();
 			
 			// Need to convert screen co-ordinates to game world co-ordinates
 			Camera camera = Graphics.getInstance().getCamera();			
