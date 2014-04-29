@@ -24,6 +24,7 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.mock.MockBulletCreator;
 import bubolo.mock.MockMineCreator;
 import bubolo.mock.MockPillboxCreator;
+import bubolo.mock.MockEngineerCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -219,5 +220,15 @@ public class TankTest
 		tank.gatherPillbox();
 		Pillbox pillbox = tank.dropPillbox(new MockPillboxCreator(), 16, 16);
 		assertNotNull(pillbox);
+	}
+
+	@Test
+	public void evictEngineer()
+	{
+		if (tank.isEngineerInside())
+		{
+			Engineer engineer = tank.evictEngineer(new MockEngineerCreator(), 16, 16);
+			assertNotNull(engineer);
+		}
 	}
 }

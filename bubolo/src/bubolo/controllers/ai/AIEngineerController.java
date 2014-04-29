@@ -114,8 +114,16 @@ public class AIEngineerController implements Controller
 			pathToDestination = AStar.calculateShortestPath(world, curTile, destTile);
 			if (pathToDestination != null)
 			{
+				// A route exists to the destination
 				haveDestination = true;
 				waypointIndex = 0;
+			}
+			else
+			{
+				// Destination unreachable, cancel current movement. Note that
+				// engineer will complete movement to the last waypoint where
+				// he was headed.
+				haveDestination = false;
 			}
 		}
 	}

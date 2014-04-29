@@ -955,6 +955,11 @@ public class Tank extends Actor implements Damageable
 	 */
 	public Engineer evictEngineer(World world, float startX, float startY)
 	{
+		if (startX < 0 || startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
+		{
+			return null;
+		}
+
 		int xTileCoord = (int)startX / Coordinates.TILE_TO_WORLD_SCALE;
 		int yTileCoord = (int)startY / Coordinates.TILE_TO_WORLD_SCALE;
 		
