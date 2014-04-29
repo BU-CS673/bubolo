@@ -73,7 +73,6 @@ public class AIBaseController implements Controller
 				{
 					if (tank.getId() == this.base.getOwnerUID())
 					{
-						System.out.println("Setting base to charging");
 						this.base.setCharging(true);
 						tank.heal(healPointsPerTick);
 						tank.gatherAmmo(ammoPerTick);
