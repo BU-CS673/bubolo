@@ -2,6 +2,9 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
 import bubolo.world.Damageable;
 import bubolo.world.Ownable;
 import bubolo.world.entity.StationaryElement;
@@ -15,6 +18,10 @@ import bubolo.world.entity.StationaryElement;
 public class Base extends StationaryElement implements Ownable, Damageable
 {
 	/**
+	 * the uid of the tank that owns this Base
+	 */
+	private UUID ownerUID;
+	/**
 	 * Used in serialization/de-serialization.
 	 */
 	private static final long serialVersionUID = 7700096718365746352L;
@@ -22,12 +29,12 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	/**
 	 * Boolean representing whether this Base belongs to the local player.
 	 */
-	private boolean isLocalPlayer = true;
+	private boolean isLocalPlayer = false;
 
 	/**
 	 * Boolean representing whether this Base is owned by a player.
 	 */
-	private boolean isOwned = true;
+	private boolean isOwned = false;
 
 	/**
 	 * Boolean representing whether this Base is currently charging a Tank.
@@ -156,8 +163,17 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
-		// TODO: This method is the first opportunity to set off "death" chain of events
-		
+		if (this.hitPoints <= 0)
+		{
+			if (this.isLocalPlayer())
+			{
+				this.setLocalPlayer(false);
+				this.setOwned(false);
+				this.ownerUID = null;
+				Network net = NetworkSystem.getInstance();
+				net.send(new UpdateOwnable(this));
+			}
+		}
 	}
 
 	/**
@@ -177,7 +193,6 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		{
 			hitPoints = MAX_HIT_POINTS;
 		}		
-		
 	}
 	
 	/**
@@ -282,4 +297,17 @@ public class Base extends StationaryElement implements Ownable, Damageable
 			return MINE_REPLENISH_RATE;
 		}
 	}
+
+	@Override
+	public UUID getOwnerUID() 
+	{
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) 
+	{
+		this.ownerUID = ownerUID;
+	}
+
 }

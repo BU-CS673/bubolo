@@ -1,6 +1,10 @@
 package bubolo.controllers.ai;
 
 import bubolo.controllers.Controller;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.UpdateOwnable;
+import bubolo.util.TileUtil;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Pillbox;
@@ -32,15 +36,38 @@ public class AIPillboxController implements Controller
 	{
 		if (pillbox.isCannonReady())
 		{
-			Entity target = getTarget(world);
+			Tank target = (Tank)getTarget(world);
 			if (target != null)
-			{
+			{	
 				if (targetInRange(target))
 				{
 					fire(getTargetDirection(target), world);
+				}						
+			}
+		}
+		
+		if(!this.pillbox.isOwned())
+		{
+			for(Entity entity:TileUtil.getLocalCollisions(this.pillbox, world))
+			{
+				if (entity instanceof Tank)
+				{
+					Tank tank = (Tank)entity;
+					this.pillbox.setOwned(true);
+					this.pillbox.setOwnerUID(tank.getId());
+					if(tank.isLocalPlayer())
+					{
+						this.pillbox.setLocalPlayer(true);
+						sendNetUpdate(this.pillbox);
+					}
+					else
+					{
+						this.pillbox.setLocalPlayer(false);
+					}
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -61,24 +88,28 @@ public class AIPillboxController implements Controller
 
 		for (Entity entity : world.getTanks())
 		{
-			xdistance = Math.abs(pillbox.getX() - entity.getX());
-			ydistance = Math.abs(pillbox.getY() - entity.getY());
-			distance = Math.sqrt((xdistance * xdistance) + (ydistance * ydistance));
-
-			if (targetdistance > -1)
+			if(entity.getId() != this.pillbox.getOwnerUID())
 			{
-				if (distance < targetdistance)
+				xdistance = Math.abs(pillbox.getX() - entity.getX());
+				ydistance = Math.abs(pillbox.getY() - entity.getY());
+				distance = Math.sqrt((xdistance * xdistance) + (ydistance * ydistance));
+	
+				if (targetdistance > -1)
+				{
+					if (distance < targetdistance)
+					{
+						targetdistance = distance;
+						target = entity;
+					}
+				}
+				else
 				{
 					targetdistance = distance;
 					target = entity;
 				}
 			}
-			else
-			{
-				targetdistance = distance;
-				target = entity;
-			}
 		}
+
 		if (target == null || ((Tank) target).isHidden())
 		{
 			return null;
@@ -140,5 +171,9 @@ public class AIPillboxController implements Controller
 		pillbox.aimCannon(rotation);
 		pillbox.fireCannon(world);
 	}
-
+	private static void sendNetUpdate(Pillbox pillbox)
+	{
+		Network net = NetworkSystem.getInstance();
+		net.send(new UpdateOwnable(pillbox));
+	}
 }

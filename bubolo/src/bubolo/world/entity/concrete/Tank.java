@@ -29,6 +29,10 @@ import bubolo.world.entity.Terrain;
 public class Tank extends Actor implements Damageable
 {
 	/**
+	 * UID of the owner of this Tank
+	 */
+	private UUID ownerUID;
+	/**
 	 * Used when serializing and de-serializing.
 	 */
 	private static final long serialVersionUID = 457933513574468829L;
@@ -926,5 +930,17 @@ public class Tank extends Actor implements Damageable
 		}
 		this.hitPoints = TANK_MAX_HIT_POINTS;
 		this.isAlive = true;
+	}
+
+	@Override
+	public UUID getOwnerUID() 
+	{	
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) 
+	{
+		this.ownerUID = ownerUID;
 	}
 }

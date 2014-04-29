@@ -125,6 +125,13 @@ public class Wall extends StationaryElement implements Adaptable, Damageable
 	public void takeHit(int damagePoints) 
 	{
 		hitPoints -= Math.abs(damagePoints);
+		
+		if(hitPoints <= 0)
+		{
+			this.getTile().clearElement();
+			dispose();
+		}
+		
 		// TODO: This method is the first opportunity to set off "death" chain of events		
 	}
 
