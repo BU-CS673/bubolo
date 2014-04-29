@@ -72,6 +72,11 @@ public class Tank extends Actor implements Damageable
 
 	// Boolean for whether this tank is currently alive
 	private boolean isAlive = true;
+	
+	// The time that the tank will respawn.
+	private long respawnTime;
+	
+	private static final long TANK_RESPAWN_TIME = 1000L;
 
 	// Minimum amount of time between laying mines.
 	private static final long MINE_RELOAD_SPEED = 500;
@@ -329,7 +334,7 @@ public class Tank extends Actor implements Damageable
 	 */
 	public boolean isHidden()
 	{
-		return hidden;
+		return hidden || !isAlive;
 	}
 
 	/**
@@ -759,7 +764,19 @@ public class Tank extends Actor implements Damageable
 		hitPoints -= Math.abs(damagePoints);
 		if (this.hitPoints <= 0)
 		{
-			this.isAlive = false;
+			onDeath();
+		}
+	}
+	
+	/**
+	 * Called when the tank dies.
+	 */
+	private void onDeath()
+	{
+		if (isAlive)
+		{
+			isAlive = false;
+			respawnTime = System.currentTimeMillis() + TANK_RESPAWN_TIME;
 		}
 	}
 
@@ -927,6 +944,12 @@ public class Tank extends Actor implements Damageable
 
 	private void respawn(World world)
 	{
+		// Don't allow the tank to respawn until its respawn timer has expired.
+		if (respawnTime > System.currentTimeMillis())
+		{
+			return;
+		}
+		
 		List<Entity> spawns = world.getSpawns();
 		if (spawns.size() > 0)
 		{
