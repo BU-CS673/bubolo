@@ -26,8 +26,11 @@ public interface GameApplication extends ApplicationListener
 		/** The game is starting. **/
 		GAME_STARTING,
 		
-		/** The game state. **/
-		GAME
+		/** The single player game state. **/
+		GAME,
+		
+		/** The multiplayer game state. **/
+		NET_GAME
 	}
 	
 	/**

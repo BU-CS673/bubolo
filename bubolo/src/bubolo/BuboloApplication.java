@@ -25,48 +25,55 @@ import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
 
 /**
- * The Game: this is where the subsystems are initialized, as well as where
- * the main game loop is. 
+ * The Game: this is where the subsystems are initialized, as well as where the main game loop is.
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class BuboloApplication extends AbstractGameApplication
 {
 	private final int windowWidth;
 	private final int windowHeight;
-	
+
 	private final boolean isClient;
+	private final State initialState;
 	
 	private Graphics graphics;
 
-	private String playerName;
-	
 	private Network network;
 
 	private Screen screen;
-	
+
 	/**
-	 * Constructs an instance of the game application. Only one instance should 
-	 * ever exist.
-	 * @param windowWidth the width of the window.
-	 * @param windowHeight the height of the window.
-	 * @param isClient specifies whether this is a client player.
+	 * Constructs an instance of the game application. Only one instance should ever exist.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window.
+	 * @param windowHeight
+	 *            the height of the window.
+	 * @param isClient
+	 *            specifies whether this is a client player.
 	 */
-	public BuboloApplication(int windowWidth, int windowHeight, boolean isClient)
+	public BuboloApplication(int windowWidth, int windowHeight, boolean isClient,
+			State initialState)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 		this.isClient = isClient;
+		this.initialState = intialState;
 	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a> 
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void create()
 	{
 		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
+		network = NetworkSystem.getInstance();
 
 		Parser fileParser = Parser.getInstance();
 		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
@@ -76,38 +83,50 @@ public class BuboloApplication extends AbstractGameApplication
 		}
 		catch (ParseException | IOException e)
 		{
-			e.printStackTrace(); 
+			e.printStackTrace();
 			throw new GameRuntimeException(e);
 		}
 
-		setState(State.PLAYER_INFO);
+		setState(initialState);
 	}
-	
+
 	/**
 	 * Called automatically by the rendering library.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void render()
 	{
 		final State state = getState();
-		if (state == State.GAME)
+		if (state == State.NET_GAME)
 		{
 			graphics.draw(world);
 			world.update();
 			network.update(world);
 		}
-		else if (state == State.GAME_LOBBY || state == State.GAME_STARTING)
+		else if (state == State.GAME)
+		{
+			graphics.draw(world);
+			world.update();
+		}
+		else if (state == State.GAME_LOBBY ||
+				state == State.GAME_STARTING)
 		{
 			graphics.draw(screen);
 			network.update(world);
 		}
+		else if (state == State.PLAYER_INFO)
+		{
+			graphics.draw(screen);
+		}
 	}
-	
+
 	@Override
 	public void onStateChanged()
 	{
-		if (getState() == State.GAME)
+		if (getState() == State.NET_GAME)
 		{
 			screen.dispose();
 
@@ -115,7 +134,19 @@ public class BuboloApplication extends AbstractGameApplication
 			Vector2 spawnLocation = getRandomSpawn(world);
 			tank.setParams(spawnLocation.x, spawnLocation.y, 0);
 			tank.setLocalPlayer(true);
+
 			network.send(new CreateTank(tank));
+
+			setReady(true);
+		}
+		else if (getState() == State.GAME)
+		{
+			screen.dispose();
+
+			Tank tank = world.addEntity(Tank.class);
+			Vector2 spawnLocation = getRandomSpawn(world);
+			tank.setParams(spawnLocation.x, spawnLocation.y, 0);
+			tank.setLocalPlayer(true);
 
 			setReady(true);
 		}
@@ -128,9 +159,10 @@ public class BuboloApplication extends AbstractGameApplication
 			screen = new PlayerInfoScreen(this, isClient);
 		}
 	}
-	
+
 	/**
 	 * Returns a random spawn point.
+	 * 
 	 * @return the location of a random spawn point.
 	 */
 	private static Vector2 getRandomSpawn(World world)
@@ -144,10 +176,12 @@ public class BuboloApplication extends AbstractGameApplication
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Called when the application is destroyed.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void dispose()

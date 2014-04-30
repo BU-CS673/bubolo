@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import bubolo.GameApplication;
 import bubolo.GameApplication.State;
 import bubolo.net.Network;
+import bubolo.net.NetworkException;
 import bubolo.net.NetworkSystem;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
@@ -31,11 +33,18 @@ public class PlayerInfoScreen extends Screen
 {
 	private TextField playerNameField;
 	private TextField ipAddressField;
-	private Label statusLabel;
+	private Label statusLabel1;
+	private Label statusLabel2;
 
 	private final GameApplication app;
 
 	private final boolean isClient;
+
+	// These variables enable the screen to be updated with a message before the connection attempt
+	// is made. This is useful because the connection attempt may take a few seconds, and the screen
+	// will appear frozen during that time otherwise.
+	private boolean connectToServer;
+	private int ticksUntilConnect;
 
 	/**
 	 * Constructs the network game lobby.
@@ -62,39 +71,47 @@ public class PlayerInfoScreen extends Screen
 		}
 
 		addOkButtonRow(skin);
+
+		table.row().colspan(8).padTop(50.f).align(Align.center);
+		statusLabel1 = new Label("", skin);
+		table.add(statusLabel1);
 		
-		table.row().colspan(4);
-		statusLabel = new Label("", skin);
-		table.add(statusLabel);
+		table.row().colspan(8).padTop(50.f).align(Align.left).padLeft(100.f);
+		statusLabel2 = new Label("", skin);
+		table.add(statusLabel2);
 	}
 
 	private void createPlayerNameRow(Skin skin)
 	{
-		table.row().colspan(4);
-		table.row();
+		table.row()
+				.align(Align.left)
+				.padTop(100.f);
 
-		table.add(new Label("Name:", skin));
+		table.add(new Label("Name:", skin)).padLeft(300.f);
 
 		playerNameField = new TextField("", skin);
-		table.add(playerNameField);
+		table.add(playerNameField).width(250.f);
 	}
 
 	private void createIpAddressRow(Skin skin)
 	{
-		table.row().colspan(4);
-		table.row();
+		table.row()
+				.align(Align.left)
+				.padTop(5.f);
 
-		table.add(new Label("Server IP Address:", skin));
+		table.add(new Label("Server IP Address:", skin)).padLeft(300.f);
 
 		ipAddressField = new TextField("", skin);
-		table.add(ipAddressField);
+		table.add(ipAddressField).width(160.f);
 	}
 
 	private void addOkButtonRow(Skin skin)
 	{
-		table.row();
+		table.row()
+				.colspan(8)
+				.padTop(25.f);
 
-		TextButton okButton = new TextButton("Send", skin);
+		TextButton okButton = new TextButton("OK", skin);
 
 		okButton.addListener(new ClickListener() {
 			@Override
@@ -103,35 +120,57 @@ public class PlayerInfoScreen extends Screen
 				if (!playerNameField.getText().isEmpty() &&
 						!(isClient && ipAddressField.getText().isEmpty()))
 				{
-					final Network network = NetworkSystem.getInstance();
-					final String playerName = playerNameField.getText();
-
 					if (isClient)
 					{
-						InetAddress ipAddress;
-						try
-						{
-							ipAddress = Inet4Address.getByName(ipAddressField.getText());
-						}
-						catch (UnknownHostException e)
-						{
-							statusLabel.setText("Unable to connect: " +  e.getMessage());
-							return;
-						}
-
-						network.connect(ipAddress, playerName);
+						statusLabel1.setText("Connecting...");
+						statusLabel2.setText("");
+						connectToServer = true;
+						ticksUntilConnect = 1;
 					}
 					else
 					{
-						network.startServer(playerName);
+						final Network network = NetworkSystem.getInstance();
+						network.startServer(playerNameField.getText());
+						app.setState(State.GAME_LOBBY);
 					}
-
-					app.setState(State.GAME_LOBBY);
 				}
 			}
 		});
 
 		table.add(okButton).expandX().width(100.f);
+	}
+
+	@Override
+	public void onUpdate()
+	{
+		if (connectToServer)
+		{
+			if (ticksUntilConnect == 0)
+			{
+				connectToServer = false;
+
+				InetAddress ipAddress;
+				try
+				{
+					ipAddress = Inet4Address.getByName(ipAddressField.getText());
+
+					final Network network = NetworkSystem.getInstance();
+					network.connect(ipAddress, playerNameField.getText());
+				}
+				catch (UnknownHostException | NetworkException e)
+				{
+					statusLabel1.setText("");
+					statusLabel2.setText("Unable to connect: " + e.getMessage());
+					return;
+				}
+
+				app.setState(State.GAME_LOBBY);
+			}
+			else
+			{
+				--ticksUntilConnect;
+			}
+		}
 	}
 
 	@Override
