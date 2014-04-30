@@ -8,6 +8,7 @@ import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateBullet;
 import bubolo.net.command.CreateEntity;
+import bubolo.net.command.CreateEngineer;
 import bubolo.net.command.MoveTank;
 import bubolo.util.Coordinates;
 import bubolo.world.World;
@@ -132,8 +133,7 @@ public class KeyboardTankController implements Controller
 			if (engineer != null)
 			{
 				Network net = NetworkSystem.getInstance();
-				net.send(new CreateEntity(Engineer.class, engineer.getId(), engineer.getX(), engineer.getY(),
-					engineer.getRotation()));
+				net.send(new CreateEngineer(engineer));
 			}
 		}
 	}
