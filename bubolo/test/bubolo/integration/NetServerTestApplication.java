@@ -120,7 +120,7 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	public void render()
 	{
 		final State state = getState();
-		if (state == State.GAME)
+		if (state == State.NET_GAME)
 		{
 			graphics.draw(world);
 			world.update();
@@ -137,7 +137,7 @@ public class NetServerTestApplication extends AbstractGameApplication implements
 	protected void onStateChanged()
 	{
 		final State state = getState();
-		if (state == State.GAME)
+		if (state == State.NET_GAME)
 		{
 			gameLobby.dispose();
 

@@ -110,7 +110,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	public void render()
 	{
 		final State state = getState();
-		if (state == State.GAME)
+		if (state == State.NET_GAME)
 		{
 			gameLobby.dispose();
 
@@ -128,7 +128,7 @@ public class NetClientTestApplication extends AbstractGameApplication implements
 	@Override
 	protected void onStateChanged()
 	{
-		if (getState() == State.GAME)
+		if (getState() == State.NET_GAME)
 		{
 			gameLobby.dispose();
 
