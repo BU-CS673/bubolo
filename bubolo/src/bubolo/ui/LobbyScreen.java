@@ -167,7 +167,7 @@ public class LobbyScreen extends Screen implements NetworkObserver
 			}
 			else
 			{
-				app.setState(State.GAME);
+				app.setState(State.NET_GAME);
 			}
 		}
 	}
