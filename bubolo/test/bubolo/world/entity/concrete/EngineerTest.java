@@ -72,4 +72,26 @@ public class EngineerTest
 		engi.setOwnerUID(engi.getId());
 		assertEquals(engi.getId(), engi.getOwnerUID());
 	}
+	
+	/**
+	 * Tests isAtWaypoint()
+	 */
+	@Test
+	public void isAtWaypoint()
+	{
+		assertTrue(engi.isAtWaypoint());
+		engi.setWaypoint(engi.getX() + 1, engi.getY() + 1);
+		assertFalse(engi.isAtWaypoint());		
+	}
+
+	/**
+	 * Tests setTank() and getTank()
+	 */
+	@Test
+	public void setTank()
+	{
+		Tank tank = new Tank();
+		engi.setTank(tank);
+		assertTrue(engi.getTank() == tank);
+	}
 }

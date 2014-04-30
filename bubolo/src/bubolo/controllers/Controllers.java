@@ -6,6 +6,7 @@ import java.util.Map;
 import bubolo.controllers.ai.AIBaseController;
 import bubolo.controllers.ai.AIMineController;
 import bubolo.controllers.ai.AIPillboxController;
+import bubolo.controllers.ai.AIEngineerController;
 import bubolo.controllers.input.KeyboardTankController;
 import bubolo.util.Nullable;
 import bubolo.world.entity.Entity;
@@ -13,6 +14,7 @@ import bubolo.world.entity.concrete.Base;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Engineer;
 
 /**
  * Contains static methods for creating controllers.
@@ -119,6 +121,16 @@ public class Controllers
 			public void create(Entity entity)
 			{
 				entity.addController(new AIBaseController((Base)entity));
+			}
+		});
+		
+		factories.put(Engineer.class, new ControllerFactory() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void create(Entity entity)
+			{
+				entity.addController(new AIEngineerController((Engineer)entity));
 			}
 		});
 		

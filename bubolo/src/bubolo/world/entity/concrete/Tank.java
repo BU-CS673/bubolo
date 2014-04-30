@@ -15,6 +15,7 @@ import bubolo.net.NetworkSystem;
 import bubolo.net.command.MoveTank;
 import bubolo.net.command.NetTankSpeed;
 import bubolo.util.TileUtil;
+import bubolo.util.Coordinates;
 import bubolo.world.Damageable;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -89,6 +90,9 @@ public class Tank extends Actor implements Damageable
 
 	// The last time a mine was laid. Used to prevent multiple mines from being dropped.
 	private long mineLayingTime = 0;
+
+	// Is an engineer seated inside the tank?
+	private boolean isEngineerInside = true;
 
 	private Polygon leftBumper = new Polygon();
 	private Polygon rightBumper = new Polygon();
@@ -972,6 +976,52 @@ public class Tank extends Actor implements Damageable
 		this.isAlive = true;
 	}
 
+	/**
+	 * @return is an Engineer inside the tank?
+	 */
+	public boolean isEngineerInside()
+	{
+		return isEngineerInside;
+	}
+
+	/**
+	 * This method ejects the engineer from the tank and creates an engineer
+	 * entity in the world.
+	 * 
+	 * @param world
+	 *            - the world in which the engineer is created
+	 * @param startX
+	 *            - the integer X position of the engineer in world coordinates
+	 * @param startY
+	 *            - the integer Y position of the engineer in world coordinates
+	 * @return - returns the created engineer or null if there are none to place or invalid placement
+	 *         location
+	 */
+	public Engineer evictEngineer(World world, float startX, float startY)
+	{
+		if (startX < 0 || startX > world.getMapWidth() || startY < 0 || startY > world.getMapHeight())
+		{
+			return null;
+		}
+
+		int xTileCoord = (int)startX / Coordinates.TILE_TO_WORLD_SCALE;
+		int yTileCoord = (int)startY / Coordinates.TILE_TO_WORLD_SCALE;
+		
+		if (world.getMapTiles()[xTileCoord][yTileCoord].getTerrain().getClass() != DeepWater.class &&
+		    isEngineerInside)
+		{
+			Engineer engineer = world.addEntity(Engineer.class);
+			engineer.setTank(this);
+			engineer.setX(startX).setY(startY);
+			isEngineerInside = false;
+			return engineer;
+		}
+		else
+		{
+			return null;
+		}			
+	}
+	
 	@Override
 	public UUID getOwnerUID() 
 	{	

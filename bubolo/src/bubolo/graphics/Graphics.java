@@ -75,7 +75,7 @@ public class Graphics
 	 *             when the Graphics system has not been explicitly constructed using the
 	 *             <code>Graphics(width, height)</code> constructor.
 	 */
-	static Graphics getInstance()
+	public static Graphics getInstance()
 	{
 		if (instance == null)
 		{
@@ -359,5 +359,15 @@ public class Graphics
 		{
 			return (o1.getClass().getName().compareTo(o2.getClass().getName()));
 		}
+	}
+
+	/**
+	 * Get the camera.
+	 * 
+	 * @return Reference to the camera.
+	 */
+	public Camera getCamera()
+	{
+		return camera;
 	}
 }

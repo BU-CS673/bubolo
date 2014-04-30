@@ -8,11 +8,14 @@ import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateBullet;
 import bubolo.net.command.CreateEntity;
+import bubolo.net.command.CreateEngineer;
 import bubolo.net.command.MoveTank;
+import bubolo.util.Coordinates;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Bullet;
 import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Tank;
+import bubolo.world.entity.concrete.Engineer;
 
 /**
  * A controller for the local tank. This controller maps keyboard inputs to tank commands.
@@ -40,6 +43,7 @@ public class KeyboardTankController implements Controller
 		processMovement(tank);
 		processCannon(tank, world);
 		processMineLaying(tank, world);
+		processEngineerEviction(tank, world);
 	}
 
 	private static void processMovement(Tank tank)
@@ -114,4 +118,23 @@ public class KeyboardTankController implements Controller
 				}
 		 }
 	 }
+
+	private static void processEngineerEviction(Tank tank, World world)
+	{
+		if (Gdx.input.isKeyPressed(Keys.E) && (tank.isEngineerInside()))
+		{
+			float tankCenterX = tank.getX();
+			float tankCenterY = tank.getY();
+
+			Engineer engineer = tank.evictEngineer(world,
+					tankCenterX + (Coordinates.TILE_TO_WORLD_SCALE/2 + 2) * (float)Math.cos(tank.getRotation()),
+					tankCenterY + (Coordinates.TILE_TO_WORLD_SCALE/2 + 2) * (float)Math.sin(tank.getRotation()));
+			
+			if (engineer != null)
+			{
+				Network net = NetworkSystem.getInstance();
+				net.send(new CreateEngineer(engineer));
+			}
+		}
+	}
 }

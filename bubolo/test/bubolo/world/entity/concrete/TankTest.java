@@ -25,6 +25,7 @@ import bubolo.graphics.LibGdxAppTester;
 import bubolo.mock.MockBulletCreator;
 import bubolo.mock.MockMineCreator;
 import bubolo.mock.MockPillboxCreator;
+import bubolo.mock.MockEngineerCreator;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;
@@ -229,6 +230,19 @@ public class TankTest
 		Pillbox pillbox = tank.dropPillbox(new MockPillboxCreator(), 16, 16);
 		assertNotNull(pillbox);
 	}
+
+	/**
+	 * Tests evictEngineer()
+	 */
+	@Test
+	public void evictEngineer()
+	{
+		if (tank.isEngineerInside())
+		{
+			Engineer engineer = tank.evictEngineer(new MockEngineerCreator(), 16, 16);
+			assertNotNull(engineer);
+		}
+	}
 	
 	@Test
 	public void setOwner()
@@ -236,6 +250,7 @@ public class TankTest
 		tank.setOwnerUID(tank.getId());
 		assertEquals(tank.getId(), tank.getOwnerUID());
 	}
+
 	@Test
 	public void getOwner()
 	{

@@ -2,9 +2,12 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.util.TileUtil;
 import bubolo.world.Damageable;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
+import bubolo.world.entity.Terrain;
+import bubolo.world.entity.concrete.Tank;
 
 /**
  * The Engineer represents the driver of a Tank. The Engineer can take actions outside of
@@ -46,6 +49,24 @@ public class Engineer extends Actor implements Damageable
 	public static final int MAX_HIT_POINTS = 1;
 
 	/**
+	 * The tank that this engineer is attached to
+	 */
+	public Tank tank;
+	
+	// Max speed in pixels per tick.
+	private static final float maxSpeed = 2.f;
+
+	// Next Waypoint for the engineer.
+	private boolean atWaypoint = true;
+	private float xWaypoint;
+	private float yWaypoint;
+	
+	/**
+	 * Used to calculate the maxSpeed based upon the interaction with the intersected terrains
+	 */
+	private float modifiedMaxSpeed = maxSpeed;
+
+	/**
 	 * Construct a new Engineer with a random UUID.
 	 */
 	public Engineer()
@@ -69,6 +90,22 @@ public class Engineer extends Actor implements Damageable
 	}
 
 	/**
+	 * @return the tank
+	 */
+	public Tank getTank()
+	{
+		return tank;
+	}
+
+	/**
+	 * @param tank the tank to set
+	 */
+	public void setTank(Tank tank)
+	{
+		this.tank = tank;
+	}
+
+	/**
 	 * Determines whether this Engineer is running forward or not.
 	 * 
 	 * @return true if the Engineer is running forward, false otherwise.
@@ -88,6 +125,31 @@ public class Engineer extends Actor implements Damageable
 	public void setRunning(boolean run)
 	{
 		isRunning = run;
+	}
+
+	/**
+	 * Sets the next Waypoint for the engineer.
+	 * 
+	 * @param x
+	 *            x co-ordinate of the Waypoint
+	 * @param y
+	 *            y co-ordinate of the Waypoint
+	 */
+	public void setWaypoint(float x, float y)
+	{
+		xWaypoint = x;
+		yWaypoint = y;
+		atWaypoint = false;
+	}
+
+	/**
+	 * Determines whether the Engineer has reached its last Waypoint.
+	 * 
+	 * @return true of the Engineer has reached its last Waypoint.
+	 */
+	public boolean isAtWaypoint()
+	{
+		return atWaypoint;
 	}
 
 	/**
@@ -116,6 +178,7 @@ public class Engineer extends Actor implements Damageable
 	public void update(World world)
 	{
 		super.updateControllers(world);
+		moveEngineer(world);
 	}
 
 	/**
@@ -153,7 +216,7 @@ public class Engineer extends Actor implements Damageable
 	}
 
 	/**
-	 * Increments the pillbox's health by a given amount
+	 * Increments the engineer's health by a given amount
 	 * 
 	 * @param healPoints - how many points the engineer is given
 	 */
@@ -170,6 +233,70 @@ public class Engineer extends Actor implements Damageable
 			hitPoints = MAX_HIT_POINTS;
 		}		
 	}
+
+	/**
+	 * Updates the Engineer's world position according to the Waypoint
+	 * position provided by the controller.
+	 * 
+	 * @param world
+	 *            is a reference to the world that this Engineer belongs to.
+	 */
+	private void moveEngineer(World world)
+	{
+		// If the engineer is already at its Waypoint, there is nothing to do.
+		if (atWaypoint)
+		{
+			return;
+		}
+		
+		Terrain currentTerrain = TileUtil.getTileTerrain(getX(), getY(), world);
+		if (currentTerrain != null)
+		{
+			modifiedMaxSpeed = maxSpeed * currentTerrain.getMaxSpeedModifier();
+		}
+
+		// Store the Engineer's current positioning and speed data, for use in calculations.
+		float xPos = getX();
+		float yPos = getY();
+		
+		// The position where the Engineer will be after one game tick.
+		float xNew;
+		float yNew;
+		
+		// The engineer should attempt to move towards WaypointX, WaypointY at full speed. 
+		float xDelta = xWaypoint - xPos;
+		float yDelta = yWaypoint - yPos;
+		float distanceToWaypoint = (float)Math.sqrt((xDelta * xDelta) + (yDelta * yDelta));
+		float slopeToWaypoint = yDelta / xDelta;
+		float rotation = (float)Math.atan(slopeToWaypoint);
+		
+		// Correct rotation.
+		if (xDelta < 0)
+		{
+			rotation = (float)Math.PI + rotation;
+		}
+
+		// Can the engineer cover the entire distance in this game tick?
+		float maxDistance = (float)(modifiedMaxSpeed * 1.0);
+		if (maxDistance >= distanceToWaypoint)
+		{
+			// Yes, Waypoint can be reached in this game tick.
+			xNew = xWaypoint;
+			yNew = yWaypoint;
+			atWaypoint = true;
+		}
+		else
+		{
+			// No, Waypoint cannot be reached in this game tick. Advance the
+			// engineer along the vector to the Waypoint.
+			xNew = xPos + maxDistance * (float)Math.cos(rotation);
+			yNew = yPos + maxDistance * (float)Math.sin(rotation);
+		}
+		
+		setX(xNew);
+		setY(yNew);
+		setRotation(rotation);
+	}	
 
 	@Override
 	public UUID getOwnerUID() 
