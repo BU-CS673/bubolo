@@ -143,13 +143,18 @@ public class BuboloApplication extends AbstractGameApplication
 		}
 		else if (getState() == State.GAME)
 		{
-			screen.dispose();
+			if (screen != null)
+			{
+				screen.dispose();
+			}
 
 			Tank tank = world.addEntity(Tank.class);
 			Vector2 spawnLocation = getRandomSpawn(world);
 			tank.setParams(spawnLocation.x, spawnLocation.y, 0);
 			tank.setLocalPlayer(true);
 
+			network.startDebug();
+			
 			setReady(true);
 		}
 		else if (getState() == State.GAME_LOBBY)

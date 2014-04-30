@@ -31,7 +31,7 @@ public class Main
 				cfg.title = "B.U.B.O.L.O";
 				cfg.width = 1067;
 				cfg.height = 600;
-				setApplication(new LwjglApplication(new BuboloApplication(1067, 600, true,
+				setApplication(new LwjglApplication(new BuboloApplication(1067, 600, false,
 						State.PLAYER_INFO), cfg));
 			}
 		};
