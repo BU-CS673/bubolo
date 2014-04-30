@@ -2,8 +2,10 @@ package bubolo;
 
 import bubolo.GameApplication.State;
 import bubolo.ui.AltMenuScreen;
+import bubolo.ui.UserInterface;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -32,6 +34,7 @@ public class Main
 				cfg.title = "B.U.B.O.L.O";
 				cfg.width = 1067;
 				cfg.height = 600;
+				cfg.addIcon(UserInterface.ICONS_PATH + "tank_icon.png", FileType.Local);
 				setApplication(new LwjglApplication(new BuboloApplication(1067, 600, false,
 						State.PLAYER_INFO), cfg));
 			}
@@ -45,6 +48,7 @@ public class Main
 				cfg.title = "B.U.B.O.L.O";
 				cfg.width = 1067;
 				cfg.height = 600;
+				cfg.addIcon(UserInterface.ICONS_PATH + "tank_icon.png", FileType.Local);
 				setApplication(new LwjglApplication(new BuboloApplication(1067, 600, true,
 						State.PLAYER_INFO), cfg));
 			}
@@ -58,6 +62,7 @@ public class Main
 				cfg.title = "B.U.B.O.L.O";
 				cfg.width = 1067;
 				cfg.height = 600;
+				cfg.addIcon(UserInterface.ICONS_PATH + "tank_icon.png", FileType.Local);
 				setApplication(new LwjglApplication(new BuboloApplication(1067, 600, false,
 						State.GAME), cfg));
 			}
