@@ -49,6 +49,8 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	
 	private static final int MAX_HIT_POINTS = 100;
 	
+	private static final int HIT_POINTS_REPLENISH_RATE = 5;
+	
 	private int mineCount;
 	
 	private static final int MAX_MINE_COUNT = 10;
@@ -59,7 +61,7 @@ public class Base extends StationaryElement implements Ownable, Damageable
 
 	private static final int MAX_AMMO_COUNT = 100;
 	
-	private static final int AMMO_REPLENISH_RATE = 10;
+	private static final int AMMO_REPLENISH_RATE = 5;
 	
 	/**
 	 * Construct a new Base with a random UUID.
@@ -237,8 +239,9 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	{
 		if(ammoCount - AMMO_REPLENISH_RATE < 0)
 		{
+			int ammoGiven = ammoCount;
 			ammoCount = 0;
-			return ammoCount;
+			return ammoGiven;
 		}
 		else 
 		{
@@ -288,8 +291,9 @@ public class Base extends StationaryElement implements Ownable, Damageable
 	{
 		if(mineCount - MINE_REPLENISH_RATE < 0)
 		{
+			int minesGiven = mineCount;
 			mineCount = 0;
-			return mineCount;
+			return minesGiven;
 		}
 		else 
 		{
@@ -298,6 +302,26 @@ public class Base extends StationaryElement implements Ownable, Damageable
 		}
 	}
 
+	
+	/**
+	 * Donates hit points to an object to heal
+	 * @return the amount of hit points to give
+	 */
+	public int giveHitPoints()
+	{
+		if(hitPoints - HIT_POINTS_REPLENISH_RATE < 0)
+		{
+			int hitPointsGiven = hitPoints;
+			hitPoints = 0;
+			return hitPointsGiven;
+		}
+		else
+		{
+			hitPoints -= HIT_POINTS_REPLENISH_RATE;
+			return HIT_POINTS_REPLENISH_RATE;
+		}
+	}
+	
 	@Override
 	public UUID getOwnerUID() 
 	{

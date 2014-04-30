@@ -257,4 +257,12 @@ public class TankTest
 		tank.setOwnerUID(tank.getId());
 		assertEquals(tank.getId(), tank.getOwnerUID());
 	}
+	
+	@Test
+	public void getMax()
+	{
+		assertEquals(100, tank.getMaxHitPoints(), 0);
+		assertEquals(100, tank.getTankMaxAmmo(), 0);
+		assertEquals(10, tank.getTankMaxMineCount(), 0);
+	}
 }
