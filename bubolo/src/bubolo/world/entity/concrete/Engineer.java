@@ -71,15 +71,7 @@ public class Engineer extends Actor implements Damageable
 	 */
 	public Engineer()
 	{
-		this(UUID.randomUUID(), null);
-	}
-
-	/**
-	 * Construct a new Engineer with a random UUID.
-	 */
-	public Engineer(Tank tank)
-	{
-		this(UUID.randomUUID(), tank);
+		this(UUID.randomUUID());
 	}
 
 	/**
@@ -88,14 +80,13 @@ public class Engineer extends Actor implements Damageable
 	 * @param id
 	 *            is the existing UUID to be applied to the new Man.
 	 */
-	public Engineer(UUID id, Tank tank)
+	public Engineer(UUID id)
 	{
 		super(id);
 		setWidth(14);
 		setHeight(9);
 		updateBounds();
 		hitPoints = MAX_HIT_POINTS;
-		this.tank = tank;
 	}
 
 	/**

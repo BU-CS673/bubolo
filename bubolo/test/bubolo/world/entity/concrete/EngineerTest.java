@@ -83,4 +83,15 @@ public class EngineerTest
 		engi.setWaypoint(engi.getX() + 1, engi.getY() + 1);
 		assertFalse(engi.isAtWaypoint());		
 	}
+
+	/**
+	 * Tests setTank() and getTank()
+	 */
+	@Test
+	public void setTank()
+	{
+		Tank tank = new Tank();
+		engi.setTank(tank);
+		assertTrue(engi.getTank() == tank);
+	}
 }

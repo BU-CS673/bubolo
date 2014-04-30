@@ -3,6 +3,7 @@ package bubolo.mock;
 import java.util.UUID;
 
 import bubolo.controllers.ControllerFactory;
+import bubolo.util.Coordinates;
 import bubolo.util.GameLogicException;
 import bubolo.world.Tile;
 import bubolo.world.entity.Entity;
@@ -17,14 +18,22 @@ import bubolo.world.entity.concrete.Engineer;
 public class MockEngineerCreator extends MockWorld
 {
 	private Tile mapTiles[][];
+	private int mapGridWidth = 1;
+	private int mapGridHeight = 1;
 	
 	/**
 	 * Constructor
 	 */
 	public MockEngineerCreator()
 	{
-		mapTiles = new Tile[1][1];
-		mapTiles[0][0] = new Tile(0 ,0 ,new Grass());
+		mapTiles = new Tile[mapGridWidth][mapGridHeight];
+		for (int i = 0; i < mapGridWidth; i++)
+		{
+			for (int j = 0; j < mapGridHeight; j++)
+			{
+				mapTiles[i][j] = new Tile(i, j, new Grass());				
+			}
+		}
 	}
 	
 	@Override
@@ -57,5 +66,17 @@ public class MockEngineerCreator extends MockWorld
 	public Tile[][] getMapTiles()
 	{
 		return mapTiles;
+	}
+
+	@Override
+	public int getMapWidth()
+	{
+		return mapGridWidth * Coordinates.TILE_TO_WORLD_SCALE;
+	}
+
+	@Override
+	public int getMapHeight()
+	{
+		return mapGridHeight * Coordinates.TILE_TO_WORLD_SCALE;
 	}
 }
