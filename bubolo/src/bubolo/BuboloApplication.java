@@ -148,7 +148,7 @@ public class BuboloApplication extends AbstractGameApplication
 			}
 			else
 			{
-				tank.setParams(1100, 200, 0);
+				tank.setParams(getRandomX(), 200, 0);
 			}
 			tank.setLocalPlayer(true);
 
@@ -197,6 +197,12 @@ public class BuboloApplication extends AbstractGameApplication
 			return new Vector2(spawn.getX(), spawn.getY());
 		}
 		return null;
+	}
+	
+	private static int getRandomX()
+	{
+		int val = (new Random()).nextInt(10);
+		return (1250 + (100 * val));
 	}
 
 	/**
