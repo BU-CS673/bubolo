@@ -3,6 +3,7 @@ package bubolo;
 import bubolo.GameApplication.State;
 import bubolo.ui.AltMenuScreen;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -13,7 +14,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
  */
 public class Main
 {
-	private static LwjglApplication application;
+	private static Application application;
 
 	/**
 	 * The application's entry point.
@@ -73,7 +74,7 @@ public class Main
 	 * @param application
 	 *            the game application.
 	 */
-	static void setApplication(LwjglApplication application)
+	static void setApplication(Application application)
 	{
 		Main.application = application;
 	}
@@ -83,7 +84,7 @@ public class Main
 	 * 
 	 * @return the game application.
 	 */
-	static LwjglApplication getApplication()
+	static Application getApplication()
 	{
 		return Main.application;
 	}
