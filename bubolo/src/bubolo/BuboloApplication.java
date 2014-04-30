@@ -36,7 +36,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	private final boolean isClient;
 	private final State initialState;
-	
+
 	private Graphics graphics;
 
 	private Network network;
@@ -52,6 +52,8 @@ public class BuboloApplication extends AbstractGameApplication
 	 *            the height of the window.
 	 * @param isClient
 	 *            specifies whether this is a client player.
+	 * @param initialState
+	 *            the initial application state.
 	 */
 	public BuboloApplication(int windowWidth, int windowHeight, boolean isClient,
 			State initialState)
@@ -59,7 +61,7 @@ public class BuboloApplication extends AbstractGameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 		this.isClient = isClient;
-		this.initialState = intialState;
+		this.initialState = initialState;
 	}
 
 	/**

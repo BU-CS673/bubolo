@@ -21,7 +21,7 @@ public class BuboloApplicationTest
 	public void setup()
 	{
 		LibGdxAppTester.createApp();
-		ga = new BuboloApplication(500, 400, true);
+		ga = new BuboloApplication(500, 400, true, State.MAIN_MENU);
 	}
 	
 	@Test
@@ -123,8 +123,8 @@ public class BuboloApplicationTest
 	{
 		assertEquals(State.MAIN_MENU, ga.getState());
 		
-		ga.setState(State.GAME_LOBBY);
-		assertEquals(State.GAME_LOBBY, ga.getState());
+		ga.setState(State.GAME_STARTING);
+		assertEquals(State.GAME_STARTING, ga.getState());
 	}
 	
 	@Test
