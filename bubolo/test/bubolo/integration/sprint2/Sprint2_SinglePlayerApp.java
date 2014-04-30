@@ -1,8 +1,10 @@
 package bubolo.integration.sprint2;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.ParseException;
+
+import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -24,7 +26,6 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new Sprint2_SinglePlayerApp(1067, 600), cfg);
 	}
 
@@ -35,19 +36,19 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 	private Graphics graphics;
 	private World world;
 
-	private long lastUpdate;
+	private long lastUpdate = 0;
 
 	private boolean ready;
 
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final int TICKS_PER_SECOND = 300;
 
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever
@@ -89,7 +90,7 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 		{
 			world = fileParser.parseMap(path);
 		}
-		catch (ParseException e)
+		catch (ParseException | IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,12 +114,12 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 	{
 		graphics.draw(world);
 		world.update();
-
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK.
 		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+		if (currentMillis > (lastUpdate + (long)MILLIS_PER_TICK))
 		{
-			world.update();
+			//graphics.draw(world);
+			//world.update();
 			lastUpdate = currentMillis;
 		}
 	}
@@ -150,4 +151,23 @@ public class Sprint2_SinglePlayerApp implements GameApplication
 	{
 	}
 
+	@Override
+	public boolean isGameStarted()
+	{
+		return world.getMapTiles() != null;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

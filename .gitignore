@@ -1,5 +1,8 @@
 *.class
 
+# Bubolo-specific
+Prefs.bolo
+
 # Package Files #
 *.war
 *.ear

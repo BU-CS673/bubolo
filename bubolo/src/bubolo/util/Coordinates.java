@@ -8,20 +8,13 @@ import com.badlogic.gdx.math.Vector2;
  * 
  * @author BU CS673 - Clone Productions
  */
-public final class Coordinates
+public abstract class Coordinates
 {
 	/**
 	 * Defines the scale used to determine the relationship between world units, map
 	 * units, and tile units
 	 */
 	public static final int TILE_TO_WORLD_SCALE = 32;
-
-	/**
-	 * Private constructor to prevent instantiation.
-	 */
-	private Coordinates()
-	{
-	}
 
 	/**
 	 * Converts world coordinates to camera coordinates.

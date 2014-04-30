@@ -10,40 +10,32 @@ package bubolo.world;
 public interface Damageable
 {
 	/**
-	 * Set the HP value f or this Damageable to the specified value.
-	 * @param i is the value to set this Damageable's HP to.
-	 * @return a reference to this Damageable.
+	 * Returns the current health of the tank
 	 * 
-	 * */
-	public Damageable setHP(int i);
-
+	 * @return current hit point count
+	 */
+	public int getHitPoints();
+	
 	/**
-	 * Get the current HP value for this Damageable.
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	public int getMaxHitPoints();
+	
+	/**
+	 * Changes the hit point count after taking damage
 	 * 
-	 * @return an int representing the current HP value.
+	 * @param damagePoints
+	 *            how much damage the tank has taken
 	 */
-	public int getHP();
-
+	public void takeHit(int damagePoints);
+	
 	/**
-	 * Get the max HP value for this Damageable.
+	 * Increments the tanks health by a given amount
 	 * 
-	 * @return an int representing the maximum HP value.
+	 * @param healPoints
+	 *            - how many points the tank is given
 	 */
-	public int getMaxHP();
-
-	/**
-	 * Modify this Damageable's HP by the specified amount. Positive values should
-	 * increase the current HP, negative values should decrease it.
-	 * @param i is the amount to modify this Damageable's health by. Positive values increase HP, negative values decrease.
-	 * @return a reference to this Damageable.
-	 */
-	public Damageable modifyHP(int i);
-
-	/**
-	 * Test to see whether this Damageable should be considered 'alive' for the purposes
-	 * of entity interactions.
-	 * 
-	 * @return true if the Damageable should be considered 'alive'.
-	 */
-	public boolean isAlive();
+	public void heal(int healPoints);
+	
 }

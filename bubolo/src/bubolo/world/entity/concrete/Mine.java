@@ -2,6 +2,8 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.audio.Audio;
+import bubolo.audio.Sfx;
 import bubolo.world.Ownable;
 import bubolo.world.entity.StationaryElement;
 
@@ -13,6 +15,10 @@ import bubolo.world.entity.StationaryElement;
  */
 public class Mine extends StationaryElement implements Ownable
 {
+	/**
+	 * the UID of the Tank that owns this Mine
+	 */
+	private UUID ownerUID;
 	/**
 	 * Used in serialization/de-serialization.
 	 */
@@ -32,7 +38,17 @@ public class Mine extends StationaryElement implements Ownable
 	 * Boolean representing whether this Mine is exploding! OH NO!
 	 */
 	private boolean isExploding = false;
-
+	
+	/**
+	 *  amount of time before mine becomes active in milliseconds
+	 */
+	private static int FUSE_TIME = 5000;
+	
+	/**
+	 * time the mine was created in milliseconds 
+	 */
+	private long createdTime;
+	
 	/**
 	 * Construct a new Mine with a random UUID.
 	 */
@@ -52,6 +68,8 @@ public class Mine extends StationaryElement implements Ownable
 		super(id);
 		setWidth(25);
 		setHeight(25);
+		this.createdTime = System.currentTimeMillis();
+		setLocalPlayer(true);
 		updateBounds();
 	}
 
@@ -99,6 +117,37 @@ public class Mine extends StationaryElement implements Ownable
 	{
 		this.isExploding = explode;
 	}
+	
+	/**
+	 * get the status of this mine. will be inactive until the fuse time has elapsed since the mine was created
+	 * @return 
+	 * 		whether or not this mine is active
+	 */
+	public boolean isActive()
+	{
+		boolean active = false;
+		if ((this.createdTime+this.FUSE_TIME) < System.currentTimeMillis())
+		{
+			active = true;
+		}
+		return active;
+	}
 
-	// TODO: Add Mine functionality!
+	@Override
+	public UUID getOwnerUID() 
+	{
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) 
+	{
+		this.ownerUID = ownerUID;
+	}
+	
+	@Override
+	protected void onDispose()
+	{
+		Audio.play(Sfx.MINE_EXPLOSION);
+	}
 }

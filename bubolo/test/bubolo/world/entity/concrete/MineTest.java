@@ -41,4 +41,22 @@ public class MineTest
 		mine.setExploding(true);
 		assertEquals("Mine exploding state set correctly.", true, mine.isExploding());
 	}
+	@Test
+	public void setOwner()
+	{
+		mine.setOwnerUID(mine.getId());
+		assertEquals(mine.getId(), mine.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		mine.setOwnerUID(mine.getId());
+		assertEquals(mine.getId(), mine.getOwnerUID());
+	}
+	
+	@Test
+	public void onDispose()
+	{
+		mine.onDispose();
+	}
 }

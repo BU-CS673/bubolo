@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import bubolo.world.World;
 import bubolo.world.entity.EntityTestCase;
-
 import static org.mockito.Mockito.mock;
 
 public class EngineerTest
@@ -39,5 +38,38 @@ public class EngineerTest
 	@Test
 	public void update() {
 		engi.update(mock(World.class));
+	}
+	
+	@Test
+	public void  getHitPoints()
+	{
+		assertEquals(1, engi.getHitPoints(), 0);
+	}
+	
+	@Test
+	public void getMaxHitPoints()
+	{
+		assertEquals(1, engi.getMaxHitPoints(), 0);
+	}
+	
+	@Test
+	public void healDamageTest()
+	{
+		engi.takeHit(1);
+		assertEquals(0, engi.getHitPoints(), 0);
+		engi.heal(1);
+		assertEquals(1, engi.getHitPoints(), 0);
+	}
+	@Test
+	public void setOwner()
+	{
+		engi.setOwnerUID(engi.getId());
+		assertEquals(engi.getId(), engi.getOwnerUID());
+	}
+	@Test
+	public void getOwner()
+	{
+		engi.setOwnerUID(engi.getId());
+		assertEquals(engi.getId(), engi.getOwnerUID());
 	}
 }

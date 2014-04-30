@@ -1,19 +1,25 @@
 package bubolo.integration;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import org.json.simple.parser.ParseException;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import bubolo.GameApplication;
+import bubolo.AbstractGameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
+import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
-import bubolo.net.command.CreateEntity;
 import bubolo.net.command.CreateTank;
-import bubolo.net.command.HelloNetworkCommand;
-import bubolo.world.GameWorld;
-import bubolo.world.World;
-import bubolo.world.entity.concrete.Grass;
+import bubolo.ui.LobbyScreen;
+import bubolo.ui.Screen;
+import bubolo.util.Parser;
 import bubolo.world.entity.concrete.Tank;
 
 /**
@@ -21,113 +27,138 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class NetServerTestApplication implements GameApplication
+public class NetServerTestApplication extends AbstractGameApplication implements NetworkObserver
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.print("Name: ");
+		String name = br.readLine();
+
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "BUBOLO Net Server Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
-		new LwjglApplication(new NetServerTestApplication(1067, 600), cfg);
+		new LwjglApplication(new NetServerTestApplication(1067, 600, name), cfg);
 	}
-	
-	private int windowWidth;
-	private int windowHeight;
-	
+
+	private final int windowWidth;
+	private final int windowHeight;
+
+	private final String playerName;
+
 	private Graphics graphics;
-	private World world;
 	private Network network;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
-	
+
+	private Screen gameLobby;
+
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
-	
+	public static final long TICKS_PER_SECOND = 30;
+
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
-	
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
+
 	/**
-	 * Constructs an instance of the game application. Only one instance should 
-	 * ever exist.
-	 * @param windowWidth the width of the window.
-	 * @param windowHeight the height of the window.
+	 * Constructs an instance of the game application. Only one instance should ever exist.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window.
+	 * @param windowHeight
+	 *            the height of the window.
+	 * @param name
+	 *            the name of the player.
 	 */
-	public NetServerTestApplication(int windowWidth, int windowHeight)
+	public NetServerTestApplication(int windowWidth, int windowHeight, String name)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
+		this.playerName = name;
 	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a> 
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void create()
 	{
-		network = NetworkSystem.getInstance();
-		network.startServer();
-		
-		network.send(new HelloNetworkCommand("Hello from the server."));
-		
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		world = new GameWorld(32*94, 32*94);
-		
-		for (int row = 0; row < 94; row++)
+
+		Parser fileParser = Parser.getInstance();
+		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+		try
 		{
-			for (int column = 0; column < 94; column++)
-			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
-			}
+			world = fileParser.parseMap(path);
 		}
-		
-		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
-		tank.setLocalPlayer(true);
-		
-		network.send(new CreateTank(tank));
-		
-		ready = true;
+		catch (ParseException | IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		network = NetworkSystem.getInstance();
+		network.addObserver(this);
+		network.startServer(playerName);
+
+		setState(State.GAME_LOBBY);
 	}
-	
+
 	/**
 	 * Called automatically by the rendering library.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void render()
 	{
-		graphics.draw(world);
-		world.update();
-		network.update(world);
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+		final State state = getState();
+		if (state == State.NET_GAME)
 		{
+			graphics.draw(world);
 			world.update();
-			lastUpdate = currentMillis;
+			network.update(world);
+		}
+		else if (state == State.GAME_LOBBY || state == State.GAME_STARTING)
+		{
+			graphics.draw(gameLobby);
+			network.update(world);
 		}
 	}
-	
+
+	@Override
+	protected void onStateChanged()
+	{
+		final State state = getState();
+		if (state == State.NET_GAME)
+		{
+			gameLobby.dispose();
+
+			Tank tank = world.addEntity(Tank.class);
+			tank.setParams(1100, 200, 0);
+			tank.setLocalPlayer(true);
+			network.send(new CreateTank(tank));
+
+			setReady(true);
+		}
+		else if (state == State.GAME_LOBBY)
+		{
+			gameLobby = new LobbyScreen(this, world);
+		}
+	}
+
 	/**
 	 * Called when the application is destroyed.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void dispose()
@@ -147,6 +178,33 @@ public class NetServerTestApplication implements GameApplication
 
 	@Override
 	public void resume()
+	{
+	}
+
+	@Override
+	public void onConnect(String clientName, String serverName)
+	{
+	}
+
+	@Override
+	public void onClientConnected(String clientName)
+	{
+		System.out.println(clientName + " joined the game.");
+	}
+
+	@Override
+	public void onClientDisconnected(String clientName)
+	{
+		System.out.println(clientName + " left the game.");
+	}
+
+	@Override
+	public void onGameStart(int timeUntilStart)
+	{
+	}
+
+	@Override
+	public void onMessageReceived(String message)
 	{
 	}
 }

@@ -13,7 +13,7 @@ import bubolo.world.entity.concrete.Mine;
  * 
  * @author BU673 - Clone Industries
  */
-class MineSprite extends Sprite<Mine>
+class MineSprite extends AbstractEntitySprite<Mine>
 {
 	// The index representing which animation frame will be drawn.
 	private int frameIndex;
@@ -47,7 +47,7 @@ class MineSprite extends Sprite<Mine>
 	private int lastAnimationState = 0;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "mine.png";
+	private static final String TEXTURE_FILE = "mine.png";
 
 	/**
 	 * Constructor for the MineSprite. This is Package-private because sprites should not
@@ -59,7 +59,7 @@ class MineSprite extends Sprite<Mine>
 	 */
 	MineSprite(Mine mine)
 	{
-		super(DrawLayer.STATIONARY_ELEMENTS, mine);
+		super(DrawLayer.THIRD, mine);
 
 		allFrames = TextureUtil.splitFrames(
 				Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE), 21, 21);
@@ -68,44 +68,34 @@ class MineSprite extends Sprite<Mine>
 		idleFrames = new TextureRegion[][] { allFrames[0], allFrames[1], allFrames[2], allFrames[1] };
 	}
 
-	// TODO (cdc - 2014-03-20): Uncomment this when it is needed, or delete it if it is no longer needed.
-//	private void updateColorSet()
-//	{
-//		{
-//			if (!this.getEntity().isOwned())
-//			{
-//				colorId = ColorSets.NEUTRAL;
-//			}
-//			else if (this.getEntity().isLocalPlayer())
-//			{
-//				colorId = ColorSets.BLUE;
-//			}
-//			else
-//			{
-//				colorId = ColorSets.RED;
-//			}
-//		}
-//	}
-
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 		}
+		else if (!getEntity().isLocalPlayer() && getEntity().isActive())
+		{
+			// Hide other people's mines, but give other players a chance to see it while the mine
+			// is arming.
+			return;
+		}
 		else
 		{
-
 			if (this.getEntity().isExploding())
+			{
 				animationState = 1;
+			}
 			else
+			{
 				animationState = 0;
+			}
 
 			switch (animationState)
 			{
 			case 0:
-				if (lastAnimationState != 0)
+				if (lastAnimationState != 0 || !getEntity().isActive())
 				{
 					lastAnimationState = 0;
 					frameIndex = 0;

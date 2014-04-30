@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Crater;
 
 import com.badlogic.gdx.Gdx;
@@ -48,7 +47,7 @@ public class CraterSpriteTest
 				public void run()
 				{
 					// Fails if the constructor throws an exception.
-					Sprite<?> sprite = Sprites.getInstance().createSprite(new Crater());
+					Sprite sprite = Sprites.getInstance().createSprite(new Crater());
 					
 					passed = true;
 					isComplete = true;
@@ -74,9 +73,9 @@ public class CraterSpriteTest
 			@Override
 			public void run()
 			{
-				Sprite<?> sprite = Sprites.getInstance().createSprite(new Crater());
+				Sprite sprite = Sprites.getInstance().createSprite(new Crater());
 				batch.begin();
-				sprite.draw(batch, camera, DrawLayer.TERRAIN);
+				sprite.draw(batch, camera, sprite.getDrawLayer());
 				passed = true;
 				isComplete = true;
 			}

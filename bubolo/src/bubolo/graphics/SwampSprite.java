@@ -1,6 +1,8 @@
 package bubolo.graphics;
 
-import bubolo.world.entity.concrete.Swamp;
+import java.util.Random;
+
+import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,12 +13,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  * @author BU673 - Clone Industries
  */
-class SwampSprite extends Sprite<Swamp>
+class SwampSprite extends AbstractEntitySprite<Entity>
 {
 	private Texture image;
 	
 	/** The file name of the texture. */
-	static final String TEXTURE_FILE = "swamp.png";
+	private static final String TEXTURE_FILE = "swamp.png";
+	
+	private float rotation;
 
 	/**
 	 * Constructor for the SwampSprite. This is Package-private because sprites should not
@@ -25,17 +29,20 @@ class SwampSprite extends Sprite<Swamp>
 	 * @param swamp
 	 *            Reference to the Swamp that this SwampSprite represents.
 	 */
-	SwampSprite(Swamp swamp)
+	SwampSprite(Entity swamp)
 	{
-		super(DrawLayer.BASE_TERRAIN, swamp);
+		super(DrawLayer.FIRST, swamp);
 
 		image = Graphics.getTexture(Graphics.TEXTURE_PATH + TEXTURE_FILE);
+		
+		Random rand = new Random();
+		rotation = (float) (rand.nextInt(4) * (Math.PI/2));
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Camera camera, DrawLayer layer)
 	{
-		if (isEntityDisposed())
+		if (isDisposed())
 		{
 			Sprites.getInstance().removeSprite(this);
 
@@ -44,5 +51,11 @@ class SwampSprite extends Sprite<Swamp>
 		{
 			drawTexture(batch, camera, layer, image);
 		}
+	}
+	
+	@Override
+	public float getRotation()
+	{
+		return rotation;
 	}
 }

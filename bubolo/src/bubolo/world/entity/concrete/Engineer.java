@@ -2,6 +2,7 @@ package bubolo.world.entity.concrete;
 
 import java.util.UUID;
 
+import bubolo.world.Damageable;
 import bubolo.world.World;
 import bubolo.world.entity.Actor;
 
@@ -12,8 +13,13 @@ import bubolo.world.entity.Actor;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class Engineer extends Actor
+public class Engineer extends Actor implements Damageable
 {
+	/**
+	 * the UID of the tank that owns this Engineer
+	 */
+	private UUID ownerUID;
+	
 	/**
 	 * Used when serializing and de-serializing.
 	 */
@@ -28,6 +34,16 @@ public class Engineer extends Actor
 	 * Boolean representing whether or not this Tank is buiilding something.
 	 */
 	private boolean isBuilding = false;
+	
+	/**
+	 * The health of the engineer
+	 */
+	private int hitPoints;
+
+	/**
+	 * The maximum amount of hit points of the engineer
+	 */
+	public static final int MAX_HIT_POINTS = 1;
 
 	/**
 	 * Construct a new Engineer with a random UUID.
@@ -49,6 +65,7 @@ public class Engineer extends Actor
 		setWidth(14);
 		setHeight(9);
 		updateBounds();
+		hitPoints = MAX_HIT_POINTS;
 	}
 
 	/**
@@ -98,9 +115,71 @@ public class Engineer extends Actor
 	@Override
 	public void update(World world)
 	{
-		// TODO Auto-generated method stub
-		
+		super.updateControllers(world);
 	}
 
-	// TODO: Add Engineer functionality!
+	/**
+	 * Returns the current health of the engineer
+	 * 
+	 * @return current hit point count
+	 */
+	@Override
+	public int getHitPoints() 
+	{
+		return hitPoints;
+	}
+
+	/**
+	 * Method that returns the maximum number of hit points the entity can have. 
+	 * @return - Max Hit points for the entity
+	 */
+	@Override
+	public int getMaxHitPoints() 
+	{
+		return MAX_HIT_POINTS;
+	}
+
+	/**
+	 * Changes the hit point count after taking damage
+	 * 
+	 * @param damagePoints
+	 *            how much damage the engineer has taken
+	 */
+	@Override
+	public void takeHit(int damagePoints) 
+	{
+		hitPoints -= Math.abs(damagePoints);
+		// TODO: This method is the first opportunity to set off "death" chain of events		
+	}
+
+	/**
+	 * Increments the pillbox's health by a given amount
+	 * 
+	 * @param healPoints - how many points the engineer is given
+	 */
+	@Override
+	public void heal(int healPoints) 
+	{
+		if (hitPoints + Math.abs(healPoints) < MAX_HIT_POINTS)
+		{
+			hitPoints += Math.abs(healPoints);
+		}
+
+		else
+		{
+			hitPoints = MAX_HIT_POINTS;
+		}		
+	}
+
+	@Override
+	public UUID getOwnerUID() 
+	{
+		return this.ownerUID;
+	}
+
+	@Override
+	public void setOwnerUID(UUID ownerUID) 
+	{
+		this.ownerUID = ownerUID;
+	}
 }

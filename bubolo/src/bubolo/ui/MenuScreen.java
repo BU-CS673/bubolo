@@ -8,6 +8,7 @@ import java.awt.Toolkit;
  * quit, as the Preferences button is currently non-functional.
  * 
  * @author BU CS673 - Clone Productions
+ * @deprecated Replaced by AltMenuScreen.
  */
 public class MenuScreen extends javax.swing.JFrame
 {

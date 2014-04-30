@@ -37,7 +37,7 @@ public class PreferencesView extends JFrame
 	private ImageIcon testIcon = new ImageIcon(UserInterface.ICONS_PATH + "test_sound.png");
 	
 	// Declaration of the controls that will appear on the window
-	private JButton cancelBtn;
+	private JButton closeBtn;
 	private JButton saveBtn;
 	private JButton sfxTest;
 	private JButton mfxTest;
@@ -75,8 +75,8 @@ public class PreferencesView extends JFrame
 		// Add Screen Size to the Main Panel
 		mainPanel.add(createScreenSizePanel());
 		
-		// Add Save/Cancel to the Main Panel
-		mainPanel.add(createSaveCancelPanel());
+		// Add Save/Close to the Main Panel
+		mainPanel.add(createSaveClosePanel());
 		
 		// Add Main Panel to the Frame (Window)
 		add(mainPanel);
@@ -116,27 +116,27 @@ public class PreferencesView extends JFrame
 	}
 	
 	/**
-	 * Internal Only -- Creates a panel with Save/Cancel buttons
-	 * @return JPanel that represents the Save/Cancel buttons
+	 * Internal Only -- Creates a panel with Save/Close buttons
+	 * @return JPanel that represents the Save/Close buttons
 	 */
-	private JPanel createSaveCancelPanel()
+	private JPanel createSaveClosePanel()
 	{
 		// Create Panel
-		JPanel SaveCancelPanel = new JPanel();
-		SaveCancelPanel.setLayout(new BoxLayout(SaveCancelPanel, BoxLayout.LINE_AXIS));
+		JPanel SaveClosePanel = new JPanel();
+		SaveClosePanel.setLayout(new BoxLayout(SaveClosePanel, BoxLayout.LINE_AXIS));
 		
 		// Create the Save button
 		saveBtn = new JButton("SAVE");
 		
-		// Create the Cancel button 
-		cancelBtn = new JButton("CANCEL");
+		// Create the Close button 
+		closeBtn = new JButton("CLOSE");
 
 		// Add the buttons to the panel
-		SaveCancelPanel.add(saveBtn);
-		SaveCancelPanel.add(cancelBtn);
+		SaveClosePanel.add(saveBtn);
+		SaveClosePanel.add(closeBtn);
 		
 		// Return the panel
-		return SaveCancelPanel;
+		return SaveClosePanel;
 	}
 
 	/**
@@ -263,12 +263,12 @@ public class PreferencesView extends JFrame
 	}
 	
 	/**
-	 * Cancel Button event listener
+	 * Close Button event listener
 	 * @param event returns the event
 	 */
-	void cancelListener(ActionListener event)
+	void closeListener(ActionListener event)
 	{
-		cancelBtn.addActionListener(event);
+		closeBtn.addActionListener(event);
 	}
 	
 	/**

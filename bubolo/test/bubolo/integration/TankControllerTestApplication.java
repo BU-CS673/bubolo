@@ -3,13 +3,16 @@ package bubolo.integration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.world.GameWorld;
+import bubolo.world.Tile;
 import bubolo.world.World;
+import bubolo.world.entity.Terrain;
 import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Tank;
 
@@ -18,7 +21,7 @@ import bubolo.world.entity.concrete.Tank;
  * 
  * @author BU CS673 - Clone Productions
  */
-public class TankControllerTestApplication implements GameApplication
+public class TankControllerTestApplication extends AbstractGameApplication
 {
 	public static void main(String[] args)
 	{
@@ -26,7 +29,6 @@ public class TankControllerTestApplication implements GameApplication
 		cfg.title = "BUBOLO Tank Controller Integration";
 		cfg.width = 1067;
 		cfg.height = 600;
-		cfg.useGL20 = true;
 		new LwjglApplication(new TankControllerTestApplication(1067, 600), cfg);
 	}
 	
@@ -34,21 +36,16 @@ public class TankControllerTestApplication implements GameApplication
 	private int windowHeight;
 	
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
 	
 	/**
 	 * The number of game ticks (calls to <code>update</code>) per second.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
+	public static final long TICKS_PER_SECOND = 30;
 	
 	/**
 	 * The number of milliseconds per game tick.
 	 */
-	public static final float MILLIS_PER_TICK = 500 / TICKS_PER_SECOND;
+	public static final long MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
@@ -61,12 +58,6 @@ public class TankControllerTestApplication implements GameApplication
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
 	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
-	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
@@ -75,6 +66,8 @@ public class TankControllerTestApplication implements GameApplication
 	@Override
 	public void create()
 	{
+		Audio.initialize();
+		
 		Network net = NetworkSystem.getInstance();
 		net.startDebug();
 		
@@ -82,19 +75,24 @@ public class TankControllerTestApplication implements GameApplication
 		
 		world = new GameWorld(32*94, 32*94);
 		
+		Tile[][] mapTiles = new Tile[94][94];
+		
 		for (int row = 0; row < 94; row++)
 		{
 			for (int column = 0; column < 94; column++)
 			{
-				world.addEntity(Grass.class).setParams(column * 32, row * 32, 0);
+				Grass grass = (Grass) world.addEntity(Grass.class).setParams(column, row, 0);
+				mapTiles[column][row] = new Tile(column, row, grass);
+				
 			}
 		}
 		
+		world.setMapTiles(mapTiles);
 		Tank tank = world.addEntity(Tank.class);
-		tank.setParams(100, 100, 0);
+		tank.setParams(1200, 100, 0);
 		tank.setLocalPlayer(true);
 
-		ready = true;
+		setReady(true);
 	}
 	
 	/**
@@ -107,13 +105,16 @@ public class TankControllerTestApplication implements GameApplication
 		graphics.draw(world);
 		world.update();
 		
+		// (cdc - 4/3/2014): Commented out, b/c update was being called twice. Additionally,
+		// the game is extremely jittery when this is used instead of calling update continuously.
+		
 		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
-		{
-			world.update();
-			lastUpdate = currentMillis;
-		}
+//		long currentMillis = System.currentTimeMillis();
+//		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+//		{
+//			world.update();
+//			lastUpdate = currentMillis;
+//		}
 	}
 	
 	/**

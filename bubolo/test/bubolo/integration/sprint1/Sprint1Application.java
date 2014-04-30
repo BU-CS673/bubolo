@@ -124,4 +124,24 @@ public class Sprint1Application implements GameApplication
 	public void resume()
 	{
 	}
+
+	@Override
+	public boolean isGameStarted()
+	{
+		return true;
+	}
+
+	@Override
+	public void setState(State state)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

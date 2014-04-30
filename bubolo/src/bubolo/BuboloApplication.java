@@ -1,126 +1,213 @@
 package bubolo;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Random;
+
+import org.json.simple.parser.ParseException;
+
+import com.badlogic.gdx.math.Vector2;
+
+import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+import bubolo.net.command.CreateTank;
+import bubolo.ui.LobbyScreen;
+import bubolo.ui.PlayerInfoScreen;
+import bubolo.ui.Screen;
+import bubolo.util.GameRuntimeException;
+import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Tank;
 
 /**
- * The Game: this is where the subsystems are initialized, as well as where
- * the main game loop is. 
+ * The Game: this is where the subsystems are initialized, as well as where the main game loop is.
+ * 
  * @author BU CS673 - Clone Productions
  */
-public class BuboloApplication implements GameApplication
+public class BuboloApplication extends AbstractGameApplication
 {
-	private int windowWidth;
-	private int windowHeight;
-	
+	private final int windowWidth;
+	private final int windowHeight;
+
+	private final boolean isClient;
+	private final State initialState;
+
 	private Graphics graphics;
-	private World world;
-	
-	private long lastUpdate;
-	
-	private boolean ready;
-	
+
+	private Network network;
+
+	private Screen screen;
+
 	/**
-	 * The number of game ticks (calls to <code>update</code>) per second.
+	 * Constructs an instance of the game application. Only one instance should ever exist.
+	 * 
+	 * @param windowWidth
+	 *            the width of the window.
+	 * @param windowHeight
+	 *            the height of the window.
+	 * @param isClient
+	 *            specifies whether this is a client player.
+	 * @param initialState
+	 *            the initial application state.
 	 */
-	public static final int TICKS_PER_SECOND = 30;
-	
-	/**
-	 * The number of milliseconds per game tick.
-	 */
-	public static final float MILLIS_PER_TICK = 1000 / TICKS_PER_SECOND;
-	
-	/**
-	 * Constructs an instance of the game application. Only one instance should 
-	 * ever exist.
-	 * @param windowWidth the width of the window.
-	 * @param windowHeight the height of the window.
-	 */
-	public BuboloApplication(int windowWidth, int windowHeight)
+	public BuboloApplication(int windowWidth, int windowHeight, boolean isClient,
+			State initialState)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-	}
-	
-	@Override
-	public boolean isReady()
-	{
-		return ready;
+		this.isClient = isClient;
+		this.initialState = initialState;
 	}
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a> 
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void create()
 	{
+		Audio.initialize();
 		graphics = new Graphics(windowWidth, windowHeight);
-		
-		// TODO: we need a way to determine the size of the game map. Perhaps we can have a default constructor,
-		// and then the map loader or creator could set the size.
-		world = new GameWorld(500, 500);
-		
-		// TODO: add other systems here.
-		
-		ready = true;
+		network = NetworkSystem.getInstance();
+
+		if (!isClient)
+		{
+			Parser fileParser = Parser.getInstance();
+			Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+			try
+			{
+				world = fileParser.parseMap(path);
+			}
+			catch (ParseException | IOException e)
+			{
+				e.printStackTrace();
+				throw new GameRuntimeException(e);
+			}
+		}
+		else
+		{
+			world = new GameWorld();
+		}
+
+		setState(initialState);
 	}
-	
+
 	/**
 	 * Called automatically by the rendering library.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void render()
 	{
-		long startMillis = System.currentTimeMillis();
-		
-		graphics.draw(world);
-		
-		// Ensure that the world is only updated as frequently as MILLIS_PER_TICK. 
-		long currentMillis = System.currentTimeMillis();
-		if (currentMillis > (lastUpdate + MILLIS_PER_TICK))
+		final State state = getState();
+		if (state == State.NET_GAME)
 		{
+			graphics.draw(world);
 			world.update();
-			lastUpdate = currentMillis;
+			network.update(world);
 		}
-		
-		long millisUntilNextUpdate = System.currentTimeMillis() - startMillis - Graphics.MILLIS_PER_TICK;
-		if (millisUntilNextUpdate > 0)
+		else if (state == State.GAME)
 		{
-			try
-			{
-				Thread.sleep(millisUntilNextUpdate);
-			}
-			catch (InterruptedException e)
-			{
-				// TODO: does this need to be handled?
-			}
+			graphics.draw(world);
+			world.update();
+		}
+		else if (state == State.GAME_LOBBY ||
+				state == State.GAME_STARTING)
+		{
+			graphics.draw(screen);
+			network.update(world);
+		}
+		else if (state == State.PLAYER_INFO)
+		{
+			graphics.draw(screen);
 		}
 	}
-	
+
+	@Override
+	public void onStateChanged()
+	{
+		if (getState() == State.NET_GAME)
+		{
+			screen.dispose();
+
+			Tank tank = world.addEntity(Tank.class);
+			if (!isClient)
+			{
+				Vector2 spawnLocation = getRandomSpawn(world);
+				tank.setParams(spawnLocation.x, spawnLocation.y, 0);
+			}
+			else
+			{
+				tank.setParams(1100, 200, 0);
+			}
+			tank.setLocalPlayer(true);
+
+			network.send(new CreateTank(tank));
+
+			setReady(true);
+		}
+		else if (getState() == State.GAME)
+		{
+			if (screen != null)
+			{
+				screen.dispose();
+			}
+
+			Tank tank = world.addEntity(Tank.class);
+			Vector2 spawnLocation = getRandomSpawn(world);
+			tank.setParams(spawnLocation.x, spawnLocation.y, 0);
+			tank.setLocalPlayer(true);
+
+			network.startDebug();
+			
+			setReady(true);
+		}
+		else if (getState() == State.GAME_LOBBY)
+		{
+			screen = new LobbyScreen(this, world);
+		}
+		else if (getState() == State.PLAYER_INFO)
+		{
+			screen = new PlayerInfoScreen(this, isClient);
+		}
+	}
+
+	/**
+	 * Returns a random spawn point.
+	 * 
+	 * @return the location of a random spawn point.
+	 */
+	private static Vector2 getRandomSpawn(World world)
+	{
+		List<Entity> spawns = world.getSpawns();
+		if (spawns.size() > 0)
+		{
+			Random randomGenerator = new Random();
+			Entity spawn = spawns.get(randomGenerator.nextInt(spawns.size()));
+			return new Vector2(spawn.getX(), spawn.getY());
+		}
+		return null;
+	}
+
 	/**
 	 * Called when the application is destroyed.
-	 * @see <a href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
+	 * 
+	 * @see <a
+	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
 	@Override
 	public void dispose()
 	{
-	}
-
-	@Override
-	public void pause()
-	{
-	}
-
-	@Override
-	public void resize(int width, int height)
-	{
-	}
-
-	@Override
-	public void resume()
-	{
+		Audio.dispose();
 	}
 }

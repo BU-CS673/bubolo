@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bubolo.ui.Screen;
 import bubolo.world.World;
-import bubolo.world.entity.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * The top-level class for the Graphics system.
@@ -57,9 +58,11 @@ public class Graphics
 	private static Graphics instance = null;
 
 	// The comparator used to sort sprites.
-	private static Comparator<Sprite<?>> spriteComparator;
+	private static Comparator<Sprite> spriteComparator;
 
-	private List<Sprite<?>> spritesInView = new ArrayList<Sprite<?>>();
+	private List<Sprite> spritesInView = new ArrayList<Sprite>();
+
+	private List<Sprite> background;
 
 	/**
 	 * Gets a reference to the Graphics system. The Graphics system must be explicitly constructed
@@ -127,6 +130,7 @@ public class Graphics
 		camera = new OrthographicCamera(windowWidth, windowHeight);
 		batch = new SpriteBatch();
 		spriteSystem = Sprites.getInstance();
+
 		loadAllTextures();
 
 		synchronized (Graphics.class)
@@ -137,6 +141,19 @@ public class Graphics
 	}
 
 	/**
+	 * Draws the specified screen.
+	 * 
+	 * @param screen the ui screen to update.
+	 */
+	public void draw(Screen screen)
+	{
+		Gdx.gl20.glClearColor(0.6f, 0.6f, 0.6f, 1);
+		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		
+		screen.update();
+	}
+
+	/**
 	 * Draws the entities that are within the camera's clipping boundary.
 	 * 
 	 * @param world
@@ -144,13 +161,26 @@ public class Graphics
 	 */
 	public void draw(World world)
 	{
+		draw(world, null);
+	}
+
+	/**
+	 * Draws the entities that are within the camera's clipping boundary.
+	 * 
+	 * @param world
+	 *            the World Model object.
+	 * @param ui
+	 *            the game user interface.
+	 */
+	public void draw(World world, Stage ui)
+	{
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		// 1, 2. Get list of sprites, and clip sprites that are outside of the camera's
+		// Get list of sprites, and clip sprites that are outside of the camera's
 		// view.
 		spritesInView.clear();
-		for (Sprite<?> sprite : spriteSystem.getSprites())
+		for (Sprite sprite : spriteSystem.getSprites())
 		{
 			if (withinCameraView(camera, sprite))
 			{
@@ -158,16 +188,25 @@ public class Graphics
 			}
 		}
 
-		// 3. Sort list by sprite type, to facilitate batching.
+		// Sort list by sprite type, to facilitate batching.
 		Collections.sort(spritesInView, spriteComparator);
 
-		// 4. Render sprites by layer.
-		drawEntities(spritesInView, DrawLayer.BACKGROUND);
-		drawEntities(spritesInView, DrawLayer.BASE_TERRAIN);
-		drawEntities(spritesInView, DrawLayer.TERRAIN);
-		drawEntities(spritesInView, DrawLayer.STATIONARY_ELEMENTS);
-		drawEntities(spritesInView, DrawLayer.ACTORS);
-		drawEntities(spritesInView, DrawLayer.EFFECTS);
+		// Draw the background layer.
+		drawBackground(world);
+
+		// Render sprites by layer.
+		drawEntities(spritesInView, DrawLayer.FIRST);
+		drawEntities(spritesInView, DrawLayer.SECOND);
+		drawEntities(spritesInView, DrawLayer.THIRD);
+		drawEntities(spritesInView, DrawLayer.FOURTH);
+		drawEntities(spritesInView, DrawLayer.TOP);
+
+		// Render the user interface.
+		if (ui != null)
+		{
+			ui.act(Gdx.graphics.getDeltaTime());
+			ui.draw();
+		}
 
 		// Update the camera controller(s).
 		for (CameraController c : cameraControllers)
@@ -176,10 +215,10 @@ public class Graphics
 		}
 
 		// Remove destroyed sprites from the list.
-		List<Sprite<?>> sprites = spriteSystem.getSprites();
+		List<Sprite> sprites = spriteSystem.getSprites();
 		for (int i = 0; i < sprites.size(); ++i)
 		{
-			if (sprites.get(i).isEntityDisposed())
+			if (sprites.get(i).isDisposed())
 			{
 				sprites.remove(i);
 			}
@@ -192,7 +231,7 @@ public class Graphics
 	 * @param controller
 	 *            a camera controller. The update method will be called once per draw call.
 	 */
-	public void addCameraController(CameraController controller)
+	void addCameraController(CameraController controller)
 	{
 		cameraControllers.add(controller);
 	}
@@ -205,7 +244,7 @@ public class Graphics
 	 * @param currentLayer
 	 *            the current layer to draw.
 	 */
-	private void drawEntities(List<Sprite<? extends Entity>> sprites, DrawLayer currentLayer)
+	private void drawEntities(List<Sprite> sprites, DrawLayer currentLayer)
 	{
 		if (sprites.size() == 0)
 		{
@@ -213,11 +252,54 @@ public class Graphics
 		}
 
 		batch.begin();
-		for (Sprite<? extends Entity> sprite : sprites)
+		for (Sprite sprite : sprites)
 		{
 			sprite.draw(batch, camera, currentLayer);
 		}
 		batch.end();
+	}
+
+	private void drawBackground(World world)
+	{
+		if (background == null)
+		{
+			background = setBackground(world.getMapWidth(), world.getMapHeight());
+		}
+
+		batch.begin();
+		for (Sprite sprite : background)
+		{
+			sprite.draw(batch, camera, DrawLayer.BACKGROUND);
+		}
+		batch.end();
+	}
+
+	/**
+	 * Sets the background images.
+	 * 
+	 * @param mapWidth
+	 *            the width of the game map.
+	 * @param mapHeight
+	 *            the height of the game map.
+	 * @return reference to the background images list.
+	 */
+	private static List<Sprite> setBackground(int mapWidth, int mapHeight)
+	{
+		int rows = mapHeight / BackgroundSprite.HEIGHT + 1;
+		int columns = mapWidth / BackgroundSprite.WIDTH + 1;
+
+		List<Sprite> background = new ArrayList<Sprite>(rows + columns);
+
+		for (int row = 0; row < rows; ++row)
+		{
+			for (int column = 0; column < columns; ++column)
+			{
+				background.add(new BackgroundSprite(
+						column * BackgroundSprite.WIDTH, row * BackgroundSprite.HEIGHT));
+			}
+		}
+
+		return background;
 	}
 
 	/**
@@ -229,15 +311,22 @@ public class Graphics
 	 *            the sprite to check.
 	 * @return true if the sprite is within the camera's view, or false otherwise.
 	 */
-	private static boolean withinCameraView(Camera camera, Sprite<?> sprite)
+	private static boolean withinCameraView(Camera camera, Sprite sprite)
 	{
+		if (sprite instanceof TankSprite)
+		{
+			// Always draw the tank, since otherwise the camera won't be attached to it if the tank
+			// starts off screen.
+			return true;
+		}
+
 		final float cameraX = camera.position.x;
 		final float cameraY = camera.position.y;
 
 		return (sprite.getX() + sprite.getWidth() / 2 + cameraX > 0
-				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth * 2
+				&& sprite.getX() - sprite.getWidth() / 2 - cameraX < camera.viewportWidth
 				&& sprite.getY() + sprite.getHeight() / 2 + cameraY > 0
-				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight * 2);
+				&& sprite.getY() - sprite.getHeight() / 2 - cameraY < camera.viewportHeight);
 	}
 
 	/**
@@ -263,10 +352,10 @@ public class Graphics
 	 * 
 	 * @author BU CS673 - Clone Productions
 	 */
-	private static class SpriteComparator implements Comparator<Sprite<?>>
+	private static class SpriteComparator implements Comparator<Sprite>
 	{
 		@Override
-		public int compare(Sprite<?> o1, Sprite<?> o2)
+		public int compare(Sprite o1, Sprite o2)
 		{
 			return (o1.getClass().getName().compareTo(o2.getClass().getName()));
 		}

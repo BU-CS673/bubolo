@@ -6,33 +6,40 @@ package bubolo.ui;
 
 import javax.swing.ImageIcon;
 
+import bubolo.audio.Audio;
+
 
 /**
- * Top level class for User Interface
+ * User interface constants.
  * @author BU CS673 - Clone Productions
  */
-public class UserInterface
+public abstract class UserInterface
 {
 
 	/**
-	 * 
+	 * The preferences file name.
 	 */
-	public static final String FILENAME = "Prefs.bolo";
+	public static final String PREFERENCES_FILENAME = "Prefs.bolo";
 	
 	/**
-	 * File path were UI icons are stored
+	 * File path where UI icons are stored.
 	 */
 	public static final String ICONS_PATH = "res/icons/";
 	
 	/**
+	 * File path where the user interface files are located.
+	 */
+	public static final String UI_PATH = "res/ui/";
+	
+	/**
 	 * Sound Effects Volume Default
 	 */
-	public static final int SFXVOL_DEFAULT = 35;
+	public static final int SFXVOL_DEFAULT = Audio.getSoundEffectVolume();
 	
 	/**
 	 * Music Volume Default
 	 */
-	public static final int MFXVOL_DEFAULT = 35;
+	public static final int MFXVOL_DEFAULT = Audio.getMusicVolume();
 	
 	/**
 	 * Screen Size Default
