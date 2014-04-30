@@ -4,8 +4,15 @@
 
 package bubolo.ui;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import bubolo.GameApplication;
 import bubolo.GameApplication.State;
+import bubolo.net.Network;
+import bubolo.net.NetworkSystem;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,9 +31,10 @@ public class PlayerInfoScreen extends Screen
 {
 	private TextField playerNameField;
 	private TextField ipAddressField;
+	private Label statusLabel;
 
 	private final GameApplication app;
-	
+
 	private final boolean isClient;
 
 	/**
@@ -47,22 +55,26 @@ public class PlayerInfoScreen extends Screen
 		Skin skin = new Skin(new FileHandle(UserInterface.UI_PATH + "uiskin.json"), atlas);
 
 		createPlayerNameRow(skin);
-		
+
 		if (isClient)
 		{
 			createIpAddressRow(skin);
 		}
 
 		addOkButtonRow(skin);
+		
+		table.row().colspan(4);
+		statusLabel = new Label("", skin);
+		table.add(statusLabel);
 	}
 
 	private void createPlayerNameRow(Skin skin)
 	{
 		table.row().colspan(4);
 		table.row();
-		
+
 		table.add(new Label("Name:", skin));
-		
+
 		playerNameField = new TextField("", skin);
 		table.add(playerNameField);
 	}
@@ -71,13 +83,13 @@ public class PlayerInfoScreen extends Screen
 	{
 		table.row().colspan(4);
 		table.row();
-		
+
 		table.add(new Label("Server IP Address:", skin));
-		
+
 		ipAddressField = new TextField("", skin);
 		table.add(ipAddressField);
 	}
-	
+
 	private void addOkButtonRow(Skin skin)
 	{
 		table.row();
@@ -91,6 +103,29 @@ public class PlayerInfoScreen extends Screen
 				if (!playerNameField.getText().isEmpty() &&
 						!(isClient && ipAddressField.getText().isEmpty()))
 				{
+					final Network network = NetworkSystem.getInstance();
+					final String playerName = playerNameField.getText();
+
+					if (isClient)
+					{
+						InetAddress ipAddress;
+						try
+						{
+							ipAddress = Inet4Address.getByName(ipAddressField.getText());
+						}
+						catch (UnknownHostException e)
+						{
+							statusLabel.setText("Unable to connect: " +  e.getMessage());
+							return;
+						}
+
+						network.connect(ipAddress, playerName);
+					}
+					else
+					{
+						network.startServer(playerName);
+					}
+
 					app.setState(State.GAME_LOBBY);
 				}
 			}
@@ -98,7 +133,7 @@ public class PlayerInfoScreen extends Screen
 
 		table.add(okButton).expandX().width(100.f);
 	}
-	
+
 	@Override
 	public void dispose()
 	{

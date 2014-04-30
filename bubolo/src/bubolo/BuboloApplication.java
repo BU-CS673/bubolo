@@ -16,6 +16,7 @@ import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.ui.LobbyScreen;
+import bubolo.ui.PlayerInfoScreen;
 import bubolo.ui.Screen;
 import bubolo.util.GameRuntimeException;
 import bubolo.util.Parser;
@@ -30,8 +31,10 @@ import bubolo.world.entity.concrete.Tank;
  */
 public class BuboloApplication extends AbstractGameApplication
 {
-	private int windowWidth;
-	private int windowHeight;
+	private final int windowWidth;
+	private final int windowHeight;
+	
+	private final boolean isClient;
 	
 	private Graphics graphics;
 
@@ -39,18 +42,20 @@ public class BuboloApplication extends AbstractGameApplication
 	
 	private Network network;
 
-	private Screen gameLobby;
+	private Screen screen;
 	
 	/**
 	 * Constructs an instance of the game application. Only one instance should 
 	 * ever exist.
 	 * @param windowWidth the width of the window.
 	 * @param windowHeight the height of the window.
+	 * @param isClient specifies whether this is a client player.
 	 */
-	public BuboloApplication(int windowWidth, int windowHeight)
+	public BuboloApplication(int windowWidth, int windowHeight, boolean isClient)
 	{
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+		this.isClient = isClient;
 	}
 
 	/**
@@ -75,10 +80,7 @@ public class BuboloApplication extends AbstractGameApplication
 			throw new GameRuntimeException(e);
 		}
 
-		network = NetworkSystem.getInstance();
-		network.startServer(playerName);
-
-		setState(State.GAME_LOBBY);
+		setState(State.PLAYER_INFO);
 	}
 	
 	/**
@@ -91,15 +93,13 @@ public class BuboloApplication extends AbstractGameApplication
 		final State state = getState();
 		if (state == State.GAME)
 		{
-			gameLobby.dispose();
-
 			graphics.draw(world);
 			world.update();
 			network.update(world);
 		}
 		else if (state == State.GAME_LOBBY || state == State.GAME_STARTING)
 		{
-			graphics.draw(gameLobby);
+			graphics.draw(screen);
 			network.update(world);
 		}
 	}
@@ -109,7 +109,7 @@ public class BuboloApplication extends AbstractGameApplication
 	{
 		if (getState() == State.GAME)
 		{
-			gameLobby.dispose();
+			screen.dispose();
 
 			Tank tank = world.addEntity(Tank.class);
 			Vector2 spawnLocation = getRandomSpawn(world);
@@ -121,7 +121,11 @@ public class BuboloApplication extends AbstractGameApplication
 		}
 		else if (getState() == State.GAME_LOBBY)
 		{
-			gameLobby = new LobbyScreen(this, world);
+			screen = new LobbyScreen(this, world);
+		}
+		else if (getState() == State.PLAYER_INFO)
+		{
+			screen = new PlayerInfoScreen(this, isClient);
 		}
 	}
 	
