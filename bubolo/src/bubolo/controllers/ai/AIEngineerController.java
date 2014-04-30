@@ -15,6 +15,7 @@ import bubolo.util.AStar;
 import bubolo.util.Coordinates;
 import bubolo.world.World;
 import bubolo.world.Tile;
+import bubolo.world.entity.concrete.DeepWater;
 import bubolo.world.entity.concrete.Engineer;
 
 /**
@@ -103,12 +104,24 @@ public class AIEngineerController implements Controller
 			int destY = screenDestY / Coordinates.TILE_TO_WORLD_SCALE;
 			
 			Tile destTile = world.getMapTiles()[destX][destY];
-
+			
 			// Get current position
 			int curX = (int)(engineer.getX() / Coordinates.TILE_TO_WORLD_SCALE);
 			int curY = (int)(engineer.getY() / Coordinates.TILE_TO_WORLD_SCALE);
 			
 			Tile curTile = world.getMapTiles()[curX][curY];
+
+			// If the destination tile is not traversable, don't even bother
+			// finding a path. However, it is important to cancel any ongoing
+			// pathing activity.
+			if (!isTileTraversable(destTile))
+			{
+				// Destination unreachable, cancel current movement. Note that
+				// engineer will complete movement to the last waypoint where
+				// he was headed.
+				haveDestination = false;				
+				return;
+			}
 
 			// Compute new path to destination
 			pathToDestination = AStar.calculateShortestPath(world, curTile, destTile);
@@ -126,5 +139,29 @@ public class AIEngineerController implements Controller
 				haveDestination = false;
 			}
 		}
+	}
+	
+	// Is a tile traversable?
+	private static boolean isTileTraversable(Tile t)
+	{
+    	// Check the game world to see if this tile has a solid
+    	// stationary element. If so, skip this tile since we cannot
+    	// have a path through a stationary element.
+    	if (t.hasElement())
+    	{
+    		if (t.getElement().isSolid())
+    		{
+    			return false;
+    		}
+    	}
+    	
+    	// Check to see if the terrain is too dangerous.
+    	if (t.getTerrain().getClass() == DeepWater.class)
+    	{
+    		return false;
+    	}
+    	
+    	// All okay.
+    	return true;
 	}
 }
