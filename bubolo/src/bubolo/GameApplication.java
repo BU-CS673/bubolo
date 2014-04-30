@@ -17,6 +17,9 @@ public interface GameApplication extends ApplicationListener
 		/** The main menu state. **/
 		MAIN_MENU,
 		
+		/** The enter player information state. **/
+		PLAYER_INFO,
+		
 		/** The game lobby state. **/
 		GAME_LOBBY,
 		
