@@ -22,7 +22,7 @@ public class Main
 		cfg.title = "BUBOLO Audio Integration";
 		cfg.width = 600;
 		cfg.height = 600;
-		setApplication(new LwjglApplication(new BuboloApplication(1067, 600), cfg));
+		setApplication(new LwjglApplication(new BuboloApplication(1067, 600, true), cfg));
 	}
 	
 	/**
