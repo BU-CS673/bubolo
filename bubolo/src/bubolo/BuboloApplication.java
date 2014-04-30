@@ -20,6 +20,7 @@ import bubolo.ui.PlayerInfoScreen;
 import bubolo.ui.Screen;
 import bubolo.util.GameRuntimeException;
 import bubolo.util.Parser;
+import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Tank;
@@ -77,16 +78,23 @@ public class BuboloApplication extends AbstractGameApplication
 		graphics = new Graphics(windowWidth, windowHeight);
 		network = NetworkSystem.getInstance();
 
-		Parser fileParser = Parser.getInstance();
-		Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
-		try
+		if (!isClient)
 		{
-			world = fileParser.parseMap(path);
+			Parser fileParser = Parser.getInstance();
+			Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+			try
+			{
+				world = fileParser.parseMap(path);
+			}
+			catch (ParseException | IOException e)
+			{
+				e.printStackTrace();
+				throw new GameRuntimeException(e);
+			}
 		}
-		catch (ParseException | IOException e)
+		else
 		{
-			e.printStackTrace();
-			throw new GameRuntimeException(e);
+			world = new GameWorld();
 		}
 
 		setState(initialState);
@@ -133,8 +141,15 @@ public class BuboloApplication extends AbstractGameApplication
 			screen.dispose();
 
 			Tank tank = world.addEntity(Tank.class);
-			Vector2 spawnLocation = getRandomSpawn(world);
-			tank.setParams(spawnLocation.x, spawnLocation.y, 0);
+			if (!isClient)
+			{
+				Vector2 spawnLocation = getRandomSpawn(world);
+				tank.setParams(spawnLocation.x, spawnLocation.y, 0);
+			}
+			else
+			{
+				tank.setParams(1100, 200, 0);
+			}
 			tank.setLocalPlayer(true);
 
 			network.send(new CreateTank(tank));
