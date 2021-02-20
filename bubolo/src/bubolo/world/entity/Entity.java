@@ -258,6 +258,18 @@ public abstract class Entity implements Serializable, Drawable
 		updateBounds();
 		return this;
 	}
+	
+	/**
+	 * Set the rotation of this Entity.
+	 * 
+	 * @param newRotation
+	 *            is the desired rotation state of this Entity in radians.
+	 * @return this Entity, after the rotation action has been completed.
+	 */
+	public Entity setRotation(double newRotation)
+	{
+		return setRotation((float) newRotation);
+	}
 
 	/**
 	 * Sets this Entity's x position.

@@ -66,8 +66,8 @@ public class Parser
 
 			JSONObject jsonObject = (JSONObject)obj;
 
-			mapHeight = (int)((long)jsonObject.get("height"));
-			mapWidth = (int)((long)jsonObject.get("width"));
+			mapHeight = (int) jsonObject.get("height");
+			mapWidth = (int) jsonObject.get("width");
 
 			Tile[][] mapTiles = new Tile[mapWidth][mapHeight];
 
@@ -75,7 +75,7 @@ public class Parser
 
 			layerObject = (JSONObject)layerArray.get(0);
 			tileData = (JSONArray)layerObject.get("data");
-			String dataString = null;
+			String dataString;
 			world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidth,
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeight);
 
@@ -86,7 +86,7 @@ public class Parser
 					dataString = tileData.get(i * mapWidth + j).toString();
 					int tileYIndex = mapHeight - i - 1;
 					mapTiles[j][tileYIndex] = new Tile(j, tileYIndex, (Terrain)world.addEntity(
-							layerOneSwitch(dataString)).setRotation((float)Math.PI / 2));
+							layerOneSwitch(dataString)).setRotation(Math.PI / 2));
 				}
 			}
 
@@ -114,7 +114,7 @@ public class Parser
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(
-									layerTwoSwitch(dataString)).setRotation(((float)Math.PI / 2)));
+									layerTwoSwitch(dataString)).setRotation(Math.PI / 2));
 						}
 					}
 				}
