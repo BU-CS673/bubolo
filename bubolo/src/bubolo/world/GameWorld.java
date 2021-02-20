@@ -14,6 +14,7 @@ import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
 import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.Sprites;
+import bubolo.util.Coordinates;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Effect;
@@ -70,6 +71,10 @@ public class GameWorld implements World
 	 */
 	public GameWorld(int worldMapWidth, int worldMapHeight)
 	{
+		int tilesX = worldMapWidth / Coordinates.TILE_TO_WORLD_SCALE;
+		int tilesY = worldMapHeight / Coordinates.TILE_TO_WORLD_SCALE;
+		mapTiles = new Tile[tilesX][tilesY];
+		
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 
@@ -243,6 +248,8 @@ public class GameWorld implements World
 	public void setMapTiles(Tile[][] mapTiles)
 	{
 		this.mapTiles = mapTiles;
+		setMapWidth(mapTiles.length * Coordinates.TILE_TO_WORLD_SCALE);
+		setMapHeight(mapTiles[0].length * Coordinates.TILE_TO_WORLD_SCALE);
 	}
 
 	@Override

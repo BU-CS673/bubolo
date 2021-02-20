@@ -78,6 +78,7 @@ public class BuboloApplication extends AbstractGameApplication
 		graphics = new Graphics(windowWidth, windowHeight);
 		network = NetworkSystem.getInstance();
 
+		// Server or single-player
 		if (!isClient)
 		{
 			Parser fileParser = new Parser();
@@ -92,6 +93,7 @@ public class BuboloApplication extends AbstractGameApplication
 				throw new GameRuntimeException(e);
 			}
 		}
+		// Client in net game
 		else
 		{
 			world = new GameWorld();

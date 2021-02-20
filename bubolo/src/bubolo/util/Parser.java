@@ -49,8 +49,8 @@ public class Parser
 	 */
 	public World parseMap(Path mapPath) throws IOException, ParseException
 	{
-		int mapHeight = 0;
-		int mapWidth = 0;
+		int mapHeight;
+		int mapWidth;
 		Object obj = null;
 		JSONObject layerObject = null;
 		JSONArray tileData = null;
@@ -105,6 +105,7 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
 							{
+								// (cdc 2021-02-20): What is this for?
 								//world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
