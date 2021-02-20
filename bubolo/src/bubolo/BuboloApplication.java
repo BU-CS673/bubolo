@@ -80,7 +80,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 		if (!isClient)
 		{
-			Parser fileParser = Parser.getInstance();
+			Parser fileParser = new Parser();
 			Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 			try
 			{

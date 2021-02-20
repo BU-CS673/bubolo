@@ -27,32 +27,13 @@ import bubolo.world.entity.concrete.*;
 
 public class Parser
 {
-
-	private static Parser currentParser = null;
-
 	/**
 	 * Parser is a singleton object. No need for multiple parsers within one instance of the
 	 * application.
 	 */
-	protected Parser()
+	public Parser()
 	{
 
-	}
-
-	/**
-	 * Generates new parser or returns existing object. Lazy instantiation is used.
-	 * 
-	 * @return either a new parser if one has not been created previously or a the previously
-	 *         created instance
-	 */
-	public static Parser getInstance()
-	{
-		if (currentParser == null)
-		{
-			currentParser = new Parser();
-		}
-
-		return currentParser;
 	}
 
 	/**
