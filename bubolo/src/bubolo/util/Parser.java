@@ -66,8 +66,8 @@ public class Parser
 
 			JSONObject jsonObject = (JSONObject)obj;
 
-			mapHeight = (int) jsonObject.get("height");
-			mapWidth = (int) jsonObject.get("width");
+			mapHeight = (int) (long) jsonObject.get("height");
+			mapWidth = (int) (long) jsonObject.get("width");
 
 			Tile[][] mapTiles = new Tile[mapWidth][mapHeight];
 
@@ -105,12 +105,12 @@ public class Parser
 							int tileYIndex = mapHeight - i - 1;
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Road.class)
 							{
-								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
+								//world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							if (mapTiles[j][tileYIndex].getTerrain().getClass() == Water.class)
 							{
-								world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
+								//world.removeEntity(mapTiles[j][tileYIndex].getTerrain());
 								mapTiles[j][tileYIndex].setTerrain(world.addEntity(Grass.class));
 							}
 							mapTiles[j][tileYIndex].setElement((StationaryElement)world.addEntity(
