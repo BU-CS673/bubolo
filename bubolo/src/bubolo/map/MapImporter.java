@@ -26,15 +26,19 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.github.cliftonlabs.json_simple.JsonException;
+import com.github.cliftonlabs.json_simple.JsonKey;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 
+/**
+ * Imports the Tiled-generated map.
+ *
+ * @author Christopher D. Canfield
+ */
 public class MapImporter {
 	/**
 	 * A tileset in the Tiled-generated map. The name and tiles are set before importing the map. The
 	 * firstGid is set by the importer. 
-	 * 
-	 * @author Christopher D. Canfield
 	 */
 	private static class Tileset {
 		final String name;
@@ -87,12 +91,50 @@ public class MapImporter {
 		tilesets.add(stationaryElements);
 	}
 	
+	/**
+	 * The top-level Tiled map keys that are relevant to us.
+	 */
+	enum Key implements JsonKey {
+		MapHeight("height"),
+		MapWidth("width"),
+		Tilesets("tilesets"),
+		Layers("layers"),
+		Data("data");
+		
+		private String key;
+		
+		private Key(String key) {
+			this.key = key;
+		}
+		
+		@Override
+		public String getKey(){
+			return key;
+		}
+
+		@Override
+		public Object getValue(){
+			return null;
+		}
+	}
+	
 	public World importJsonMap(Path mapPath) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
-			JsonObject jsonMap = (JsonObject) Jsoner.deserialize(reader);
+			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(reader);
+			
+			setTilesetFirstGids(jsonTiledMap);
+			
+			int mapHeightTiles = jsonTiledMap.getInteger(Key.MapHeight);
+			int mapWidthTiles = jsonTiledMap.getInteger(Key.MapWidth);
+			
+			
 			
 		} catch (JsonException e) {
 			throw new InvalidMapException("Error parsing the json map file.", e);
 		}
+	}
+	
+	void setTilesetFirstGids(JsonObject jsonTiledMap) {
+		// TODO: Import the tiled first gids from the tilesets json array.
 	}
 }
