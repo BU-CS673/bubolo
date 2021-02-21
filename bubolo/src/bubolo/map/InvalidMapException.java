@@ -28,4 +28,8 @@ public class InvalidMapException extends GameException
 	{
 		super(exception);
 	}
+	
+	public InvalidMapException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

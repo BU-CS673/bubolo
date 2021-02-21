@@ -16,11 +16,18 @@ import bubolo.world.entity.concrete.Tree;
 import bubolo.world.entity.concrete.Wall;
 import bubolo.world.entity.concrete.Water;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+
+import com.github.cliftonlabs.json_simple.JsonException;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
 
 public class MapImporter {
 	/**
@@ -80,7 +87,12 @@ public class MapImporter {
 		tilesets.add(stationaryElements);
 	}
 	
-	public World importMap(Path mapPath) {
-		
+	public World importJsonMap(Path mapPath) throws IOException {
+		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
+			JsonObject jsonMap = (JsonObject) Jsoner.deserialize(reader);
+			
+		} catch (JsonException e) {
+			throw new InvalidMapException("Error parsing the json map file.", e);
+		}
 	}
 }
