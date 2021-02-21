@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.map.Parser;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
@@ -19,7 +20,6 @@ import bubolo.ui.LobbyScreen;
 import bubolo.ui.PlayerInfoScreen;
 import bubolo.ui.Screen;
 import bubolo.util.GameRuntimeException;
-import bubolo.util.Parser;
 import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;

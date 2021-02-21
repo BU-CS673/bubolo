@@ -1,4 +1,4 @@
-package bubolo.util;
+package bubolo.map;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import bubolo.util.Coordinates;
+import bubolo.util.InvalidMapException;
 import bubolo.world.GameWorld;
 import bubolo.world.Tile;
 import bubolo.world.World;

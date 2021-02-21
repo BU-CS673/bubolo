@@ -2,7 +2,8 @@ package bubolo.util;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import bubolo.util.Parser;
+
+import bubolo.map.Parser;
 
 public class ParserTest
 {
