@@ -1,0 +1,77 @@
+package bubolo.map;
+
+import bubolo.world.World;
+import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Base;
+import bubolo.world.entity.concrete.Crater;
+import bubolo.world.entity.concrete.DeepWater;
+import bubolo.world.entity.concrete.Grass;
+import bubolo.world.entity.concrete.Mine;
+import bubolo.world.entity.concrete.Pillbox;
+import bubolo.world.entity.concrete.Road;
+import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Swamp;
+import bubolo.world.entity.concrete.Tree;
+import bubolo.world.entity.concrete.Wall;
+import bubolo.world.entity.concrete.Water;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+public class MapImporter {
+	/**
+	 * A tileset in the Tiled-generated map. The name and tiles are set before importing the map. The
+	 * firstGid is set by the importer. 
+	 * 
+	 * @author Christopher D. Canfield
+	 */
+	private static class Tileset {
+		final String name;
+		/**
+		 * Map of tile IDs to Entity creation functions. The tile ID is the tile's gid minus the tileset's firstGid.
+		 */
+		final Map<Integer, Function<World, Entity>> tiles = new HashMap<>();
+		
+		int firstGid;
+		
+		Tileset(String name) {
+			this.name = name;
+		}
+
+		int lastGid() {
+			return firstGid + tiles.size() - 1;
+		}
+		
+		/**
+		 * Whether the specified tile global ID belongs to this tileset.
+		 * @param tileGid the tile global ID to check.
+		 */
+		boolean isInThisTileset(int tileGid) {
+			return tileGid >= firstGid && tileGid <= lastGid();
+		}
+	}
+	
+	private List<Tileset> tilesets;
+	
+	public MapImporter() {
+		Tileset terrain = new Tileset("bubolo_tilset_terrain");
+		terrain.tiles.put(0, (World world) -> world.addEntity(Grass.class));
+		terrain.tiles.put(1, (World world) -> world.addEntity(Swamp.class));
+		terrain.tiles.put(2, (World world) -> world.addEntity(Water.class));
+		terrain.tiles.put(3, (World world) -> world.addEntity(DeepWater.class));
+		terrain.tiles.put(4, (World world) -> world.addEntity(Road.class));
+		terrain.tiles.put(5, (World world) -> world.addEntity(Crater.class));
+		terrain.tiles.put(6, (World world) -> world.addEntity(Rubble.class));
+		tilesets.add(terrain);
+		
+		Tileset stationaryElements = new Tileset("bubolo_tilset_stationaryElements");
+		stationaryElements.tiles.put(0, (World world) -> world.addEntity(Pillbox.class));
+		stationaryElements.tiles.put(1, (World world) -> world.addEntity(Tree.class));
+		stationaryElements.tiles.put(2, (World world) -> world.addEntity(Mine.class));
+		stationaryElements.tiles.put(3, (World world) -> world.addEntity(Wall.class));
+		stationaryElements.tiles.put(4, (World world) -> world.addEntity(Base.class));
+		tilesets.add(stationaryElements);
+	}
+}
