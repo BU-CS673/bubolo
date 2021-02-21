@@ -10,11 +10,13 @@ import bubolo.world.entity.concrete.Mine;
 import bubolo.world.entity.concrete.Pillbox;
 import bubolo.world.entity.concrete.Road;
 import bubolo.world.entity.concrete.Rubble;
+import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Swamp;
 import bubolo.world.entity.concrete.Tree;
 import bubolo.world.entity.concrete.Wall;
 import bubolo.world.entity.concrete.Water;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,22 +58,29 @@ public class MapImporter {
 	private List<Tileset> tilesets;
 	
 	public MapImporter() {
+		// Add the known map tiles here.
+		
 		Tileset terrain = new Tileset("bubolo_tilset_terrain");
-		terrain.tiles.put(0, (World world) -> world.addEntity(Grass.class));
-		terrain.tiles.put(1, (World world) -> world.addEntity(Swamp.class));
-		terrain.tiles.put(2, (World world) -> world.addEntity(Water.class));
-		terrain.tiles.put(3, (World world) -> world.addEntity(DeepWater.class));
-		terrain.tiles.put(4, (World world) -> world.addEntity(Road.class));
-		terrain.tiles.put(5, (World world) -> world.addEntity(Crater.class));
-		terrain.tiles.put(6, (World world) -> world.addEntity(Rubble.class));
+		terrain.tiles.put(0, world -> world.addEntity(Grass.class));
+		terrain.tiles.put(1, world -> world.addEntity(Swamp.class));
+		terrain.tiles.put(2, world -> world.addEntity(Water.class));
+		terrain.tiles.put(3, world -> world.addEntity(DeepWater.class));
+		terrain.tiles.put(4, world -> world.addEntity(Road.class));
+		terrain.tiles.put(5, world -> world.addEntity(Crater.class));
+		terrain.tiles.put(6, world -> world.addEntity(Rubble.class));
 		tilesets.add(terrain);
 		
 		Tileset stationaryElements = new Tileset("bubolo_tilset_stationaryElements");
-		stationaryElements.tiles.put(0, (World world) -> world.addEntity(Pillbox.class));
-		stationaryElements.tiles.put(1, (World world) -> world.addEntity(Tree.class));
-		stationaryElements.tiles.put(2, (World world) -> world.addEntity(Mine.class));
-		stationaryElements.tiles.put(3, (World world) -> world.addEntity(Wall.class));
-		stationaryElements.tiles.put(4, (World world) -> world.addEntity(Base.class));
+		stationaryElements.tiles.put(0, world -> world.addEntity(Pillbox.class));
+		stationaryElements.tiles.put(1, world -> world.addEntity(Tree.class));
+		stationaryElements.tiles.put(2, world -> world.addEntity(Mine.class));
+		stationaryElements.tiles.put(3, world -> world.addEntity(Wall.class));
+		stationaryElements.tiles.put(4, world -> world.addEntity(Base.class));
+		stationaryElements.tiles.put(5, world -> world.addEntity(Spawn.class));
 		tilesets.add(stationaryElements);
+	}
+	
+	public World importMap(Path mapPath) {
+		
 	}
 }
