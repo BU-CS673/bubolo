@@ -281,6 +281,11 @@ public class GameWorld implements World
 		// Update all entities.
 		for (Entity e : entities)
 		{
+			// TODO (cdc - 2021-02/23): There are disposed entities in the world when the game starts. Try this line again
+			// after rewriting the map importer.
+//			assert !e.isDisposed() : 
+//				"Entity " + e.getId() + " (" + e.getClass().getSimpleName() + ") is disposed but not removed from the world.";
+			
 			e.update(this);
 			if (e.isDisposed())
 			{
