@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonKey;
 import com.github.cliftonlabs.json_simple.JsonObject;
@@ -127,6 +128,7 @@ public class MapImporter {
 			int mapHeightTiles = jsonTiledMap.getInteger(Key.MapHeight);
 			int mapWidthTiles = jsonTiledMap.getInteger(Key.MapWidth);
 			
+			setTilesetFirstGids(jsonTiledMap);
 			
 			
 		} catch (JsonException e) {
@@ -135,6 +137,8 @@ public class MapImporter {
 	}
 	
 	void setTilesetFirstGids(JsonObject jsonTiledMap) {
+		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.toString());
+		
 		// TODO: Import the tiled first gids from the tilesets json array.
 	}
 }
