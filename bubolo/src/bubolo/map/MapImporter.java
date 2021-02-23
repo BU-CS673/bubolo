@@ -1,5 +1,7 @@
 package bubolo.map;
 
+import bubolo.util.Coordinates;
+import bubolo.world.GameWorld;
 import bubolo.world.World;
 import bubolo.world.entity.Entity;
 import bubolo.world.entity.concrete.Base;
@@ -18,11 +20,15 @@ import bubolo.world.entity.concrete.Water;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.Function;
 
 import com.github.cliftonlabs.json_simple.JsonArray;
@@ -67,10 +73,21 @@ public class MapImporter {
 		}
 	}
 	
-	private List<Tileset> tilesets;
+	private String DefaultExceptionMessage = "Error parsing the json map file";
+	
+	private Map<String, Tileset> tilesets = new HashMap<>();
 	
 	public MapImporter() {
 		// Add the known map tiles here.
+		
+		Tileset stationaryElements = new Tileset("bubolo_tilset_stationaryElements");
+		stationaryElements.tiles.put(0, world -> world.addEntity(Pillbox.class));
+		stationaryElements.tiles.put(1, world -> world.addEntity(Tree.class));
+		stationaryElements.tiles.put(2, world -> world.addEntity(Mine.class));
+		stationaryElements.tiles.put(3, world -> world.addEntity(Wall.class));
+		stationaryElements.tiles.put(4, world -> world.addEntity(Base.class));
+		stationaryElements.tiles.put(5, world -> world.addEntity(Spawn.class));
+		tilesets.put(stationaryElements.name, stationaryElements);
 		
 		Tileset terrain = new Tileset("bubolo_tilset_terrain");
 		terrain.tiles.put(0, world -> world.addEntity(Grass.class));
@@ -80,16 +97,7 @@ public class MapImporter {
 		terrain.tiles.put(4, world -> world.addEntity(Road.class));
 		terrain.tiles.put(5, world -> world.addEntity(Crater.class));
 		terrain.tiles.put(6, world -> world.addEntity(Rubble.class));
-		tilesets.add(terrain);
-		
-		Tileset stationaryElements = new Tileset("bubolo_tilset_stationaryElements");
-		stationaryElements.tiles.put(0, world -> world.addEntity(Pillbox.class));
-		stationaryElements.tiles.put(1, world -> world.addEntity(Tree.class));
-		stationaryElements.tiles.put(2, world -> world.addEntity(Mine.class));
-		stationaryElements.tiles.put(3, world -> world.addEntity(Wall.class));
-		stationaryElements.tiles.put(4, world -> world.addEntity(Base.class));
-		stationaryElements.tiles.put(5, world -> world.addEntity(Spawn.class));
-		tilesets.add(stationaryElements);
+		tilesets.put(terrain.name, terrain);
 	}
 	
 	/**
@@ -100,7 +108,11 @@ public class MapImporter {
 		MapWidth("width"),
 		Tilesets("tilesets"),
 		Layers("layers"),
-		Data("data");
+		
+		Data("data"),
+		
+		Name("name"),
+		FirstGid("firstgid");
 		
 		private String key;
 		
@@ -121,24 +133,53 @@ public class MapImporter {
 	
 	public World importJsonMap(Path mapPath) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
-			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(reader);
+			return importJsonMap(reader);
+		}
+	}
+	
+	public World importJsonMap(Reader mapReader) {
+		try {
+			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(mapReader);
+			jsonTiledMap.requireKeys(Key.MapHeight, Key.MapWidth, Key.Tilesets, Key.Layers);
 			
 			setTilesetFirstGids(jsonTiledMap);
 			
+			// Get the map height and width, in tiles.
 			int mapHeightTiles = jsonTiledMap.getInteger(Key.MapHeight);
 			int mapWidthTiles = jsonTiledMap.getInteger(Key.MapWidth);
 			
-			setTilesetFirstGids(jsonTiledMap);
+			World world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles, 
+					Coordinates.TILE_TO_WORLD_SCALE * mapHeightTiles);
 			
+			// TODO (cdc - 2021-02-23): Iterate through the layers, and add each entity to the world.
 			
+			return world;
 		} catch (JsonException e) {
-			throw new InvalidMapException("Error parsing the json map file.", e);
+			throw new InvalidMapException(DefaultExceptionMessage, e);
+		} catch (NoSuchElementException e) {
+			throw new InvalidMapException(DefaultExceptionMessage + e.toString(), e);
 		}
 	}
 	
 	void setTilesetFirstGids(JsonObject jsonTiledMap) {
 		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.toString());
+		if (jsonTilesets.size() < 2) {
+			throw new InvalidMapException(DefaultExceptionMessage + " There should be two tilesets, but " + jsonTilesets.size() + " was found.");
+		}
 		
-		// TODO: Import the tiled first gids from the tilesets json array.
+		for (Object ts : jsonTilesets) {
+			JsonObject jsonTileset = (JsonObject) ts;
+			jsonTileset.requireKeys(Key.Name, Key.FirstGid);
+			
+			String tilesetName = jsonTileset.getString(Key.Name);
+			Tileset tileset = tilesets.get(tilesetName);
+			if (tileset != null) {
+				tileset.firstGid = jsonTileset.getInteger(Key.FirstGid);
+				
+			// Log a warning for unknown tileset, and then skip it.
+			} else {
+				System.out.println("[WARNING] Unknown tileset found in map file: " + tilesetName);
+			}
+		}
 	}
 }
