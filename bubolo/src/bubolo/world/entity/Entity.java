@@ -81,6 +81,22 @@ public abstract class Entity implements Serializable, Drawable
 		updateBounds();
 		return this;
 	}
+	
+	/**
+	 * Set the basic parameters for an Entity. Intended to be used after construction.
+	 * 
+	 * @param x
+	 *            is the initial x position in world coordinates.
+	 * @param y
+	 *            is the initial y position in world coordinates.
+	 * @param rot
+	 *            is the initial rotation in radians.
+	 * @return a reference to this Entity.
+	 */
+	public Entity setParams(float x, float y, double rot) {
+		return setParams(x, y, (float) rot);
+		
+	}
 
 	/**
 	 * Checks to see whether this Entity's bounding box overlaps that of another Entity,
