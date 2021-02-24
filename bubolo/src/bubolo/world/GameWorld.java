@@ -19,6 +19,7 @@ import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.Entity;
+import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 
@@ -250,6 +251,17 @@ public class GameWorld implements World
 		this.mapTiles = mapTiles;
 		setMapWidth(mapTiles.length * Coordinates.TILE_TO_WORLD_SCALE);
 		setMapHeight(mapTiles[0].length * Coordinates.TILE_TO_WORLD_SCALE);
+		
+		// Starting on 2/2021, Tiles can be created without an associated Terrain, in order to increase
+		// the map importer's flexibility with slightly malformed, but otherwise valid, map files.
+		// These lines add a Grass tile to any tile that is missing an associated terrain.
+		for (Tile[] tiles : mapTiles) {
+			for (Tile tile : tiles) {
+				if (!tile.hasTerrain()) {
+					tile.setTerrain(addEntity(Grass.class));
+				}
+			}
+		}
 	}
 
 	@Override
