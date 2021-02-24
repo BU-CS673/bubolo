@@ -4,22 +4,29 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 import org.junit.Test;
+
+import bubolo.world.World;
 
 public class MapImporterTest {
 
 	@Test
 	public void importEverardIsland() throws IOException {
 		MapImporter importer = new MapImporter();
-		MapImporter.Results results = importer.importJsonMap(FileSystems.getDefault().getPath("res", "maps/Everard Island.json"));
+		Path mapPath = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
+		var results = importer.importJsonMapWithDiagnostics(mapPath);
 		
-		assertNotNull(results.world());
-		assertEquals(3, results.layerCount());
-		assertEquals(2, results.tilesetCount());
-		assertEquals(11, results.typesImported().size());
-		assertEquals(114, results.tileWidth());
-		assertEquals(64, results.tileHeight());
+		World world = results.getLeft();
+		MapImporter.Diagnostics diagnostics = results.getRight();
+		
+		assertNotNull(world);
+		assertEquals(3, diagnostics.layerCount());
+		assertEquals(2, diagnostics.tilesetCount());
+		assertEquals(11, diagnostics.typesImported().size());
+		assertEquals(114, diagnostics.tileWidth());
+		assertEquals(64, diagnostics.tileHeight());
 	}
 
 }

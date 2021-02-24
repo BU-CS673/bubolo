@@ -31,6 +31,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonKey;
@@ -78,9 +80,7 @@ public class MapImporter {
 	 *
 	 * @author Christopher D. Canfield
 	 */
-	public static class Results {
-		World world;
-		
+	public static class Diagnostics {
 		Set<String> typesImported = new HashSet<>();
 		
 		int tileHeight;
@@ -88,10 +88,6 @@ public class MapImporter {
 		
 		int layerCount;
 		int tilesetCount;
-		
-		public World world() {
-			return world;
-		}
 		
 		public Set<String> typesImported() {
 			return typesImported;
@@ -180,11 +176,27 @@ public class MapImporter {
 	 * @throws IOException if the provided path can't be opened.
 	 * @throws InvalidMapException if the json Tiled map is malformed. 
 	 */
-	public Results importJsonMap(Path mapPath) throws IOException {
+	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Path mapPath) throws IOException {
+		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
+			return importJsonMapWithDiagnostics(reader);
+		}
+	}
+	
+	public World importJsonMap(Path mapPath) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
 			return importJsonMap(reader);
 		}
 	}
+	
+	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Reader mapReader) {
+		return importMap(mapReader);
+	}
+	
+	public World importJsonMap(Reader mapReader) {
+		return importMap(mapReader).getLeft();
+	}
+	
+	
 	
 	/**
 	 * Imports the json Tiled map, and constructs a world from the data.
@@ -193,33 +205,32 @@ public class MapImporter {
 	 * @return a results object that contains the world and diagnostic information.
 	 * @throws InvalidMapException if the json Tiled map is malformed. 
 	 */
-	public Results importJsonMap(Reader mapReader) {
+	private Pair<World, Diagnostics> importMap(Reader mapReader) {
 		try {
 			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(mapReader);
 			jsonTiledMap.requireKeys(Key.MapHeight, Key.MapWidth, Key.Tilesets, Key.Layers);
 			
-			Results importResults = new Results();
+			Diagnostics diagnostics = new Diagnostics();
 			
-			setTilesetFirstGids(jsonTiledMap, importResults);
+			setTilesetFirstGids(jsonTiledMap, diagnostics);
 			
 			// Get the map height and width, in tiles.
-			int mapHeightTiles = importResults.tileWidth = jsonTiledMap.getInteger(Key.MapHeight);
-			int mapWidthTiles = importResults.tileHeight = jsonTiledMap.getInteger(Key.MapWidth);
+			int mapHeightTiles = diagnostics.tileWidth = jsonTiledMap.getInteger(Key.MapHeight);
+			int mapWidthTiles = diagnostics.tileHeight = jsonTiledMap.getInteger(Key.MapWidth);
 			
 			World world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles, 
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeightTiles);
-			importResults.world = world;
 			
 			// TODO (cdc - 2021-02-23): Iterate through the layers, and add each entity to the world.
 			JsonArray layers = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
-			importResults.layerCount = layers.size();
+			diagnostics.layerCount = layers.size();
 			for (int i = 0; i < layers.size(); i++) {
 				JsonObject layer = (JsonObject) layers.get(i);
 				JsonArray layerTiles = (JsonArray) layer.get(Key.Data.getKey());
 				
 			}
 			
-			return importResults;
+			return Pair.of(world, diagnostics);
 		} catch (JsonException e) {
 			throw new InvalidMapException(DefaultExceptionMessage, e);
 		} catch (NoSuchElementException e) {
@@ -227,7 +238,7 @@ public class MapImporter {
 		}
 	}
 	
-	void setTilesetFirstGids(JsonObject jsonTiledMap, Results importResults) {
+	void setTilesetFirstGids(JsonObject jsonTiledMap, Diagnostics importResults) {
 		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
 		if (jsonTilesets.size() < 2) {
 			throw new InvalidMapException(DefaultExceptionMessage + " There should be two tilesets, but " + jsonTilesets.size() + " was found.");
