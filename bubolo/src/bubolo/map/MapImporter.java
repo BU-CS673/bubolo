@@ -73,6 +73,47 @@ public class MapImporter {
 		}
 	}
 	
+	/**
+	 * Map import results, including the fully instantiated World and diagnostic information. 
+	 *
+	 * @author Christopher D. Canfield
+	 */
+	public static class Results {
+		World world;
+		
+		Set<String> typesImported = new HashSet<>();
+		
+		int tileHeight;
+		int tileWidth;
+		
+		int layerCount;
+		int tilesetCount;
+		
+		public World world() {
+			return world;
+		}
+		
+		public Set<String> typesImported() {
+			return typesImported;
+		}
+		
+		public int tileHeight() {
+			return tileHeight;
+		}
+		
+		public int tileWidth() {
+			return tileWidth;
+		}
+		
+		public int layerCount() {
+			return layerCount;
+		}
+		
+		public int tilesetCount() {
+			return tilesetCount;
+		}
+	}
+	
 	private String DefaultExceptionMessage = "Error parsing the json map file";
 	
 	private Map<String, Tileset> tilesets = new HashMap<>();
@@ -131,29 +172,54 @@ public class MapImporter {
 		}
 	}
 	
-	public World importJsonMap(Path mapPath) throws IOException {
+	/**
+	 * Imports the json Tiled map, and constructs a world from the data.
+	 * 
+	 * @param mapPath path to the json Tiled map file.
+	 * @return a results object that contains the world and diagnostic information.
+	 * @throws IOException if the provided path can't be opened.
+	 * @throws InvalidMapException if the json Tiled map is malformed. 
+	 */
+	public Results importJsonMap(Path mapPath) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
 			return importJsonMap(reader);
 		}
 	}
 	
-	public World importJsonMap(Reader mapReader) {
+	/**
+	 * Imports the json Tiled map, and constructs a world from the data.
+	 * 
+	 * @param mapReader a reader that reads from a json Tiled map.
+	 * @return a results object that contains the world and diagnostic information.
+	 * @throws InvalidMapException if the json Tiled map is malformed. 
+	 */
+	public Results importJsonMap(Reader mapReader) {
 		try {
 			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(mapReader);
 			jsonTiledMap.requireKeys(Key.MapHeight, Key.MapWidth, Key.Tilesets, Key.Layers);
 			
-			setTilesetFirstGids(jsonTiledMap);
+			Results importResults = new Results();
+			
+			setTilesetFirstGids(jsonTiledMap, importResults);
 			
 			// Get the map height and width, in tiles.
-			int mapHeightTiles = jsonTiledMap.getInteger(Key.MapHeight);
-			int mapWidthTiles = jsonTiledMap.getInteger(Key.MapWidth);
+			int mapHeightTiles = importResults.tileWidth = jsonTiledMap.getInteger(Key.MapHeight);
+			int mapWidthTiles = importResults.tileHeight = jsonTiledMap.getInteger(Key.MapWidth);
 			
 			World world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles, 
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeightTiles);
+			importResults.world = world;
 			
 			// TODO (cdc - 2021-02-23): Iterate through the layers, and add each entity to the world.
+			JsonArray layers = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
+			importResults.layerCount = layers.size();
+			for (int i = 0; i < layers.size(); i++) {
+				JsonObject layer = (JsonObject) layers.get(i);
+				JsonArray layerTiles = (JsonArray) layer.get(Key.Data.getKey());
+				
+			}
 			
-			return world;
+			return importResults;
 		} catch (JsonException e) {
 			throw new InvalidMapException(DefaultExceptionMessage, e);
 		} catch (NoSuchElementException e) {
@@ -161,8 +227,8 @@ public class MapImporter {
 		}
 	}
 	
-	void setTilesetFirstGids(JsonObject jsonTiledMap) {
-		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.toString());
+	void setTilesetFirstGids(JsonObject jsonTiledMap, Results importResults) {
+		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
 		if (jsonTilesets.size() < 2) {
 			throw new InvalidMapException(DefaultExceptionMessage + " There should be two tilesets, but " + jsonTilesets.size() + " was found.");
 		}
@@ -175,6 +241,7 @@ public class MapImporter {
 			Tileset tileset = tilesets.get(tilesetName);
 			if (tileset != null) {
 				tileset.firstGid = jsonTileset.getInteger(Key.FirstGid);
+				importResults.tilesetCount++;
 				
 			// Log a warning for unknown tileset, and then skip it.
 			} else {
