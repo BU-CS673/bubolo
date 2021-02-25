@@ -98,11 +98,11 @@ public class AIBaseController implements Controller
 							{
 								tank.heal(base.giveHitPoints());
 							}
-							if(tank.getAmmoCount() < Tank.getTankMaxAmmo())
+							if(tank.getAmmoCount() < tank.getTankMaxAmmo())
 							{
 								tank.gatherAmmo(base.giveAmmo());
 							}
-							if(tank.getMineCount() < Tank.getTankMaxMineCount())
+							if(tank.getMineCount() < tank.getTankMaxMineCount())
 							{
 								tank.gatherMine(base.giveMine());
 							}

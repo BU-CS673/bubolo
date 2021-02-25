@@ -1,6 +1,4 @@
-package bubolo.map;
-
-import bubolo.util.GameException;
+package bubolo.util;
 
 /**
  * Thrown to indicate an error in a provided map file that would generate an incomplete or illogical map 
@@ -27,9 +25,5 @@ public class InvalidMapException extends GameException
 	public InvalidMapException(Throwable exception)
 	{
 		super(exception);
-	}
-	
-	public InvalidMapException(String message, Throwable cause) {
-		super(message, cause);
 	}
 }

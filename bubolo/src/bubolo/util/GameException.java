@@ -25,8 +25,4 @@ public abstract class GameException extends RuntimeException
 	{
 		super(exception);
 	}
-	
-	public GameException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

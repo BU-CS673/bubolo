@@ -126,7 +126,7 @@ public class Mine extends StationaryElement implements Ownable
 	public boolean isActive()
 	{
 		boolean active = false;
-		if ((this.createdTime + FUSE_TIME) < System.currentTimeMillis())
+		if ((this.createdTime+this.FUSE_TIME) < System.currentTimeMillis())
 		{
 			active = true;
 		}

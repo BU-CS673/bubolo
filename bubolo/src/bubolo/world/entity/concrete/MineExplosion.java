@@ -67,14 +67,14 @@ public class MineExplosion extends Effect
 	
 	public long getExplosionLength()
 	{
-		return EXPLOSION_LENGTH;
+		return this.EXPLOSION_LENGTH;
 	}
 	
 	
 	@Override
 	public void update(World world)
 	{
-		if((EXPLOSION_LENGTH + this.explosionStart) > System.currentTimeMillis())
+		if((this.EXPLOSION_LENGTH + this.explosionStart) > System.currentTimeMillis())
 		{
 			for(Entity collider:TileUtil.getLocalCollisions(this, world))
 			{

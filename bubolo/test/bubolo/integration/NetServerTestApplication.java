@@ -13,13 +13,13 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import bubolo.AbstractGameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
-import bubolo.map.Parser;
 import bubolo.net.Network;
 import bubolo.net.NetworkObserver;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.ui.LobbyScreen;
 import bubolo.ui.Screen;
+import bubolo.util.Parser;
 import bubolo.world.entity.concrete.Tank;
 
 /**
