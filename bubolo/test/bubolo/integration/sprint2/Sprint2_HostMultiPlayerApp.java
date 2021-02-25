@@ -16,11 +16,11 @@ import bubolo.AbstractGameApplication;
 import bubolo.GameApplication;
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
+import bubolo.map.Parser;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
 import bubolo.net.command.HelloNetworkCommand;
-import bubolo.util.Parser;
 import bubolo.world.World;
 import bubolo.world.entity.concrete.Tank;
 

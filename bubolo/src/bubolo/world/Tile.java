@@ -41,6 +41,19 @@ public class Tile
 		this.gridX = gridX;
 		this.gridY = gridY;
 	}
+	
+	/**
+	 * Constructs a tile without an associated Terrain. A terrain can be added later, or alternatively the world will
+	 * automatically add a terrain when the tile is added to the world using the world.setTiles method.
+	 * 
+	 * @param gridX
+	 *            is the x coordinate of this Tile in grid units.
+	 * @param gridY
+	 *            is the y coordinate of this Tile in grid units.
+	 */
+	public Tile(int gridX, int gridY) {
+		this(gridX, gridY, null);
+	}
 
 	/**
 	 * Returns this Tile's center x position in World coordinates.
@@ -97,6 +110,14 @@ public class Tile
 		{
 			return myTerrain;
 		}
+	}
+	
+	/**
+	 * Whether the Tile has a Terrain. It may not have a Terrain before being added to the world,
+	 * but it is guaranteed to have one after being added.
+	 */
+	public boolean hasTerrain() {
+		return myTerrain != null;
 	}
 
 	/**
