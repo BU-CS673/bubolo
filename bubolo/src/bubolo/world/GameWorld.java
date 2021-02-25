@@ -63,8 +63,8 @@ public class GameWorld implements World
 	private int worldMapWidth;
 	private int worldMapHeight;
 
-	// Whether the graphics subsystem can be used. Intended to help with unit testing.
-	private boolean graphicsEnabled = true;
+	// Whether the sprites are loaded when an entity is created. Intended to help with unit testing.
+	private boolean loadSprites = true;
 
 	/**
 	 * Constructs the GameWorld object.
@@ -95,8 +95,6 @@ public class GameWorld implements World
 		this(0, 0);
 	}
 
-
-
 	@Override
 	public void setMapHeight(int height)
 	{
@@ -111,8 +109,8 @@ public class GameWorld implements World
 		worldMapWidth = width;
 	}
 
-	public void setGraphicsEnabled(boolean graphicsEnabled) {
-		this.graphicsEnabled = graphicsEnabled;
+	public void setLoadSprites(boolean loadSprites) {
+		this.loadSprites = loadSprites;
 	}
 
 	@Override
@@ -175,7 +173,7 @@ public class GameWorld implements World
 
 		entity.setId(id);
 
-		if (graphicsEnabled) {
+		if (loadSprites) {
 			Sprites.getInstance().createSprite(entity);
 		}
 		Controllers.getInstance().createController(entity, controllerFactory);
