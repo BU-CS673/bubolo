@@ -42,11 +42,11 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/tools\/Tiled\/tilesets\/bubolo_tilset_terrain.png",
+         "image":"..\/..\/..\/tools\/Tiled\/tilesets\/bubolo_tilset_terrain_oldLayout.png",
          "imageheight":32,
          "imagewidth":224,
          "margin":0,
-         "name":"bubolo_tilset_terrain",
+         "name":"bubolo_tilset_terrain_oldLayout",
          "properties":
             {
 
@@ -57,11 +57,11 @@
         }, 
         {
          "firstgid":8,
-         "image":"..\/..\/..\/tools\/Tiled\/tilesets\/bubolo_tilset_stationaryElements.png",
+         "image":"..\/..\/..\/tools\/Tiled\/tilesets\/bubolo_tilset_stationaryElements_oldLayout.png",
          "imageheight":32,
          "imagewidth":192,
          "margin":0,
-         "name":"bubolo_tilset_stationaryElements",
+         "name":"bubolo_tilset_stationaryElements_oldLayout",
          "properties":
             {
 

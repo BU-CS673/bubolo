@@ -73,6 +73,11 @@ public class MapImporter {
 		 * @param tileGid the tile global ID to check.
 		 */
 		boolean isGidInThisTileset(int tileGid) {
+			// If the firstGid wasn't set, always return false. This happens when the tileset wasn't found
+			// in the json map file. That's fine, because there are multiple tileset layouts available in the map files.
+			if (firstGid == 0) {
+				return false;
+			}
 			return tileGid >= firstGid && tileGid <= lastGid();
 		}
 	}
@@ -136,8 +141,28 @@ public class MapImporter {
 		terrain.tiles.put(2, world -> world.addEntity(Water.class));
 		terrain.tiles.put(3, world -> world.addEntity(DeepWater.class));
 		terrain.tiles.put(4, world -> world.addEntity(Road.class));
-
 		tilesets.put(terrain.name, terrain);
+
+		// Tilesets for the original layout, which put rubble and craters in the terrain category.
+		// Needed so the Everard Island map will continue to work.
+		Tileset stationaryElements_oldLayout = new Tileset("bubolo_tilset_stationaryElements_oldLayout");
+		stationaryElements_oldLayout.tiles.put(0, world -> world.addEntity(Pillbox.class));
+		stationaryElements_oldLayout.tiles.put(1, world -> world.addEntity(Tree.class));
+		stationaryElements_oldLayout.tiles.put(2, world -> world.addEntity(Mine.class));
+		stationaryElements_oldLayout.tiles.put(3, world -> world.addEntity(Wall.class));
+		stationaryElements_oldLayout.tiles.put(4, world -> world.addEntity(Base.class));
+		stationaryElements_oldLayout.tiles.put(5, world -> world.addEntity(Spawn.class));
+		tilesets.put(stationaryElements_oldLayout.name, stationaryElements_oldLayout);
+
+		Tileset terrain_oldLayout = new Tileset("bubolo_tilset_terrain_oldLayout");
+		terrain_oldLayout.tiles.put(0, world -> world.addEntity(Grass.class));
+		terrain_oldLayout.tiles.put(1, world -> world.addEntity(Swamp.class));
+		terrain_oldLayout.tiles.put(2, world -> world.addEntity(Water.class));
+		terrain_oldLayout.tiles.put(3, world -> world.addEntity(DeepWater.class));
+		terrain_oldLayout.tiles.put(4, world -> world.addEntity(Road.class));
+		terrain_oldLayout.tiles.put(5, world -> world.addEntity(Crater.class));
+		terrain_oldLayout.tiles.put(6, world -> world.addEntity(Rubble.class));
+		tilesets.put(terrain_oldLayout.name, terrain_oldLayout);
 	}
 
 	/**

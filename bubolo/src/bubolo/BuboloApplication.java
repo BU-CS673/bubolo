@@ -6,13 +6,11 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
-import org.json.simple.parser.ParseException;
-
 import com.badlogic.gdx.math.Vector2;
 
 import bubolo.audio.Audio;
 import bubolo.graphics.Graphics;
-import bubolo.map.Parser;
+import bubolo.map.MapImporter;
 import bubolo.net.Network;
 import bubolo.net.NetworkSystem;
 import bubolo.net.command.CreateTank;
@@ -27,7 +25,7 @@ import bubolo.world.entity.concrete.Tank;
 
 /**
  * The Game: this is where the subsystems are initialized, as well as where the main game loop is.
- * 
+ *
  * @author BU CS673 - Clone Productions
  */
 public class BuboloApplication extends AbstractGameApplication
@@ -46,7 +44,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	/**
 	 * Constructs an instance of the game application. Only one instance should ever exist.
-	 * 
+	 *
 	 * @param windowWidth
 	 *            the width of the window.
 	 * @param windowHeight
@@ -67,7 +65,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	/**
 	 * Create anything that relies on graphics, sound, windowing, or input devices here.
-	 * 
+	 *
 	 * @see <a
 	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
@@ -81,13 +79,13 @@ public class BuboloApplication extends AbstractGameApplication
 		// Server or single-player
 		if (!isClient)
 		{
-			Parser fileParser = new Parser();
 			Path path = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
 			try
 			{
-				world = fileParser.parseMap(path);
+				MapImporter importer = new MapImporter();
+				world = importer.importJsonMap(path);
 			}
-			catch (ParseException | IOException e)
+			catch (IOException e)
 			{
 				e.printStackTrace();
 				throw new GameRuntimeException(e);
@@ -104,7 +102,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	/**
 	 * Called automatically by the rendering library.
-	 * 
+	 *
 	 * @see <a
 	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
@@ -171,7 +169,7 @@ public class BuboloApplication extends AbstractGameApplication
 			tank.setLocalPlayer(true);
 
 			network.startDebug();
-			
+
 			setReady(true);
 		}
 		else if (getState() == State.GAME_LOBBY)
@@ -186,7 +184,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	/**
 	 * Returns a random spawn point.
-	 * 
+	 *
 	 * @return the location of a random spawn point.
 	 */
 	private static Vector2 getRandomSpawn(World world)
@@ -200,7 +198,7 @@ public class BuboloApplication extends AbstractGameApplication
 		}
 		return null;
 	}
-	
+
 	private static int getRandomX()
 	{
 		int val = (new Random()).nextInt(10);
@@ -209,7 +207,7 @@ public class BuboloApplication extends AbstractGameApplication
 
 	/**
 	 * Called when the application is destroyed.
-	 * 
+	 *
 	 * @see <a
 	 *      href="http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ApplicationListener.html">ApplicationListener</a>
 	 */
