@@ -125,7 +125,9 @@ public class MapImporter {
 		stationaryElements.tiles.put(2, world -> world.addEntity(Mine.class));
 		stationaryElements.tiles.put(3, world -> world.addEntity(Wall.class));
 		stationaryElements.tiles.put(4, world -> world.addEntity(Base.class));
-		stationaryElements.tiles.put(5, world -> world.addEntity(Spawn.class));
+		stationaryElements.tiles.put(5, world -> world.addEntity(Crater.class));
+		stationaryElements.tiles.put(6, world -> world.addEntity(Rubble.class));
+		stationaryElements.tiles.put(7, world -> world.addEntity(Spawn.class));
 		tilesets.put(stationaryElements.name, stationaryElements);
 
 		Tileset terrain = new Tileset("bubolo_tilset_terrain");
@@ -134,8 +136,7 @@ public class MapImporter {
 		terrain.tiles.put(2, world -> world.addEntity(Water.class));
 		terrain.tiles.put(3, world -> world.addEntity(DeepWater.class));
 		terrain.tiles.put(4, world -> world.addEntity(Road.class));
-		terrain.tiles.put(5, world -> world.addEntity(Crater.class));
-		terrain.tiles.put(6, world -> world.addEntity(Rubble.class));
+
 		tilesets.put(terrain.name, terrain);
 	}
 
@@ -217,8 +218,8 @@ public class MapImporter {
 			setTilesetFirstGids(jsonTiledMap, diagnostics);
 
 			// Get the map height and width, in tiles.
-			int mapHeightTiles = diagnostics.tileWidth = jsonTiledMap.getInteger(Key.MapHeight);
-			int mapWidthTiles = diagnostics.tileHeight = jsonTiledMap.getInteger(Key.MapWidth);
+			int mapHeightTiles = diagnostics.tileHeight = jsonTiledMap.getInteger(Key.MapHeight);
+			int mapWidthTiles = diagnostics.tileWidth = jsonTiledMap.getInteger(Key.MapWidth);
 			Tile[][] mapTiles = new Tile[mapWidthTiles][mapHeightTiles];
 
 			GameWorld world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles,
@@ -236,7 +237,7 @@ public class MapImporter {
 				for (int row = 0; row < mapHeightTiles; row++) {
 					for (int col = 0; col < mapWidthTiles; col++) {
 						int tileGid = layerTiles.getInteger(row * mapWidthTiles + col);
-						addEntityIfGidRecognized(tileGid, world, mapTiles, mapHeightTiles, row, col);
+						addEntityIfGidRecognized(tileGid, world, mapTiles, mapHeightTiles, row, col, diagnostics);
 					}
 				}
 			}
@@ -249,7 +250,7 @@ public class MapImporter {
 		}
 	}
 
-	void setTilesetFirstGids(JsonObject jsonTiledMap, Diagnostics importResults) {
+	void setTilesetFirstGids(JsonObject jsonTiledMap, Diagnostics diagnostics) {
 		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Tilesets.getKey());
 		if (jsonTilesets.size() < 2) {
 			throw new InvalidMapException(DefaultExceptionMessage + " There should be two tilesets, but " + jsonTilesets.size() + " was found.");
@@ -263,7 +264,7 @@ public class MapImporter {
 			Tileset tileset = tilesets.get(tilesetName);
 			if (tileset != null) {
 				tileset.firstGid = jsonTileset.getInteger(Key.FirstGid);
-				importResults.tilesetCount++;
+				diagnostics.tilesetCount++;
 
 			// Log a warning for unknown tileset, and then skip it.
 			} else {
@@ -272,7 +273,7 @@ public class MapImporter {
 		}
 	}
 
-	void addEntityIfGidRecognized(int tileGid, World world, Tile[][] mapTiles, int mapHeightTiles, int row, int col) {
+	void addEntityIfGidRecognized(int tileGid, World world, Tile[][] mapTiles, int mapHeightTiles, int row, int col, Diagnostics diagnostics) {
 		// Zero represents an empty space in the layer, so skip it if encountered.
 		if (tileGid > 0) {
 			// Check the tile GID against the known GIDs in each tileset.
@@ -303,6 +304,8 @@ public class MapImporter {
 						}
 						mapTiles[gridX][gridY].setElement(stationaryElement);
 					}
+
+					diagnostics.typesImported.add(entity.getClass().getSimpleName());
 				}
 			}
 		}

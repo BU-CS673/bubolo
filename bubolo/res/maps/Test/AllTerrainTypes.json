@@ -1,0 +1,78 @@
+{ "compressionlevel":-1,
+ "height":2,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[9, 10, 11, 12, 13, 9, 10, 13, 9, 10, 11, 12, 13, 9, 10, 13],
+         "height":2,
+         "id":1,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":8,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 2, 7, 0, 1, 2, 0, 0, 3, 4, 5, 6],
+         "height":2,
+         "id":2,
+         "name":"Tile Layer 2",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":8,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":2,
+         "id":3,
+         "name":"Tile Layer 3",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":8,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":4,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.4.3",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":8,
+         "firstgid":1,
+         "image":"..\/..\/..\/..\/tools\/bubolo_tilset_stationaryElements.png",
+         "imageheight":32,
+         "imagewidth":256,
+         "margin":0,
+         "name":"bubolo_tilset_stationaryElements",
+         "spacing":0,
+         "tilecount":8,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "columns":5,
+         "firstgid":9,
+         "image":"..\/..\/..\/..\/tools\/bubolo_tilset_terrain.png",
+         "imageheight":32,
+         "imagewidth":160,
+         "margin":0,
+         "name":"bubolo_tilset_terrain",
+         "spacing":0,
+         "tilecount":5,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":1.4,
+ "width":8
+}
