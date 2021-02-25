@@ -1,6 +1,7 @@
 package bubolo.map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -16,11 +17,11 @@ public class MapImporterTest {
 	public void importEverardIsland() throws IOException {
 		MapImporter importer = new MapImporter();
 		Path mapPath = FileSystems.getDefault().getPath("res", "maps/Everard Island.json");
-		var results = importer.importJsonMapWithDiagnostics(mapPath);
-		
+		var results = importer.importJsonMapWithDiagnostics(mapPath, true);
+
 		World world = results.getLeft();
 		MapImporter.Diagnostics diagnostics = results.getRight();
-		
+
 		assertNotNull(world);
 		assertEquals(3, diagnostics.layerCount());
 		assertEquals(2, diagnostics.tilesetCount());

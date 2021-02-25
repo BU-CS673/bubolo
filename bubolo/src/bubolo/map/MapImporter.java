@@ -178,9 +178,9 @@ public class MapImporter {
 	 * @throws IOException if the provided path can't be opened.
 	 * @throws InvalidMapException if the json Tiled map is malformed.
 	 */
-	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Path mapPath) throws IOException {
+	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Path mapPath, boolean disableGraphics) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(mapPath)) {
-			return importJsonMapWithDiagnostics(reader);
+			return importJsonMapWithDiagnostics(reader, disableGraphics);
 		}
 	}
 
@@ -190,12 +190,12 @@ public class MapImporter {
 		}
 	}
 
-	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Reader mapReader) {
-		return importMap(mapReader);
+	public Pair<World, Diagnostics> importJsonMapWithDiagnostics(Reader mapReader, boolean disableGraphics) {
+		return importMap(mapReader, disableGraphics);
 	}
 
 	public World importJsonMap(Reader mapReader) {
-		return importMap(mapReader).getLeft();
+		return importMap(mapReader, false).getLeft();
 	}
 
 
@@ -207,7 +207,7 @@ public class MapImporter {
 	 * @return a results object that contains the world and diagnostic information.
 	 * @throws InvalidMapException if the json Tiled map is malformed.
 	 */
-	private Pair<World, Diagnostics> importMap(Reader mapReader) {
+	private Pair<World, Diagnostics> importMap(Reader mapReader, boolean disableGraphics) {
 		try {
 			JsonObject jsonTiledMap = (JsonObject) Jsoner.deserialize(mapReader);
 			jsonTiledMap.requireKeys(Key.MapHeight, Key.MapWidth, Key.Tilesets, Key.Layers);
@@ -221,8 +221,9 @@ public class MapImporter {
 			int mapWidthTiles = diagnostics.tileHeight = jsonTiledMap.getInteger(Key.MapWidth);
 			Tile[][] mapTiles = new Tile[mapWidthTiles][mapHeightTiles];
 
-			World world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles,
+			GameWorld world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles,
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeightTiles);
+			world.setGraphicsEnabled(!disableGraphics);
 
 			JsonArray layers = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
 			diagnostics.layerCount = layers.size();
@@ -249,7 +250,7 @@ public class MapImporter {
 	}
 
 	void setTilesetFirstGids(JsonObject jsonTiledMap, Diagnostics importResults) {
-		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
+		JsonArray jsonTilesets = (JsonArray) jsonTiledMap.get(Key.Tilesets.getKey());
 		if (jsonTilesets.size() < 2) {
 			throw new InvalidMapException(DefaultExceptionMessage + " There should be two tilesets, but " + jsonTilesets.size() + " was found.");
 		}
