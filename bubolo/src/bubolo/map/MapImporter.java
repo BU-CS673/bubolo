@@ -249,7 +249,7 @@ public class MapImporter {
 
 			GameWorld world = new GameWorld(Coordinates.TILE_TO_WORLD_SCALE * mapWidthTiles,
 					Coordinates.TILE_TO_WORLD_SCALE * mapHeightTiles);
-			world.setGraphicsEnabled(!disableGraphics);
+			world.setLoadSprites(!disableGraphics);
 
 			JsonArray layers = (JsonArray) jsonTiledMap.get(Key.Layers.getKey());
 			diagnostics.layerCount = layers.size();
@@ -267,6 +267,7 @@ public class MapImporter {
 				}
 			}
 
+			world.setMapTiles(mapTiles);
 			return Pair.of(world, diagnostics);
 		} catch (JsonException e) {
 			throw new InvalidMapException(DefaultExceptionMessage, e);
