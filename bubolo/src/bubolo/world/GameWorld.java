@@ -1,8 +1,5 @@
 package bubolo.world;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,24 +7,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
 import bubolo.controllers.Controller;
 import bubolo.controllers.ControllerFactory;
 import bubolo.controllers.Controllers;
 import bubolo.controllers.ai.AITreeController;
 import bubolo.graphics.Sprites;
-import bubolo.util.Coordinates;
 import bubolo.util.GameLogicException;
 import bubolo.world.entity.Actor;
 import bubolo.world.entity.Effect;
 import bubolo.world.entity.Entity;
-import bubolo.world.entity.concrete.Grass;
 import bubolo.world.entity.concrete.Spawn;
 import bubolo.world.entity.concrete.Tank;
 
 /**
  * The concrete implementation of the World interface. GameWorld is the sole owner of Entity
  * objects.
- *
+ * 
  * @author BU CS673 - Clone Productions
  */
 public class GameWorld implements World
@@ -63,12 +60,9 @@ public class GameWorld implements World
 	private int worldMapWidth;
 	private int worldMapHeight;
 
-	// Whether the sprites are loaded when an entity is created. Intended to help with unit testing.
-	private boolean loadSprites = true;
-
 	/**
 	 * Constructs the GameWorld object.
-	 *
+	 * 
 	 * @param worldMapWidth
 	 *            the width of the game world map.
 	 * @param worldMapHeight
@@ -76,10 +70,6 @@ public class GameWorld implements World
 	 */
 	public GameWorld(int worldMapWidth, int worldMapHeight)
 	{
-		int tilesX = worldMapWidth / Coordinates.TILE_TO_WORLD_SCALE;
-		int tilesY = worldMapHeight / Coordinates.TILE_TO_WORLD_SCALE;
-		mapTiles = new Tile[tilesX][tilesY];
-
 		this.worldMapWidth = worldMapWidth;
 		this.worldMapHeight = worldMapHeight;
 
@@ -107,10 +97,6 @@ public class GameWorld implements World
 	{
 		checkArgument(width > 0, "width parameter must be greater than zero: %s", width);
 		worldMapWidth = width;
-	}
-
-	public void setLoadSprites(boolean loadSprites) {
-		this.loadSprites = loadSprites;
 	}
 
 	@Override
@@ -173,9 +159,7 @@ public class GameWorld implements World
 
 		entity.setId(id);
 
-		if (loadSprites) {
-			Sprites.getInstance().createSprite(entity);
-		}
+		Sprites.getInstance().createSprite(entity);
 		Controllers.getInstance().createController(entity, controllerFactory);
 
 		if (entity instanceof Tank)
@@ -259,19 +243,6 @@ public class GameWorld implements World
 	public void setMapTiles(Tile[][] mapTiles)
 	{
 		this.mapTiles = mapTiles;
-		setMapWidth(mapTiles.length * Coordinates.TILE_TO_WORLD_SCALE);
-		setMapHeight(mapTiles[0].length * Coordinates.TILE_TO_WORLD_SCALE);
-
-		// Starting on 2/2021, Tiles can be created without an associated Terrain, in order to increase
-		// the map importer's flexibility with slightly malformed, but otherwise valid, map files.
-		// These lines add a Grass tile to any tile that is missing an associated terrain.
-		for (Tile[] tiles : mapTiles) {
-			for (Tile tile : tiles) {
-				if (!tile.hasTerrain()) {
-					tile.setTerrain(addEntity(Grass.class));
-				}
-			}
-		}
 	}
 
 	@Override
@@ -303,11 +274,6 @@ public class GameWorld implements World
 		// Update all entities.
 		for (Entity e : entities)
 		{
-			// TODO (cdc - 2021-02/23): There are disposed entities in the world when the game starts. Try this line again
-			// after rewriting the map importer.
-//			assert !e.isDisposed() :
-//				"Entity " + e.getId() + " (" + e.getClass().getSimpleName() + ") is disposed but not removed from the world.";
-
 			e.update(this);
 			if (e.isDisposed())
 			{
@@ -335,7 +301,7 @@ public class GameWorld implements World
 		List<Entity> copyOfSpawns = Collections.unmodifiableList(spawns);
 		return copyOfSpawns;
 	}
-
+	
 	@Override
 	public void addController(Class<? extends Controller> controllerType)
 	{
@@ -346,7 +312,7 @@ public class GameWorld implements World
 				return;
 			}
 		}
-
+		
 		try
 		{
 			worldControllers.add(controllerType.newInstance());
@@ -356,7 +322,7 @@ public class GameWorld implements World
 			throw new GameLogicException(e);
 		}
 	}
-
+	
 	@Override
 	public void removeController(Class<? extends Controller> controllerType)
 	{
@@ -369,7 +335,7 @@ public class GameWorld implements World
 			}
 		}
 	}
-
+	
 	@Override
 	public int getControllerCount()
 	{

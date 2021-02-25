@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import com.badlogic.gdx.math.Intersector;
+
 import com.badlogic.gdx.math.Polygon;
 
 import bubolo.controllers.Controller;
@@ -15,7 +15,7 @@ import bubolo.world.World;
 /**
  * Base class for game objects. Anything that is part of the game world should inherit from this
  * class.
- *
+ * 
  * @author BU CS673 - Clone Productions
  */
 public abstract class Entity implements Serializable, Drawable
@@ -52,7 +52,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Construct a new Entity with the specified UUID.
-	 *
+	 * 
 	 * @param newID
 	 *            is the existing UUID to be assigned to the new Entity.
 	 */
@@ -64,7 +64,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Set the basic parameters for an Entity. Intended to be used after construction.
-	 *
+	 * 
 	 * @param x
 	 *            is the initial x position in world coordinates.
 	 * @param y
@@ -83,23 +83,8 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Set the basic parameters for an Entity. Intended to be used after construction.
-	 *
-	 * @param x
-	 *            is the initial x position in world coordinates.
-	 * @param y
-	 *            is the initial y position in world coordinates.
-	 * @param rot
-	 *            is the initial rotation in radians.
-	 * @return a reference to this Entity.
-	 */
-	public Entity setParams(float x, float y, double rot) {
-		return setParams(x, y, (float) rot);
-	}
-
-	/**
 	 * Checks to see whether this Entity's bounding box overlaps that of another Entity,
-	 *
+	 * 
 	 * @param e
 	 *            is the Entity that this Entity should be checked against.
 	 * @return true if this Entity overlaps with the Entity specified, false otherwise.
@@ -123,7 +108,7 @@ public abstract class Entity implements Serializable, Drawable
 	 * Entities found in the given world, and could be optimized to check only Entities within a
 	 * reasonable range -- StationaryEntities found in the tiles surrounding this Entity's position
 	 * and all Effects and Actors, which are mobile.
-	 *
+	 * 
 	 * @param w
 	 *            is the World object where this Entity is contained.
 	 * @return a list of all of the Entities which this Entity overlaps with.
@@ -139,7 +124,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * The Entity's unique id.
-	 *
+	 * 
 	 * @return the Entity's unique id.
 	 */
 	public UUID getId()
@@ -149,7 +134,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Sets the Entity's unique id.
-	 *
+	 * 
 	 * @param id
 	 *            the Entity's unique id.
 	 */
@@ -173,7 +158,7 @@ public abstract class Entity implements Serializable, Drawable
 	/**
 	 * Updates the state of this Entity. Must be called once per game tick to maintain the Entity's
 	 * state.
-	 *
+	 * 
 	 * @param world
 	 *            reference to the World
 	 */
@@ -200,7 +185,7 @@ public abstract class Entity implements Serializable, Drawable
 	/**
 	 * Checks whether this Entity should be considered "solid" for the purpose of movement
 	 * collisions.
-	 *
+	 * 
 	 * @return true if this Entity is solid, false otherwise.
 	 */
 	public boolean isSolid()
@@ -211,7 +196,7 @@ public abstract class Entity implements Serializable, Drawable
 	/**
 	 * Sets whether this Entity should be considered "solid" for the purpose of movement collision
 	 * checks.
-	 *
+	 * 
 	 * @param solidity
 	 *            is true if the Entity should be considered "solid", false otherwise.
 	 * @return a reference to this Entity, for chaining.
@@ -246,9 +231,9 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Returns the bounding polygon for this Entity.
-	 *
+	 * 
 	 * @return the Polygon representing the bounds for this Entity, for intersections/collisions.
-	 *
+	 * 
 	 */
 	public Polygon getBounds()
 	{
@@ -257,7 +242,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Set the rotation of this Entity.
-	 *
+	 * 
 	 * @param newRotation
 	 *            is the desired rotation state of this Entity in radians.
 	 * @return this Entity, after the rotation action has been completed.
@@ -275,20 +260,8 @@ public abstract class Entity implements Serializable, Drawable
 	}
 
 	/**
-	 * Set the rotation of this Entity.
-	 *
-	 * @param newRotation
-	 *            is the desired rotation state of this Entity in radians.
-	 * @return this Entity, after the rotation action has been completed.
-	 */
-	public Entity setRotation(double newRotation)
-	{
-		return setRotation((float) newRotation);
-	}
-
-	/**
 	 * Sets this Entity's x position.
-	 *
+	 * 
 	 * @param x
 	 *            is the desired x position in world coordinates.
 	 * @return this Entity.
@@ -303,7 +276,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Set this Entity's y position.
-	 *
+	 * 
 	 * @param y
 	 *            is the desired y position in world coordinates.
 	 * @return this Entity.
@@ -317,7 +290,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Set this Entity's width.
-	 *
+	 * 
 	 * @param size
 	 *            is the desired Entity width in world coordinates.
 	 * @return this Entity.
@@ -330,7 +303,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Set this Entity's height.
-	 *
+	 * 
 	 * @param size
 	 *            is the desired Entity height in world coordinates.
 	 * @return this Entity.
@@ -343,7 +316,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Adds a controller to this Entity.
-	 *
+	 * 
 	 * @param c
 	 *            the controller to add.
 	 */
@@ -358,7 +331,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Updates all attached controllers.
-	 *
+	 * 
 	 * @param world
 	 *            reference to the World.
 	 */
@@ -375,7 +348,7 @@ public abstract class Entity implements Serializable, Drawable
 
 	/**
 	 * Returns the number of controllers attached to this Entity.
-	 *
+	 * 
 	 * @return the number of controllers attached to this Entity.
 	 */
 	public int getControllerCount()
@@ -386,7 +359,7 @@ public abstract class Entity implements Serializable, Drawable
 	/**
 	 * Returns true if the entity should be removed from the game. This is needed by the graphics
 	 * system.
-	 *
+	 * 
 	 * @return true if the entity should be removed from the game.
 	 */
 	public final boolean isDisposed()
@@ -399,14 +372,13 @@ public abstract class Entity implements Serializable, Drawable
 	 */
 	public final void dispose()
 	{
-		//System.out.println(getId() + " (" + getClass().getSimpleName() + ") at " + getX() + "," + getY() + " disposed.");
 		onDispose();
 		disposed = true;
 	}
-
+	
 	/**
-	 * Called when dispose is called. Entities can override this to perform additional processing
-	 * on dispose.
+	 * Called when dispose is called. Entities can override this to perform additional processing 
+	 * on dispose. 
 	 */
 	protected void onDispose()
 	{
